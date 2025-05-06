@@ -454,7 +454,10 @@ class GICAPI_Admin
             'posts_per_page' => -1,
             'meta_query' => [
                 'relation' => 'AND',
-                [$sku_meta_key, 'key' => $sku_meta_key, 'compare' => 'EXISTS']
+                [
+                    'key' => $sku_meta_key,
+                    'compare' => 'EXISTS'
+                ]
             ],
             'fields' => 'ids' // We only need IDs and then get meta
         ];
@@ -473,7 +476,8 @@ class GICAPI_Admin
             foreach ($local_items_query->posts as $local_post_id) {
                 $sku = get_post_meta($local_post_id, $sku_meta_key, true);
                 if ($sku) {
-                    $local_items_by_sku[$sku] = $local_post_id;
+                    // Trim the SKU from local meta
+                    $local_items_by_sku[trim($sku)] = $local_post_id;
                 }
             }
         }
@@ -487,10 +491,11 @@ class GICAPI_Admin
         foreach ($api_items as $api_item) {
             list($post_args_base, $meta_input_base) = call_user_func($map_api_to_post_args_callback, $api_item, $parent_id);
 
-            $sku_value = isset($meta_input_base[$sku_meta_key]) ? $meta_input_base[$sku_meta_key] : null;
+            // Trim the SKU from API item's mapped meta
+            $sku_value = isset($meta_input_base[$sku_meta_key]) ? trim($meta_input_base[$sku_meta_key]) : null;
 
-            if (!$sku_value) { // Skip if SKU is not present in the API item's mapped meta
-                // error_log("GICAPI Sync: SKU missing for an API item. Post Type: {$post_type}. Item: " . print_r($api_item, true));
+            if (!$sku_value) { // Skip if SKU is not present or empty after trim
+                // error_log("GICAPI Sync: SKU missing or empty for an API item. Post Type: {$post_type}. Item: " . print_r($api_item, true));
                 continue;
             }
             $processed_skus[] = $sku_value;
@@ -501,6 +506,10 @@ class GICAPI_Admin
             ]);
 
             $meta_input = $meta_input_base;
+            // Ensure the SKU in meta_input is also trimmed for consistency if it's re-saved
+            if (isset($meta_input[$sku_meta_key])) {
+                $meta_input[$sku_meta_key] = $sku_value;
+            }
 
             if (isset($local_items_by_sku[$sku_value])) {
                 // Update existing
