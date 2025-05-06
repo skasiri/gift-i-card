@@ -62,6 +62,7 @@ if (!class_exists('GICAPI')) {
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-api.php';
             require_once GICAPI_PLUGIN_DIR . 'admin/class-gicapi-admin.php';
             require_once GICAPI_PLUGIN_DIR . 'public/class-gicapi-public.php';
+            require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-jwt.php';
         }
 
         private function set_locale()

@@ -1,5 +1,25 @@
 <?php
 
+/**
+ * The API functionality of the plugin.
+ *
+ * @link       https://gift-i-card.com
+ * @since      1.0.0
+ *
+ * @package    GICAPI
+ * @subpackage GICAPI/includes
+ */
+
+/**
+ * The API functionality of the plugin.
+ *
+ * Defines the plugin name, version, and two examples hooks for how to
+ * enqueue the admin-specific stylesheet and JavaScript.
+ *
+ * @package    GICAPI
+ * @subpackage GICAPI/includes
+ * @author     Gift-i-Card <info@gift-i-card.com>
+ */
 class GICAPI_API
 {
     private static $instance = null;
@@ -8,11 +28,16 @@ class GICAPI_API
     private $consumer_secret;
     private $jwt;
 
-    private function __construct()
+    /**
+     * Initialize the class and set its properties.
+     *
+     * @since    1.0.0
+     */
+    public function __construct()
     {
-        $this->base_url = get_option('gicapi_base_url', '');
-        $this->consumer_key = get_option('gicapi_consumer_key', '');
-        $this->consumer_secret = get_option('gicapi_consumer_secret', '');
+        $this->base_url = get_option('gicapi_base_url');
+        $this->consumer_key = get_option('gicapi_consumer_key');
+        $this->consumer_secret = get_option('gicapi_consumer_secret');
         $this->jwt = GICAPI_JWT::get_instance();
     }
 
