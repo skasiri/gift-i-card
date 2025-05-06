@@ -57,6 +57,7 @@ class GICAPI_Admin
         add_action('admin_enqueue_scripts', array($this, 'enqueue_styles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('admin_notices', array($this, 'display_connection_status'));
+        add_action('wp_ajax_gicapi_force_refresh_token', array($this, 'ajax_force_refresh_token'));
     }
 
     /**
@@ -77,6 +78,17 @@ class GICAPI_Admin
     public function enqueue_scripts()
     {
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/gicapi-admin.js', array('jquery'), $this->version, false);
+
+        // Prepare parameters for JavaScript, including nonces and localized text
+        $script_params = array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'force_refresh_token_nonce' => wp_create_nonce('gicapi_force_refresh_token_action'),
+            'text_refreshing_token' => __('در حال دریافت توکن جدید...', 'gift-i-card'),
+            'text_error_unknown' => __('An unknown error occurred.', 'gift-i-card'),
+            'text_error_server_communication' => __('خطا در ارتباط با سرور: ', 'gift-i-card'),
+            // Add any other existing params here if gicapi_admin_params was previously used
+        );
+        wp_localize_script($this->plugin_name, 'gicapi_admin_params', $script_params);
     }
 
     public function add_plugin_admin_menu()
@@ -152,7 +164,15 @@ class GICAPI_Admin
 
     public function display_plugin_setup_page()
     {
-        include_once 'partials/gicapi-admin-display.php';
+        // Determine connection status to pass to the view
+        $api = GICAPI_API::get_instance();
+        $response = $api->get_balance();
+        // Use the same logic as in display_connection_status for consistency
+        // Assuming 'balance' key indicates successful connection and contains balance.
+        // If 'success' => true is the indicator, adjust accordingly.
+        $is_connected = ($response && isset($response['balance']) && is_numeric($response['balance']));
+
+        include_once 'partials/gicapi-admin-display.php'; // $is_connected will be available in this partial
     }
 
     public function display_plugin_products_page()
@@ -314,7 +334,7 @@ class GICAPI_Admin
 
                 if (empty($products)) {
                     // Fetch all products for this category initially
-                    $response = $api->get_products($category_sku, 1, 999); // Request a large page size
+                    $response = $api->get_products($category_sku, 1, 50); // Request a large page size
                     if ($response && isset($response['products']) && is_array($response['products'])) {
                         foreach ($response['products'] as $product) { // Iterate over the 'products' array
                             $post_id = wp_insert_post(array(
@@ -449,4 +469,35 @@ class GICAPI_Admin
     // private function get_product_ids_by_category($category_id) {
     //    // ... (code is now commented out or removed as it's not directly used in the simplified delete logic)
     // }
+
+    /**
+     * Handles the AJAX request to force refresh the API token.
+     */
+    public function ajax_force_refresh_token()
+    {
+        // Verify the nonce for security
+        check_ajax_referer('gicapi_force_refresh_token_action', '_ajax_nonce');
+
+        // Check user capabilities
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'gift-i-card')), 403);
+            return;
+        }
+
+        $api = GICAPI_API::get_instance();
+        $new_token = $api->force_refresh_token();
+
+        if ($new_token) {
+            // Optionally, you can try to verify the new token by making a quick call, e.g., get_balance
+            // $test_connection = $api->get_balance();
+            // if ($test_connection && isset($test_connection['balance'])) {
+            //     wp_send_json_success(array('message' => __('توکن با موفقیت تازه‌سازی و تایید شد.', 'gift-i-card')));
+            // } else {
+            //     wp_send_json_success(array('message' => __('توکن تازه‌سازی شد، اما تایید اتصال جدید ناموفق بود.', 'gift-i-card')));
+            // }
+            wp_send_json_success(array('message' => __('توکن با موفقیت تازه‌سازی شد. لطفاً برای مشاهده وضعیت اتصال جدید، صفحه را رفرش کنید یا تنظیمات را ذخیره نمایید.', 'gift-i-card')));
+        } else {
+            wp_send_json_error(array('message' => __('خطا در تازه‌سازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید.', 'gift-i-card')));
+        }
+    }
 }

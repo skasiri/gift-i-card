@@ -77,6 +77,39 @@ class GICAPI_API
         return $token;
     }
 
+    public function force_refresh_token()
+    {
+        // Delete the existing token transient
+        delete_transient('gicapi_token');
+
+        // Attempt to fetch a new token
+        $response = wp_remote_post($this->base_url . '/auth/get-token', array(
+            'body' => array(
+                'consumer_key' => $this->consumer_key,
+                'consumer_secret' => $this->consumer_secret
+            )
+        ));
+
+        if (is_wp_error($response)) {
+            // Log error or handle it as needed
+            // error_log('GICAPI Error fetching new token: ' . $response->get_error_message());
+            return false;
+        }
+
+        $headers = wp_remote_retrieve_headers($response);
+        if (!isset($headers['Authorization'])) {
+            // Log error or handle it
+            // error_log('GICAPI Error: Authorization header not found in new token response.');
+            return false;
+        }
+
+        $token = $headers['Authorization'];
+        // Store the new token with expiry (5 minutes less than actual expiry for buffer)
+        set_transient('gicapi_token', $token, $this->jwt->get_token_expiry() - 300);
+
+        return $token; // Return the new token or false on failure
+    }
+
     private function make_request($endpoint, $method = 'GET', $body = array())
     {
         $token = $this->get_token();

@@ -52,6 +52,27 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
 
         </table>
 
+        <?php
+        // Check if $is_connected is set and true by the GICAPI_Admin class
+        if (isset($is_connected) && $is_connected) :
+        ?>
+            <h2><?php _e('Token Management', 'gift-i-card'); ?></h2>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php _e('Refresh Token', 'gift-i-card'); ?></th>
+                    <td>
+                        <button type="button" id="gicapi-force-refresh-token-button" class="button button-secondary">
+                            <?php _e('Get New Token', 'gift-i-card'); ?>
+                        </button>
+                        <p class="description"><?php _e('Click this button to discard the current token and get a new one from the API.', 'gift-i-card'); ?></p>
+                        <div id="gicapi-refresh-token-message" style="margin-top: 10px;"></div>
+                    </td>
+                </tr>
+            </table>
+        <?php
+        endif;
+        ?>
+
         <h2><?php _e('Order Settings', 'gift-i-card'); ?></h2>
 
         <table class="form-table">

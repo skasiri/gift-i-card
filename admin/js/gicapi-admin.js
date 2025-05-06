@@ -138,4 +138,48 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    // Force Refresh Token Button
+    $('#gicapi-force-refresh-token-button').on('click', function () {
+        var $button = $(this);
+        var $messageDiv = $('#gicapi-refresh-token-message');
+
+        // Use localized text
+        $messageDiv.html('<span class="spinner is-active" style="float: none; vertical-align: middle; margin-left: 5px;"></span> ' + gicapi_admin_params.text_refreshing_token);
+        $button.prop('disabled', true);
+
+        $.ajax({
+            url: gicapi_admin_params.ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_force_refresh_token',
+                _ajax_nonce: gicapi_admin_params.force_refresh_token_nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    $messageDiv.html('<p style="color: green;">' + response.data.message + '</p>');
+                    // Consider briefly showing success then clearing, or instructing user to save settings if applicable
+                    // Example: Refresh page to see updated status if connection notice changes
+                    // setTimeout(function(){ location.reload(); }, 2000); 
+                } else {
+                    var errorMessage = (response.data && response.data.message) ? response.data.message : gicapi_admin_params.text_error_unknown;
+                    $messageDiv.html('<p style="color: red;">' + errorMessage + '</p>');
+                }
+            },
+            error: function (xhr, status, error) {
+                var serverError = gicapi_admin_params.text_error_server_communication + error;
+                $messageDiv.html('<p style="color: red;">' + serverError + '</p>');
+            },
+            complete: function () {
+                $button.prop('disabled', false);
+                // Remove spinner after a short delay to ensure message is visible
+                setTimeout(function () {
+                    $messageDiv.find('.spinner').remove();
+                    // Optionally clear the message after a few more seconds
+                    // setTimeout(function() { $messageDiv.html(''); }, 5000);
+                }, 1000);
+            }
+        });
+    });
+
 }); 
