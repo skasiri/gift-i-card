@@ -50,15 +50,6 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
                 </td>
             </tr>
 
-            <tr>
-                <th scope="row">
-                    <?php _e('Test Connection', 'gift-i-card'); ?>
-                </th>
-                <td>
-                    <button type="button" id="gicapi_test_connection" class="button button-secondary"><?php _e('Test Connection', 'gift-i-card'); ?></button>
-                    <span id="gicapi_test_result" class="description"></span>
-                </td>
-            </tr>
         </table>
 
         <h2><?php _e('Order Settings', 'gift-i-card'); ?></h2>
@@ -132,31 +123,3 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
         <?php submit_button(); ?>
     </form>
 </div>
-
-<script>
-    jQuery(document).ready(function($) {
-        $('#gicapi_test_connection').on('click', function() {
-            var $button = $(this);
-            var $result = $('#gicapi_test_result');
-
-            $button.prop('disabled', true).text('<?php _e('Testing...', 'gift-i-card'); ?>');
-            $result.removeClass('error success').text('');
-
-            $.post(ajaxurl, {
-                action: 'gicapi_test_connection',
-                nonce: '<?php echo wp_create_nonce('gicapi_test_connection'); ?>',
-                base_url: $('#gicapi_base_url').val(),
-                consumer_key: $('#gicapi_consumer_key').val(),
-                consumer_secret: $('#gicapi_consumer_secret').val()
-            }, function(response) {
-                if (response.success) {
-                    $result.addClass('success').text('<?php _e('Connection successful!', 'gift-i-card'); ?>');
-                } else {
-                    $result.addClass('error').text(response.data);
-                }
-            }).always(function() {
-                $button.prop('disabled', false).text('<?php _e('Test Connection', 'gift-i-card'); ?>');
-            });
-        });
-    });
-</script>

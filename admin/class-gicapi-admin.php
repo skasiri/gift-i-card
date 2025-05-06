@@ -128,7 +128,10 @@ class GICAPI_Admin
 
     public function register_settings()
     {
-        register_setting('gicapi_settings', 'gicapi_base_url');
+        register_setting('gicapi_settings', 'gicapi_base_url', array(
+            'type' => 'string',
+            'sanitize_callback' => array($this, 'sanitize_base_url')
+        ));
         register_setting('gicapi_settings', 'gicapi_consumer_key');
         register_setting('gicapi_settings', 'gicapi_consumer_secret');
         register_setting('gicapi_settings', 'gicapi_complete_orders');
@@ -136,6 +139,12 @@ class GICAPI_Admin
         register_setting('gicapi_settings', 'gicapi_add_to_email');
         register_setting('gicapi_settings', 'gicapi_add_to_order_details');
         register_setting('gicapi_settings', 'gicapi_add_to_thank_you');
+    }
+
+    public function sanitize_base_url($url)
+    {
+        $url = trim($url);
+        return rtrim($url, '/');
     }
 
     public function display_plugin_setup_page()
