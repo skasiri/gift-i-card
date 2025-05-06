@@ -39,7 +39,7 @@ $parent_page_url = menu_page_url($plugin_name . '-products', false);
         </thead>
         <tbody id="the-list">
             <?php
-            $products = get_posts(array(
+            $products_args = array(
                 'post_type' => 'gic_prod',
                 'posts_per_page' => -1, // Adjust later for pagination
                 'post_status' => 'publish',
@@ -50,7 +50,8 @@ $parent_page_url = menu_page_url($plugin_name . '-products', false);
                         'compare' => '='
                     )
                 )
-            ));
+            );
+            $products = get_posts($products_args);
 
             if (!empty($products)) :
                 foreach ($products as $product) :
@@ -60,8 +61,9 @@ $parent_page_url = menu_page_url($plugin_name . '-products', false);
                     $product_image_url = get_post_meta($product_id, '_gicapi_product_image_url', true);
                     $product_variant_count = get_post_meta($product_id, '_gicapi_product_variant_count', true);
                     $variants_page_url = add_query_arg('product', $product_id);
+                    $is_deleted = get_post_meta($product_id, '_gicapi_is_deleted', true) === 'true';
             ?>
-                    <tr>
+                    <tr class="<?php if ($is_deleted) echo 'gicapi-item-deleted'; ?>">
                         <td class="column-thumbnail">
                             <?php if ($product_image_url) : ?>
                                 <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>" width="40" height="40" style="object-fit: contain;">
@@ -72,9 +74,12 @@ $parent_page_url = menu_page_url($plugin_name . '-products', false);
                                 <a class="row-title" href="<?php echo esc_url($variants_page_url); ?>">
                                     <?php echo esc_html($product_name); ?>
                                 </a>
+                                <?php if ($is_deleted) : ?>
+                                    <span class="gicapi-deleted-status"> (<?php _e('Deleted', 'gift-i-card'); ?>)</span>
+                                <?php endif; ?>
                             </strong>
                             <div class="row-actions">
-                                <span class="view"><a href="<?php echo esc_url($variants_page_url); ?>"><?php _e('View Variants', 'gift-i-card'); ?></a></span>
+                                <span class="view"><a href="<?php echo esc_url($variants_page_url); ?>" <?php if ($is_deleted) echo 'style="pointer-events:none; opacity:0.5;"'; ?>><?php _e('View Variants', 'gift-i-card'); ?></a></span>
                             </div>
                             <button type="button" class="toggle-row"><span class="screen-reader-text"><?php _e('Show more details'); ?></span></button>
                         </td>

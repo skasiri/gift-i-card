@@ -50,7 +50,7 @@ $categories_page_url = menu_page_url($plugin_name . '-products', false);
         </thead>
         <tbody id="the-list">
             <?php
-            $variants = get_posts(array(
+            $variants_args = array(
                 'post_type' => 'gic_var',
                 'posts_per_page' => -1, // Adjust later for pagination
                 'post_status' => 'publish',
@@ -61,7 +61,8 @@ $categories_page_url = menu_page_url($plugin_name . '-products', false);
                         'compare' => '='
                     )
                 )
-            ));
+            );
+            $variants = get_posts($variants_args);
 
             if (!empty($variants)) :
                 foreach ($variants as $variant) :
@@ -74,12 +75,25 @@ $categories_page_url = menu_page_url($plugin_name . '-products', false);
                     $variant_stock_status = get_post_meta($variant_id, '_gicapi_variant_stock_status', true);
                     $mapped_product_id = get_post_meta($variant_id, '_gicapi_mapped_wc_product_id', true);
                     $mapped_product = $mapped_product_id ? wc_get_product($mapped_product_id) : null;
+                    $is_deleted = get_post_meta($variant_id, '_gicapi_is_deleted', true) === 'true';
             ?>
-                    <tr>
+                    <tr class="<?php if ($is_deleted) echo 'gicapi-item-deleted'; ?>">
                         <td class="title column-title has-row-actions column-primary" data-colname="<?php _e('Name', 'gift-i-card'); ?>">
-                            <strong><?php echo esc_html($variant_name); ?></strong>
+                            <strong>
+                                <?php echo esc_html($variant_name); ?>
+                                <?php if ($is_deleted) : ?>
+                                    <span class="gicapi-deleted-status"> (<?php _e('Deleted', 'gift-i-card'); ?>)</span>
+                                <?php endif; ?>
+                            </strong>
                             <div class="row-actions">
-                                <span class="edit"><a href="#" class="edit-mapping" data-variant-id="<?php echo esc_attr($variant_id); ?>" data-variant-name="<?php echo esc_attr($variant_name); ?>"><?php _e('Map Product', 'gift-i-card'); ?></a></span>
+                                <span class="edit">
+                                    <a href="#" class="edit-mapping"
+                                        data-variant-id="<?php echo esc_attr($variant_id); ?>"
+                                        data-variant-name="<?php echo esc_attr($variant_name); ?>"
+                                        <?php if ($is_deleted) echo 'style="pointer-events:none; opacity:0.5;" title="' . esc_attr__('Cannot map a deleted variant', 'gift-i-card') . '"'; ?>>
+                                        <?php _e('Map Product', 'gift-i-card'); ?>
+                                    </a>
+                                </span>
                             </div>
                             <button type="button" class="toggle-row"><span class="screen-reader-text"><?php _e('Show more details'); ?></span></button>
                         </td>

@@ -56,8 +56,9 @@ $total_categories = wp_count_posts('gic_cat')->publish;
                     $category_count = get_post_meta($category_id, '_gicapi_category_count', true);
                     $category_thumbnail = get_post_meta($category_id, '_gicapi_category_thumbnail', true);
                     $products_page_url = add_query_arg('category', $category_id, menu_page_url($plugin_name . '-products', false));
+                    $is_deleted = get_post_meta($category_id, '_gicapi_is_deleted', true) === 'true';
             ?>
-                    <tr>
+                    <tr class="<?php if ($is_deleted) echo 'gicapi-item-deleted'; ?>">
                         <td class="column-thumbnail">
                             <?php if ($category_thumbnail) : ?>
                                 <img src="<?php echo esc_url($category_thumbnail); ?>" alt="<?php echo esc_attr($category_name); ?>" width="40" height="40" style="object-fit: contain;">
@@ -68,9 +69,12 @@ $total_categories = wp_count_posts('gic_cat')->publish;
                                 <a class="row-title" href="<?php echo esc_url($products_page_url); ?>">
                                     <?php echo esc_html($category_name); ?>
                                 </a>
+                                <?php if ($is_deleted) : ?>
+                                    <span class="gicapi-deleted-status"> (<?php _e('Deleted', 'gift-i-card'); ?>)</span>
+                                <?php endif; ?>
                             </strong>
                             <div class="row-actions">
-                                <span class="view"><a href="<?php echo esc_url($products_page_url); ?>"><?php _e('View Products', 'gift-i-card'); ?></a></span>
+                                <span class="view"><a href="<?php echo esc_url($products_page_url); ?>" <?php if ($is_deleted) echo 'style="pointer-events:none; opacity:0.5;"'; ?>><?php _e('View Products', 'gift-i-card'); ?></a></span>
                             </div>
                             <button type="button" class="toggle-row"><span class="screen-reader-text"><?php _e('Show more details'); ?></span></button>
                         </td>
