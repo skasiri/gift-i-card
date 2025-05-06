@@ -39,8 +39,8 @@ class GICAPI_Admin
     public function add_plugin_admin_menu()
     {
         add_menu_page(
-            __('Gift Card Settings', 'gift-i-card'),
-            __('Gift Card', 'gift-i-card'),
+            __('Gift-i-Card Settings', 'gift-i-card'),
+            __('Gift-i-Card', 'gift-i-card'),
             'manage_options',
             $this->plugin_name,
             array($this, 'display_plugin_setup_page'),

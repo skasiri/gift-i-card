@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: Gift Card
+ * Plugin Name: Gift-i-Card
  * Plugin URI: https://example.com/gift-card
  * Description: A plugin to integrate WooCommerce with a gift card service
  * Version: 1.0.0
