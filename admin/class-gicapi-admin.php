@@ -157,55 +157,20 @@ class GICAPI_Admin
 
     public function display_plugin_products_page()
     {
-        global $wpdb;
+        // Get current view
+        $category_id = isset($_GET['category']) ? absint($_GET['category']) : 0;
+        $product_id = isset($_GET['product']) ? absint($_GET['product']) : 0;
 
-        // بررسی وجود محصولات
-        $products_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'gic_prod'");
+        // Pass plugin name to views
+        $plugin_name = $this->plugin_name;
 
-        if ($products_count == 0) {
-            $api = new GICAPI_API();
-            $response = $api->get_categories();
-
-            if ($response && is_array($response)) {
-                foreach ($response as $category) {
-                    // ایجاد دسته‌بندی
-                    $cat_id = wp_insert_post(array(
-                        'post_title' => $category['name'],
-                        'post_type' => 'gic_cat',
-                        'post_status' => 'publish',
-                        'post_content' => $category['permalink']
-                    ));
-
-                    if ($cat_id) {
-                        // ذخیره مشخصات دسته‌بندی
-                        update_post_meta($cat_id, '_gicapi_category_sku', $category['sku']);
-                        update_post_meta($cat_id, '_gicapi_category_count', $category['count']);
-                        update_post_meta($cat_id, '_gicapi_category_thumbnail', $category['thumbnail']);
-
-                        // دریافت محصولات دسته‌بندی
-                        $products_response = $api->get_products($category['sku']);
-                        if ($products_response && is_array($products_response)) {
-                            foreach ($products_response as $product) {
-                                $post_id = wp_insert_post(array(
-                                    'post_title' => $product['name'],
-                                    'post_type' => 'gic_prod',
-                                    'post_status' => 'publish'
-                                ));
-
-                                if ($post_id) {
-                                    // ذخیره مشخصات محصول
-                                    update_post_meta($post_id, '_gicapi_product_sku', $product['sku']);
-                                    update_post_meta($post_id, '_gicapi_product_price', $product['price']);
-                                    update_post_meta($post_id, '_gicapi_product_stock', $product['stock']);
-                                    update_post_meta($post_id, '_gicapi_product_category', $cat_id);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        // Load appropriate view
+        if ($product_id) {
+            include_once plugin_dir_path(__FILE__) . 'partials/gicapi-variants-display.php';
+        } elseif ($category_id) {
+            include_once plugin_dir_path(__FILE__) . 'partials/gicapi-products-display.php';
+        } else {
+            include_once plugin_dir_path(__FILE__) . 'partials/gicapi-categories-display.php';
         }
-
-        include_once 'partials/gicapi-products-display.php';
     }
 }

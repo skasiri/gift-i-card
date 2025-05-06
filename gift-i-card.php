@@ -118,4 +118,5 @@ function run_gicapi()
     $plugin->run();
 }
 
+// Initialize the plugin
 run_gicapi();
