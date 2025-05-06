@@ -125,11 +125,17 @@ class GICAPI_API
             )
         );
 
+        $url = $this->base_url . $endpoint;
+
         if (!empty($body)) {
-            $args['body'] = json_encode($body);
+            if (strtoupper($method) === 'GET') {
+                $url = add_query_arg($body, $url);
+            } else {
+                $args['body'] = json_encode($body);
+            }
         }
 
-        $response = wp_remote_request($this->base_url . $endpoint, $args);
+        $response = wp_remote_request($url, $args);
 
         if (is_wp_error($response)) {
             return false;

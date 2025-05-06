@@ -315,6 +315,7 @@ class GICAPI_Admin
             }
         }
 
+        // echo 'category_id: ' . $category_id . '<br>';
         // Get products if category selected OR update action was triggered
         if ($category_id && !$product_id) {
             $category = get_post($category_id);
@@ -334,7 +335,9 @@ class GICAPI_Admin
 
                 if (empty($products)) {
                     // Fetch all products for this category initially
+                    // echo 'category_sku: ' . $category_sku . '<br>';
                     $response = $api->get_products($category_sku, 1, 50); // Request a large page size
+                    // echo 'response: ' . json_encode($response) . '<br>';
                     if ($response && isset($response['products']) && is_array($response['products'])) {
                         foreach ($response['products'] as $product) { // Iterate over the 'products' array
                             $post_id = wp_insert_post(array(
