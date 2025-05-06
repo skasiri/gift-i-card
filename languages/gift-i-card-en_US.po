@@ -1,0 +1,20 @@
+\
+msgid ""
+msgstr ""
+"Project-Id-Version: Gift-i-Card 1.0.0\\n"
+"Report-Msgid-Bugs-To: https://example.com/gift-card/issues\\n"
+"POT-Creation-Date: <?php echo date('Y-m-d H:i:sP'); ?>\\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"
+"Last-Translator: Your Name <you@example.com>\\n"
+"Language-Team: English <en@li.org>\\n"
+"Language: en_US\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"X-Generator: Poedit 3.0.1\\n"
+"X-Domain: gift-i-card\\n"
+""
+
+# Example translation entry
+# msgid "Hello World"
+# msgstr "Hello World" 

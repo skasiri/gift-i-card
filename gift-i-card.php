@@ -50,7 +50,7 @@ if (!class_exists('GICAPI')) {
             $this->version = GICAPI_VERSION;
 
             $this->load_dependencies();
-            $this->set_locale();
+            add_action('plugins_loaded', array($this, 'set_locale'));
             $this->define_admin_hooks();
             $this->define_public_hooks();
         }
@@ -65,7 +65,7 @@ if (!class_exists('GICAPI')) {
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-jwt.php';
         }
 
-        private function set_locale()
+        public function set_locale()
         {
             load_plugin_textdomain(
                 'gift-i-card',
