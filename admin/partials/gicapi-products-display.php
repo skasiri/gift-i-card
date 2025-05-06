@@ -26,7 +26,7 @@ $args = array(
 if ($selected_category) {
     $args['meta_query'] = array(
         array(
-            'key' => 'category_sku',
+            'key' => '_gicapi_product_category',
             'value' => $selected_category
         )
     );
@@ -36,20 +36,18 @@ $products = get_posts($args);
 ?>
 
 <div class="wrap">
-    <h1><?php _e('Gift Card Products', 'gift-i-card'); ?></h1>
+    <h1><?php _e('Gift-i-Card Products', 'gift-i-card'); ?></h1>
 
     <div class="tablenav top">
         <div class="alignleft actions">
             <select name="category" id="category-filter">
                 <option value=""><?php _e('All Categories', 'gift-i-card'); ?></option>
                 <?php foreach ($categories as $category): ?>
-                    <option value="<?php echo esc_attr(get_post_meta($category->ID, 'sku', true)); ?>" <?php selected($selected_category, get_post_meta($category->ID, 'sku', true)); ?>>
+                    <option value="<?php echo esc_attr($category->ID); ?>" <?php selected($selected_category, $category->ID); ?>>
                         <?php echo esc_html($category->post_title); ?>
                     </option>
                 <?php endforeach; ?>
             </select>
-            <button class="button" id="sync-categories"><?php _e('Sync Categories', 'gift-i-card'); ?></button>
-            <button class="button" id="sync-products"><?php _e('Sync Products', 'gift-i-card'); ?></button>
         </div>
     </div>
 
@@ -58,51 +56,30 @@ $products = get_posts($args);
             <tr>
                 <th><?php _e('Category', 'gift-i-card'); ?></th>
                 <th><?php _e('Product', 'gift-i-card'); ?></th>
-                <th><?php _e('Variant', 'gift-i-card'); ?></th>
                 <th><?php _e('Price', 'gift-i-card'); ?></th>
-                <th><?php _e('Stock Status', 'gift-i-card'); ?></th>
+                <th><?php _e('Stock', 'gift-i-card'); ?></th>
                 <th><?php _e('Actions', 'gift-i-card'); ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($products as $product): ?>
                 <?php
-                $variants = get_posts(array(
-                    'post_type' => 'gic_var',
-                    'meta_key' => 'product_sku',
-                    'meta_value' => get_post_meta($product->ID, 'sku', true),
-                    'posts_per_page' => -1
-                ));
-
-                foreach ($variants as $variant):
-                    $category_sku = get_post_meta($product->ID, 'category_sku', true);
-                    $category = get_posts(array(
-                        'post_type' => 'gic_cat',
-                        'meta_key' => 'sku',
-                        'meta_value' => $category_sku,
-                        'posts_per_page' => 1
-                    ));
-                    $category_name = !empty($category) ? $category[0]->post_title : '';
+                $category_id = get_post_meta($product->ID, '_gicapi_product_category', true);
+                $category = get_post($category_id);
+                $price = get_post_meta($product->ID, '_gicapi_product_price', true);
+                $stock = get_post_meta($product->ID, '_gicapi_product_stock', true);
                 ?>
-                    <tr>
-                        <td><?php echo esc_html($category_name); ?></td>
-                        <td><?php echo esc_html($product->post_title); ?></td>
-                        <td><?php echo esc_html($variant->post_title); ?></td>
-                        <td>
-                            <?php
-                            $price = get_post_meta($variant->ID, 'price', true);
-                            $currency = get_post_meta($variant->ID, 'price_currency', true);
-                            echo esc_html($price . ' ' . $currency);
-                            ?>
-                        </td>
-                        <td><?php echo esc_html(get_post_meta($variant->ID, 'stock_status', true)); ?></td>
-                        <td>
-                            <button class="button map-product" data-variant-sku="<?php echo esc_attr(get_post_meta($variant->ID, 'sku', true)); ?>">
-                                <?php _e('Map to WooCommerce', 'gift-i-card'); ?>
-                            </button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+                <tr>
+                    <td><?php echo esc_html($category ? $category->post_title : ''); ?></td>
+                    <td><?php echo esc_html($product->post_title); ?></td>
+                    <td><?php echo esc_html(number_format($price, 0, '.', ',')); ?></td>
+                    <td><?php echo esc_html($stock); ?></td>
+                    <td>
+                        <button class="button map-product" data-product-id="<?php echo esc_attr($product->ID); ?>">
+                            <?php _e('Map to WooCommerce', 'gift-i-card'); ?>
+                        </button>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -142,8 +119,8 @@ $products = get_posts($args);
                 ));
 
                 foreach ($wc_products as $wc_product):
-                    $mapped_variant = get_post_meta($wc_product->ID, '_gic_variant_sku', true);
-                    if (!$mapped_variant):
+                    $mapped_product = get_post_meta($wc_product->ID, '_gicapi_product_id', true);
+                    if (!$mapped_product):
                 ?>
                         <option value="<?php echo esc_attr($wc_product->ID); ?>">
                             <?php echo esc_html($wc_product->post_title); ?>
@@ -154,7 +131,7 @@ $products = get_posts($args);
                 ?>
             </select>
         </p>
-        <input type="hidden" name="variant_sku" id="variant-sku">
+        <input type="hidden" name="product_id" id="product-id">
     </form>
 </div>
 
@@ -167,50 +144,12 @@ $products = get_posts($args);
             window.location.href = url.toString();
         });
 
-        // Sync categories
-        $('#sync-categories').on('click', function() {
-            var $button = $(this);
-            $button.prop('disabled', true).text('<?php _e('Syncing...', 'gift-i-card'); ?>');
-
-            $.post(ajaxurl, {
-                action: 'gicapi_sync_categories',
-                nonce: '<?php echo wp_create_nonce('gicapi_sync_categories'); ?>'
-            }, function(response) {
-                if (response.success) {
-                    location.reload();
-                } else {
-                    alert(response.data);
-                }
-            }).always(function() {
-                $button.prop('disabled', false).text('<?php _e('Sync Categories', 'gift-i-card'); ?>');
-            });
-        });
-
-        // Sync products
-        $('#sync-products').on('click', function() {
-            var $button = $(this);
-            $button.prop('disabled', true).text('<?php _e('Syncing...', 'gift-i-card'); ?>');
-
-            $.post(ajaxurl, {
-                action: 'gicapi_sync_products',
-                nonce: '<?php echo wp_create_nonce('gicapi_sync_products'); ?>'
-            }, function(response) {
-                if (response.success) {
-                    location.reload();
-                } else {
-                    alert(response.data);
-                }
-            }).always(function() {
-                $button.prop('disabled', false).text('<?php _e('Sync Products', 'gift-i-card'); ?>');
-            });
-        });
-
         // Map product
         $('.map-product').on('click', function() {
             var $button = $(this);
-            var variantSku = $button.data('variant-sku');
+            var productId = $button.data('product-id');
 
-            $('#variant-sku').val(variantSku);
+            $('#product-id').val(productId);
             $('#map-product-dialog').dialog({
                 title: '<?php _e('Map to WooCommerce', 'gift-i-card'); ?>',
                 modal: true,
@@ -230,7 +169,7 @@ $products = get_posts($args);
                             action: 'gicapi_map_product',
                             nonce: '<?php echo wp_create_nonce('gicapi_map_product'); ?>',
                             wc_product_id: $select.val(),
-                            gic_variant_sku: $('#variant-sku').val()
+                            gic_product_id: $('#product-id').val()
                         }, function(response) {
                             if (response.success) {
                                 location.reload();
