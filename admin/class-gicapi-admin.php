@@ -157,12 +157,163 @@ class GICAPI_Admin
 
     public function display_plugin_products_page()
     {
-        // Get current view
+        // Handle update actions first
+        $action = isset($_GET['action']) ? sanitize_key($_GET['action']) : '';
+        $nonce = isset($_GET['_wpnonce']) ? sanitize_text_field($_GET['_wpnonce']) : '';
         $category_id = isset($_GET['category']) ? absint($_GET['category']) : 0;
         $product_id = isset($_GET['product']) ? absint($_GET['product']) : 0;
 
+        $api = new GICAPI_API();
+
+        if ($action && $nonce && wp_verify_nonce($nonce, 'gicapi_update_data')) {
+            $redirect_url = remove_query_arg(array('action', '_wpnonce'));
+
+            switch ($action) {
+                case 'update_categories':
+                    $this->delete_custom_posts('gic_var');
+                    $this->delete_custom_posts('gic_prod');
+                    $this->delete_custom_posts('gic_cat');
+                    // Fetch and insert logic will run below
+                    wp_safe_redirect($redirect_url);
+                    exit;
+
+                case 'update_products':
+                    if ($category_id) {
+                        $this->delete_custom_posts('gic_var', '_gicapi_variant_product', $this->get_product_ids_by_category($category_id));
+                        $this->delete_custom_posts('gic_prod', '_gicapi_product_category', $category_id);
+                        // Fetch and insert logic will run below
+                        wp_safe_redirect($redirect_url);
+                        exit;
+                    }
+                    break;
+
+                case 'update_variants':
+                    if ($product_id) {
+                        $this->delete_custom_posts('gic_var', '_gicapi_variant_product', $product_id);
+                        // Fetch and insert logic will run below
+                        wp_safe_redirect($redirect_url);
+                        exit;
+                    }
+                    break;
+            }
+        }
+
+        // Get current view (moved down)
+        // $category_id = isset($_GET['category']) ? absint($_GET['category']) : 0;
+        // $product_id = isset($_GET['product']) ? absint($_GET['product']) : 0;
+
         // Pass plugin name to views
         $plugin_name = $this->plugin_name;
+
+        // Initialize API (moved up)
+        // $api = new GICAPI_API();
+
+        // Get categories if not exists OR update action was triggered
+        if (!$category_id) {
+            $categories = get_posts(array(
+                'post_type' => 'gic_cat',
+                'posts_per_page' => -1
+            ));
+
+            if (empty($categories)) {
+                $response = $api->get_categories();
+                if ($response && is_array($response)) {
+                    foreach ($response as $category) {
+                        $cat_id = wp_insert_post(array(
+                            'post_title' => $category['name'],
+                            'post_type' => 'gic_cat',
+                            'post_status' => 'publish'
+                        ));
+
+                        if ($cat_id) {
+                            update_post_meta($cat_id, '_gicapi_category_sku', $category['sku']);
+                            update_post_meta($cat_id, '_gicapi_category_count', $category['count']);
+                            update_post_meta($cat_id, '_gicapi_category_permalink', $category['permalink']);
+                            update_post_meta($cat_id, '_gicapi_category_thumbnail', $category['thumbnail']);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Get products if category selected OR update action was triggered
+        if ($category_id && !$product_id) {
+            $category = get_post($category_id);
+            if ($category) {
+                $category_sku = get_post_meta($category->ID, '_gicapi_category_sku', true);
+                $products = get_posts(array(
+                    'post_type' => 'gic_prod',
+                    'posts_per_page' => -1,
+                    'meta_query' => array(
+                        array(
+                            'key' => '_gicapi_product_category',
+                            'value' => $category_id
+                        )
+                    )
+                ));
+
+                if (empty($products)) {
+                    $response = $api->get_products($category_sku);
+                    if ($response && is_array($response)) {
+                        foreach ($response as $product) {
+                            $post_id = wp_insert_post(array(
+                                'post_title' => $product['name'],
+                                'post_type' => 'gic_prod',
+                                'post_status' => 'publish'
+                            ));
+
+                            if ($post_id) {
+                                update_post_meta($post_id, '_gicapi_product_sku', $product['sku']);
+                                update_post_meta($post_id, '_gicapi_product_url', $product['url']);
+                                update_post_meta($post_id, '_gicapi_product_image_url', $product['image_url']);
+                                update_post_meta($post_id, '_gicapi_product_variant_count', $product['variant_count']);
+                                update_post_meta($post_id, '_gicapi_product_category', $category_id);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Get variants if product selected OR update action was triggered
+        if ($product_id) {
+            $product = get_post($product_id);
+            if ($product) {
+                $product_sku = get_post_meta($product->ID, '_gicapi_product_sku', true);
+                $variants = get_posts(array(
+                    'post_type' => 'gic_var',
+                    'posts_per_page' => -1,
+                    'meta_query' => array(
+                        array(
+                            'key' => '_gicapi_variant_product',
+                            'value' => $product_id
+                        )
+                    )
+                ));
+
+                if (empty($variants)) {
+                    $response = $api->get_variants($product_sku);
+                    if ($response && is_array($response)) {
+                        foreach ($response as $variant) {
+                            $post_id = wp_insert_post(array(
+                                'post_title' => $variant['name'],
+                                'post_type' => 'gic_var',
+                                'post_status' => 'publish'
+                            ));
+
+                            if ($post_id) {
+                                update_post_meta($post_id, '_gicapi_variant_sku', $variant['sku']);
+                                update_post_meta($post_id, '_gicapi_variant_price', $variant['price']);
+                                update_post_meta($post_id, '_gicapi_variant_value', $variant['value']);
+                                update_post_meta($post_id, '_gicapi_variant_max_order', $variant['max_order']);
+                                update_post_meta($post_id, '_gicapi_variant_stock_status', $variant['stock_status']);
+                                update_post_meta($post_id, '_gicapi_variant_product', $product_id);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         // Load appropriate view
         if ($product_id) {
@@ -172,5 +323,63 @@ class GICAPI_Admin
         } else {
             include_once plugin_dir_path(__FILE__) . 'partials/gicapi-categories-display.php';
         }
+    }
+
+    /**
+     * Helper function to delete custom posts based on post type and optional meta query.
+     *
+     * @param string $post_type Post type to delete.
+     * @param string|null $meta_key Meta key for filtering (optional).
+     * @param mixed|null $meta_value Meta value or array of values for filtering (optional).
+     */
+    private function delete_custom_posts($post_type, $meta_key = null, $meta_value = null)
+    {
+        $args = array(
+            'post_type' => $post_type,
+            'posts_per_page' => -1,
+            'post_status' => 'any', // Include trashed posts if any
+            'fields' => 'ids', // Only get IDs for efficiency
+        );
+
+        if ($meta_key && $meta_value !== null) {
+            $args['meta_query'] = array(
+                array(
+                    'key' => $meta_key,
+                    'value' => $meta_value,
+                    'compare' => is_array($meta_value) ? 'IN' : '=',
+                )
+            );
+        }
+
+        $post_ids = get_posts($args);
+
+        if (!empty($post_ids)) {
+            foreach ($post_ids as $post_id) {
+                wp_delete_post($post_id, true); // Force delete
+            }
+        }
+    }
+
+    /**
+     * Helper function to get product IDs based on category ID.
+     *
+     * @param int $category_id The category post ID.
+     * @return array Array of product post IDs.
+     */
+    private function get_product_ids_by_category($category_id)
+    {
+        $args = array(
+            'post_type' => 'gic_prod',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'meta_query' => array(
+                array(
+                    'key' => '_gicapi_product_category',
+                    'value' => $category_id,
+                    'compare' => '=',
+                )
+            )
+        );
+        return get_posts($args);
     }
 }

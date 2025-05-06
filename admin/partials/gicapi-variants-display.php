@@ -1,155 +1,148 @@
 <?php
+
+/**
+ * Displays the variants table for a selected product.
+ */
+
+// Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
 }
 
-// Get product ID
+$category_id = isset($_GET['category']) ? absint($_GET['category']) : 0;
 $product_id = isset($_GET['product']) ? absint($_GET['product']) : 0;
 
-// Get search query
-$search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+$product = $product_id ? get_post($product_id) : null;
+$product_name = $product ? $product->post_title : __('Unknown Product', 'gift-i-card');
 
-// Get current page
-$paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
-$per_page = 20;
+$category = $category_id ? get_post($category_id) : null;
+$category_name = $category ? $category->post_title : __('Unknown Category', 'gift-i-card');
 
-// Get variants with search and pagination
-$args = array(
-    'post_type' => 'gic_var',
-    'posts_per_page' => $per_page,
-    'paged' => $paged,
-    'orderby' => 'title',
-    'order' => 'ASC',
-    'meta_query' => array(
-        array(
-            'key' => '_gicapi_variant_product',
-            'value' => $product_id
-        )
-    )
-);
+$products_page_url = add_query_arg('category', $category_id, menu_page_url($plugin_name . '-products', false));
+$categories_page_url = menu_page_url($plugin_name . '-products', false);
 
-if ($search) {
-    $args['s'] = $search;
-}
-
-$variants = get_posts($args);
-$total_variants = wp_count_posts('gic_var')->publish;
 ?>
+<div class="wrap gicapi-admin-page">
+    <h1>
+        <a href="<?php echo esc_url($categories_page_url); ?>"><?php echo esc_html(get_admin_page_title()); ?></a> &raquo;
+        <a href="<?php echo esc_url($products_page_url); ?>"><?php echo esc_html($category_name); ?></a> &raquo;
+        <?php echo esc_html($product_name); ?> - <?php _e('Variants', 'gift-i-card'); ?>
+    </h1>
 
-<div class="wrap">
-    <h1><?php _e('Gift-i-Card Variants', 'gift-i-card'); ?></h1>
-
-    <!-- Back to Products -->
-    <div class="tablenav top">
-        <div class="alignleft actions">
-            <a href="<?php echo esc_url(remove_query_arg('product')); ?>" class="button">
-                <?php _e('Back to Products', 'gift-i-card'); ?>
-            </a>
-        </div>
+    <div class="gicapi-toolbar">
+        <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('action', 'update_variants'), 'gicapi_update_data')); ?>" class="button button-secondary">
+            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Variants from API', 'gift-i-card'); ?>
+        </a>
+        <!-- Add search form here later -->
     </div>
 
-    <!-- Search Box -->
-    <div class="tablenav top">
-        <div class="alignleft actions">
-            <form method="get">
-                <input type="hidden" name="page" value="gicapi-products">
-                <input type="hidden" name="category" value="<?php echo esc_attr($_GET['category']); ?>">
-                <input type="hidden" name="product" value="<?php echo esc_attr($product_id); ?>">
-                <input type="search" name="s" value="<?php echo esc_attr($search); ?>" placeholder="<?php _e('Search variants...', 'gift-i-card'); ?>">
-                <input type="submit" class="button" value="<?php _e('Search', 'gift-i-card'); ?>">
-            </form>
-        </div>
-    </div>
-
-    <!-- Variants Table -->
-    <table class="wp-list-table widefat fixed striped">
+    <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
             <tr>
-                <th><?php _e('Name', 'gift-i-card'); ?></th>
-                <th><?php _e('SKU', 'gift-i-card'); ?></th>
-                <th><?php _e('Price', 'gift-i-card'); ?></th>
-                <th><?php _e('Value', 'gift-i-card'); ?></th>
-                <th><?php _e('Max Order', 'gift-i-card'); ?></th>
-                <th><?php _e('Stock Status', 'gift-i-card'); ?></th>
-                <th><?php _e('Actions', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Price', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Value', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Max Order', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Stock Status', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Mapped WC Product', 'gift-i-card'); ?></th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($variants as $variant): ?>
-                <?php
-                $sku = get_post_meta($variant->ID, '_gicapi_variant_sku', true);
-                $price = get_post_meta($variant->ID, '_gicapi_variant_price', true);
-                $value = get_post_meta($variant->ID, '_gicapi_variant_value', true);
-                $max_order = get_post_meta($variant->ID, '_gicapi_variant_max_order', true);
-                $stock_status = get_post_meta($variant->ID, '_gicapi_variant_stock_status', true);
-                ?>
-                <tr>
-                    <td><?php echo esc_html($variant->post_title); ?></td>
-                    <td><?php echo esc_html($sku); ?></td>
-                    <td><?php echo esc_html(number_format($price, 0, '.', ',')); ?></td>
-                    <td><?php echo esc_html($value); ?></td>
-                    <td><?php echo esc_html($max_order); ?></td>
-                    <td><?php echo esc_html($stock_status); ?></td>
-                    <td>
-                        <button class="button map-variant" data-variant-id="<?php echo esc_attr($variant->ID); ?>">
-                            <?php _e('Map to WooCommerce', 'gift-i-card'); ?>
-                        </button>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div class="tablenav bottom">
-        <div class="tablenav-pages">
+        <tbody id="the-list">
             <?php
-            $pagination = paginate_links(array(
-                'base' => add_query_arg('paged', '%#%'),
-                'format' => '',
-                'prev_text' => __('&laquo;'),
-                'next_text' => __('&raquo;'),
-                'total' => ceil($total_variants / $per_page),
-                'current' => $paged
+            $variants = get_posts(array(
+                'post_type' => 'gic_var',
+                'posts_per_page' => -1, // Adjust later for pagination
+                'post_status' => 'publish',
+                'meta_query' => array(
+                    array(
+                        'key' => '_gicapi_variant_product',
+                        'value' => $product_id,
+                        'compare' => '='
+                    )
+                )
             ));
 
-            if ($pagination) {
-                echo '<div class="tablenav-pages">' . $pagination . '</div>';
-            }
+            if (!empty($variants)) :
+                foreach ($variants as $variant) :
+                    $variant_id = $variant->ID;
+                    $variant_name = $variant->post_title;
+                    $variant_sku = get_post_meta($variant_id, '_gicapi_variant_sku', true);
+                    $variant_price = get_post_meta($variant_id, '_gicapi_variant_price', true);
+                    $variant_value = get_post_meta($variant_id, '_gicapi_variant_value', true);
+                    $variant_max_order = get_post_meta($variant_id, '_gicapi_variant_max_order', true);
+                    $variant_stock_status = get_post_meta($variant_id, '_gicapi_variant_stock_status', true);
+                    $mapped_product_id = get_post_meta($variant_id, '_gicapi_mapped_wc_product_id', true);
+                    $mapped_product = $mapped_product_id ? wc_get_product($mapped_product_id) : null;
             ?>
+                    <tr>
+                        <td class="title column-title has-row-actions column-primary" data-colname="<?php _e('Name', 'gift-i-card'); ?>">
+                            <strong><?php echo esc_html($variant_name); ?></strong>
+                            <div class="row-actions">
+                                <span class="edit"><a href="#" class="edit-mapping" data-variant-id="<?php echo esc_attr($variant_id); ?>" data-variant-name="<?php echo esc_attr($variant_name); ?>"><?php _e('Map Product', 'gift-i-card'); ?></a></span>
+                            </div>
+                            <button type="button" class="toggle-row"><span class="screen-reader-text"><?php _e('Show more details'); ?></span></button>
+                        </td>
+                        <td data-colname="<?php _e('SKU', 'gift-i-card'); ?>"><?php echo esc_html($variant_sku); ?></td>
+                        <td data-colname="<?php _e('Price', 'gift-i-card'); ?>"><?php echo esc_html($variant_price); ?></td>
+                        <td data-colname="<?php _e('Value', 'gift-i-card'); ?>"><?php echo esc_html($variant_value); ?></td>
+                        <td data-colname="<?php _e('Max Order', 'gift-i-card'); ?>"><?php echo esc_html($variant_max_order); ?></td>
+                        <td data-colname="<?php _e('Stock Status', 'gift-i-card'); ?>">
+                            <span class="gicapi-stock-status-<?php echo esc_attr($variant_stock_status); ?>">
+                                <?php echo esc_html(ucfirst($variant_stock_status)); ?>
+                            </span>
+                        </td>
+                        <td data-colname="<?php _e('Mapped WC Product', 'gift-i-card'); ?>" id="mapped-product-<?php echo esc_attr($variant_id); ?>">
+                            <?php if ($mapped_product) : ?>
+                                <a href="<?php echo esc_url(get_edit_post_link($mapped_product_id)); ?>" target="_blank">
+                                    <?php echo esc_html($mapped_product->get_formatted_name()); ?>
+                                </a>
+                            <?php else : ?>
+                                <span class="gicapi-not-mapped"><?php _e('Not Mapped', 'gift-i-card'); ?></span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <tr>
+                    <td colspan="7"><?php _e('No variants found for this product. Try updating from API.', 'gift-i-card'); ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Price', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Value', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Max Order', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Stock Status', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Mapped WC Product', 'gift-i-card'); ?></th>
+            </tr>
+        </tfoot>
+    </table>
+    <!-- Add pagination controls here later -->
+
+    <!-- Modal for mapping -->
+    <div id="gicapi-mapping-modal" style="display:none;">
+        <div id="gicapi-mapping-modal-content">
+            <h2><?php _e('Map Gift-i-Card Variant to WooCommerce Product', 'gift-i-card'); ?></h2>
+            <p><?php _e('Mapping Variant:', 'gift-i-card'); ?> <strong id="modal-variant-name"></strong></p>
+            <input type="hidden" id="modal-variant-id">
+            <div>
+                <label for="wc-product-search"><?php _e('Search WooCommerce Products:', 'gift-i-card'); ?></label>
+                <select id="wc-product-search" style="width: 100%;" data-placeholder="<?php _e('Search for a product...', 'gift-i-card'); ?>"></select>
+            </div>
+            <div style="margin-top: 15px;">
+                <button id="save-mapping" class="button button-primary"><?php _e('Save Mapping', 'gift-i-card'); ?></button>
+                <button id="unmap-product" class="button button-secondary" style="display: none;"><?php _e('Unmap Product', 'gift-i-card'); ?></button>
+                <button id="close-modal" class="button button-secondary"><?php _e('Cancel', 'gift-i-card'); ?></button>
+                <span class="spinner"></span>
+            </div>
         </div>
     </div>
-</div>
+    <div id="gicapi-mapping-modal-overlay" style="display:none;"></div>
 
-<div id="map-variant-dialog" style="display: none;">
-    <form id="map-variant-form">
-        <p>
-            <label for="wc-product"><?php _e('WooCommerce Product:', 'gift-i-card'); ?></label>
-            <select name="wc_product_id" id="wc-product" required>
-                <option value=""><?php _e('Select a product', 'gift-i-card'); ?></option>
-                <?php
-                $wc_products = get_posts(array(
-                    'post_type' => 'product',
-                    'posts_per_page' => -1,
-                    'orderby' => 'title',
-                    'order' => 'ASC'
-                ));
-
-                foreach ($wc_products as $wc_product):
-                    $mapped_variant = get_post_meta($wc_product->ID, '_gicapi_variant_id', true);
-                    if (!$mapped_variant):
-                ?>
-                        <option value="<?php echo esc_attr($wc_product->ID); ?>">
-                            <?php echo esc_html($wc_product->post_title); ?>
-                        </option>
-                <?php
-                    endif;
-                endforeach;
-                ?>
-            </select>
-        </p>
-        <input type="hidden" name="variant_id" id="variant-id">
-    </form>
 </div>
 
 <script>

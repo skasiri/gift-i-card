@@ -27,81 +27,71 @@ $categories = get_posts($args);
 $total_categories = wp_count_posts('gic_cat')->publish;
 ?>
 
-<div class="wrap">
-    <h1><?php _e('Gift-i-Card Categories', 'gift-i-card'); ?></h1>
+<div class="wrap gicapi-admin-page">
+    <h1><?php echo esc_html(get_admin_page_title()); ?> - <?php _e('Categories', 'gift-i-card'); ?></h1>
 
-    <!-- Search Box -->
-    <div class="tablenav top">
-        <div class="alignleft actions">
-            <form method="get">
-                <input type="hidden" name="page" value="<?php echo esc_attr($plugin_name); ?>-products">
-                <input type="search" name="s" value="<?php echo esc_attr($search); ?>" placeholder="<?php _e('Search categories...', 'gift-i-card'); ?>">
-                <input type="submit" class="button" value="<?php _e('Search', 'gift-i-card'); ?>">
-            </form>
-        </div>
+    <div class="gicapi-toolbar">
+        <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('action', 'update_categories'), 'gicapi_update_data')); ?>" class="button button-secondary">
+            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Categories from API', 'gift-i-card'); ?>
+        </a>
+        <!-- Add search form here later -->
     </div>
 
-    <!-- Categories Table -->
-    <table class="wp-list-table widefat fixed striped">
+    <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
             <tr>
-                <th><?php _e('SKU', 'gift-i-card'); ?></th>
-                <th><?php _e('Name', 'gift-i-card'); ?></th>
-                <th><?php _e('Count', 'gift-i-card'); ?></th>
-                <th><?php _e('Permalink', 'gift-i-card'); ?></th>
-                <th><?php _e('Thumbnail', 'gift-i-card'); ?></th>
-                <th><?php _e('Actions', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-thumbnail"><?php _e('Thumbnail', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Product Count', 'gift-i-card'); ?></th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($categories as $category): ?>
-                <?php
-                $sku = get_post_meta($category->ID, '_gicapi_category_sku', true);
-                $count = get_post_meta($category->ID, '_gicapi_category_count', true);
-                $permalink = get_post_meta($category->ID, '_gicapi_category_permalink', true);
-                $thumbnail = get_post_meta($category->ID, '_gicapi_category_thumbnail', true);
-                ?>
-                <tr>
-                    <td><?php echo esc_html($sku); ?></td>
-                    <td><?php echo esc_html($category->post_title); ?></td>
-                    <td><?php echo esc_html($count); ?></td>
-                    <td>
-                        <a href="<?php echo esc_url($permalink); ?>" target="_blank">
-                            <?php echo esc_html($permalink); ?>
-                        </a>
-                    </td>
-                    <td>
-                        <?php if ($thumbnail): ?>
-                            <img src="<?php echo esc_url($thumbnail); ?>" alt="" style="max-width: 100px;">
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <a href="<?php echo esc_url(add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category->ID))); ?>" class="button">
-                            <?php _e('View Products', 'gift-i-card'); ?>
-                        </a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div class="tablenav bottom">
-        <div class="tablenav-pages">
+        <tbody id="the-list">
             <?php
-            $pagination = paginate_links(array(
-                'base' => add_query_arg('paged', '%#%'),
-                'format' => '',
-                'prev_text' => __('&laquo;'),
-                'next_text' => __('&raquo;'),
-                'total' => ceil($total_categories / $per_page),
-                'current' => $paged
-            ));
-
-            if ($pagination) {
-                echo '<div class="tablenav-pages">' . $pagination . '</div>';
-            }
+            if (!empty($categories)) :
+                foreach ($categories as $category) :
+                    $category_id = $category->ID;
+                    $category_name = $category->post_title;
+                    $category_sku = get_post_meta($category_id, '_gicapi_category_sku', true);
+                    $category_count = get_post_meta($category_id, '_gicapi_category_count', true);
+                    $category_thumbnail = get_post_meta($category_id, '_gicapi_category_thumbnail', true);
+                    $products_page_url = add_query_arg('category', $category_id, menu_page_url($plugin_name . '-products', false));
             ?>
-        </div>
-    </div>
+                    <tr>
+                        <td class="column-thumbnail">
+                            <?php if ($category_thumbnail) : ?>
+                                <img src="<?php echo esc_url($category_thumbnail); ?>" alt="<?php echo esc_attr($category_name); ?>" width="40" height="40" style="object-fit: contain;">
+                            <?php endif; ?>
+                        </td>
+                        <td class="title column-title has-row-actions column-primary" data-colname="<?php _e('Name', 'gift-i-card'); ?>">
+                            <strong>
+                                <a class="row-title" href="<?php echo esc_url($products_page_url); ?>">
+                                    <?php echo esc_html($category_name); ?>
+                                </a>
+                            </strong>
+                            <div class="row-actions">
+                                <span class="view"><a href="<?php echo esc_url($products_page_url); ?>"><?php _e('View Products', 'gift-i-card'); ?></a></span>
+                            </div>
+                            <button type="button" class="toggle-row"><span class="screen-reader-text"><?php _e('Show more details'); ?></span></button>
+                        </td>
+                        <td data-colname="<?php _e('SKU', 'gift-i-card'); ?>"><?php echo esc_html($category_sku); ?></td>
+                        <td data-colname="<?php _e('Product Count', 'gift-i-card'); ?>"><?php echo esc_html($category_count); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <tr>
+                    <td colspan="4"><?php _e('No categories found. Try updating from API.', 'gift-i-card'); ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col" class="manage-column column-thumbnail"><?php _e('Thumbnail', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php _e('Product Count', 'gift-i-card'); ?></th>
+            </tr>
+        </tfoot>
+    </table>
+    <!-- Add pagination controls here later -->
 </div>
