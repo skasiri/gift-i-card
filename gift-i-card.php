@@ -80,6 +80,8 @@ if (!class_exists('GICAPI')) {
 
             add_action('admin_enqueue_scripts', array($plugin_admin, 'enqueue_styles'));
             add_action('admin_enqueue_scripts', array($plugin_admin, 'enqueue_scripts'));
+            add_action('admin_menu', array($plugin_admin, 'add_plugin_admin_menu'));
+            add_action('admin_init', array($plugin_admin, 'register_settings'));
         }
 
         private function define_public_hooks()

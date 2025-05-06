@@ -1,13 +1,52 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit;
-}
 
+/**
+ * The admin-specific functionality of the plugin.
+ *
+ * @link       https://gift-i-card.com
+ * @since      1.0.0
+ *
+ * @package    GICAPI
+ * @subpackage GICAPI/admin
+ */
+
+/**
+ * The admin-specific functionality of the plugin.
+ *
+ * Defines the plugin name, version, and two examples hooks for how to
+ * enqueue the admin-specific stylesheet and JavaScript.
+ *
+ * @package    GICAPI
+ * @subpackage GICAPI/admin
+ * @author     Gift-i-Card <info@gift-i-card.com>
+ */
 class GICAPI_Admin
 {
+    /**
+     * The ID of this plugin.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string    $plugin_name    The ID of this plugin.
+     */
     private $plugin_name;
+
+    /**
+     * The version of this plugin.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string    $version    The current version of this plugin.
+     */
     private $version;
 
+    /**
+     * Initialize the class and set its properties.
+     *
+     * @since    1.0.0
+     * @param      string    $plugin_name       The name of this plugin.
+     * @param      string    $version    The version of this plugin.
+     */
     public function __construct($plugin_name, $version)
     {
         $this->plugin_name = $plugin_name;
@@ -15,32 +54,44 @@ class GICAPI_Admin
 
         add_action('admin_menu', array($this, 'add_plugin_admin_menu'));
         add_action('admin_init', array($this, 'register_settings'));
-        add_action('wp_ajax_gicapi_test_connection', array($this, 'test_connection'));
-        add_action('wp_ajax_gicapi_sync_categories', array($this, 'sync_categories'));
-        add_action('wp_ajax_gicapi_sync_products', array($this, 'sync_products'));
-        add_action('wp_ajax_gicapi_map_product', array($this, 'map_product'));
-        add_action('wp_ajax_gicapi_unmap_product', array($this, 'unmap_product'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_styles'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('admin_notices', array($this, 'display_connection_status'));
     }
 
+    /**
+     * Register the stylesheets for the admin area.
+     *
+     * @since    1.0.0
+     */
     public function enqueue_styles()
     {
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/gicapi-admin.css', array(), $this->version, 'all');
     }
 
+    /**
+     * Register the JavaScript for the admin area.
+     *
+     * @since    1.0.0
+     */
     public function enqueue_scripts()
     {
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/gicapi-admin.js', array('jquery'), $this->version, false);
-        wp_localize_script($this->plugin_name, 'gicapi_ajax', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('gicapi_nonce')
-        ));
     }
 
     public function add_plugin_admin_menu()
     {
+        $api = new GICAPI_API();
+        $response = $api->get_balance();
+        $is_connected = ($response && isset($response['success']) && $response['success']);
+
+        $menu_title = $is_connected ?
+            'Gift-i-Card <span class="update-plugins count-1"><span class="update-count">LIVE</span></span>' :
+            'Gift-i-Card';
+
         add_menu_page(
-            __('Gift-i-Card Settings', 'gift-i-card'),
-            __('Gift-i-Card', 'gift-i-card'),
+            'Gift-i-Card Settings',
+            $menu_title,
             'manage_options',
             $this->plugin_name,
             array($this, 'display_plugin_setup_page'),
@@ -50,12 +101,29 @@ class GICAPI_Admin
 
         add_submenu_page(
             $this->plugin_name,
-            __('Products', 'gift-i-card'),
-            __('Products', 'gift-i-card'),
+            'Products',
+            'Products',
             'manage_options',
             $this->plugin_name . '-products',
             array($this, 'display_plugin_products_page')
         );
+    }
+
+    public function display_connection_status()
+    {
+        $api = new GICAPI_API();
+        $response = $api->get_balance();
+        $is_connected = ($response && isset($response['success']) && $response['success']);
+
+        if ($is_connected) {
+            echo '<div class="notice notice-success is-dismissible">
+                <p>Gift-i-Card API: <strong style="color: green;">Connected</strong></p>
+            </div>';
+        } else {
+            echo '<div class="notice notice-error is-dismissible">
+                <p>Gift-i-Card API: <strong style="color: red;">Disconnected</strong></p>
+            </div>';
+        }
     }
 
     public function register_settings()
@@ -78,256 +146,5 @@ class GICAPI_Admin
     public function display_plugin_products_page()
     {
         include_once 'partials/gicapi-products-display.php';
-    }
-
-    public function test_connection()
-    {
-        check_ajax_referer('gicapi_test_connection', 'nonce');
-
-        $base_url = isset($_POST['base_url']) ? sanitize_text_field($_POST['base_url']) : '';
-        $consumer_key = isset($_POST['consumer_key']) ? sanitize_text_field($_POST['consumer_key']) : '';
-        $consumer_secret = isset($_POST['consumer_secret']) ? sanitize_text_field($_POST['consumer_secret']) : '';
-
-        if (!$base_url || !$consumer_key || !$consumer_secret) {
-            wp_send_json_error(__('Missing required parameters', 'gift-i-card'));
-        }
-
-        $api = new GICAPI_API($base_url, $consumer_key, $consumer_secret);
-        $response = $api->test_connection();
-
-        if (is_wp_error($response)) {
-            wp_send_json_error($response->get_error_message());
-        }
-
-        wp_send_json_success(__('Connection successful!', 'gift-i-card'));
-    }
-
-    public function sync_categories()
-    {
-        check_ajax_referer('gicapi_sync_categories', 'nonce');
-
-        $base_url = get_option('gicapi_base_url');
-        $consumer_key = get_option('gicapi_consumer_key');
-        $consumer_secret = get_option('gicapi_consumer_secret');
-
-        if (!$base_url || !$consumer_key || !$consumer_secret) {
-            wp_send_json_error(__('API credentials not configured', 'gift-i-card'));
-        }
-
-        $api = new GICAPI_API($base_url, $consumer_key, $consumer_secret);
-        $response = $api->get_categories();
-
-        if (is_wp_error($response)) {
-            wp_send_json_error($response->get_error_message());
-        }
-
-        foreach ($response as $category) {
-            $existing = get_posts(array(
-                'post_type' => 'gic_cat',
-                'meta_key' => 'sku',
-                'meta_value' => $category['sku'],
-                'posts_per_page' => 1
-            ));
-
-            if (empty($existing)) {
-                $post_id = wp_insert_post(array(
-                    'post_type' => 'gic_cat',
-                    'post_title' => $category['name'],
-                    'post_status' => 'publish'
-                ));
-
-                if (!is_wp_error($post_id)) {
-                    update_post_meta($post_id, 'sku', $category['sku']);
-                }
-            } else {
-                $post_id = $existing[0]->ID;
-                wp_update_post(array(
-                    'ID' => $post_id,
-                    'post_title' => $category['name']
-                ));
-            }
-        }
-
-        wp_send_json_success(__('Categories synced successfully', 'gift-i-card'));
-    }
-
-    public function sync_products()
-    {
-        check_ajax_referer('gicapi_sync_products', 'nonce');
-
-        $base_url = get_option('gicapi_base_url');
-        $consumer_key = get_option('gicapi_consumer_key');
-        $consumer_secret = get_option('gicapi_consumer_secret');
-
-        if (!$base_url || !$consumer_key || !$consumer_secret) {
-            wp_send_json_error(__('API credentials not configured', 'gift-i-card'));
-        }
-
-        $api = new GICAPI_API($base_url, $consumer_key, $consumer_secret);
-        $response = $api->get_products();
-
-        if (is_wp_error($response)) {
-            wp_send_json_error($response->get_error_message());
-        }
-
-        foreach ($response as $product) {
-            $existing = get_posts(array(
-                'post_type' => 'gic_prod',
-                'meta_key' => 'sku',
-                'meta_value' => $product['sku'],
-                'posts_per_page' => 1
-            ));
-
-            if (empty($existing)) {
-                $post_id = wp_insert_post(array(
-                    'post_type' => 'gic_prod',
-                    'post_title' => $product['name'],
-                    'post_status' => 'publish'
-                ));
-
-                if (!is_wp_error($post_id)) {
-                    update_post_meta($post_id, 'sku', $product['sku']);
-                    update_post_meta($post_id, 'category_sku', $product['category_sku']);
-                }
-            } else {
-                $post_id = $existing[0]->ID;
-                wp_update_post(array(
-                    'ID' => $post_id,
-                    'post_title' => $product['name']
-                ));
-                update_post_meta($post_id, 'category_sku', $product['category_sku']);
-            }
-
-            foreach ($product['variants'] as $variant) {
-                $existing = get_posts(array(
-                    'post_type' => 'gic_var',
-                    'meta_key' => 'sku',
-                    'meta_value' => $variant['sku'],
-                    'posts_per_page' => 1
-                ));
-
-                if (empty($existing)) {
-                    $variant_id = wp_insert_post(array(
-                        'post_type' => 'gic_var',
-                        'post_title' => $variant['name'],
-                        'post_status' => 'publish'
-                    ));
-
-                    if (!is_wp_error($variant_id)) {
-                        update_post_meta($variant_id, 'sku', $variant['sku']);
-                        update_post_meta($variant_id, 'product_sku', $product['sku']);
-                        update_post_meta($variant_id, 'price', $variant['price']);
-                        update_post_meta($variant_id, 'price_currency', $variant['price_currency']);
-                        update_post_meta($variant_id, 'value', $variant['value']);
-                        update_post_meta($variant_id, 'max_order_per_item', $variant['max_order_per_item']);
-                        update_post_meta($variant_id, 'stock_status', $variant['stock_status']);
-                    }
-                } else {
-                    $variant_id = $existing[0]->ID;
-                    wp_update_post(array(
-                        'ID' => $variant_id,
-                        'post_title' => $variant['name']
-                    ));
-                    update_post_meta($variant_id, 'price', $variant['price']);
-                    update_post_meta($variant_id, 'price_currency', $variant['price_currency']);
-                    update_post_meta($variant_id, 'value', $variant['value']);
-                    update_post_meta($variant_id, 'max_order_per_item', $variant['max_order_per_item']);
-                    update_post_meta($variant_id, 'stock_status', $variant['stock_status']);
-                }
-            }
-        }
-
-        wp_send_json_success(__('Products synced successfully', 'gift-i-card'));
-    }
-
-    public function map_product()
-    {
-        check_ajax_referer('gicapi_map_product', 'nonce');
-
-        $wc_product_id = isset($_POST['wc_product_id']) ? intval($_POST['wc_product_id']) : 0;
-        $gic_variant_sku = isset($_POST['gic_variant_sku']) ? sanitize_text_field($_POST['gic_variant_sku']) : '';
-
-        if (!$wc_product_id || !$gic_variant_sku) {
-            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
-        }
-
-        // Get variant data
-        $variant = get_posts(array(
-            'post_type' => 'gic_var',
-            'meta_key' => 'sku',
-            'meta_value' => $gic_variant_sku,
-            'posts_per_page' => 1
-        ));
-
-        if (empty($variant)) {
-            wp_send_json_error(__('Variant not found', 'gift-i-card'));
-        }
-
-        $variant = $variant[0];
-        $product_sku = get_post_meta($variant->ID, 'product_sku', true);
-        $product = get_posts(array(
-            'post_type' => 'gic_prod',
-            'meta_key' => 'sku',
-            'meta_value' => $product_sku,
-            'posts_per_page' => 1
-        ));
-
-        if (empty($product)) {
-            wp_send_json_error(__('Product not found', 'gift-i-card'));
-        }
-
-        $product = $product[0];
-        $category_sku = get_post_meta($product->ID, 'category_sku', true);
-        $category = get_posts(array(
-            'post_type' => 'gic_cat',
-            'meta_key' => 'sku',
-            'meta_value' => $category_sku,
-            'posts_per_page' => 1
-        ));
-
-        if (empty($category)) {
-            wp_send_json_error(__('Category not found', 'gift-i-card'));
-        }
-
-        // Save mapping data to product meta
-        update_post_meta($wc_product_id, '_gic_variant_sku', $gic_variant_sku);
-        update_post_meta($wc_product_id, '_gic_variant_name', $variant->post_title);
-        update_post_meta($wc_product_id, '_gic_product_sku', $product_sku);
-        update_post_meta($wc_product_id, '_gic_product_name', $product->post_title);
-        update_post_meta($wc_product_id, '_gic_category_sku', $category_sku);
-        update_post_meta($wc_product_id, '_gic_category_name', $category[0]->post_title);
-        update_post_meta($wc_product_id, '_gic_price', get_post_meta($variant->ID, 'price', true));
-        update_post_meta($wc_product_id, '_gic_price_currency', get_post_meta($variant->ID, 'price_currency', true));
-        update_post_meta($wc_product_id, '_gic_value', get_post_meta($variant->ID, 'value', true));
-        update_post_meta($wc_product_id, '_gic_max_order_per_item', get_post_meta($variant->ID, 'max_order_per_item', true));
-        update_post_meta($wc_product_id, '_gic_stock_status', get_post_meta($variant->ID, 'stock_status', true));
-
-        wp_send_json_success(__('Product mapped successfully', 'gift-i-card'));
-    }
-
-    public function unmap_product()
-    {
-        check_ajax_referer('gicapi_unmap_product', 'nonce');
-
-        $wc_product_id = isset($_POST['wc_product_id']) ? intval($_POST['wc_product_id']) : 0;
-
-        if (!$wc_product_id) {
-            wp_send_json_error(__('Invalid product ID', 'gift-i-card'));
-        }
-
-        // Remove all gift card meta data
-        delete_post_meta($wc_product_id, '_gic_variant_sku');
-        delete_post_meta($wc_product_id, '_gic_variant_name');
-        delete_post_meta($wc_product_id, '_gic_product_sku');
-        delete_post_meta($wc_product_id, '_gic_product_name');
-        delete_post_meta($wc_product_id, '_gic_category_sku');
-        delete_post_meta($wc_product_id, '_gic_category_name');
-        delete_post_meta($wc_product_id, '_gic_price');
-        delete_post_meta($wc_product_id, '_gic_price_currency');
-        delete_post_meta($wc_product_id, '_gic_value');
-        delete_post_meta($wc_product_id, '_gic_max_order_per_item');
-        delete_post_meta($wc_product_id, '_gic_stock_status');
-
-        wp_send_json_success(__('Product unmapped successfully', 'gift-i-card'));
     }
 }
