@@ -65,12 +65,12 @@ class GICAPI_API
                 return false;
             }
 
-            $body = json_decode(wp_remote_retrieve_body($response), true);
-            if (!isset($body['token'])) {
+            $headers = wp_remote_retrieve_headers($response);
+            if (!isset($headers['Authorization'])) {
                 return false;
             }
 
-            $token = $body['token'];
+            $token = $headers['Authorization'];
             set_transient('gicapi_token', $token, $this->jwt->get_token_expiry() - 300); // 5 minutes less than expiry
         }
 

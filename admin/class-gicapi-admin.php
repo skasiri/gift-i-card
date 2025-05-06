@@ -113,11 +113,14 @@ class GICAPI_Admin
     {
         $api = new GICAPI_API();
         $response = $api->get_balance();
-        $is_connected = ($response && isset($response['success']) && $response['success']);
+        // echo 'response: ' . json_encode($response);
+        $is_connected = ($response && isset($response['balance']) && $response['balance']);
 
         if ($is_connected) {
+            $balance = number_format($response['balance'], 0, '.', ',');
+            $currency = $response['currency'];
             echo '<div class="notice notice-success is-dismissible">
-                <p>Gift-i-Card API: <strong style="color: green;">Connected</strong></p>
+                <p>Gift-i-Card API: <strong style="color: green;">Connected</strong> | موجودی: <strong>' . $balance . ' ' . $currency . '</strong></p>
             </div>';
         } else {
             echo '<div class="notice notice-error is-dismissible">
