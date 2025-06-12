@@ -85,7 +85,9 @@ $category_name = !empty($category) ? $category[0]->post_title : __('Unknown Cate
                     $product_sku = get_post_meta($product_id, '_gicapi_product_sku', true);
                     $product_image_url = get_post_meta($product_id, '_gicapi_product_image_url', true);
                     $product_variant_count = get_post_meta($product_id, '_gicapi_product_variant_count', true);
-                    $variants_page_url = add_query_arg('product', $product_id);
+
+                    $variants_page_url = add_query_arg('product', $product_sku);
+
                     $is_deleted = get_post_meta($product_id, '_gicapi_is_deleted', true) === 'true';
             ?>
                     <tr class="<?php if ($is_deleted) echo 'gicapi-item-deleted'; ?>">

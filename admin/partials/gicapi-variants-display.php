@@ -9,16 +9,50 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$category_id = isset($_GET['category']) ? absint($_GET['category']) : 0;
-$product_id = isset($_GET['product']) ? absint($_GET['product']) : 0;
+$category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
+$product_sku = isset($_GET['product']) ? sanitize_text_field($_GET['product']) : '';
 
-$product = $product_id ? get_post($product_id) : null;
-$product_name = $product ? $product->post_title : __('Unknown Product', 'gift-i-card');
+// $product = $product_sku ? get_post($product_sku) : null;
+$product_args = array(
+    'post_type' => 'gic_prod',
+    'posts_per_page' => 1,
+    'meta_query' => array(
+        array(
+            'key' => '_gicapi_product_sku',
+            'value' => $product_sku,
+            'compare' => '='
+        )
+    )
+);
+$products = get_posts($product_args);
 
-$category = $category_id ? get_post($category_id) : null;
-$category_name = $category ? $category->post_title : __('Unknown Category', 'gift-i-card');
+if (empty($products)) {
+    echo '<div class="wrap gicapi-admin-page">';
+    echo '<h1>' . __('Product Not Found', 'gift-i-card') . '</h1>';
+    echo '<p>' . __('The product you are looking for does not exist.', 'gift-i-card') . '</p>';
+    echo '</div>';
+    return;
+}
 
-$products_page_url = add_query_arg('category', $category_id, menu_page_url($plugin_name . '-products', false));
+$product_name = $products ? $products[0]->post_title : __('Unknown Product', 'gift-i-card');
+
+$category_args = array(
+
+    'post_type' => 'gic_cat',
+    'posts_per_page' => 1,
+    'meta_query' => array(
+        array(
+            'key' => '_gicapi_category_sku',
+            'value' => $category_sku,
+            'compare' => '='
+        )
+    )
+);
+$categories = get_posts($category_args);
+
+$category_name = $categories ? $categories[0]->post_title : __('Unknown Category', 'gift-i-card');
+
+$products_page_url = add_query_arg('category', $category_sku, menu_page_url($plugin_name . '-products', false));
 $categories_page_url = menu_page_url($plugin_name . '-products', false);
 
 ?>
