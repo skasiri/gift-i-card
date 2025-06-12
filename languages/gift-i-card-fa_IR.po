@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-12 21:54+0330\n"
-"PO-Revision-Date: 2025-06-12 21:54+0330\n"
+"POT-Creation-Date: 2025-06-13 02:26+0330\n"
+"PO-Revision-Date: 2025-06-13 02:28+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -21,56 +21,60 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: admin/class-gicapi-admin.php:102
+#: admin/class-gicapi-admin.php:95
 msgid "Refreshing token..."
 msgstr "در حال نوسازی توکن..."
 
-#: admin/class-gicapi-admin.php:103
+#: admin/class-gicapi-admin.php:96
 msgid "An unknown error occurred."
 msgstr "خطای ناشناخته رخ داد."
 
-#: admin/class-gicapi-admin.php:104
+#: admin/class-gicapi-admin.php:97
 msgid "Error communicating with server: "
 msgstr "خطا در برقراری ارتباط با سرور:"
 
-#: admin/class-gicapi-admin.php:151
+#: admin/class-gicapi-admin.php:145
 msgid "Connected"
 msgstr "متصل"
 
-#: admin/class-gicapi-admin.php:151
+#: admin/class-gicapi-admin.php:145
 msgid "Balance"
 msgstr "موجودی"
 
-#: admin/class-gicapi-admin.php:155
+#: admin/class-gicapi-admin.php:149
 msgid "Disconnected"
 msgstr "قطع"
 
-#: admin/class-gicapi-admin.php:584 admin/class-gicapi-admin.php:631
-#: admin/class-gicapi-admin.php:652
+#: admin/class-gicapi-admin.php:578 admin/class-gicapi-admin.php:625
+#: admin/class-gicapi-admin.php:646
 msgid "You do not have permission to perform this action."
 msgstr "دسترسی لازم برای این کار را ندارید."
 
-#: admin/class-gicapi-admin.php:593
-msgid "Token refreshed successfully. Please refresh the page or save the settings to see the new connection status."
-msgstr "توکن با موفقیت نوسازی شد. لطفاً صفحه را به‌روزرسانی کنید تا وضعیت اتصال جدید را مشاهده کنید."
+#: admin/class-gicapi-admin.php:587
+msgid ""
+"Token refreshed successfully. Please refresh the page or save the settings to "
+"see the new connection status."
+msgstr ""
+"توکن با موفقیت نوسازی شد. لطفاً صفحه را به‌روزرسانی کنید تا وضعیت اتصال جدید را "
+"مشاهده کنید."
 
-#: admin/class-gicapi-admin.php:595
+#: admin/class-gicapi-admin.php:589
 msgid "Error refreshing token. Please check the API settings and try again."
 msgstr "خطا در نوسازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید."
 
-#: admin/class-gicapi-admin.php:639
+#: admin/class-gicapi-admin.php:633
 msgid "Invalid product or variant ID."
 msgstr ""
 
-#: admin/class-gicapi-admin.php:644
+#: admin/class-gicapi-admin.php:638
 msgid "Variant mapped successfully."
 msgstr ""
 
-#: admin/class-gicapi-admin.php:661
+#: admin/class-gicapi-admin.php:655
 msgid "All plugin data has been deleted successfully."
 msgstr ""
 
-#: admin/class-gicapi-admin.php:663
+#: admin/class-gicapi-admin.php:657
 msgid "Error deleting data: "
 msgstr ""
 
@@ -116,8 +120,7 @@ msgstr "دریافت توکن جدید"
 
 #: admin/partials/gicapi-admin-display.php:67
 msgid ""
-"Click this button to discard the current token and get a new one from the "
-"API."
+"Click this button to discard the current token and get a new one from the API."
 msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:76
@@ -211,16 +214,14 @@ msgstr "تصویر"
 #: admin/partials/gicapi-categories-display.php:54
 #: admin/partials/gicapi-products-display.php:69
 #: admin/partials/gicapi-products-display.php:104
-#: admin/partials/gicapi-variants-display.php:87
-#: admin/partials/gicapi-variants-display.php:132
+#: admin/partials/gicapi-variants-display.php:75
 msgid "Name"
 msgstr "نام"
 
 #: admin/partials/gicapi-categories-display.php:55
 #: admin/partials/gicapi-products-display.php:70
 #: admin/partials/gicapi-products-display.php:105
-#: admin/partials/gicapi-variants-display.php:88
-#: admin/partials/gicapi-variants-display.php:133
+#: admin/partials/gicapi-variants-display.php:76
 msgid "SKU"
 msgstr "شناسه SKU"
 
@@ -289,117 +290,106 @@ msgstr "محصول ناشناخته"
 msgid "Error fetching variants from API"
 msgstr "خطا در دریافت لیست واریانت از API"
 
-#: admin/partials/gicapi-variants-display.php:67
+#: admin/partials/gicapi-variants-display.php:55
 msgid "No variants found for this product."
 msgstr ""
 
-#: admin/partials/gicapi-variants-display.php:77
+#: admin/partials/gicapi-variants-display.php:65
 msgid "Variants"
 msgstr "واریانت ها"
 
-#: admin/partials/gicapi-variants-display.php:89
-#: admin/partials/gicapi-variants-display.php:134
+#: admin/partials/gicapi-variants-display.php:77
 msgid "Price"
 msgstr "قیمت"
 
-#: admin/partials/gicapi-variants-display.php:90
-#: admin/partials/gicapi-variants-display.php:135
+#: admin/partials/gicapi-variants-display.php:78
 #: public/class-gicapi-public.php:176
 msgid "Value"
 msgstr "اعتبار"
 
-#: admin/partials/gicapi-variants-display.php:91
-#: admin/partials/gicapi-variants-display.php:136
+#: admin/partials/gicapi-variants-display.php:79
 msgid "Max Order"
 msgstr "حداکثر تعداد سفارش"
 
-#: admin/partials/gicapi-variants-display.php:92
-#: admin/partials/gicapi-variants-display.php:137
+#: admin/partials/gicapi-variants-display.php:80
 msgid "Stock Status"
 msgstr "وضعیت فروش"
 
-#: admin/partials/gicapi-variants-display.php:93
-#: admin/partials/gicapi-variants-display.php:138
-msgid "Mapped WC Product"
-msgstr "محصولات متصل ووکامرس"
-
-#: admin/partials/gicapi-variants-display.php:123
-#: admin/partials/gicapi-variants-display.php:193
-msgid "Map to WooCommerce"
-msgstr "اتصال به محصول ووکامرس"
-
-#: admin/partials/gicapi-variants-display.php:147
-msgid "Map Gift-i-Card Variant to WooCommerce Product"
-msgstr ""
-
-#: admin/partials/gicapi-variants-display.php:148
-msgid "Mapping Variant:"
-msgstr "اتصال به محصول ووکامرس:"
+#: admin/partials/gicapi-variants-display.php:81
+msgid "Mapped WC Products"
+msgstr "محصولات مرتبط ووکامرس"
 
 #: admin/partials/gicapi-variants-display.php:151
-msgid "Search WooCommerce Products:"
-msgstr "جستجو در محصولات ووکامرس:"
+#, php-format
+msgid "%d product mapped"
+msgid_plural "%d products mapped"
+msgstr[0] "%d محصول در ارتباط"
+msgstr[1] "%d محصول در ارتباط"
 
-#: admin/partials/gicapi-variants-display.php:152
+#: admin/partials/gicapi-variants-display.php:153
+#: admin/partials/gicapi-variants-display.php:180
+msgid "Add Mapping"
+msgstr "ذخیره ارتباط"
+
+#: admin/partials/gicapi-variants-display.php:168
+msgid "Map Gift-i-Card Variant to WooCommerce Product"
+msgstr "برقراری ارتباط بین محصول ووکامرس و واریانت گیفتی کارت"
+
+#: admin/partials/gicapi-variants-display.php:174
+#: admin/partials/gicapi-variants-display.php:377
 msgid "Search for a product..."
 msgstr "جستجوی محصول..."
 
-#: admin/partials/gicapi-variants-display.php:155
-msgid "Save Mapping"
-msgstr "ذخیره اتصال"
-
-#: admin/partials/gicapi-variants-display.php:156
-msgid "Unmap Product"
-msgstr "حذف اتصال"
-
-#: admin/partials/gicapi-variants-display.php:157
-#: admin/partials/gicapi-variants-display.php:222
+#: admin/partials/gicapi-variants-display.php:181
 msgid "Cancel"
 msgstr "انصراف"
 
-#: admin/partials/gicapi-variants-display.php:170
-#, fuzzy
-#| msgid "Search WooCommerce Products:"
-msgid "Select WooCommerce Product:"
-msgstr "جستجو در محصولات ووکامرس:"
-
-#: admin/partials/gicapi-variants-display.php:172
-#, fuzzy
-#| msgid "Search for a product..."
-msgid "Select a product..."
-msgstr "جستجوی محصول..."
-
-#: admin/partials/gicapi-variants-display.php:197
-msgid "Map"
-msgstr "اتصال"
-
-#: admin/partials/gicapi-variants-display.php:203
+#: admin/partials/gicapi-variants-display.php:402
 msgid "Please select a product"
 msgstr "محصولی را انتخاب کنید"
 
-#: includes/class-gicapi-activator.php:20
-msgid "Gift-i-Card Categories"
-msgstr "دسته بندی های گیفتی کارت"
+#: admin/partials/gicapi-variants-display.php:418
+#: admin/partials/gicapi-variants-display.php:421
+msgid "Error adding mapping"
+msgstr "خطا در ایجاد ارتباط"
 
-#: includes/class-gicapi-activator.php:21
-msgid "Gift-i-Card Category"
-msgstr "دسته بندی گیفتی کارت"
+#: admin/partials/gicapi-variants-display.php:430
+msgid "Are you sure you want to remove this mapping?"
+msgstr ""
 
-#: includes/class-gicapi-activator.php:32
-msgid "Gift-i-Card Products"
-msgstr "محصولات گیفتی کارت"
+#: admin/partials/gicapi-variants-display.php:449
+#: admin/partials/gicapi-variants-display.php:452
+msgid "Error removing mapping"
+msgstr ""
 
-#: includes/class-gicapi-activator.php:33
-msgid "Gift-i-Card Product"
-msgstr "محصول گیفتی کارت"
+#: includes/class-gicapi-ajax.php:27 includes/class-gicapi-ajax.php:70
+#: includes/class-gicapi-ajax.php:122
+msgid "Permission denied"
+msgstr "دسترسی غیر مجاز"
 
-#: includes/class-gicapi-activator.php:44
-msgid "Gift-i-Card Variants"
-msgstr "لیست واریانت گیفتی کارت"
+#: includes/class-gicapi-ajax.php:77 includes/class-gicapi-ajax.php:129
+msgid "Invalid parameters"
+msgstr "پارامترهای نامعتبر"
 
-#: includes/class-gicapi-activator.php:45
-msgid "Gift-i-Card Variant"
-msgstr "واریانت گیفتی کارت"
+#: includes/class-gicapi-ajax.php:86
+msgid "This product is already mapped to this variant"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:101
+msgid "Error saving product mapping"
+msgstr "خطا در ذخیره ارتباط محصول"
+
+#: includes/class-gicapi-ajax.php:114
+msgid "Mapping added successfully"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:142
+msgid "Error removing product mapping"
+msgstr "حذف در حذف ارتباط محصول"
+
+#: includes/class-gicapi-ajax.php:154
+msgid "Mapping removed successfully"
+msgstr "ارتباط حذف شد"
 
 #: includes/class-gicapi-webhook.php:10
 msgid "Invalid data"
@@ -462,6 +452,49 @@ msgstr "نام شما"
 #. Author URI of the plugin/theme
 msgid "https://example.com"
 msgstr "https://example.com"
+
+#~ msgid "Map to WooCommerce"
+#~ msgstr "اتصال به محصول ووکامرس"
+
+#~ msgid "Mapping Variant:"
+#~ msgstr "اتصال به محصول ووکامرس:"
+
+#~ msgid "Search WooCommerce Products:"
+#~ msgstr "جستجو در محصولات ووکامرس:"
+
+#~ msgid "Unmap Product"
+#~ msgstr "حذف اتصال"
+
+#, fuzzy
+#~| msgid "Search WooCommerce Products:"
+#~ msgid "Select WooCommerce Product:"
+#~ msgstr "جستجو در محصولات ووکامرس:"
+
+#, fuzzy
+#~| msgid "Search for a product..."
+#~ msgid "Select a product..."
+#~ msgstr "جستجوی محصول..."
+
+#~ msgid "Map"
+#~ msgstr "اتصال"
+
+#~ msgid "Gift-i-Card Categories"
+#~ msgstr "دسته بندی های گیفتی کارت"
+
+#~ msgid "Gift-i-Card Category"
+#~ msgstr "دسته بندی گیفتی کارت"
+
+#~ msgid "Gift-i-Card Products"
+#~ msgstr "محصولات گیفتی کارت"
+
+#~ msgid "Gift-i-Card Product"
+#~ msgstr "محصول گیفتی کارت"
+
+#~ msgid "Gift-i-Card Variants"
+#~ msgstr "لیست واریانت گیفتی کارت"
+
+#~ msgid "Gift-i-Card Variant"
+#~ msgstr "واریانت گیفتی کارت"
 
 #~ msgid "Update Categories"
 #~ msgstr "بروزرسانی محصولات"
