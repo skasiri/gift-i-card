@@ -43,23 +43,11 @@ $products_page_url = add_query_arg('category', $category_sku, menu_page_url($plu
 $categories_page_url = menu_page_url($plugin_name . '-products', false);
 
 // Get variants from API
-$variants_response = $api->get_variants($product_sku);
+$variants = $api->get_variants($product_sku);
 
-if (!$variants_response) {
+if (!$variants) {
     echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching variants from API', 'gift-i-card') . '</p></div>';
     return;
-}
-
-$variants = isset($variants_response['variants']) ? $variants_response['variants'] : array();
-
-$variants = array();
-
-if (!is_wp_error($variants_response)) {
-    if (isset($variants_response['variants']) && is_array($variants_response['variants'])) {
-        $variants = $variants_response['variants'];
-    } elseif (is_array($variants_response)) {
-        $variants = $variants_response;
-    }
 }
 
 if (empty($variants)) {
@@ -99,7 +87,7 @@ if (empty($variants)) {
                 $variant_sku = $variant['sku'];
                 $variant_price = isset($variant['price']) ? $variant['price'] : '';
                 $variant_value = isset($variant['value']) ? $variant['value'] : '';
-                $variant_max_order = isset($variant['max_order']) ? $variant['max_order'] : 0;
+                $variant_max_order = isset($variant['max_order_per_item']) ? $variant['max_order_per_item'] : 0;
                 $variant_stock_status = isset($variant['stock_status']) ? $variant['stock_status'] : '';
                 $mapped_product_id = get_post_meta($variant_sku, '_gicapi_mapped_wc_product_id', true);
                 $mapped_product = $mapped_product_id ? wc_get_product($mapped_product_id) : null;
