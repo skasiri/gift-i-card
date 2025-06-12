@@ -12,50 +12,56 @@ if (!defined('ABSPATH')) {
 $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
 $product_sku = isset($_GET['product']) ? sanitize_text_field($_GET['product']) : '';
 
-// $product = $product_sku ? get_post($product_sku) : null;
-$product_args = array(
-    'post_type' => 'gic_prod',
-    'posts_per_page' => 1,
-    'meta_query' => array(
-        array(
-            'key' => '_gicapi_product_sku',
-            'value' => $product_sku,
-            'compare' => '='
-        )
-    )
-);
-$products = get_posts($product_args);
+// Get product info from API
+$api = GICAPI_API::get_instance();
+$response = $api->get_products($category_sku, 1, 999);
+$product_name = __('Unknown Product', 'gift-i-card');
 
-if (empty($products)) {
-    echo '<div class="wrap gicapi-admin-page">';
-    echo '<h1>' . __('Product Not Found', 'gift-i-card') . '</h1>';
-    echo '<p>' . __('The product you are looking for does not exist.', 'gift-i-card') . '</p>';
-    echo '</div>';
-    return;
+if (!is_wp_error($response) && isset($response['products'])) {
+    foreach ($response['products'] as $prod) {
+        if ($prod['sku'] === $product_sku) {
+            $product_name = $prod['name'];
+            break;
+        }
+    }
 }
 
-$product_name = $products ? $products[0]->post_title : __('Unknown Product', 'gift-i-card');
+// Get category info from API
+$categories = $api->get_categories();
+$category_name = __('Unknown Category', 'gift-i-card');
 
-$category_args = array(
-
-    'post_type' => 'gic_cat',
-    'posts_per_page' => 1,
-    'meta_query' => array(
-        array(
-            'key' => '_gicapi_category_sku',
-            'value' => $category_sku,
-            'compare' => '='
-        )
-    )
-);
-$categories = get_posts($category_args);
-
-$category_name = $categories ? $categories[0]->post_title : __('Unknown Category', 'gift-i-card');
+if (!is_wp_error($categories)) {
+    foreach ($categories as $cat) {
+        if ($cat['sku'] === $category_sku) {
+            $category_name = $cat['name'];
+            break;
+        }
+    }
+}
 
 $products_page_url = add_query_arg('category', $category_sku, menu_page_url($plugin_name . '-products', false));
 $categories_page_url = menu_page_url($plugin_name . '-products', false);
 
+// Get variants from API
+$variants_response = $api->get_variants($product_sku);
+$variants = array();
+
+if (!is_wp_error($variants_response)) {
+    if (isset($variants_response['variants']) && is_array($variants_response['variants'])) {
+        $variants = $variants_response['variants'];
+    } elseif (is_array($variants_response)) {
+        $variants = $variants_response;
+    }
+}
+
+if (empty($variants)) {
+    echo '<div class="wrap gicapi-admin-page">';
+    echo '<h1>' . esc_html__('No variants found for this product.', 'gift-i-card') . '</h1>';
+    echo '</div>';
+    return;
+}
 ?>
+
 <div class="wrap gicapi-admin-page">
     <h1>
         <a href="<?php echo esc_url($categories_page_url); ?>"><?php echo esc_html(get_admin_page_title()); ?></a> &raquo;
@@ -83,79 +89,38 @@ $categories_page_url = menu_page_url($plugin_name . '-products', false);
             </tr>
         </thead>
         <tbody id="the-list">
-            <?php
-            $variants_args = array(
-                'post_type' => 'gic_var',
-                'posts_per_page' => -1, // Adjust later for pagination
-                'post_status' => 'publish',
-                'meta_query' => array(
-                    array(
-                        'key' => '_gicapi_variant_product',
-                        'value' => $product_id,
-                        'compare' => '='
-                    )
-                )
-            );
-            $variants = get_posts($variants_args);
-
-            if (!empty($variants)) :
-                foreach ($variants as $variant) :
-                    $variant_id = $variant->ID;
-                    $variant_name = $variant->post_title;
-                    $variant_sku = get_post_meta($variant_id, '_gicapi_variant_sku', true);
-                    $variant_price = get_post_meta($variant_id, '_gicapi_variant_price', true);
-                    $variant_value = get_post_meta($variant_id, '_gicapi_variant_value', true);
-                    $variant_max_order = get_post_meta($variant_id, '_gicapi_variant_max_order', true);
-                    $variant_stock_status = get_post_meta($variant_id, '_gicapi_variant_stock_status', true);
-                    $mapped_product_id = get_post_meta($variant_id, '_gicapi_mapped_wc_product_id', true);
-                    $mapped_product = $mapped_product_id ? wc_get_product($mapped_product_id) : null;
-                    $is_deleted = get_post_meta($variant_id, '_gicapi_is_deleted', true) === 'true';
+            <?php foreach ($variants as $variant) :
+                $variant_name = $variant['name'];
+                $variant_sku = $variant['sku'];
+                $variant_price = isset($variant['price']) ? $variant['price'] : '';
+                $variant_value = isset($variant['value']) ? $variant['value'] : '';
+                $variant_max_order = isset($variant['max_order']) ? $variant['max_order'] : 0;
+                $variant_stock_status = isset($variant['stock_status']) ? $variant['stock_status'] : '';
+                $mapped_product_id = get_post_meta($variant_sku, '_gicapi_mapped_wc_product_id', true);
+                $mapped_product = $mapped_product_id ? wc_get_product($mapped_product_id) : null;
             ?>
-                    <tr class="<?php if ($is_deleted) echo 'gicapi-item-deleted'; ?>">
-                        <td class="title column-title has-row-actions column-primary" data-colname="<?php _e('Name', 'gift-i-card'); ?>">
-                            <strong>
-                                <?php echo esc_html($variant_name); ?>
-                                <?php if ($is_deleted) : ?>
-                                    <span class="gicapi-deleted-status"> (<?php _e('Deleted', 'gift-i-card'); ?>)</span>
-                                <?php endif; ?>
-                            </strong>
-                            <div class="row-actions">
-                                <span class="edit">
-                                    <a href="#" class="edit-mapping"
-                                        data-variant-id="<?php echo esc_attr($variant_id); ?>"
-                                        data-variant-name="<?php echo esc_attr($variant_name); ?>"
-                                        <?php if ($is_deleted) echo 'style="pointer-events:none; opacity:0.5;" title="' . esc_attr__('Cannot map a deleted variant', 'gift-i-card') . '"'; ?>>
-                                        <?php _e('Map Product', 'gift-i-card'); ?>
-                                    </a>
-                                </span>
-                            </div>
-                            <button type="button" class="toggle-row"><span class="screen-reader-text"><?php _e('Show more details'); ?></span></button>
-                        </td>
-                        <td data-colname="<?php _e('SKU', 'gift-i-card'); ?>"><?php echo esc_html($variant_sku); ?></td>
-                        <td data-colname="<?php _e('Price', 'gift-i-card'); ?>"><?php echo esc_html($variant_price); ?></td>
-                        <td data-colname="<?php _e('Value', 'gift-i-card'); ?>"><?php echo esc_html($variant_value); ?></td>
-                        <td data-colname="<?php _e('Max Order', 'gift-i-card'); ?>"><?php echo esc_html($variant_max_order); ?></td>
-                        <td data-colname="<?php _e('Stock Status', 'gift-i-card'); ?>">
-                            <span class="gicapi-stock-status-<?php echo esc_attr($variant_stock_status); ?>">
-                                <?php echo esc_html(ucfirst($variant_stock_status)); ?>
-                            </span>
-                        </td>
-                        <td data-colname="<?php _e('Mapped WC Product', 'gift-i-card'); ?>" id="mapped-product-<?php echo esc_attr($variant_id); ?>">
-                            <?php if ($mapped_product) : ?>
-                                <a href="<?php echo esc_url(get_edit_post_link($mapped_product_id)); ?>" target="_blank">
-                                    <?php echo esc_html($mapped_product->get_formatted_name()); ?>
-                                </a>
-                            <?php else : ?>
-                                <span class="gicapi-not-mapped"><?php _e('Not Mapped', 'gift-i-card'); ?></span>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
                 <tr>
-                    <td colspan="7"><?php _e('No variants found for this product. Try updating from API.', 'gift-i-card'); ?></td>
+                    <td class="column-title column-primary">
+                        <strong><?php echo esc_html($variant_name); ?></strong>
+                    </td>
+                    <td class="column-sku"><?php echo esc_html($variant_sku); ?></td>
+                    <td class="column-price"><?php echo esc_html($variant_price); ?></td>
+                    <td class="column-value"><?php echo esc_html($variant_value); ?></td>
+                    <td class="column-max-order"><?php echo esc_html($variant_max_order); ?></td>
+                    <td class="column-stock-status"><?php echo esc_html($variant_stock_status); ?></td>
+                    <td class="column-mapped-product">
+                        <?php if ($mapped_product) : ?>
+                            <a href="<?php echo esc_url(get_edit_post_link($mapped_product_id)); ?>" target="_blank">
+                                <?php echo esc_html($mapped_product->get_name()); ?>
+                            </a>
+                        <?php else : ?>
+                            <button type="button" class="button map-variant" data-variant-id="<?php echo esc_attr($variant_sku); ?>">
+                                <?php _e('Map to WooCommerce', 'gift-i-card'); ?>
+                            </button>
+                        <?php endif; ?>
+                    </td>
                 </tr>
-            <?php endif; ?>
+            <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
@@ -191,6 +156,24 @@ $categories_page_url = menu_page_url($plugin_name . '-products', false);
     </div>
     <div id="gicapi-mapping-modal-overlay" style="display:none;"></div>
 
+</div>
+
+<div id="map-variant-dialog" style="display: none;">
+    <form id="map-variant-form">
+        <input type="hidden" id="variant-id" value="">
+        <p>
+            <label for="wc-product"><?php _e('Select WooCommerce Product:', 'gift-i-card'); ?></label>
+            <select id="wc-product" style="width: 100%;">
+                <option value=""><?php _e('Select a product...', 'gift-i-card'); ?></option>
+                <?php
+                $products = wc_get_products(array('limit' => -1));
+                foreach ($products as $product) {
+                    echo '<option value="' . esc_attr($product->get_id()) . '">' . esc_html($product->get_name()) . '</option>';
+                }
+                ?>
+            </select>
+        </p>
+    </form>
 </div>
 
 <script>

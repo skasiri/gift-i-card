@@ -10,31 +10,41 @@ $search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 $paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
 $per_page = 20;
 
-// Get categories with search and pagination
-$args = array(
-    'post_type' => 'gic_cat',
-    'posts_per_page' => $per_page,
-    'paged' => $paged,
-    'orderby' => 'title',
-    'order' => 'ASC'
-);
+// Get categories from API
+$api = GICAPI_API::get_instance();
+$categories = $api->get_categories();
 
-if ($search) {
-    $args['s'] = $search;
+if (is_wp_error($categories)) {
+    echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching categories from API', 'gift-i-card') . '</p></div>';
+    return;
 }
 
-$categories = get_posts($args);
-$total_categories = wp_count_posts('gic_cat')->publish;
+// Filter categories if search is active
+if ($search) {
+    $categories = array_filter($categories, function ($category) use ($search) {
+        return stripos($category['name'], $search) !== false;
+    });
+}
+
+// Calculate pagination
+$total_categories = count($categories);
+$total_pages = ceil($total_categories / $per_page);
+$offset = ($paged - 1) * $per_page;
+$categories = array_slice($categories, $offset, $per_page);
 ?>
 
 <div class="wrap gicapi-admin-page">
     <h1><?php echo esc_html(get_admin_page_title()); ?> - <?php _e('Categories', 'gift-i-card'); ?></h1>
 
     <div class="gicapi-toolbar">
-        <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('action', 'update_categories'), 'gicapi_update_data')); ?>" class="button button-secondary">
-            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Categories', 'gift-i-card'); ?>
-        </a>
-        <!-- Add search form here later -->
+        <form method="get" class="search-form">
+            <input type="hidden" name="page" value="<?php echo esc_attr($plugin_name . '-products'); ?>">
+            <p class="search-box">
+                <label class="screen-reader-text" for="post-search-input"><?php _e('Search Categories:', 'gift-i-card'); ?></label>
+                <input type="search" id="post-search-input" name="s" value="<?php echo esc_attr($search); ?>">
+                <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e('Search Categories', 'gift-i-card'); ?>">
+            </p>
+        </form>
     </div>
 
     <table class="wp-list-table widefat fixed striped table-view-list posts">
@@ -50,52 +60,56 @@ $total_categories = wp_count_posts('gic_cat')->publish;
             <?php
             if (!empty($categories)) :
                 foreach ($categories as $category) :
-                    $category_id = $category->ID;
-                    $category_name = $category->post_title;
-                    $category_sku = get_post_meta($category_id, '_gicapi_category_sku', true);
-                    $category_count = get_post_meta($category_id, '_gicapi_category_count', true);
-                    $category_thumbnail = get_post_meta($category_id, '_gicapi_category_thumbnail', true);
+                    $category_name = $category['name'];
+                    $category_sku = $category['sku'];
+                    $category_count = $category['count'];
+                    $category_thumbnail = isset($category['thumbnail']) ? $category['thumbnail'] : '';
                     $products_page_url = add_query_arg('category', $category_sku, menu_page_url($plugin_name . '-products', false));
-                    $is_deleted = get_post_meta($category_id, '_gicapi_is_deleted', true) === 'true';
             ?>
-                    <tr class="<?php if ($is_deleted) echo 'gicapi-item-deleted'; ?>">
+                    <tr>
                         <td class="column-thumbnail">
                             <?php if ($category_thumbnail) : ?>
-                                <img src="<?php echo esc_url($category_thumbnail); ?>" alt="<?php echo esc_attr($category_name); ?>" width="40" height="40" style="object-fit: contain;">
+                                <img src="<?php echo esc_url($category_thumbnail); ?>" alt="<?php echo esc_attr($category_name); ?>" style="max-width: 50px; height: auto;">
                             <?php endif; ?>
                         </td>
-                        <td class="title column-title has-row-actions column-primary" data-colname="<?php _e('Name', 'gift-i-card'); ?>">
+                        <td class="column-title column-primary">
                             <strong>
-                                <a class="row-title" href="<?php echo esc_url($products_page_url); ?>">
+                                <a href="<?php echo esc_url($products_page_url); ?>" class="row-title">
                                     <?php echo esc_html($category_name); ?>
                                 </a>
-                                <?php if ($is_deleted) : ?>
-                                    <span class="gicapi-deleted-status"> (<?php _e('Deleted', 'gift-i-card'); ?>)</span>
-                                <?php endif; ?>
                             </strong>
-                            <div class="row-actions">
-                                <span class="view"><a href="<?php echo esc_url($products_page_url); ?>" <?php if ($is_deleted) echo 'style="pointer-events:none; opacity:0.5;"'; ?>><?php _e('View Products', 'gift-i-card'); ?></a></span>
-                            </div>
-                            <button type="button" class="toggle-row"><span class="screen-reader-text"><?php _e('Show more details'); ?></span></button>
                         </td>
-                        <td data-colname="<?php _e('SKU', 'gift-i-card'); ?>"><?php echo esc_html($category_sku); ?></td>
-                        <td data-colname="<?php _e('Product Count', 'gift-i-card'); ?>"><?php echo esc_html($category_count); ?></td>
+                        <td class="column-sku"><?php echo esc_html($category_sku); ?></td>
+                        <td class="column-count"><?php echo esc_html($category_count); ?></td>
                     </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
+                <?php
+                endforeach;
+            else :
+                ?>
                 <tr>
-                    <td colspan="4"><?php _e('No categories found. Try updating from API.', 'gift-i-card'); ?></td>
+                    <td colspan="4"><?php _e('No categories found.', 'gift-i-card'); ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>
-        <tfoot>
-            <tr>
-                <th scope="col" class="manage-column column-thumbnail"><?php _e('Thumbnail', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Product Count', 'gift-i-card'); ?></th>
-            </tr>
-        </tfoot>
     </table>
-    <!-- Add pagination controls here later -->
+
+    <?php if ($total_pages > 1) : ?>
+        <div class="tablenav bottom">
+            <div class="tablenav-pages">
+                <span class="displaying-num"><?php printf(_n('%s item', '%s items', $total_categories, 'gift-i-card'), number_format_i18n($total_categories)); ?></span>
+                <span class="pagination-links">
+                    <?php
+                    echo paginate_links(array(
+                        'base' => add_query_arg('paged', '%#%'),
+                        'format' => '',
+                        'prev_text' => __('&laquo;'),
+                        'next_text' => __('&raquo;'),
+                        'total' => $total_pages,
+                        'current' => $paged
+                    ));
+                    ?>
+                </span>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
