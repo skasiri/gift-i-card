@@ -201,226 +201,226 @@ class GICAPI_Admin
 
         $api = GICAPI_API::get_instance(); // Use singleton instance
 
-        if ($action && $nonce && wp_verify_nonce($nonce, 'gicapi_update_data')) {
-            $redirect_url = remove_query_arg(array('action', '_wpnonce'));
+        // if ($action && $nonce && wp_verify_nonce($nonce, 'gicapi_update_data')) {
+        //     $redirect_url = remove_query_arg(array('action', '_wpnonce'));
 
-            switch ($action) {
-                case 'update_categories':
-                    $api_response = $api->get_categories();
-                    if ($api_response && is_array($api_response) && !is_wp_error($api_response)) {
-                        $this->sync_items(
-                            $api_response,
-                            'gic_cat',
-                            '_gicapi_category_sku',
-                            function ($api_cat_item) {
-                                $post_args = [
-                                    'post_title' => sanitize_text_field($api_cat_item['name']),
-                                ];
-                                $meta_input = [
-                                    '_gicapi_category_sku' => sanitize_text_field($api_cat_item['sku']),
-                                    '_gicapi_category_count' => absint($api_cat_item['count']),
-                                    '_gicapi_category_permalink' => isset($api_cat_item['permalink']) ? esc_url_raw($api_cat_item['permalink']) : '',
-                                    '_gicapi_category_thumbnail' => isset($api_cat_item['thumbnail']) ? esc_url_raw($api_cat_item['thumbnail']) : '',
-                                ];
-                                return [$post_args, $meta_input];
-                            }
-                        );
-                    } else {
-                        // Handle API error, maybe add an admin notice
-                        // error_log('GICAPI: Error fetching categories from API.');
-                    }
-                    wp_safe_redirect($redirect_url);
-                    exit;
+        //     switch ($action) {
+        //         case 'update_categories':
+        //             $api_response = $api->get_categories();
+        //             if ($api_response && is_array($api_response) && !is_wp_error($api_response)) {
+        //                 $this->sync_items(
+        //                     $api_response,
+        //                     'gic_cat',
+        //                     '_gicapi_category_sku',
+        //                     function ($api_cat_item) {
+        //                         $post_args = [
+        //                             'post_title' => sanitize_text_field($api_cat_item['name']),
+        //                         ];
+        //                         $meta_input = [
+        //                             '_gicapi_category_sku' => sanitize_text_field($api_cat_item['sku']),
+        //                             '_gicapi_category_count' => absint($api_cat_item['count']),
+        //                             '_gicapi_category_permalink' => isset($api_cat_item['permalink']) ? esc_url_raw($api_cat_item['permalink']) : '',
+        //                             '_gicapi_category_thumbnail' => isset($api_cat_item['thumbnail']) ? esc_url_raw($api_cat_item['thumbnail']) : '',
+        //                         ];
+        //                         return [$post_args, $meta_input];
+        //                     }
+        //                 );
+        //             } else {
+        //                 // Handle API error, maybe add an admin notice
+        //                 // error_log('GICAPI: Error fetching categories from API.');
+        //             }
+        //             wp_safe_redirect($redirect_url);
+        //             exit;
 
-                case 'update_products':
-                    if ($category_sku) {
-                        $api_response = $api->get_products($category_sku, 1, 999); // Fetch all products for the category
-                        $api_products_list = [];
-                        if ($api_response && isset($api_response['products']) && is_array($api_response['products']) && !is_wp_error($api_response)) {
-                            $api_products_list = $api_response['products'];
-                        } elseif (is_wp_error($api_response)) {
-                            // error_log('GICAPI: Error fetching products from API: ' . $api_response->get_error_message());
-                        }
+        //         case 'update_products':
+        //             if ($category_sku) {
+        //                 $api_response = $api->get_products($category_sku, 1, 999); // Fetch all products for the category
+        //                 $api_products_list = [];
+        //                 if ($api_response && isset($api_response['products']) && is_array($api_response['products']) && !is_wp_error($api_response)) {
+        //                     $api_products_list = $api_response['products'];
+        //                 } elseif (is_wp_error($api_response)) {
+        //                     // error_log('GICAPI: Error fetching products from API: ' . $api_response->get_error_message());
+        //                 }
 
-                        $this->sync_items(
-                            $api_products_list,
-                            'gic_prod',
-                            '_gicapi_product_sku',
-                            function ($api_prod_item, $parent_sku_val) {
-                                $post_args = [
-                                    'post_title' => sanitize_text_field($api_prod_item['name']),
-                                ];
-                                $meta_input = [
-                                    '_gicapi_product_sku' => sanitize_text_field($api_prod_item['sku']),
-                                    '_gicapi_product_url' => isset($api_prod_item['url']) ? esc_url_raw($api_prod_item['url']) : '',
-                                    '_gicapi_product_image_url' => isset($api_prod_item['image_url']) ? esc_url_raw($api_prod_item['image_url']) : '',
-                                    '_gicapi_product_variant_count' => isset($api_prod_item['variant_count']) ? absint($api_prod_item['variant_count']) : 0,
-                                    '_gicapi_product_category' => $parent_sku_val,
-                                ];
-                                return [$post_args, $meta_input];
-                            },
-                            '_gicapi_product_category',
-                            $category_sku
-                        );
-                        wp_safe_redirect($redirect_url);
-                        exit;
-                    }
-                    break;
+        //                 $this->sync_items(
+        //                     $api_products_list,
+        //                     'gic_prod',
+        //                     '_gicapi_product_sku',
+        //                     function ($api_prod_item, $parent_sku_val) {
+        //                         $post_args = [
+        //                             'post_title' => sanitize_text_field($api_prod_item['name']),
+        //                         ];
+        //                         $meta_input = [
+        //                             '_gicapi_product_sku' => sanitize_text_field($api_prod_item['sku']),
+        //                             '_gicapi_product_url' => isset($api_prod_item['url']) ? esc_url_raw($api_prod_item['url']) : '',
+        //                             '_gicapi_product_image_url' => isset($api_prod_item['image_url']) ? esc_url_raw($api_prod_item['image_url']) : '',
+        //                             '_gicapi_product_variant_count' => isset($api_prod_item['variant_count']) ? absint($api_prod_item['variant_count']) : 0,
+        //                             '_gicapi_product_category' => $parent_sku_val,
+        //                         ];
+        //                         return [$post_args, $meta_input];
+        //                     },
+        //                     '_gicapi_product_category',
+        //                     $category_sku
+        //                 );
+        //                 wp_safe_redirect($redirect_url);
+        //                 exit;
+        //             }
+        //             break;
 
-                case 'update_variants':
-                    if ($product_sku) {
-                        $api_response = $api->get_variants($product_sku, 1, 999); // Fetch all variants
-                        $api_variants_list = [];
+        //         case 'update_variants':
+        //             if ($product_sku) {
+        //                 $api_response = $api->get_variants($product_sku, 1, 999); // Fetch all variants
+        //                 $api_variants_list = [];
 
-                        if ($api_response && !is_wp_error($api_response)) {
-                            if (isset($api_response['variants']) && is_array($api_response['variants'])) {
-                                $api_variants_list = $api_response['variants'];
-                            } elseif (is_array($api_response)) { // Fallback for direct array
-                                $api_variants_list = $api_response;
-                            }
-                        } elseif (is_wp_error($api_response)) {
-                            // error_log('GICAPI: Error fetching variants from API: ' . $api_response->get_error_message());
-                        }
+        //                 if ($api_response && !is_wp_error($api_response)) {
+        //                     if (isset($api_response['variants']) && is_array($api_response['variants'])) {
+        //                         $api_variants_list = $api_response['variants'];
+        //                     } elseif (is_array($api_response)) { // Fallback for direct array
+        //                         $api_variants_list = $api_response;
+        //                     }
+        //                 } elseif (is_wp_error($api_response)) {
+        //                     // error_log('GICAPI: Error fetching variants from API: ' . $api_response->get_error_message());
+        //                 }
 
-                        $this->sync_items(
-                            $api_variants_list,
-                            'gic_var',
-                            '_gicapi_variant_sku',
-                            function ($api_var_item, $parent_id_val) {
-                                $post_args = [
-                                    'post_title' => sanitize_text_field($api_var_item['name']),
-                                ];
-                                $meta_input = [
-                                    '_gicapi_variant_sku' => sanitize_text_field($api_var_item['sku']),
-                                    '_gicapi_variant_price' => isset($api_var_item['price']) ? sanitize_text_field($api_var_item['price']) : '',
-                                    '_gicapi_variant_value' => isset($api_var_item['value']) ? sanitize_text_field($api_var_item['value']) : '',
-                                    '_gicapi_variant_max_order' => isset($api_var_item['max_order']) ? absint($api_var_item['max_order']) : 0,
-                                    '_gicapi_variant_stock_status' => isset($api_var_item['stock_status']) ? sanitize_text_field($api_var_item['stock_status']) : '',
-                                    '_gicapi_variant_product' => $parent_id_val,
-                                ];
-                                return [$post_args, $meta_input];
-                            },
-                            '_gicapi_variant_product',
-                            $product_sku
-                        );
-                        wp_safe_redirect($redirect_url);
-                        exit;
-                    }
-                    break;
-            }
-        }
+        //                 $this->sync_items(
+        //                     $api_variants_list,
+        //                     'gic_var',
+        //                     '_gicapi_variant_sku',
+        //                     function ($api_var_item, $parent_id_val) {
+        //                         $post_args = [
+        //                             'post_title' => sanitize_text_field($api_var_item['name']),
+        //                         ];
+        //                         $meta_input = [
+        //                             '_gicapi_variant_sku' => sanitize_text_field($api_var_item['sku']),
+        //                             '_gicapi_variant_price' => isset($api_var_item['price']) ? sanitize_text_field($api_var_item['price']) : '',
+        //                             '_gicapi_variant_value' => isset($api_var_item['value']) ? sanitize_text_field($api_var_item['value']) : '',
+        //                             '_gicapi_variant_max_order' => isset($api_var_item['max_order']) ? absint($api_var_item['max_order']) : 0,
+        //                             '_gicapi_variant_stock_status' => isset($api_var_item['stock_status']) ? sanitize_text_field($api_var_item['stock_status']) : '',
+        //                             '_gicapi_variant_product' => $parent_id_val,
+        //                         ];
+        //                         return [$post_args, $meta_input];
+        //                     },
+        //                     '_gicapi_variant_product',
+        //                     $product_sku
+        //                 );
+        //                 wp_safe_redirect($redirect_url);
+        //                 exit;
+        //             }
+        //             break;
+        //     }
+        // }
 
         // Pass plugin name to views
         $plugin_name = $this->plugin_name;
 
         // Get categories if not exists (Initial Population)
-        if (!$category_sku) { // On main categories page
-            $existing_cats_query = new WP_Query([
-                'post_type' => 'gic_cat',
-                'posts_per_page' => 1,
-                'fields' => 'ids',
-                'meta_query' => [['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']]
-            ]);
-            if (!$existing_cats_query->have_posts()) {
-                $response = $api->get_categories();
-                if ($response && is_array($response) && !is_wp_error($response)) {
-                    foreach ($response as $category) {
-                        $cat_id = wp_insert_post(array(
-                            'post_title' => sanitize_text_field($category['name']),
-                            'post_type' => 'gic_cat',
-                            'post_status' => 'publish'
-                        ));
-                        if ($cat_id && !is_wp_error($cat_id)) {
-                            update_post_meta($cat_id, '_gicapi_category_sku', sanitize_text_field($category['sku']));
-                            update_post_meta($cat_id, '_gicapi_category_count', absint($category['count']));
-                            if (isset($category['permalink'])) update_post_meta($cat_id, '_gicapi_category_permalink', esc_url_raw($category['permalink']));
-                            if (isset($category['thumbnail'])) update_post_meta($cat_id, '_gicapi_category_thumbnail', esc_url_raw($category['thumbnail']));
-                            delete_post_meta($cat_id, '_gicapi_is_deleted'); // Ensure not marked deleted
-                        }
-                    }
-                }
-            }
-            wp_reset_postdata();
-        }
+        // if (!$category_sku) { // On main categories page
+        //     $existing_cats_query = new WP_Query([
+        //         'post_type' => 'gic_cat',
+        //         'posts_per_page' => 1,
+        //         'fields' => 'ids',
+        //         'meta_query' => [['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']]
+        //     ]);
+        //     if (!$existing_cats_query->have_posts()) {
+        //         $response = $api->get_categories();
+        //         if ($response && is_array($response) && !is_wp_error($response)) {
+        //             foreach ($response as $category) {
+        //                 $cat_id = wp_insert_post(array(
+        //                     'post_title' => sanitize_text_field($category['name']),
+        //                     'post_type' => 'gic_cat',
+        //                     'post_status' => 'publish'
+        //                 ));
+        //                 if ($cat_id && !is_wp_error($cat_id)) {
+        //                     update_post_meta($cat_id, '_gicapi_category_sku', sanitize_text_field($category['sku']));
+        //                     update_post_meta($cat_id, '_gicapi_category_count', absint($category['count']));
+        //                     if (isset($category['permalink'])) update_post_meta($cat_id, '_gicapi_category_permalink', esc_url_raw($category['permalink']));
+        //                     if (isset($category['thumbnail'])) update_post_meta($cat_id, '_gicapi_category_thumbnail', esc_url_raw($category['thumbnail']));
+        //                     delete_post_meta($cat_id, '_gicapi_is_deleted'); // Ensure not marked deleted
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     wp_reset_postdata();
+        // }
 
         // Get products if category selected (Initial Population for that category)
-        if ($category_sku && !$product_sku) {
-            $existing_prods_query = new WP_Query([
-                'post_type' => 'gic_prod',
-                'posts_per_page' => 1,
-                'fields' => 'ids',
-                'meta_query' => [
-                    'relation' => 'AND',
-                    ['key' => '_gicapi_product_category', 'value' => $category_sku],
-                    ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
-                ]
-            ]);
-            if (!$existing_prods_query->have_posts()) {
-                $response = $api->get_products($category_sku, 1, 50); // Original page size
-                if ($response && isset($response['products']) && is_array($response['products']) && !is_wp_error($response)) {
-                    foreach ($response['products'] as $product) {
-                        $post_id = wp_insert_post(array(
-                            'post_title' => sanitize_text_field($product['name']),
-                            'post_type' => 'gic_prod',
-                            'post_status' => 'publish'
-                        ));
-                        if ($post_id && !is_wp_error($post_id)) {
-                            update_post_meta($post_id, '_gicapi_product_sku', sanitize_text_field($product['sku']));
-                            if (isset($product['url'])) update_post_meta($post_id, '_gicapi_product_url', esc_url_raw($product['url']));
-                            if (isset($product['image_url'])) update_post_meta($post_id, '_gicapi_product_image_url', esc_url_raw($product['image_url']));
-                            if (isset($product['variant_count'])) update_post_meta($post_id, '_gicapi_product_variant_count', absint($product['variant_count']));
-                            update_post_meta($post_id, '_gicapi_product_category', $category_sku);
-                            delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
-                        }
-                    }
-                }
-            }
-            wp_reset_postdata();
-        }
+        // if ($category_sku && !$product_sku) {
+        //     $existing_prods_query = new WP_Query([
+        //         'post_type' => 'gic_prod',
+        //         'posts_per_page' => 1,
+        //         'fields' => 'ids',
+        //         'meta_query' => [
+        //             'relation' => 'AND',
+        //             ['key' => '_gicapi_product_category', 'value' => $category_sku],
+        //             ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
+        //         ]
+        //     ]);
+        //     if (!$existing_prods_query->have_posts()) {
+        //         $response = $api->get_products($category_sku, 1, 50); // Original page size
+        //         if ($response && isset($response['products']) && is_array($response['products']) && !is_wp_error($response)) {
+        //             foreach ($response['products'] as $product) {
+        //                 $post_id = wp_insert_post(array(
+        //                     'post_title' => sanitize_text_field($product['name']),
+        //                     'post_type' => 'gic_prod',
+        //                     'post_status' => 'publish'
+        //                 ));
+        //                 if ($post_id && !is_wp_error($post_id)) {
+        //                     update_post_meta($post_id, '_gicapi_product_sku', sanitize_text_field($product['sku']));
+        //                     if (isset($product['url'])) update_post_meta($post_id, '_gicapi_product_url', esc_url_raw($product['url']));
+        //                     if (isset($product['image_url'])) update_post_meta($post_id, '_gicapi_product_image_url', esc_url_raw($product['image_url']));
+        //                     if (isset($product['variant_count'])) update_post_meta($post_id, '_gicapi_product_variant_count', absint($product['variant_count']));
+        //                     update_post_meta($post_id, '_gicapi_product_category', $category_sku);
+        //                     delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     wp_reset_postdata();
+        // }
 
         // Get variants if product selected (Initial Population for that product)
-        if ($product_sku) {
-            $existing_vars_query = new WP_Query([
-                'post_type' => 'gic_var',
-                'posts_per_page' => 1,
-                'fields' => 'ids',
-                'meta_query' => [
-                    'relation' => 'AND',
-                    ['key' => '_gicapi_variant_product', 'value' => $product_sku],
-                    ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
-                ]
-            ]);
-            if (!$existing_vars_query->have_posts()) {
-                $response = $api->get_variants($product_sku, 1, 999); // Original page size
-                $variants_list = [];
-                if ($response && !is_wp_error($response)) {
-                    if (isset($response['variants']) && is_array($response['variants'])) {
-                        $variants_list = $response['variants'];
-                    } elseif (is_array($response)) {
-                        $variants_list = $response;
-                    }
-                }
-                if (!empty($variants_list)) {
-                    foreach ($variants_list as $variant) {
-                        $post_id = wp_insert_post(array(
-                            'post_title' => sanitize_text_field($variant['name']),
-                            'post_type' => 'gic_var',
-                            'post_status' => 'publish'
-                        ));
-                        if ($post_id && !is_wp_error($post_id)) {
-                            update_post_meta($post_id, '_gicapi_variant_sku', sanitize_text_field($variant['sku']));
-                            if (isset($variant['price'])) update_post_meta($post_id, '_gicapi_variant_price', sanitize_text_field($variant['price']));
-                            if (isset($variant['value'])) update_post_meta($post_id, '_gicapi_variant_value', sanitize_text_field($variant['value']));
-                            if (isset($variant['max_order'])) update_post_meta($post_id, '_gicapi_variant_max_order', absint($variant['max_order']));
-                            if (isset($variant['stock_status'])) update_post_meta($post_id, '_gicapi_variant_stock_status', sanitize_text_field($variant['stock_status']));
-                            update_post_meta($post_id, '_gicapi_variant_product', $product_sku);
-                            delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
-                        }
-                    }
-                }
-            }
-            wp_reset_postdata();
-        }
+        // if ($product_sku) {
+        //     $existing_vars_query = new WP_Query([
+        //         'post_type' => 'gic_var',
+        //         'posts_per_page' => 1,
+        //         'fields' => 'ids',
+        //         'meta_query' => [
+        //             'relation' => 'AND',
+        //             ['key' => '_gicapi_variant_product', 'value' => $product_sku],
+        //             ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
+        //         ]
+        //     ]);
+        //     if (!$existing_vars_query->have_posts()) {
+        //         $response = $api->get_variants($product_sku, 1, 999); // Original page size
+        //         $variants_list = [];
+        //         if ($response && !is_wp_error($response)) {
+        //             if (isset($response['variants']) && is_array($response['variants'])) {
+        //                 $variants_list = $response['variants'];
+        //             } elseif (is_array($response)) {
+        //                 $variants_list = $response;
+        //             }
+        //         }
+        //         if (!empty($variants_list)) {
+        //             foreach ($variants_list as $variant) {
+        //                 $post_id = wp_insert_post(array(
+        //                     'post_title' => sanitize_text_field($variant['name']),
+        //                     'post_type' => 'gic_var',
+        //                     'post_status' => 'publish'
+        //                 ));
+        //                 if ($post_id && !is_wp_error($post_id)) {
+        //                     update_post_meta($post_id, '_gicapi_variant_sku', sanitize_text_field($variant['sku']));
+        //                     if (isset($variant['price'])) update_post_meta($post_id, '_gicapi_variant_price', sanitize_text_field($variant['price']));
+        //                     if (isset($variant['value'])) update_post_meta($post_id, '_gicapi_variant_value', sanitize_text_field($variant['value']));
+        //                     if (isset($variant['max_order'])) update_post_meta($post_id, '_gicapi_variant_max_order', absint($variant['max_order']));
+        //                     if (isset($variant['stock_status'])) update_post_meta($post_id, '_gicapi_variant_stock_status', sanitize_text_field($variant['stock_status']));
+        //                     update_post_meta($post_id, '_gicapi_variant_product', $product_sku);
+        //                     delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     wp_reset_postdata();
+        // }
 
         // Load appropriate view
         if ($product_sku) {

@@ -19,7 +19,7 @@ if (strpos($category_sku, 'GC-') !== 0) {
 
 // Get products from API
 $api = GICAPI_API::get_instance();
-$response = $api->get_products($category_sku, 1, 999); // Get all products for the category
+$response = $api->get_products($category_sku, 1, 10); // Get all products for the category
 
 if (is_wp_error($response)) {
     echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching products from API', 'gift-i-card') . '</p></div>';
@@ -53,9 +53,6 @@ if (!is_wp_error($categories)) {
     </h1>
 
     <div class="gicapi-toolbar">
-        <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('action', 'update_products'), 'gicapi_update_data')); ?>" class="button button-secondary">
-            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Products', 'gift-i-card'); ?>
-        </a>
         <!-- Add search form here later -->
     </div>
 

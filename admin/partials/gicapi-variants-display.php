@@ -70,9 +70,6 @@ if (empty($variants)) {
     </h1>
 
     <div class="gicapi-toolbar">
-        <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('action', 'update_variants'), 'gicapi_update_data')); ?>" class="button button-secondary">
-            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Variants', 'gift-i-card'); ?>
-        </a>
         <!-- Add search form here later -->
     </div>
 
