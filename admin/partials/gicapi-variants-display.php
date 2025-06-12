@@ -14,17 +14,6 @@ $product_sku = isset($_GET['product']) ? sanitize_text_field($_GET['product']) :
 
 // Get product info from API
 $api = GICAPI_API::get_instance();
-$response = $api->get_products($category_sku, 1, 999);
-$product_name = __('Unknown Product', 'gift-i-card');
-
-if (!is_wp_error($response) && isset($response['products'])) {
-    foreach ($response['products'] as $prod) {
-        if ($prod['sku'] === $product_sku) {
-            $product_name = $prod['name'];
-            break;
-        }
-    }
-}
 
 // Get category info from API
 $categories = $api->get_categories();
@@ -44,6 +33,13 @@ $categories_page_url = menu_page_url($plugin_name . '-products', false);
 
 // Get variants from API
 $variants = $api->get_variants($product_sku);
+
+$product_name = __('Unknown Product', 'gift-i-card');
+
+if ($variants[0]) {
+    $value = $variants[0]['value'];
+    $product_name = str_replace($value . ' - ', '', $variants[0]['name']);
+}
 
 if (!$variants) {
     echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching variants from API', 'gift-i-card') . '</p></div>';
