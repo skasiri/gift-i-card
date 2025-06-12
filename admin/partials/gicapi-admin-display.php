@@ -54,7 +54,7 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
 
         <?php
         // Check if $is_connected is set and true by the GICAPI_Admin class
-        if (isset($is_connected) && $is_connected) :
+        if (isset($base_url) && isset($consumer_key) && isset($consumer_secret)) :
         ?>
             <h2><?php _e('Token Management', 'gift-i-card'); ?></h2>
             <table class="form-table">
