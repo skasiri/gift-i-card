@@ -192,7 +192,7 @@ class GICAPI_Admin
         $action = isset($_GET['action']) ? sanitize_key($_GET['action']) : '';
         $nonce = isset($_GET['_wpnonce']) ? sanitize_text_field($_GET['_wpnonce']) : '';
         $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
-        $product_id = isset($_GET['product']) ? absint($_GET['product']) : 0;
+        $product_sku = isset($_GET['product']) ? sanitize_text_field($_GET['product']) : '';
 
         $api = GICAPI_API::get_instance(); // Use singleton instance
 
@@ -241,7 +241,7 @@ class GICAPI_Admin
                             $api_products_list,
                             'gic_prod',
                             '_gicapi_product_sku',
-                            function ($api_prod_item, $parent_id_val) {
+                            function ($api_prod_item, $parent_sku_val) {
                                 $post_args = [
                                     'post_title' => sanitize_text_field($api_prod_item['name']),
                                 ];
@@ -250,7 +250,7 @@ class GICAPI_Admin
                                     '_gicapi_product_url' => isset($api_prod_item['url']) ? esc_url_raw($api_prod_item['url']) : '',
                                     '_gicapi_product_image_url' => isset($api_prod_item['image_url']) ? esc_url_raw($api_prod_item['image_url']) : '',
                                     '_gicapi_product_variant_count' => isset($api_prod_item['variant_count']) ? absint($api_prod_item['variant_count']) : 0,
-                                    '_gicapi_product_category' => $parent_id_val,
+                                    '_gicapi_product_category' => $parent_sku_val,
                                 ];
                                 return [$post_args, $meta_input];
                             },
@@ -263,44 +263,41 @@ class GICAPI_Admin
                     break;
 
                 case 'update_variants':
-                    if ($product_id) {
-                        $product_sku = get_post_meta($product_id, '_gicapi_product_sku', true);
-                        if ($product_sku) {
-                            $api_response = $api->get_variants($product_sku, 1, 999); // Fetch all variants
-                            $api_variants_list = [];
+                    if ($product_sku) {
+                        $api_response = $api->get_variants($product_sku, 1, 999); // Fetch all variants
+                        $api_variants_list = [];
 
-                            if ($api_response && !is_wp_error($api_response)) {
-                                if (isset($api_response['variants']) && is_array($api_response['variants'])) {
-                                    $api_variants_list = $api_response['variants'];
-                                } elseif (is_array($api_response)) { // Fallback for direct array
-                                    $api_variants_list = $api_response;
-                                }
-                            } elseif (is_wp_error($api_response)) {
-                                // error_log('GICAPI: Error fetching variants from API: ' . $api_response->get_error_message());
+                        if ($api_response && !is_wp_error($api_response)) {
+                            if (isset($api_response['variants']) && is_array($api_response['variants'])) {
+                                $api_variants_list = $api_response['variants'];
+                            } elseif (is_array($api_response)) { // Fallback for direct array
+                                $api_variants_list = $api_response;
                             }
-
-                            $this->sync_items(
-                                $api_variants_list,
-                                'gic_var',
-                                '_gicapi_variant_sku',
-                                function ($api_var_item, $parent_id_val) {
-                                    $post_args = [
-                                        'post_title' => sanitize_text_field($api_var_item['name']),
-                                    ];
-                                    $meta_input = [
-                                        '_gicapi_variant_sku' => sanitize_text_field($api_var_item['sku']),
-                                        '_gicapi_variant_price' => isset($api_var_item['price']) ? sanitize_text_field($api_var_item['price']) : '',
-                                        '_gicapi_variant_value' => isset($api_var_item['value']) ? sanitize_text_field($api_var_item['value']) : '',
-                                        '_gicapi_variant_max_order' => isset($api_var_item['max_order']) ? absint($api_var_item['max_order']) : 0,
-                                        '_gicapi_variant_stock_status' => isset($api_var_item['stock_status']) ? sanitize_text_field($api_var_item['stock_status']) : '',
-                                        '_gicapi_variant_product' => $parent_id_val,
-                                    ];
-                                    return [$post_args, $meta_input];
-                                },
-                                '_gicapi_variant_product',
-                                $product_id
-                            );
+                        } elseif (is_wp_error($api_response)) {
+                            // error_log('GICAPI: Error fetching variants from API: ' . $api_response->get_error_message());
                         }
+
+                        $this->sync_items(
+                            $api_variants_list,
+                            'gic_var',
+                            '_gicapi_variant_sku',
+                            function ($api_var_item, $parent_id_val) {
+                                $post_args = [
+                                    'post_title' => sanitize_text_field($api_var_item['name']),
+                                ];
+                                $meta_input = [
+                                    '_gicapi_variant_sku' => sanitize_text_field($api_var_item['sku']),
+                                    '_gicapi_variant_price' => isset($api_var_item['price']) ? sanitize_text_field($api_var_item['price']) : '',
+                                    '_gicapi_variant_value' => isset($api_var_item['value']) ? sanitize_text_field($api_var_item['value']) : '',
+                                    '_gicapi_variant_max_order' => isset($api_var_item['max_order']) ? absint($api_var_item['max_order']) : 0,
+                                    '_gicapi_variant_stock_status' => isset($api_var_item['stock_status']) ? sanitize_text_field($api_var_item['stock_status']) : '',
+                                    '_gicapi_variant_product' => $parent_id_val,
+                                ];
+                                return [$post_args, $meta_input];
+                            },
+                            '_gicapi_variant_product',
+                            $product_sku
+                        );
                         wp_safe_redirect($redirect_url);
                         exit;
                     }
@@ -342,7 +339,7 @@ class GICAPI_Admin
         }
 
         // Get products if category selected (Initial Population for that category)
-        if ($category_sku && !$product_id) {
+        if ($category_sku && !$product_sku) {
             $existing_prods_query = new WP_Query([
                 'post_type' => 'gic_prod',
                 'posts_per_page' => 1,
@@ -377,57 +374,51 @@ class GICAPI_Admin
         }
 
         // Get variants if product selected (Initial Population for that product)
-        if ($product_id) {
-            $product = get_post($product_id);
-            if ($product) {
-                $existing_vars_query = new WP_Query([
-                    'post_type' => 'gic_var',
-                    'posts_per_page' => 1,
-                    'fields' => 'ids',
-                    'meta_query' => [
-                        'relation' => 'AND',
-                        ['key' => '_gicapi_variant_product', 'value' => $product_id],
-                        ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
-                    ]
-                ]);
-                if (!$existing_vars_query->have_posts()) {
-                    $product_sku = get_post_meta($product->ID, '_gicapi_product_sku', true);
-                    if ($product_sku) {
-                        $response = $api->get_variants($product_sku, 1, 999); // Original page size
-                        $variants_list = [];
-                        if ($response && !is_wp_error($response)) {
-                            if (isset($response['variants']) && is_array($response['variants'])) {
-                                $variants_list = $response['variants'];
-                            } elseif (is_array($response)) {
-                                $variants_list = $response;
-                            }
-                        }
-                        if (!empty($variants_list)) {
-                            foreach ($variants_list as $variant) {
-                                $post_id = wp_insert_post(array(
-                                    'post_title' => sanitize_text_field($variant['name']),
-                                    'post_type' => 'gic_var',
-                                    'post_status' => 'publish'
-                                ));
-                                if ($post_id && !is_wp_error($post_id)) {
-                                    update_post_meta($post_id, '_gicapi_variant_sku', sanitize_text_field($variant['sku']));
-                                    if (isset($variant['price'])) update_post_meta($post_id, '_gicapi_variant_price', sanitize_text_field($variant['price']));
-                                    if (isset($variant['value'])) update_post_meta($post_id, '_gicapi_variant_value', sanitize_text_field($variant['value']));
-                                    if (isset($variant['max_order'])) update_post_meta($post_id, '_gicapi_variant_max_order', absint($variant['max_order']));
-                                    if (isset($variant['stock_status'])) update_post_meta($post_id, '_gicapi_variant_stock_status', sanitize_text_field($variant['stock_status']));
-                                    update_post_meta($post_id, '_gicapi_variant_product', $product_id);
-                                    delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
-                                }
-                            }
+        if ($product_sku) {
+            $existing_vars_query = new WP_Query([
+                'post_type' => 'gic_var',
+                'posts_per_page' => 1,
+                'fields' => 'ids',
+                'meta_query' => [
+                    'relation' => 'AND',
+                    ['key' => '_gicapi_variant_product', 'value' => $product_sku],
+                    ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
+                ]
+            ]);
+            if (!$existing_vars_query->have_posts()) {
+                $response = $api->get_variants($product_sku, 1, 999); // Original page size
+                $variants_list = [];
+                if ($response && !is_wp_error($response)) {
+                    if (isset($response['variants']) && is_array($response['variants'])) {
+                        $variants_list = $response['variants'];
+                    } elseif (is_array($response)) {
+                        $variants_list = $response;
+                    }
+                }
+                if (!empty($variants_list)) {
+                    foreach ($variants_list as $variant) {
+                        $post_id = wp_insert_post(array(
+                            'post_title' => sanitize_text_field($variant['name']),
+                            'post_type' => 'gic_var',
+                            'post_status' => 'publish'
+                        ));
+                        if ($post_id && !is_wp_error($post_id)) {
+                            update_post_meta($post_id, '_gicapi_variant_sku', sanitize_text_field($variant['sku']));
+                            if (isset($variant['price'])) update_post_meta($post_id, '_gicapi_variant_price', sanitize_text_field($variant['price']));
+                            if (isset($variant['value'])) update_post_meta($post_id, '_gicapi_variant_value', sanitize_text_field($variant['value']));
+                            if (isset($variant['max_order'])) update_post_meta($post_id, '_gicapi_variant_max_order', absint($variant['max_order']));
+                            if (isset($variant['stock_status'])) update_post_meta($post_id, '_gicapi_variant_stock_status', sanitize_text_field($variant['stock_status']));
+                            update_post_meta($post_id, '_gicapi_variant_product', $product_sku);
+                            delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
                         }
                     }
                 }
-                wp_reset_postdata();
             }
+            wp_reset_postdata();
         }
 
         // Load appropriate view
-        if ($product_id) {
+        if ($product_sku) {
             include_once plugin_dir_path(__FILE__) . 'partials/gicapi-variants-display.php';
         } elseif ($category_sku) {
             include_once plugin_dir_path(__FILE__) . 'partials/gicapi-products-display.php';
@@ -448,7 +439,7 @@ class GICAPI_Admin
      * @param string|null $parent_meta_key Optional. The meta key on the post type that links to a parent post.
      * @param int|null    $parent_id Optional. The ID of the parent post if syncing child items.
      */
-    private function sync_items($api_items, $post_type, $sku_meta_key, $map_api_to_post_args_callback, $parent_meta_key = null, $parent_id = null)
+    private function sync_items($api_items, $post_type, $sku_meta_key, $map_api_to_post_args_callback, $parent_meta_key = null, $parent_sku = null)
     {
         $processed_skus = [];
         $local_items_query_args = [
@@ -464,10 +455,10 @@ class GICAPI_Admin
             'fields' => 'ids' // We only need IDs and then get meta
         ];
 
-        if ($parent_meta_key && $parent_id) {
+        if ($parent_meta_key && $parent_sku) {
             $local_items_query_args['meta_query'][] = [
                 'key' => $parent_meta_key,
-                'value' => $parent_id,
+                'value' => $parent_sku,
                 'compare' => '='
             ];
         }
@@ -491,7 +482,7 @@ class GICAPI_Admin
         }
 
         foreach ($api_items as $api_item) {
-            list($post_args_base, $meta_input_base) = call_user_func($map_api_to_post_args_callback, $api_item, $parent_id);
+            list($post_args_base, $meta_input_base) = call_user_func($map_api_to_post_args_callback, $api_item, $parent_sku);
 
             // Trim the SKU from API item's mapped meta
             $sku_value = isset($meta_input_base[$sku_meta_key]) ? trim($meta_input_base[$sku_meta_key]) : null;

@@ -102,14 +102,14 @@ class GICAPI_Public
 
         if (is_wp_error($response)) {
             $order->add_order_note(sprintf(
-                __('Failed to create gift card order: %s', 'gift-i-card'),
+                __('Failed to create Gift-i-Card order: %s', 'gift-i-card'),
                 $response->get_error_message()
             ));
             return;
         }
 
         $order->add_order_note(sprintf(
-            __('Gift card order created: %s', 'gift-i-card'),
+            __('Gift-i-Card order created: %s', 'gift-i-card'),
             $response['order_id']
         ));
 
