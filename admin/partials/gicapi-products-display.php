@@ -12,6 +12,10 @@ if (!defined('ABSPATH')) {
 $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
 $parent_page_url = menu_page_url($plugin_name . '-products', false);
 
+// Get current page and items per page
+$paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+$per_page = 10;
+
 if (strpos($category_sku, 'GC-') !== 0) {
     echo '<div class="wrap gicapi-admin-page"><h1>' . esc_html__('Category is not valid.', 'gift-i-card') . '</h1></div>';
     return;
@@ -19,7 +23,7 @@ if (strpos($category_sku, 'GC-') !== 0) {
 
 // Get products from API
 $api = GICAPI_API::get_instance();
-$response = $api->get_products($category_sku, 1, 10); // Get all products for the category
+$response = $api->get_products($category_sku, $paged, $per_page); // Get products with pagination
 
 if (is_wp_error($response)) {
     echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching products from API', 'gift-i-card') . '</p></div>';
@@ -27,6 +31,8 @@ if (is_wp_error($response)) {
 }
 
 $products = isset($response['products']) ? $response['products'] : array();
+$total_products = isset($response['total']) ? $response['total'] : 0;
+$total_pages = ceil($total_products / $per_page);
 
 if (empty($products)) {
     echo '<div class="wrap gicapi-admin-page"><h1>' . esc_html__('No products found for this category.', 'gift-i-card') . '</h1></div>';
@@ -101,5 +107,23 @@ if (!is_wp_error($categories)) {
             </tr>
         </tfoot>
     </table>
-    <!-- Add pagination controls here later -->
+    <?php if ($total_pages > 1) : ?>
+        <div class="tablenav bottom">
+            <div class="tablenav-pages">
+                <span class="displaying-num"><?php printf(_n('%s item', '%s items', $total_products, 'gift-i-card'), number_format_i18n($total_products)); ?></span>
+                <span class="pagination-links">
+                    <?php
+                    echo paginate_links(array(
+                        'base' => add_query_arg('paged', '%#%'),
+                        'format' => '',
+                        'prev_text' => __('&laquo;'),
+                        'next_text' => __('&raquo;'),
+                        'total' => $total_pages,
+                        'current' => $paged
+                    ));
+                    ?>
+                </span>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
