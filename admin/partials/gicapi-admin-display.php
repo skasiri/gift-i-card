@@ -14,7 +14,7 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
 ?>
 
 <div class="wrap">
-    <h1><?php _e('Gift Card Settings', 'gift-i-card'); ?></h1>
+    <h1><?php _e('Gift-i-Card Settings', 'gift-i-card'); ?></h1>
 
     <form method="post" action="options.php">
         <?php settings_fields('gicapi_settings'); ?>
@@ -26,7 +26,7 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
                 </th>
                 <td>
                     <input type="url" name="gicapi_base_url" id="gicapi_base_url" value="<?php echo esc_attr($base_url); ?>" class="regular-text" required>
-                    <p class="description"><?php _e('The base URL of the gift card service API', 'gift-i-card'); ?></p>
+                    <p class="description"><?php _e('The base URL of the gift-i-card service API', 'gift-i-card'); ?></p>
                 </td>
             </tr>
 

@@ -32,7 +32,7 @@ $total_categories = wp_count_posts('gic_cat')->publish;
 
     <div class="gicapi-toolbar">
         <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('action', 'update_categories'), 'gicapi_update_data')); ?>" class="button button-secondary">
-            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Categories from API', 'gift-i-card'); ?>
+            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Categories', 'gift-i-card'); ?>
         </a>
         <!-- Add search form here later -->
     </div>

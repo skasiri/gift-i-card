@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-05-06 19:27+0330\n"
-"PO-Revision-Date: 2025-05-06 19:46+0330\n"
+"POT-Creation-Date: 2025-06-12 04:23+0330\n"
+"PO-Revision-Date: 2025-06-12 04:26+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -21,88 +21,102 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: admin/class-gicapi-admin.php:86
-msgid "در حال دریافت توکن جدید..."
-msgstr ""
+#: admin/class-gicapi-admin.php:97
+msgid "Refreshing token..."
+msgstr "در حال نوسازی توکن..."
 
-#: admin/class-gicapi-admin.php:87
+#: admin/class-gicapi-admin.php:98
 msgid "An unknown error occurred."
-msgstr ""
+msgstr "خطای ناشناخته رخ داد."
 
-#: admin/class-gicapi-admin.php:88
-msgid "خطا در ارتباط با سرور: "
-msgstr ""
+#: admin/class-gicapi-admin.php:99
+msgid "Error communicating with server: "
+msgstr "خطا در برقراری ارتباط با سرور:"
 
-#: admin/class-gicapi-admin.php:483
+#: admin/class-gicapi-admin.php:146
+msgid "Connected"
+msgstr "متصل"
+
+#: admin/class-gicapi-admin.php:146
+msgid "Balance"
+msgstr "موجودی"
+
+#: admin/class-gicapi-admin.php:150
+msgid "Disconnected"
+msgstr "قطع"
+
+#: admin/class-gicapi-admin.php:588
 msgid "You do not have permission to perform this action."
-msgstr ""
+msgstr "دسترسی لازم برای این کار را ندارید."
 
-#: admin/class-gicapi-admin.php:498
+#: admin/class-gicapi-admin.php:597
 msgid ""
-"توکن با موفقیت تازه‌سازی شد. لطفاً برای مشاهده وضعیت اتصال جدید، صفحه را رفرش "
-"کنید یا تنظیمات را ذخیره نمایید."
+"Token refreshed successfully. Please refresh the page or save the settings "
+"to see the new connection status."
 msgstr ""
 
-#: admin/class-gicapi-admin.php:500
-msgid "خطا در تازه‌سازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید."
+#: admin/class-gicapi-admin.php:599
+msgid "Error refreshing token. Please check the API settings and try again."
 msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:17
-msgid "Gift Card Settings"
-msgstr ""
+msgid "Gift-i-Card Settings"
+msgstr "تنظیمات گیفتی کارت"
 
 #: admin/partials/gicapi-admin-display.php:25
 msgid "Base URL"
-msgstr ""
+msgstr "آدرس اتصال"
 
 #: admin/partials/gicapi-admin-display.php:29
-msgid "The base URL of the gift card service API"
-msgstr ""
+msgid "The base URL of the gift-i-card service API"
+msgstr "آدرس اتصال به وب سرویس گیفتی کارت"
 
 #: admin/partials/gicapi-admin-display.php:35
 msgid "Consumer Key"
-msgstr ""
+msgstr "کلید مصرف کننده"
 
 #: admin/partials/gicapi-admin-display.php:39
 msgid "The consumer key for API authentication"
-msgstr ""
+msgstr "کلید مصرف کننده برای اعتبارسنجی وب سرویس"
 
 #: admin/partials/gicapi-admin-display.php:45
 msgid "Consumer Secret"
-msgstr ""
+msgstr "رمز مصرف کننده"
 
 #: admin/partials/gicapi-admin-display.php:49
 msgid "The consumer secret for API authentication"
-msgstr ""
+msgstr "رمز مصرف کننده برای اعتبارسنجی وب سرویس"
 
 #: admin/partials/gicapi-admin-display.php:59
 msgid "Token Management"
-msgstr ""
+msgstr "مدیریت توکن"
 
 #: admin/partials/gicapi-admin-display.php:62
 msgid "Refresh Token"
-msgstr ""
+msgstr "نوسازی توکن"
 
 #: admin/partials/gicapi-admin-display.php:65
 msgid "Get New Token"
-msgstr ""
+msgstr "دریافت توکن جدید"
 
 #: admin/partials/gicapi-admin-display.php:67
 msgid ""
-"Click this button to discard the current token and get a new one from the API."
+"Click this button to discard the current token and get a new one from the "
+"API."
 msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:76
 msgid "Order Settings"
-msgstr ""
+msgstr "تنظیمات سفارشات"
 
 #: admin/partials/gicapi-admin-display.php:81
 msgid "Complete Orders"
-msgstr ""
+msgstr "تکمیل سفارشات"
 
 #: admin/partials/gicapi-admin-display.php:86
 msgid ""
-"Automatically complete WooCommerce orders after successful gift card redemption"
+"Automatically complete WooCommerce orders after successful gift card "
+"redemption"
 msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:93
@@ -115,11 +129,11 @@ msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:104
 msgid "Display Settings"
-msgstr ""
+msgstr "تنظیمات نمایش"
 
 #: admin/partials/gicapi-admin-display.php:109
 msgid "Add to Email"
-msgstr ""
+msgstr "افزودن به ایمیل"
 
 #: admin/partials/gicapi-admin-display.php:114
 msgid "Add redeem data to order emails"
@@ -127,7 +141,7 @@ msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:121
 msgid "Add to Order Details"
-msgstr ""
+msgstr "افزودن به جزئیات سفارش"
 
 #: admin/partials/gicapi-admin-display.php:126
 msgid "Add redeem data to order details page"
@@ -135,240 +149,268 @@ msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:133
 msgid "Add to Thank You"
-msgstr ""
+msgstr "افزودن به صفحه تشکر از پرداخت"
 
 #: admin/partials/gicapi-admin-display.php:138
 msgid "Add redeem data to thank you page"
 msgstr ""
 
+#: admin/partials/gicapi-admin-display.php:144
+msgid "Data Management"
+msgstr ""
+
+#: admin/partials/gicapi-admin-display.php:147
+msgid "Delete All Data"
+msgstr "حذف تمام اطلاعات افزونه"
+
+#: admin/partials/gicapi-admin-display.php:150
+msgid "Delete All Plugin Data"
+msgstr ""
+
+#: admin/partials/gicapi-admin-display.php:153
+msgid ""
+"Warning: This will permanently delete all plugin data. This action cannot be "
+"undone!"
+msgstr ""
+
 #: admin/partials/gicapi-categories-display.php:31
 msgid "Categories"
-msgstr ""
+msgstr "دسته بندی ها"
 
 #: admin/partials/gicapi-categories-display.php:35
-msgid "Update Categories from API"
-msgstr ""
+msgid "Update Categories"
+msgstr "بروزرسانی محصولات"
 
 #: admin/partials/gicapi-categories-display.php:43
-#: admin/partials/gicapi-categories-display.php:89
+#: admin/partials/gicapi-categories-display.php:93
 msgid "Thumbnail"
-msgstr ""
+msgstr "تصویر"
 
 #: admin/partials/gicapi-categories-display.php:44
-#: admin/partials/gicapi-categories-display.php:66
-#: admin/partials/gicapi-categories-display.php:90
-#: admin/partials/gicapi-products-display.php:35
-#: admin/partials/gicapi-products-display.php:70
-#: admin/partials/gicapi-products-display.php:94
+#: admin/partials/gicapi-categories-display.php:67
+#: admin/partials/gicapi-categories-display.php:94
+#: admin/partials/gicapi-products-display.php:72
+#: admin/partials/gicapi-products-display.php:97
+#: admin/partials/gicapi-products-display.php:124
 #: admin/partials/gicapi-variants-display.php:42
-#: admin/partials/gicapi-variants-display.php:79
-#: admin/partials/gicapi-variants-display.php:114
+#: admin/partials/gicapi-variants-display.php:81
+#: admin/partials/gicapi-variants-display.php:128
 msgid "Name"
-msgstr ""
+msgstr "نام"
 
 #: admin/partials/gicapi-categories-display.php:45
-#: admin/partials/gicapi-categories-display.php:77
-#: admin/partials/gicapi-categories-display.php:91
-#: admin/partials/gicapi-products-display.php:36
-#: admin/partials/gicapi-products-display.php:81
-#: admin/partials/gicapi-products-display.php:95
+#: admin/partials/gicapi-categories-display.php:81
+#: admin/partials/gicapi-categories-display.php:95
+#: admin/partials/gicapi-products-display.php:73
+#: admin/partials/gicapi-products-display.php:111
+#: admin/partials/gicapi-products-display.php:125
 #: admin/partials/gicapi-variants-display.php:43
-#: admin/partials/gicapi-variants-display.php:86
-#: admin/partials/gicapi-variants-display.php:115
+#: admin/partials/gicapi-variants-display.php:100
+#: admin/partials/gicapi-variants-display.php:129
 msgid "SKU"
-msgstr ""
+msgstr "شناسه SKU"
 
 #: admin/partials/gicapi-categories-display.php:46
-#: admin/partials/gicapi-categories-display.php:78
-#: admin/partials/gicapi-categories-display.php:92
+#: admin/partials/gicapi-categories-display.php:82
+#: admin/partials/gicapi-categories-display.php:96
 msgid "Product Count"
-msgstr ""
+msgstr "تعداد محصول"
 
 #: admin/partials/gicapi-categories-display.php:73
+#: admin/partials/gicapi-products-display.php:103
+#: admin/partials/gicapi-variants-display.php:85
+msgid "Deleted"
+msgstr ""
+
+#: admin/partials/gicapi-categories-display.php:77
 msgid "View Products"
-msgstr ""
+msgstr "لیست  محصولات"
 
-#: admin/partials/gicapi-categories-display.php:75
-#: admin/partials/gicapi-products-display.php:79
-#: admin/partials/gicapi-variants-display.php:84
+#: admin/partials/gicapi-categories-display.php:79
+#: admin/partials/gicapi-products-display.php:109
+#: admin/partials/gicapi-variants-display.php:98
 msgid "Show more details"
-msgstr ""
+msgstr "جزئیات بیشتر"
 
-#: admin/partials/gicapi-categories-display.php:83
+#: admin/partials/gicapi-categories-display.php:87
 msgid "No categories found. Try updating from API."
 msgstr ""
 
-#: admin/partials/gicapi-products-display.php:14
+#: admin/partials/gicapi-products-display.php:51
 #: admin/partials/gicapi-variants-display.php:19
 msgid "Unknown Category"
-msgstr ""
+msgstr "دسته بندی ناشناخته"
 
-#: admin/partials/gicapi-products-display.php:21
+#: admin/partials/gicapi-products-display.php:58
 msgid "Products"
-msgstr ""
+msgstr "محصولات"
 
-#: admin/partials/gicapi-products-display.php:26
-msgid "Update Products from API"
+#: admin/partials/gicapi-products-display.php:63
+msgid "Update Products"
 msgstr "بروزرسانی محصولات"
 
-#: admin/partials/gicapi-products-display.php:34
-#: admin/partials/gicapi-products-display.php:93
+#: admin/partials/gicapi-products-display.php:71
+#: admin/partials/gicapi-products-display.php:123
 msgid "Image"
-msgstr ""
+msgstr "تصویر"
 
-#: admin/partials/gicapi-products-display.php:37
-#: admin/partials/gicapi-products-display.php:82
-#: admin/partials/gicapi-products-display.php:96
+#: admin/partials/gicapi-products-display.php:74
+#: admin/partials/gicapi-products-display.php:112
+#: admin/partials/gicapi-products-display.php:126
 msgid "Variant Count"
-msgstr ""
+msgstr "تعداد واریانت"
 
-#: admin/partials/gicapi-products-display.php:77
+#: admin/partials/gicapi-products-display.php:107
 msgid "View Variants"
-msgstr ""
+msgstr "لیست واریانت"
 
-#: admin/partials/gicapi-products-display.php:87
+#: admin/partials/gicapi-products-display.php:117
 msgid "No products found for this category. Try updating from API."
 msgstr ""
 
 #: admin/partials/gicapi-variants-display.php:16
 msgid "Unknown Product"
-msgstr ""
+msgstr "محصول ناشناخته"
 
 #: admin/partials/gicapi-variants-display.php:29
 msgid "Variants"
-msgstr ""
+msgstr "واریانت ها"
 
 #: admin/partials/gicapi-variants-display.php:34
-msgid "Update Variants from API"
-msgstr ""
+msgid "Update Variants"
+msgstr "بروزرسانی لیست واریانت"
 
 #: admin/partials/gicapi-variants-display.php:44
-#: admin/partials/gicapi-variants-display.php:87
-#: admin/partials/gicapi-variants-display.php:116
+#: admin/partials/gicapi-variants-display.php:101
+#: admin/partials/gicapi-variants-display.php:130
 msgid "Price"
-msgstr ""
+msgstr "قیمت"
 
 #: admin/partials/gicapi-variants-display.php:45
-#: admin/partials/gicapi-variants-display.php:88
-#: admin/partials/gicapi-variants-display.php:117
+#: admin/partials/gicapi-variants-display.php:102
+#: admin/partials/gicapi-variants-display.php:131
 #: public/class-gicapi-public.php:176
 msgid "Value"
-msgstr ""
+msgstr "اعتبار"
 
 #: admin/partials/gicapi-variants-display.php:46
-#: admin/partials/gicapi-variants-display.php:89
-#: admin/partials/gicapi-variants-display.php:118
+#: admin/partials/gicapi-variants-display.php:103
+#: admin/partials/gicapi-variants-display.php:132
 msgid "Max Order"
-msgstr ""
+msgstr "حداکثر تعداد سفارش"
 
 #: admin/partials/gicapi-variants-display.php:47
-#: admin/partials/gicapi-variants-display.php:90
-#: admin/partials/gicapi-variants-display.php:119
+#: admin/partials/gicapi-variants-display.php:104
+#: admin/partials/gicapi-variants-display.php:133
 msgid "Stock Status"
-msgstr ""
+msgstr "وضعیت فروش"
 
 #: admin/partials/gicapi-variants-display.php:48
-#: admin/partials/gicapi-variants-display.php:95
-#: admin/partials/gicapi-variants-display.php:120
+#: admin/partials/gicapi-variants-display.php:109
+#: admin/partials/gicapi-variants-display.php:134
 msgid "Mapped WC Product"
+msgstr "محصولات متصل ووکامرس"
+
+#: admin/partials/gicapi-variants-display.php:93
+msgid "Cannot map a deleted variant"
 msgstr ""
 
-#: admin/partials/gicapi-variants-display.php:82
+#: admin/partials/gicapi-variants-display.php:94
 msgid "Map Product"
-msgstr ""
+msgstr "اتصال به محصول ووکامرس"
 
-#: admin/partials/gicapi-variants-display.php:101
+#: admin/partials/gicapi-variants-display.php:115
 msgid "Not Mapped"
-msgstr ""
+msgstr "محصولی متصل نشده"
 
-#: admin/partials/gicapi-variants-display.php:108
+#: admin/partials/gicapi-variants-display.php:122
 msgid "No variants found for this product. Try updating from API."
 msgstr ""
 
-#: admin/partials/gicapi-variants-display.php:129
+#: admin/partials/gicapi-variants-display.php:143
 msgid "Map Gift-i-Card Variant to WooCommerce Product"
 msgstr ""
 
-#: admin/partials/gicapi-variants-display.php:130
+#: admin/partials/gicapi-variants-display.php:144
 msgid "Mapping Variant:"
-msgstr ""
+msgstr "اتصال به محصول ووکامرس:"
 
-#: admin/partials/gicapi-variants-display.php:133
+#: admin/partials/gicapi-variants-display.php:147
 msgid "Search WooCommerce Products:"
-msgstr ""
+msgstr "جستجو در محصولات ووکامرس:"
 
-#: admin/partials/gicapi-variants-display.php:134
+#: admin/partials/gicapi-variants-display.php:148
 msgid "Search for a product..."
-msgstr ""
+msgstr "جستجوی محصول..."
 
-#: admin/partials/gicapi-variants-display.php:137
+#: admin/partials/gicapi-variants-display.php:151
 msgid "Save Mapping"
-msgstr ""
+msgstr "ذخیره اتصال"
 
-#: admin/partials/gicapi-variants-display.php:138
+#: admin/partials/gicapi-variants-display.php:152
 msgid "Unmap Product"
-msgstr ""
+msgstr "حذف اتصال"
 
-#: admin/partials/gicapi-variants-display.php:139
-#: admin/partials/gicapi-variants-display.php:186
+#: admin/partials/gicapi-variants-display.php:153
+#: admin/partials/gicapi-variants-display.php:200
 msgid "Cancel"
-msgstr ""
+msgstr "انصراف"
 
-#: admin/partials/gicapi-variants-display.php:157
+#: admin/partials/gicapi-variants-display.php:171
 msgid "Map to WooCommerce"
-msgstr ""
+msgstr "اتصال به محصول ووکامرس"
 
-#: admin/partials/gicapi-variants-display.php:161
+#: admin/partials/gicapi-variants-display.php:175
 msgid "Map"
-msgstr ""
+msgstr "اتصال"
 
-#: admin/partials/gicapi-variants-display.php:167
+#: admin/partials/gicapi-variants-display.php:181
 msgid "Please select a product"
-msgstr ""
+msgstr "محصولی را انتخاب کنید"
 
 #: includes/class-gicapi-activator.php:20
-msgid "Gift Card Categories"
-msgstr ""
+msgid "Gift-i-Card Categories"
+msgstr "دسته بندی های گیفتی کارت"
 
 #: includes/class-gicapi-activator.php:21
-msgid "Gift Card Category"
-msgstr ""
+msgid "Gift-i-Card Category"
+msgstr "دسته بندی گیفتی کارت"
 
 #: includes/class-gicapi-activator.php:32
-msgid "Gift Card Products"
-msgstr ""
+msgid "Gift-i-Card Products"
+msgstr "محصولات گیفتی کارت"
 
 #: includes/class-gicapi-activator.php:33
-msgid "Gift Card Product"
-msgstr ""
+msgid "Gift-i-Card Product"
+msgstr "محصول گیفتی کارت"
 
 #: includes/class-gicapi-activator.php:44
-msgid "Gift Card Variants"
-msgstr ""
+msgid "Gift-i-Card Variants"
+msgstr "لیست واریانت گیفتی کارت"
 
 #: includes/class-gicapi-activator.php:45
-msgid "Gift Card Variant"
-msgstr ""
+msgid "Gift-i-Card Variant"
+msgstr "واریانت گیفتی کارت"
 
 #: includes/class-gicapi-webhook.php:10
 msgid "Invalid data"
-msgstr ""
+msgstr "داده نامعتبر"
 
 #: includes/class-gicapi-webhook.php:14
 msgid "Order ID is required"
-msgstr ""
+msgstr "شماره سفارش الزامی است"
 
 #: includes/class-gicapi-webhook.php:28
 msgid "Order not found"
-msgstr ""
+msgstr "سفارش یافت نشد"
 
 #: includes/class-gicapi-webhook.php:35 includes/class-gicapi-webhook.php:40
 msgid "WooCommerce order not found"
-msgstr ""
+msgstr "سفارش ووکامرس یافت نشد"
 
 #: includes/class-gicapi-webhook.php:51
 msgid "Webhook processed successfully"
-msgstr ""
+msgstr "وب هوک با موفقیت پردازش شد"
 
 #: public/class-gicapi-public.php:105
 #, php-format
@@ -386,15 +428,15 @@ msgstr ""
 
 #: public/class-gicapi-public.php:174
 msgid "Product"
-msgstr ""
+msgstr "محصول"
 
 #: public/class-gicapi-public.php:175
 msgid "Code"
-msgstr ""
+msgstr "کد"
 
 #. Plugin Name of the plugin/theme
 msgid "Gift-i-Card"
-msgstr ""
+msgstr "گیفتی کارت"
 
 #. Plugin URI of the plugin/theme
 msgid "https://example.com/gift-card"
@@ -406,8 +448,8 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Your Name"
-msgstr ""
+msgstr "نام شما"
 
 #. Author URI of the plugin/theme
 msgid "https://example.com"
-msgstr ""
+msgstr "https://example.com"

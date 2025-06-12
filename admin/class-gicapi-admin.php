@@ -94,9 +94,9 @@ class GICAPI_Admin
         $script_params = array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'force_refresh_token_nonce' => wp_create_nonce('gicapi_force_refresh_token_action'),
-            'text_refreshing_token' => __('در حال دریافت توکن جدید...', 'gift-i-card'),
+            'text_refreshing_token' => __('Refreshing token...', 'gift-i-card'),
             'text_error_unknown' => __('An unknown error occurred.', 'gift-i-card'),
-            'text_error_server_communication' => __('خطا در ارتباط با سرور: ', 'gift-i-card'),
+            'text_error_server_communication' => __('Error communicating with server: ', 'gift-i-card'),
             // Add any other existing params here if gicapi_admin_params was previously used
         );
         wp_localize_script($this->plugin_name, 'gicapi_admin_params', $script_params);
@@ -143,11 +143,11 @@ class GICAPI_Admin
             $balance = number_format($response['balance'], 0, '.', ',');
             $currency = $response['currency'];
             echo '<div class="notice notice-success is-dismissible">
-                <p>Gift-i-Card API: <strong style="color: green;">Connected</strong> | موجودی: <strong>' . $balance . ' ' . $currency . '</strong></p>
+                <p>Gift-i-Card API: <strong style="color: green;">' . __('Connected', 'gift-i-card') . '</strong> | ' . __('Balance', 'gift-i-card') . ': <strong>' . $balance . ' ' . $currency . '</strong></p>
             </div>';
         } else {
             echo '<div class="notice notice-error is-dismissible">
-                <p>Gift-i-Card API: <strong style="color: red;">Disconnected</strong></p>
+                <p>Gift-i-Card API: <strong style="color: red;">' . __('Disconnected', 'gift-i-card') . '</strong></p>
             </div>';
         }
     }
@@ -594,9 +594,9 @@ class GICAPI_Admin
 
         if ($new_token) {
             // Optionally, you can try to verify the new token by making a quick call, e.g., get_balance
-            wp_send_json_success(array('message' => __('توکن با موفقیت تازه‌سازی شد. لطفاً برای مشاهده وضعیت اتصال جدید، صفحه را رفرش کنید یا تنظیمات را ذخیره نمایید.', 'gift-i-card')));
+            wp_send_json_success(array('message' => __('Token refreshed successfully. Please refresh the page or save the settings to see the new connection status.', 'gift-i-card')));
         } else {
-            wp_send_json_error(array('message' => __('خطا در تازه‌سازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید.', 'gift-i-card')));
+            wp_send_json_error(array('message' => __('Error refreshing token. Please check the API settings and try again.', 'gift-i-card')));
         }
     }
 
@@ -605,7 +605,7 @@ class GICAPI_Admin
         check_ajax_referer('gicapi_admin_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => 'شما دسترسی لازم برای انجام این عملیات را ندارید.'));
+            wp_send_json_error(array('message' => 'You do not have permission to perform this action.'));
             return;
         }
 
@@ -618,11 +618,11 @@ class GICAPI_Admin
             }
 
             wp_send_json_success(array(
-                'message' => 'تمام داده‌های افزونه با موفقیت حذف شدند.'
+                'message' => 'All plugin data has been deleted successfully.'
             ));
         } catch (Exception $e) {
             wp_send_json_error(array(
-                'message' => 'خطا در حذف داده‌ها: ' . $e->getMessage()
+                'message' => 'Error deleting data: ' . $e->getMessage()
             ));
         }
     }

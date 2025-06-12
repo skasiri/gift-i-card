@@ -17,8 +17,8 @@ class GICAPI_Activator
         // Register category post type
         register_post_type('gic_cat', array(
             'labels' => array(
-                'name' => __('Gift Card Categories', 'gift-i-card'),
-                'singular_name' => __('Gift Card Category', 'gift-i-card')
+                'name' => __('Gift-i-Card Categories', 'gift-i-card'),
+                'singular_name' => __('Gift-i-Card Category', 'gift-i-card')
             ),
             'public' => false,
             'show_ui' => false,
@@ -29,8 +29,8 @@ class GICAPI_Activator
         // Register product post type
         register_post_type('gic_prod', array(
             'labels' => array(
-                'name' => __('Gift Card Products', 'gift-i-card'),
-                'singular_name' => __('Gift Card Product', 'gift-i-card')
+                'name' => __('Gift-i-Card Products', 'gift-i-card'),
+                'singular_name' => __('Gift-i-Card Product', 'gift-i-card')
             ),
             'public' => false,
             'show_ui' => false,
@@ -41,8 +41,8 @@ class GICAPI_Activator
         // Register variant post type
         register_post_type('gic_var', array(
             'labels' => array(
-                'name' => __('Gift Card Variants', 'gift-i-card'),
-                'singular_name' => __('Gift Card Variant', 'gift-i-card')
+                'name' => __('Gift-i-Card Variants', 'gift-i-card'),
+                'singular_name' => __('Gift-i-Card Variant', 'gift-i-card')
             ),
             'public' => false,
             'show_ui' => false,

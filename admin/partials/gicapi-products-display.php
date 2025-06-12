@@ -60,7 +60,7 @@ $category_name = !empty($category) ? $category[0]->post_title : __('Unknown Cate
 
     <div class="gicapi-toolbar">
         <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('action', 'update_products'), 'gicapi_update_data')); ?>" class="button button-secondary">
-            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Products from API', 'gift-i-card'); ?>
+            <span class="dashicons dashicons-update" style="vertical-align: middle;"></span> <?php _e('Update Products', 'gift-i-card'); ?>
         </a>
         <!-- Add search form here later -->
     </div>
