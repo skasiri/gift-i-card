@@ -55,7 +55,7 @@ $total_categories = wp_count_posts('gic_cat')->publish;
                     $category_sku = get_post_meta($category_id, '_gicapi_category_sku', true);
                     $category_count = get_post_meta($category_id, '_gicapi_category_count', true);
                     $category_thumbnail = get_post_meta($category_id, '_gicapi_category_thumbnail', true);
-                    $products_page_url = add_query_arg('category', $category_id, menu_page_url($plugin_name . '-products', false));
+                    $products_page_url = add_query_arg('category', $category_sku, menu_page_url($plugin_name . '-products', false));
                     $is_deleted = get_post_meta($category_id, '_gicapi_is_deleted', true) === 'true';
             ?>
                     <tr class="<?php if ($is_deleted) echo 'gicapi-item-deleted'; ?>">

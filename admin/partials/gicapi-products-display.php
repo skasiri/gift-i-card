@@ -9,10 +9,31 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$category_id = isset($_GET['category']) ? absint($_GET['category']) : 0;
-$category = $category_id ? get_post($category_id) : null;
-$category_name = $category ? $category->post_title : __('Unknown Category', 'gift-i-card');
+$category_meta = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
+$category_name = !empty($category_meta) ? $category_meta : __('Unknown Category', 'gift-i-card');
 $parent_page_url = menu_page_url($plugin_name . '-products', false);
+
+if (strpos($category_meta, 'GC-') != 0) {
+    return '<div class="wrap gicapi-admin-page"><h1>Category is not valid.</h1></div>';
+}
+
+$products_args = array(
+    'post_type' => 'gic_prod',
+    'posts_per_page' => -1, // Adjust later for pagination
+    'post_status' => 'publish',
+    'meta_query' => array(
+        array(
+            'key' => '_gicapi_product_category',
+            'value' => $category_meta,
+            'compare' => '='
+        )
+    )
+);
+$products = get_posts($products_args);
+
+if (empty($products)) {
+    return '<div class="wrap gicapi-admin-page"><h1>Category is not valid.</h1></div>';
+}
 
 ?>
 <div class="wrap gicapi-admin-page">
@@ -39,19 +60,7 @@ $parent_page_url = menu_page_url($plugin_name . '-products', false);
         </thead>
         <tbody id="the-list">
             <?php
-            $products_args = array(
-                'post_type' => 'gic_prod',
-                'posts_per_page' => -1, // Adjust later for pagination
-                'post_status' => 'publish',
-                'meta_query' => array(
-                    array(
-                        'key' => '_gicapi_product_category',
-                        'value' => $category_id,
-                        'compare' => '='
-                    )
-                )
-            );
-            $products = get_posts($products_args);
+
 
             if (!empty($products)) :
                 foreach ($products as $product) :

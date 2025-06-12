@@ -58,6 +58,7 @@ class GICAPI_Admin
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('admin_notices', array($this, 'display_connection_status'));
         add_action('wp_ajax_gicapi_force_refresh_token', array($this, 'ajax_force_refresh_token'));
+        add_action('wp_ajax_gicapi_delete_all_data', array($this, 'ajax_delete_all_data'));
     }
 
     /**
@@ -77,7 +78,17 @@ class GICAPI_Admin
      */
     public function enqueue_scripts()
     {
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/gicapi-admin.js', array('jquery'), $this->version, false);
+        wp_enqueue_script(
+            'gicapi-admin',
+            plugin_dir_url(__FILE__) . 'js/gicapi-admin.js',
+            array('jquery'),
+            $this->version,
+            true
+        );
+
+        wp_localize_script('gicapi-admin', 'gicapi_admin', array(
+            'nonce' => wp_create_nonce('gicapi_admin_nonce')
+        ));
 
         // Prepare parameters for JavaScript, including nonces and localized text
         $script_params = array(
@@ -180,7 +191,7 @@ class GICAPI_Admin
         // Handle update actions first
         $action = isset($_GET['action']) ? sanitize_key($_GET['action']) : '';
         $nonce = isset($_GET['_wpnonce']) ? sanitize_text_field($_GET['_wpnonce']) : '';
-        $category_id = isset($_GET['category']) ? absint($_GET['category']) : 0;
+        $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
         $product_id = isset($_GET['product']) ? absint($_GET['product']) : 0;
 
         $api = GICAPI_API::get_instance(); // Use singleton instance
@@ -217,38 +228,35 @@ class GICAPI_Admin
                     exit;
 
                 case 'update_products':
-                    if ($category_id) {
-                        $category_sku = get_post_meta($category_id, '_gicapi_category_sku', true);
-                        if ($category_sku) {
-                            $api_response = $api->get_products($category_sku, 1, 999); // Fetch all products for the category
-                            $api_products_list = [];
-                            if ($api_response && isset($api_response['products']) && is_array($api_response['products']) && !is_wp_error($api_response)) {
-                                $api_products_list = $api_response['products'];
-                            } elseif (is_wp_error($api_response)) {
-                                // error_log('GICAPI: Error fetching products from API: ' . $api_response->get_error_message());
-                            }
-
-                            $this->sync_items(
-                                $api_products_list,
-                                'gic_prod',
-                                '_gicapi_product_sku',
-                                function ($api_prod_item, $parent_id_val) {
-                                    $post_args = [
-                                        'post_title' => sanitize_text_field($api_prod_item['name']),
-                                    ];
-                                    $meta_input = [
-                                        '_gicapi_product_sku' => sanitize_text_field($api_prod_item['sku']),
-                                        '_gicapi_product_url' => isset($api_prod_item['url']) ? esc_url_raw($api_prod_item['url']) : '',
-                                        '_gicapi_product_image_url' => isset($api_prod_item['image_url']) ? esc_url_raw($api_prod_item['image_url']) : '',
-                                        '_gicapi_product_variant_count' => isset($api_prod_item['variant_count']) ? absint($api_prod_item['variant_count']) : 0,
-                                        '_gicapi_product_category' => $parent_id_val,
-                                    ];
-                                    return [$post_args, $meta_input];
-                                },
-                                '_gicapi_product_category',
-                                $category_id
-                            );
+                    if ($category_sku) {
+                        $api_response = $api->get_products($category_sku, 1, 999); // Fetch all products for the category
+                        $api_products_list = [];
+                        if ($api_response && isset($api_response['products']) && is_array($api_response['products']) && !is_wp_error($api_response)) {
+                            $api_products_list = $api_response['products'];
+                        } elseif (is_wp_error($api_response)) {
+                            // error_log('GICAPI: Error fetching products from API: ' . $api_response->get_error_message());
                         }
+
+                        $this->sync_items(
+                            $api_products_list,
+                            'gic_prod',
+                            '_gicapi_product_sku',
+                            function ($api_prod_item, $parent_id_val) {
+                                $post_args = [
+                                    'post_title' => sanitize_text_field($api_prod_item['name']),
+                                ];
+                                $meta_input = [
+                                    '_gicapi_product_sku' => sanitize_text_field($api_prod_item['sku']),
+                                    '_gicapi_product_url' => isset($api_prod_item['url']) ? esc_url_raw($api_prod_item['url']) : '',
+                                    '_gicapi_product_image_url' => isset($api_prod_item['image_url']) ? esc_url_raw($api_prod_item['image_url']) : '',
+                                    '_gicapi_product_variant_count' => isset($api_prod_item['variant_count']) ? absint($api_prod_item['variant_count']) : 0,
+                                    '_gicapi_product_category' => $parent_id_val,
+                                ];
+                                return [$post_args, $meta_input];
+                            },
+                            '_gicapi_product_category',
+                            $category_sku
+                        );
                         wp_safe_redirect($redirect_url);
                         exit;
                     }
@@ -304,7 +312,7 @@ class GICAPI_Admin
         $plugin_name = $this->plugin_name;
 
         // Get categories if not exists (Initial Population)
-        if (!$category_id) { // On main categories page
+        if (!$category_sku) { // On main categories page
             $existing_cats_query = new WP_Query([
                 'post_type' => 'gic_cat',
                 'posts_per_page' => 1,
@@ -334,44 +342,38 @@ class GICAPI_Admin
         }
 
         // Get products if category selected (Initial Population for that category)
-        if ($category_id && !$product_id) {
-            $category = get_post($category_id);
-            if ($category) {
-                $existing_prods_query = new WP_Query([
-                    'post_type' => 'gic_prod',
-                    'posts_per_page' => 1,
-                    'fields' => 'ids',
-                    'meta_query' => [
-                        'relation' => 'AND',
-                        ['key' => '_gicapi_product_category', 'value' => $category_id],
-                        ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
-                    ]
-                ]);
-                if (!$existing_prods_query->have_posts()) {
-                    $category_sku = get_post_meta($category->ID, '_gicapi_category_sku', true);
-                    if ($category_sku) {
-                        $response = $api->get_products($category_sku, 1, 50); // Original page size
-                        if ($response && isset($response['products']) && is_array($response['products']) && !is_wp_error($response)) {
-                            foreach ($response['products'] as $product) {
-                                $post_id = wp_insert_post(array(
-                                    'post_title' => sanitize_text_field($product['name']),
-                                    'post_type' => 'gic_prod',
-                                    'post_status' => 'publish'
-                                ));
-                                if ($post_id && !is_wp_error($post_id)) {
-                                    update_post_meta($post_id, '_gicapi_product_sku', sanitize_text_field($product['sku']));
-                                    if (isset($product['url'])) update_post_meta($post_id, '_gicapi_product_url', esc_url_raw($product['url']));
-                                    if (isset($product['image_url'])) update_post_meta($post_id, '_gicapi_product_image_url', esc_url_raw($product['image_url']));
-                                    if (isset($product['variant_count'])) update_post_meta($post_id, '_gicapi_product_variant_count', absint($product['variant_count']));
-                                    update_post_meta($post_id, '_gicapi_product_category', $category_id);
-                                    delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
-                                }
-                            }
+        if ($category_sku && !$product_id) {
+            $existing_prods_query = new WP_Query([
+                'post_type' => 'gic_prod',
+                'posts_per_page' => 1,
+                'fields' => 'ids',
+                'meta_query' => [
+                    'relation' => 'AND',
+                    ['key' => '_gicapi_product_category', 'value' => $category_sku],
+                    ['key' => '_gicapi_is_deleted', 'compare' => 'NOT EXISTS']
+                ]
+            ]);
+            if (!$existing_prods_query->have_posts()) {
+                $response = $api->get_products($category_sku, 1, 50); // Original page size
+                if ($response && isset($response['products']) && is_array($response['products']) && !is_wp_error($response)) {
+                    foreach ($response['products'] as $product) {
+                        $post_id = wp_insert_post(array(
+                            'post_title' => sanitize_text_field($product['name']),
+                            'post_type' => 'gic_prod',
+                            'post_status' => 'publish'
+                        ));
+                        if ($post_id && !is_wp_error($post_id)) {
+                            update_post_meta($post_id, '_gicapi_product_sku', sanitize_text_field($product['sku']));
+                            if (isset($product['url'])) update_post_meta($post_id, '_gicapi_product_url', esc_url_raw($product['url']));
+                            if (isset($product['image_url'])) update_post_meta($post_id, '_gicapi_product_image_url', esc_url_raw($product['image_url']));
+                            if (isset($product['variant_count'])) update_post_meta($post_id, '_gicapi_product_variant_count', absint($product['variant_count']));
+                            update_post_meta($post_id, '_gicapi_product_category', $category_sku);
+                            delete_post_meta($post_id, '_gicapi_is_deleted'); // Ensure not marked deleted
                         }
                     }
                 }
-                wp_reset_postdata();
             }
+            wp_reset_postdata();
         }
 
         // Get variants if product selected (Initial Population for that product)
@@ -427,7 +429,7 @@ class GICAPI_Admin
         // Load appropriate view
         if ($product_id) {
             include_once plugin_dir_path(__FILE__) . 'partials/gicapi-variants-display.php';
-        } elseif ($category_id) {
+        } elseif ($category_sku) {
             include_once plugin_dir_path(__FILE__) . 'partials/gicapi-products-display.php';
         } else {
             include_once plugin_dir_path(__FILE__) . 'partials/gicapi-categories-display.php';
@@ -564,17 +566,6 @@ class GICAPI_Admin
     }
 
     /**
-     * Helper function to delete custom posts based on post type and optional meta query.
-     *
-     * @param string $post_type Post type to delete.
-     * @param string|null $meta_key Meta key for filtering (optional).
-     * @param mixed|null $meta_value Meta value or array of values for filtering (optional).
-     */
-    // private function delete_custom_posts($post_type, $meta_key = null, $meta_value = null) {
-    //     // ... (code is now commented out or removed as it's replaced by direct logic)
-    // }
-
-    /**
      * Helper function to get product IDs based on category ID.
      *
      * @param int $category_id The category post ID.
@@ -603,15 +594,36 @@ class GICAPI_Admin
 
         if ($new_token) {
             // Optionally, you can try to verify the new token by making a quick call, e.g., get_balance
-            // $test_connection = $api->get_balance();
-            // if ($test_connection && isset($test_connection['balance'])) {
-            //     wp_send_json_success(array('message' => __('توکن با موفقیت تازه‌سازی و تایید شد.', 'gift-i-card')));
-            // } else {
-            //     wp_send_json_success(array('message' => __('توکن تازه‌سازی شد، اما تایید اتصال جدید ناموفق بود.', 'gift-i-card')));
-            // }
             wp_send_json_success(array('message' => __('توکن با موفقیت تازه‌سازی شد. لطفاً برای مشاهده وضعیت اتصال جدید، صفحه را رفرش کنید یا تنظیمات را ذخیره نمایید.', 'gift-i-card')));
         } else {
             wp_send_json_error(array('message' => __('خطا در تازه‌سازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید.', 'gift-i-card')));
+        }
+    }
+
+    public function ajax_delete_all_data()
+    {
+        check_ajax_referer('gicapi_admin_nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => 'شما دسترسی لازم برای انجام این عملیات را ندارید.'));
+            return;
+        }
+
+        try {
+            // حذف تمام پست‌های مرتبط با کارت هدیه
+            $post_types = array('gic_cat', 'gic_prod', 'gic_var'); // اضافه کردن سایر post type های مورد نیاز
+
+            foreach ($post_types as $post_type) {
+                $this->delete_all_posts($post_type);
+            }
+
+            wp_send_json_success(array(
+                'message' => 'تمام داده‌های افزونه با موفقیت حذف شدند.'
+            ));
+        } catch (Exception $e) {
+            wp_send_json_error(array(
+                'message' => 'خطا در حذف داده‌ها: ' . $e->getMessage()
+            ));
         }
     }
 }
