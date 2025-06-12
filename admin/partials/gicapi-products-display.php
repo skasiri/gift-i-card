@@ -25,7 +25,7 @@ if (strpos($category_sku, 'GC-') !== 0) {
 $api = GICAPI_API::get_instance();
 $response = $api->get_products($category_sku, $paged, $per_page); // Get products with pagination
 
-if (is_wp_error($response)) {
+if (!$response) {
     echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching products from API', 'gift-i-card') . '</p></div>';
     return;
 }

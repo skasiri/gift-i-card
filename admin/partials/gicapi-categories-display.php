@@ -14,7 +14,7 @@ $per_page = 20;
 $api = GICAPI_API::get_instance();
 $categories = $api->get_categories();
 
-if (is_wp_error($categories)) {
+if (!$categories) {
     echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching categories from API', 'gift-i-card') . '</p></div>';
     return;
 }

@@ -44,6 +44,14 @@ $categories_page_url = menu_page_url($plugin_name . '-products', false);
 
 // Get variants from API
 $variants_response = $api->get_variants($product_sku);
+
+if (!$variants_response) {
+    echo '<div class="notice notice-error"><p>' . esc_html__('Error fetching variants from API', 'gift-i-card') . '</p></div>';
+    return;
+}
+
+$variants = isset($variants_response['variants']) ? $variants_response['variants'] : array();
+
 $variants = array();
 
 if (!is_wp_error($variants_response)) {

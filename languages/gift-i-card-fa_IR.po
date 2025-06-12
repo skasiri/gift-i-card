@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-12 21:43+0330\n"
-"PO-Revision-Date: 2025-06-12 21:44+0330\n"
+"POT-Creation-Date: 2025-06-12 21:54+0330\n"
+"PO-Revision-Date: 2025-06-12 21:54+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -192,7 +192,7 @@ msgstr ""
 
 #: admin/partials/gicapi-categories-display.php:18
 msgid "Error fetching categories from API"
-msgstr ""
+msgstr "خطا در دریافت لیست دسته بندی ها از API"
 
 #: admin/partials/gicapi-categories-display.php:37
 msgid "Categories"
@@ -213,16 +213,16 @@ msgstr "تصویر"
 #: admin/partials/gicapi-categories-display.php:54
 #: admin/partials/gicapi-products-display.php:69
 #: admin/partials/gicapi-products-display.php:104
-#: admin/partials/gicapi-variants-display.php:79
-#: admin/partials/gicapi-variants-display.php:124
+#: admin/partials/gicapi-variants-display.php:87
+#: admin/partials/gicapi-variants-display.php:132
 msgid "Name"
 msgstr "نام"
 
 #: admin/partials/gicapi-categories-display.php:55
 #: admin/partials/gicapi-products-display.php:70
 #: admin/partials/gicapi-products-display.php:105
-#: admin/partials/gicapi-variants-display.php:80
-#: admin/partials/gicapi-variants-display.php:125
+#: admin/partials/gicapi-variants-display.php:88
+#: admin/partials/gicapi-variants-display.php:133
 msgid "SKU"
 msgstr "شناسه SKU"
 
@@ -258,7 +258,7 @@ msgstr "دسته بندی نامعتبر است."
 
 #: admin/partials/gicapi-products-display.php:29
 msgid "Error fetching products from API"
-msgstr ""
+msgstr "خطا در دریافت لیست محصولات از API"
 
 #: admin/partials/gicapi-products-display.php:38
 msgid "No products found for this category."
@@ -287,91 +287,95 @@ msgstr "تعداد واریانت"
 msgid "Unknown Product"
 msgstr "محصول ناشناخته"
 
-#: admin/partials/gicapi-variants-display.php:59
+#: admin/partials/gicapi-variants-display.php:49
+msgid "Error fetching variants from API"
+msgstr "خطا در دریافت لیست واریانت از API"
+
+#: admin/partials/gicapi-variants-display.php:67
 msgid "No variants found for this product."
 msgstr ""
 
-#: admin/partials/gicapi-variants-display.php:69
+#: admin/partials/gicapi-variants-display.php:77
 msgid "Variants"
 msgstr "واریانت ها"
 
-#: admin/partials/gicapi-variants-display.php:81
-#: admin/partials/gicapi-variants-display.php:126
+#: admin/partials/gicapi-variants-display.php:89
+#: admin/partials/gicapi-variants-display.php:134
 msgid "Price"
 msgstr "قیمت"
 
-#: admin/partials/gicapi-variants-display.php:82
-#: admin/partials/gicapi-variants-display.php:127
+#: admin/partials/gicapi-variants-display.php:90
+#: admin/partials/gicapi-variants-display.php:135
 #: public/class-gicapi-public.php:176
 msgid "Value"
 msgstr "اعتبار"
 
-#: admin/partials/gicapi-variants-display.php:83
-#: admin/partials/gicapi-variants-display.php:128
+#: admin/partials/gicapi-variants-display.php:91
+#: admin/partials/gicapi-variants-display.php:136
 msgid "Max Order"
 msgstr "حداکثر تعداد سفارش"
 
-#: admin/partials/gicapi-variants-display.php:84
-#: admin/partials/gicapi-variants-display.php:129
+#: admin/partials/gicapi-variants-display.php:92
+#: admin/partials/gicapi-variants-display.php:137
 msgid "Stock Status"
 msgstr "وضعیت فروش"
 
-#: admin/partials/gicapi-variants-display.php:85
-#: admin/partials/gicapi-variants-display.php:130
+#: admin/partials/gicapi-variants-display.php:93
+#: admin/partials/gicapi-variants-display.php:138
 msgid "Mapped WC Product"
 msgstr "محصولات متصل ووکامرس"
 
-#: admin/partials/gicapi-variants-display.php:115
-#: admin/partials/gicapi-variants-display.php:185
+#: admin/partials/gicapi-variants-display.php:123
+#: admin/partials/gicapi-variants-display.php:193
 msgid "Map to WooCommerce"
 msgstr "اتصال به محصول ووکامرس"
 
-#: admin/partials/gicapi-variants-display.php:139
+#: admin/partials/gicapi-variants-display.php:147
 msgid "Map Gift-i-Card Variant to WooCommerce Product"
 msgstr ""
 
-#: admin/partials/gicapi-variants-display.php:140
+#: admin/partials/gicapi-variants-display.php:148
 msgid "Mapping Variant:"
 msgstr "اتصال به محصول ووکامرس:"
 
-#: admin/partials/gicapi-variants-display.php:143
+#: admin/partials/gicapi-variants-display.php:151
 msgid "Search WooCommerce Products:"
 msgstr "جستجو در محصولات ووکامرس:"
 
-#: admin/partials/gicapi-variants-display.php:144
+#: admin/partials/gicapi-variants-display.php:152
 msgid "Search for a product..."
 msgstr "جستجوی محصول..."
 
-#: admin/partials/gicapi-variants-display.php:147
+#: admin/partials/gicapi-variants-display.php:155
 msgid "Save Mapping"
 msgstr "ذخیره اتصال"
 
-#: admin/partials/gicapi-variants-display.php:148
+#: admin/partials/gicapi-variants-display.php:156
 msgid "Unmap Product"
 msgstr "حذف اتصال"
 
-#: admin/partials/gicapi-variants-display.php:149
-#: admin/partials/gicapi-variants-display.php:214
+#: admin/partials/gicapi-variants-display.php:157
+#: admin/partials/gicapi-variants-display.php:222
 msgid "Cancel"
 msgstr "انصراف"
 
-#: admin/partials/gicapi-variants-display.php:162
+#: admin/partials/gicapi-variants-display.php:170
 #, fuzzy
 #| msgid "Search WooCommerce Products:"
 msgid "Select WooCommerce Product:"
 msgstr "جستجو در محصولات ووکامرس:"
 
-#: admin/partials/gicapi-variants-display.php:164
+#: admin/partials/gicapi-variants-display.php:172
 #, fuzzy
 #| msgid "Search for a product..."
 msgid "Select a product..."
 msgstr "جستجوی محصول..."
 
-#: admin/partials/gicapi-variants-display.php:189
+#: admin/partials/gicapi-variants-display.php:197
 msgid "Map"
 msgstr "اتصال"
 
-#: admin/partials/gicapi-variants-display.php:195
+#: admin/partials/gicapi-variants-display.php:203
 msgid "Please select a product"
 msgstr "محصولی را انتخاب کنید"
 
