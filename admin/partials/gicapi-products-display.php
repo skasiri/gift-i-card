@@ -10,11 +10,11 @@ if (!defined('ABSPATH')) {
 }
 
 $category_meta = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
-$category_name = !empty($category_meta) ? $category_meta : __('Unknown Category', 'gift-i-card');
 $parent_page_url = menu_page_url($plugin_name . '-products', false);
 
-if (strpos($category_meta, 'GC-') != 0) {
-    return '<div class="wrap gicapi-admin-page"><h1>Category is not valid.</h1></div>';
+if (strpos($category_meta, 'GC-') !== 0) {
+    echo '<div class="wrap gicapi-admin-page"><h1>Category is not valid.</h1></div>';
+    return;
 }
 
 $products_args = array(
@@ -32,8 +32,24 @@ $products_args = array(
 $products = get_posts($products_args);
 
 if (empty($products)) {
-    return '<div class="wrap gicapi-admin-page"><h1>Category is not valid.</h1></div>';
+    echo '<div class="wrap gicapi-admin-page"><h1>Category is not valid.</h1></div>';
+    return;
 }
+
+$category_args = array(
+    'post_type' => 'gic_cat',
+    'posts_per_page' => 1,
+    'meta_query' => array(
+        array(
+            'key' => '_gicapi_category_sku',
+            'value' => $category_meta,
+            'compare' => '='
+        )
+    )
+);
+$category = get_posts($category_args);
+$category_name = !empty($category) ? $category[0]->post_title : __('Unknown Category', 'gift-i-card');
+
 
 ?>
 <div class="wrap gicapi-admin-page">
