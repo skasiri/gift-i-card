@@ -51,14 +51,12 @@ msgid "You do not have permission to perform this action."
 msgstr "دسترسی لازم برای این کار را ندارید."
 
 #: admin/class-gicapi-admin.php:593
-msgid ""
-"Token refreshed successfully. Please refresh the page or save the settings "
-"to see the new connection status."
-msgstr ""
+msgid "Token refreshed successfully. Please refresh the page or save the settings to see the new connection status."
+msgstr "توکن با موفقیت نوسازی شد. لطفاً صفحه را به‌روزرسانی کنید تا وضعیت اتصال جدید را مشاهده کنید."
 
 #: admin/class-gicapi-admin.php:595
 msgid "Error refreshing token. Please check the API settings and try again."
-msgstr ""
+msgstr "خطا در نوسازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید."
 
 #: admin/class-gicapi-admin.php:639
 msgid "Invalid product or variant ID."

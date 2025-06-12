@@ -144,9 +144,9 @@ jQuery(document).ready(function ($) {
         var $button = $(this);
         var $messageDiv = $('#gicapi-refresh-token-message');
 
-        // Use localized text
-        $messageDiv.html('<span class="spinner is-active" style="float: none; vertical-align: middle; margin-left: 5px;"></span> ' + gicapi_admin_params.text_refreshing_token);
+        // غیرفعال کردن دکمه و نمایش پیام در حال بارگذاری
         $button.prop('disabled', true);
+        $messageDiv.html('<div class="notice notice-info inline"><p><span class="spinner is-active" style="float: none; vertical-align: middle; margin-left: 5px;"></span> ' + gicapi_admin_params.text_refreshing_token + '</p></div>');
 
         $.ajax({
             url: gicapi_admin_params.ajaxurl,
@@ -157,27 +157,22 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
-                    $messageDiv.html('<p style="color: green;">' + response.data.message + '</p>');
-                    // Consider briefly showing success then clearing, or instructing user to save settings if applicable
-                    // Example: Refresh page to see updated status if connection notice changes
-                    // setTimeout(function(){ location.reload(); }, 2000); 
+                    $messageDiv.html('<div class="notice notice-success inline"><p>' + response.data.message + '</p></div>');
+                    // به‌روزرسانی خودکار صفحه پس از 2 ثانیه
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
                 } else {
                     var errorMessage = (response.data && response.data.message) ? response.data.message : gicapi_admin_params.text_error_unknown;
-                    $messageDiv.html('<p style="color: red;">' + errorMessage + '</p>');
+                    $messageDiv.html('<div class="notice notice-error inline"><p>' + errorMessage + '</p></div>');
                 }
             },
             error: function (xhr, status, error) {
                 var serverError = gicapi_admin_params.text_error_server_communication + error;
-                $messageDiv.html('<p style="color: red;">' + serverError + '</p>');
+                $messageDiv.html('<div class="notice notice-error inline"><p>' + serverError + '</p></div>');
             },
             complete: function () {
                 $button.prop('disabled', false);
-                // Remove spinner after a short delay to ensure message is visible
-                setTimeout(function () {
-                    $messageDiv.find('.spinner').remove();
-                    // Optionally clear the message after a few more seconds
-                    // setTimeout(function() { $messageDiv.html(''); }, 5000);
-                }, 1000);
             }
         });
     });

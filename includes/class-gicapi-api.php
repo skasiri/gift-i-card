@@ -79,11 +79,12 @@ class GICAPI_API
 
     public function force_refresh_token()
     {
-        // Delete the existing token transient
+        // حذف توکن قبلی از حافظه موقت
         delete_transient('gicapi_token');
 
-        // Attempt to fetch a new token
+        // تلاش برای دریافت توکن جدید
         $response = wp_remote_post($this->base_url . '/auth/get-token', array(
+            'timeout' => 30, // افزایش زمان انتظار برای اطمینان از دریافت پاسخ
             'body' => array(
                 'consumer_key' => $this->consumer_key,
                 'consumer_secret' => $this->consumer_secret
@@ -91,23 +92,28 @@ class GICAPI_API
         ));
 
         if (is_wp_error($response)) {
-            // Log error or handle it as needed
-            // error_log('GICAPI Error fetching new token: ' . $response->get_error_message());
+            error_log('GICAPI Error fetching new token: ' . $response->get_error_message());
+            return false;
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code !== 200) {
+            error_log('GICAPI Error: Invalid response code ' . $response_code . ' when fetching new token');
             return false;
         }
 
         $headers = wp_remote_retrieve_headers($response);
         if (!isset($headers['Authorization'])) {
-            // Log error or handle it
-            // error_log('GICAPI Error: Authorization header not found in new token response.');
+            error_log('GICAPI Error: Authorization header not found in new token response');
             return false;
         }
 
         $token = $headers['Authorization'];
-        // Store the new token with expiry (5 minutes less than actual expiry for buffer)
+
+        // ذخیره توکن جدید با زمان انقضای کمتر از زمان واقعی برای اطمینان
         set_transient('gicapi_token', $token, $this->jwt->get_token_expiry() - 300);
 
-        return $token; // Return the new token or false on failure
+        return $token;
     }
 
     private function make_request($endpoint, $method = 'GET', $body = array())

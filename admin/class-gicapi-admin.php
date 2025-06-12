@@ -91,20 +91,18 @@ class GICAPI_Admin
             true
         );
 
-        wp_localize_script('gicapi-admin', 'gicapi_admin', array(
-            'nonce' => wp_create_nonce('gicapi_admin_nonce')
-        ));
-
         // Prepare parameters for JavaScript, including nonces and localized text
         $script_params = array(
             'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('gicapi_admin_nonce'),
             'force_refresh_token_nonce' => wp_create_nonce('gicapi_force_refresh_token_action'),
             'text_refreshing_token' => __('Refreshing token...', 'gift-i-card'),
             'text_error_unknown' => __('An unknown error occurred.', 'gift-i-card'),
-            'text_error_server_communication' => __('Error communicating with server: ', 'gift-i-card'),
-            // Add any other existing params here if gicapi_admin_params was previously used
+            'text_error_server_communication' => __('Error communicating with server: ', 'gift-i-card')
         );
-        wp_localize_script($this->plugin_name, 'gicapi_admin_params', $script_params);
+
+        // انتقال پارامترها به اسکریپت gicapi-admin
+        wp_localize_script('gicapi-admin', 'gicapi_admin_params', $script_params);
     }
 
     public function add_plugin_admin_menu()
