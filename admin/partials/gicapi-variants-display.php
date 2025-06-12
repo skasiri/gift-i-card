@@ -72,7 +72,6 @@ if (empty($variants)) {
                 <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php _e('Price', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php _e('Value', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Max Order', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php _e('Stock Status', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php _e('Mapped WC Products', 'gift-i-card'); ?> <span class="mapped-count"></span></th>
             </tr>
@@ -123,7 +122,6 @@ if (empty($variants)) {
                     <td class="column-sku"><?php echo esc_html($variant_sku); ?></td>
                     <td class="column-price"><?php echo esc_html($variant_price); ?></td>
                     <td class="column-value"><?php echo esc_html($variant_value); ?></td>
-                    <td class="column-max-order"><?php echo esc_html($variant_max_order); ?></td>
                     <td class="column-stock-status"><?php echo esc_html($variant_stock_status); ?></td>
                     <td class="column-mapped-products">
                         <div class="gicapi-mapped-products">

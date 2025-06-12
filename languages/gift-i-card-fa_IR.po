@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
 "POT-Creation-Date: 2025-06-13 02:26+0330\n"
-"PO-Revision-Date: 2025-06-13 02:28+0330\n"
+"PO-Revision-Date: 2025-06-13 03:20+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -133,8 +133,7 @@ msgstr "تکمیل سفارشات"
 
 #: admin/partials/gicapi-admin-display.php:86
 msgid ""
-"Automatically complete WooCommerce orders after successful gift card "
-"redemption"
+"Automatically complete WooCommerce orders after successful gift card redemption"
 msgstr ""
 
 #: admin/partials/gicapi-admin-display.php:93
@@ -329,7 +328,7 @@ msgstr[1] "%d محصول در ارتباط"
 #: admin/partials/gicapi-variants-display.php:153
 #: admin/partials/gicapi-variants-display.php:180
 msgid "Add Mapping"
-msgstr "ذخیره ارتباط"
+msgstr "افزودن  ارتباط"
 
 #: admin/partials/gicapi-variants-display.php:168
 msgid "Map Gift-i-Card Variant to WooCommerce Product"
