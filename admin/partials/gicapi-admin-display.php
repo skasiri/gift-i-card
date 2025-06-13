@@ -84,7 +84,7 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
                     <td>
                         <label>
                             <input type="checkbox" name="gicapi_complete_orders" value="yes" <?php checked($complete_orders, 'yes'); ?>>
-                            <?php _e('Automatically complete WooCommerce orders after successful gift card redemption', 'gift-i-card'); ?>
+                            <?php _e('Change WooCommerce order status to completed (after completing Gift-i-Card order)', 'gift-i-card'); ?>
                         </label>
                     </td>
                 </tr>
@@ -96,7 +96,7 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
                     <td>
                         <label>
                             <input type="checkbox" name="gicapi_ignore_other_orders" value="yes" <?php checked($ignore_other_orders, 'yes'); ?>>
-                            <?php _e('Ignore orders that do not contain gift card products', 'gift-i-card'); ?>
+                            <?php _e('Ignore orders that do not contain Gift-i-Card related products', 'gift-i-card'); ?>
                         </label>
                     </td>
                 </tr>
