@@ -195,6 +195,8 @@ msgid ""
 "Warning: This will permanently delete all plugin data. This action cannot be "
 "undone!"
 msgstr ""
+"هشدار: این کار تمام اطلاعات افزونه را به طور دائمی حذف می‌کند. این عملیات قابل "
+"بازگشت نیست!"
 
 #: admin/partials/gicapi-categories-display.php:18
 msgid "Error fetching categories from API"
@@ -454,96 +456,74 @@ msgstr "نام شما"
 msgid "https://example.com"
 msgstr "https://example.com"
 
-#~ msgid ""
-#~ "Automatically complete WooCommerce orders after gift-i-card order is "
-#~ "completed"
-#~ msgstr ""
-#~ "تغییر وضعیت سفارشات ووکامرس به تکمیل شده (بعد از تکمیل سفارش گیفتی کارت)"
+#: admin/partials/gicapi-admin-display.php:82
+msgid "Enable Order Processing"
+msgstr "فعال‌سازی پردازش سفارشات"
 
-#~ msgid "Token Management"
-#~ msgstr "مدیریت توکن"
+#: admin/partials/gicapi-admin-display.php:85
+msgid "Enable order processing functionality"
+msgstr "فعال‌سازی قابلیت پردازش سفارشات"
 
-#~ msgid "Order Settings"
-#~ msgstr "تنظیمات سفارشات"
+#: admin/partials/gicapi-admin-display.php:90
+msgid "Gift Card Order Status"
+msgstr "وضعیت سفارش گیفتی کارت"
 
-#~ msgid "Display Settings"
-#~ msgstr "تنظیمات نمایش"
+#: admin/partials/gicapi-admin-display.php:98
+msgid "Status to set when creating gift card orders"
+msgstr "وضعیتی که هنگام ایجاد سفارشات گیفتی کارت تنظیم می‌شود"
 
-#~ msgid "Max Order"
-#~ msgstr "حداکثر تعداد سفارش"
+#: admin/partials/gicapi-admin-display.php:103
+msgid "Auto Complete Orders"
+msgstr "تکمیل خودکار سفارشات"
 
-#~ msgid "Map to WooCommerce"
-#~ msgstr "اتصال به محصول ووکامرس"
+#: admin/partials/gicapi-admin-display.php:106
+msgid "None"
+msgstr "هیچکدام"
 
-#~ msgid "Mapping Variant:"
-#~ msgstr "اتصال به محصول ووکامرس:"
+#: admin/partials/gicapi-admin-display.php:107
+msgid "All"
+msgstr "همه"
 
-#~ msgid "Search WooCommerce Products:"
-#~ msgstr "جستجو در محصولات ووکامرس:"
+#: admin/partials/gicapi-admin-display.php:108
+msgid "Orders with mapped items"
+msgstr "سفارشات دارای آیتم مپ شده"
 
-#~ msgid "Unmap Product"
-#~ msgstr "حذف اتصال"
+#: admin/partials/gicapi-admin-display.php:110
+msgid "Automatically complete orders based on selection"
+msgstr "تکمیل خودکار سفارشات بر اساس انتخاب"
 
-#, fuzzy
-#~| msgid "Search WooCommerce Products:"
-#~ msgid "Select WooCommerce Product:"
-#~ msgstr "جستجو در محصولات ووکامرس:"
+#: admin/partials/gicapi-admin-display.php:115
+msgid "Complete Status"
+msgstr "وضعیت تکمیل شده"
 
-#, fuzzy
-#~| msgid "Search for a product..."
-#~ msgid "Select a product..."
-#~ msgstr "جستجوی محصول..."
+#: admin/partials/gicapi-admin-display.php:123
+msgid "Status to set when completing orders"
+msgstr "وضعیتی که هنگام تکمیل سفارشات تنظیم می‌شود"
 
-#~ msgid "Map"
-#~ msgstr "اتصال"
+#: admin/partials/gicapi-admin-display.php:128
+msgid "Change Failed Status"
+msgstr "تغییر وضعیت ناموفق"
 
-#~ msgid "Gift-i-Card Categories"
-#~ msgstr "دسته بندی های گیفتی کارت"
+#: admin/partials/gicapi-admin-display.php:131
+msgid "Mapped"
+msgstr "مپ شده"
 
-#~ msgid "Gift-i-Card Category"
-#~ msgstr "دسته بندی گیفتی کارت"
+#: admin/partials/gicapi-admin-display.php:133
+msgid "Orders to change status when failed"
+msgstr "سفارشاتی که هنگام ناموفق بودن وضعیتشان تغییر کند"
 
-#~ msgid "Gift-i-Card Products"
-#~ msgstr "محصولات گیفتی کارت"
+#: admin/partials/gicapi-admin-display.php:138
+msgid "Failed Status"
+msgstr "وضعیت ناموفق"
 
-#~ msgid "Gift-i-Card Product"
-#~ msgstr "محصول گیفتی کارت"
+#: admin/partials/gicapi-admin-display.php:146
+msgid "Status to set when orders fail"
+msgstr "وضعیتی که هنگام ناموفق بودن سفارشات تنظیم می‌شود"
 
-#~ msgid "Gift-i-Card Variants"
-#~ msgstr "لیست واریانت گیفتی کارت"
+#: admin/partials/gicapi-admin-display.php:151
+msgid "Hook Priority"
+msgstr "اولویت اجرای هوک"
 
-#~ msgid "Gift-i-Card Variant"
-#~ msgstr "واریانت گیفتی کارت"
-
-#~ msgid "Update Categories"
-#~ msgstr "بروزرسانی محصولات"
-
-#~ msgid "Deleted"
-#~ msgstr "حذف شده"
-
-#~ msgid "View Products"
-#~ msgstr "لیست  محصولات"
-
-#~ msgid "Show more details"
-#~ msgstr "جزئیات بیشتر"
-
-#~ msgid "Update Products"
-#~ msgstr "بروزرسانی محصولات"
-
-#~ msgid "View Variants"
-#~ msgstr "لیست واریانت"
-
-#~ msgid "Product Not Found"
-#~ msgstr "محصول یافت نشد"
-
-#~ msgid "Update Variants"
-#~ msgstr "بروزرسانی لیست واریانت"
-
-#~ msgid "Cannot map a deleted variant"
-#~ msgstr "نمیتوان واریانت حذف شده را متصل کرد"
-
-#~ msgid "Map Product"
-#~ msgstr "اتصال به محصول ووکامرس"
-
-#~ msgid "Not Mapped"
-#~ msgstr "محصولی متصل نشده"
+#: admin/partials/gicapi-admin-display.php:154
+msgid "Priority for hook execution (default: 10)"
+msgstr "اولویت اجرای هوک (پیش‌فرض: ۱۰)"

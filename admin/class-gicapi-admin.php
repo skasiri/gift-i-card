@@ -164,12 +164,31 @@ class GICAPI_Admin
         register_setting('gicapi_settings', 'gicapi_add_to_email');
         register_setting('gicapi_settings', 'gicapi_add_to_order_details');
         register_setting('gicapi_settings', 'gicapi_add_to_thank_you');
+
+        // New order processing settings
+        register_setting('gicapi_settings', 'gicapi_enable_order_processing');
+        register_setting('gicapi_settings', 'gicapi_gift_card_order_status');
+        register_setting('gicapi_settings', 'gicapi_auto_complete_orders');
+        register_setting('gicapi_settings', 'gicapi_complete_status');
+        register_setting('gicapi_settings', 'gicapi_change_failed_status');
+        register_setting('gicapi_settings', 'gicapi_failed_status');
+        register_setting('gicapi_settings', 'gicapi_hook_priority', array(
+            'type' => 'integer',
+            'default' => 10,
+            'sanitize_callback' => array($this, 'sanitize_hook_priority')
+        ));
     }
 
     public function sanitize_base_url($url)
     {
         $url = trim($url);
         return rtrim($url, '/');
+    }
+
+    public function sanitize_hook_priority($priority)
+    {
+        $priority = intval($priority);
+        return max(1, min(100, $priority)); // Ensure priority is between 1 and 100
     }
 
     public function display_plugin_setup_page()

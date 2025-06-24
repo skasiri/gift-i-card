@@ -18,3 +18,75 @@ msgstr ""
 # Example translation entry
 # msgid "Hello World"
 # msgstr "Hello World" 
+
+#: admin/partials/gicapi-admin-display.php:82
+msgid "Enable Order Processing"
+msgstr "Enable Order Processing"
+
+#: admin/partials/gicapi-admin-display.php:85
+msgid "Enable order processing functionality"
+msgstr "Enable order processing functionality"
+
+#: admin/partials/gicapi-admin-display.php:90
+msgid "Gift Card Order Status"
+msgstr "Gift Card Order Status"
+
+#: admin/partials/gicapi-admin-display.php:98
+msgid "Status to set when creating gift card orders"
+msgstr "Status to set when creating gift card orders"
+
+#: admin/partials/gicapi-admin-display.php:103
+msgid "Auto Complete Orders"
+msgstr "Auto Complete Orders"
+
+#: admin/partials/gicapi-admin-display.php:106
+msgid "None"
+msgstr "None"
+
+#: admin/partials/gicapi-admin-display.php:107
+msgid "All"
+msgstr "All"
+
+#: admin/partials/gicapi-admin-display.php:108
+msgid "Orders with mapped items"
+msgstr "Orders with mapped items"
+
+#: admin/partials/gicapi-admin-display.php:110
+msgid "Automatically complete orders based on selection"
+msgstr "Automatically complete orders based on selection"
+
+#: admin/partials/gicapi-admin-display.php:115
+msgid "Complete Status"
+msgstr "Complete Status"
+
+#: admin/partials/gicapi-admin-display.php:123
+msgid "Status to set when completing orders"
+msgstr "Status to set when completing orders"
+
+#: admin/partials/gicapi-admin-display.php:128
+msgid "Change Failed Status"
+msgstr "Change Failed Status"
+
+#: admin/partials/gicapi-admin-display.php:131
+msgid "Mapped"
+msgstr "Mapped"
+
+#: admin/partials/gicapi-admin-display.php:133
+msgid "Orders to change status when failed"
+msgstr "Orders to change status when failed"
+
+#: admin/partials/gicapi-admin-display.php:138
+msgid "Failed Status"
+msgstr "Failed Status"
+
+#: admin/partials/gicapi-admin-display.php:146
+msgid "Status to set when orders fail"
+msgstr "Status to set when orders fail"
+
+#: admin/partials/gicapi-admin-display.php:151
+msgid "Hook Priority"
+msgstr "Hook Priority"
+
+#: admin/partials/gicapi-admin-display.php:154
+msgid "Priority for hook execution (default: 10)"
+msgstr "Priority for hook execution (default: 10)" 

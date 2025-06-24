@@ -11,6 +11,21 @@ $ignore_other_orders = get_option('gicapi_ignore_other_orders', 'yes');
 $add_to_email = get_option('gicapi_add_to_email', 'yes');
 $add_to_order_details = get_option('gicapi_add_to_order_details', 'yes');
 $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
+
+// New order processing options
+$enable_order_processing = get_option('gicapi_enable_order_processing', 'yes');
+$gift_card_order_status = get_option('gicapi_gift_card_order_status', 'processing');
+$auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
+$complete_status = get_option('gicapi_complete_status', 'completed');
+$change_failed_status = get_option('gicapi_change_failed_status', 'none');
+$failed_status = get_option('gicapi_failed_status', 'failed');
+$hook_priority = get_option('gicapi_hook_priority', '10');
+
+// Get WooCommerce order statuses
+$wc_order_statuses = array();
+if (class_exists('WooCommerce')) {
+    $wc_order_statuses = wc_get_order_statuses();
+}
 ?>
 
 <div class="wrap">
@@ -77,6 +92,104 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
 
         <div id="orders" class="tab-content" style="display: none;">
             <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <?php _e('Enable Order Processing', 'gift-i-card'); ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="gicapi_enable_order_processing" value="yes" <?php checked($enable_order_processing, 'yes'); ?>>
+                            <?php _e('Enable order processing functionality', 'gift-i-card'); ?>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="gicapi_gift_card_order_status"><?php _e('Gift Card Order Status', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select name="gicapi_gift_card_order_status" id="gicapi_gift_card_order_status">
+                            <?php foreach ($wc_order_statuses as $status_key => $status_label) : ?>
+                                <option value="<?php echo esc_attr($status_key); ?>" <?php selected($gift_card_order_status, $status_key); ?>>
+                                    <?php echo esc_html($status_label); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <p class="description"><?php _e('Status to set when creating gift card orders', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="gicapi_auto_complete_orders"><?php _e('Auto Complete Orders', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select name="gicapi_auto_complete_orders" id="gicapi_auto_complete_orders">
+                            <option value="none" <?php selected($auto_complete_orders, 'none'); ?>><?php _e('None', 'gift-i-card'); ?></option>
+                            <option value="all" <?php selected($auto_complete_orders, 'all'); ?>><?php _e('All', 'gift-i-card'); ?></option>
+                            <option value="mapped" <?php selected($auto_complete_orders, 'mapped'); ?>><?php _e('Orders with mapped items', 'gift-i-card'); ?></option>
+                        </select>
+                        <p class="description"><?php _e('Automatically complete orders based on selection', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="gicapi_complete_status"><?php _e('Complete Status', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select name="gicapi_complete_status" id="gicapi_complete_status">
+                            <?php foreach ($wc_order_statuses as $status_key => $status_label) : ?>
+                                <option value="<?php echo esc_attr($status_key); ?>" <?php selected($complete_status, $status_key); ?>>
+                                    <?php echo esc_html($status_label); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <p class="description"><?php _e('Status to set when completing orders', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="gicapi_change_failed_status"><?php _e('Change Failed Status', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select name="gicapi_change_failed_status" id="gicapi_change_failed_status">
+                            <option value="none" <?php selected($change_failed_status, 'none'); ?>><?php _e('None', 'gift-i-card'); ?></option>
+                            <option value="all" <?php selected($change_failed_status, 'all'); ?>><?php _e('All', 'gift-i-card'); ?></option>
+                            <option value="mapped" <?php selected($change_failed_status, 'mapped'); ?>><?php _e('Mapped', 'gift-i-card'); ?></option>
+                        </select>
+                        <p class="description"><?php _e('Orders to change status when failed', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="gicapi_failed_status"><?php _e('Failed Status', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select name="gicapi_failed_status" id="gicapi_failed_status">
+                            <?php foreach ($wc_order_statuses as $status_key => $status_label) : ?>
+                                <option value="<?php echo esc_attr($status_key); ?>" <?php selected($failed_status, $status_key); ?>>
+                                    <?php echo esc_html($status_label); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <p class="description"><?php _e('Status to set when orders fail', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="gicapi_hook_priority"><?php _e('Hook Priority', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="number" name="gicapi_hook_priority" id="gicapi_hook_priority" value="<?php echo esc_attr($hook_priority); ?>" class="small-text" min="1" max="100">
+                        <p class="description"><?php _e('Priority for hook execution (default: 10)', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
                 <tr>
                     <th scope="row">
                         <?php _e('Complete Orders', 'gift-i-card'); ?>
