@@ -13,8 +13,8 @@ $add_to_order_details = get_option('gicapi_add_to_order_details', 'yes');
 $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
 
 // New order processing options
-$enable_order_processing = get_option('gicapi_enable_order_processing', 'yes');
-$gift_card_order_status = get_option('gicapi_gift_card_order_status', 'processing');
+$enable_order_processing = get_option('gicapi_enable_order_processing', 'no');
+$gift_card_order_status = get_option('gicapi_gift_card_order_status', 'wc-processing');
 $auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
 $complete_status = get_option('gicapi_complete_status', 'completed');
 $change_failed_status = get_option('gicapi_change_failed_status', 'none');
@@ -101,12 +101,13 @@ if (class_exists('WooCommerce')) {
                             <input type="checkbox" name="gicapi_enable_order_processing" value="yes" <?php checked($enable_order_processing, 'yes'); ?>>
                             <?php _e('Enable order processing functionality', 'gift-i-card'); ?>
                         </label>
+                        <p class="description"><?php _e('By disabling this, orders will not be processed automatically.', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
 
                 <tr>
                     <th scope="row">
-                        <label for="gicapi_gift_card_order_status"><?php _e('Gift Card Order Status', 'gift-i-card'); ?></label>
+                        <label for="gicapi_gift_card_order_status"><?php _e('Create Gift-i-Card Order at Status', 'gift-i-card'); ?></label>
                     </th>
                     <td>
                         <select name="gicapi_gift_card_order_status" id="gicapi_gift_card_order_status">
@@ -116,7 +117,7 @@ if (class_exists('WooCommerce')) {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php _e('Status to set when creating gift card orders', 'gift-i-card'); ?></p>
+                        <p class="description"><?php _e('Status to set when creating Gift-i-Card orders', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
 
