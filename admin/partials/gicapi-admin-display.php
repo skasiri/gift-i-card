@@ -7,7 +7,6 @@ $base_url = get_option('gicapi_base_url');
 $consumer_key = get_option('gicapi_consumer_key');
 $consumer_secret = get_option('gicapi_consumer_secret');
 $complete_orders = get_option('gicapi_complete_orders', 'yes');
-$ignore_other_orders = get_option('gicapi_ignore_other_orders', 'yes');
 $add_to_email = get_option('gicapi_add_to_email', 'yes');
 $add_to_order_details = get_option('gicapi_add_to_order_details', 'yes');
 $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
@@ -16,7 +15,6 @@ $add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
 $enable_order_processing = get_option('gicapi_enable_order_processing', 'no');
 $gift_card_order_status = get_option('gicapi_gift_card_order_status', 'wc-processing');
 $auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
-$complete_status = get_option('gicapi_complete_status', 'completed');
 $change_failed_status = get_option('gicapi_change_failed_status', 'none');
 $failed_status = get_option('gicapi_failed_status', 'failed');
 $hook_priority = get_option('gicapi_hook_priority', '10');
@@ -106,6 +104,12 @@ if (class_exists('WooCommerce')) {
                 </tr>
 
                 <tr>
+                    <td colspan="2">
+                        <hr>
+                    </td>
+                </tr>
+
+                <tr>
                     <th scope="row">
                         <label for="gicapi_gift_card_order_status"><?php _e('Create Gift-i-Card Order at Status', 'gift-i-card'); ?></label>
                     </th>
@@ -118,6 +122,23 @@ if (class_exists('WooCommerce')) {
                             <?php endforeach; ?>
                         </select>
                         <p class="description"><?php _e('Status to set when creating Gift-i-Card orders', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <th scope="row">
+                        <label for="gicapi_hook_priority"><?php _e('Hook Priority', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="number" name="gicapi_hook_priority" id="gicapi_hook_priority" value="<?php echo esc_attr($hook_priority); ?>" class="small-text" min="1" max="100">
+                        <p class="description"><?php _e('Priority for hook execution (default: 10)', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <hr>
                     </td>
                 </tr>
 
@@ -178,40 +199,6 @@ if (class_exists('WooCommerce')) {
                             <?php endforeach; ?>
                         </select>
                         <p class="description"><?php _e('Status to set when orders fail', 'gift-i-card'); ?></p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th scope="row">
-                        <label for="gicapi_hook_priority"><?php _e('Hook Priority', 'gift-i-card'); ?></label>
-                    </th>
-                    <td>
-                        <input type="number" name="gicapi_hook_priority" id="gicapi_hook_priority" value="<?php echo esc_attr($hook_priority); ?>" class="small-text" min="1" max="100">
-                        <p class="description"><?php _e('Priority for hook execution (default: 10)', 'gift-i-card'); ?></p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th scope="row">
-                        <?php _e('Complete Orders', 'gift-i-card'); ?>
-                    </th>
-                    <td>
-                        <label>
-                            <input type="checkbox" name="gicapi_complete_orders" value="yes" <?php checked($complete_orders, 'yes'); ?>>
-                            <?php _e('Change WooCommerce order status to completed (after completing Gift-i-Card order)', 'gift-i-card'); ?>
-                        </label>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th scope="row">
-                        <?php _e('Ignore Other Orders', 'gift-i-card'); ?>
-                    </th>
-                    <td>
-                        <label>
-                            <input type="checkbox" name="gicapi_ignore_other_orders" value="yes" <?php checked($ignore_other_orders, 'yes'); ?>>
-                            <?php _e('Ignore orders that do not contain Gift-i-Card related products', 'gift-i-card'); ?>
-                        </label>
                     </td>
                 </tr>
             </table>
