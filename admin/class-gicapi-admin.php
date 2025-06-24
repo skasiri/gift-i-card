@@ -169,7 +169,6 @@ class GICAPI_Admin
         register_setting('gicapi_settings', 'gicapi_enable_order_processing');
         register_setting('gicapi_settings', 'gicapi_gift_card_order_status');
         register_setting('gicapi_settings', 'gicapi_auto_complete_orders');
-        // register_setting('gicapi_settings', 'gicapi_complete_status');
         register_setting('gicapi_settings', 'gicapi_change_failed_status');
         register_setting('gicapi_settings', 'gicapi_failed_status');
         register_setting('gicapi_settings', 'gicapi_hook_priority', array(

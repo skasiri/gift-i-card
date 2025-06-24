@@ -18,6 +18,7 @@ $auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
 $change_failed_status = get_option('gicapi_change_failed_status', 'none');
 $failed_status = get_option('gicapi_failed_status', 'failed');
 $hook_priority = get_option('gicapi_hook_priority', '10');
+$complete_status = get_option('gicapi_complete_status', 'wc-completed');
 
 // Get WooCommerce order statuses
 $wc_order_statuses = array();
