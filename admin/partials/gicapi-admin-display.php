@@ -2,29 +2,6 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
-$base_url = get_option('gicapi_base_url');
-$consumer_key = get_option('gicapi_consumer_key');
-$consumer_secret = get_option('gicapi_consumer_secret');
-$complete_orders = get_option('gicapi_complete_orders', 'yes');
-$add_to_email = get_option('gicapi_add_to_email', 'yes');
-$add_to_order_details = get_option('gicapi_add_to_order_details', 'yes');
-$add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
-
-// New order processing options
-$enable_order_processing = get_option('gicapi_enable', 'no');
-$gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-processing');
-$auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
-$change_failed_status = get_option('gicapi_change_failed_status', 'none');
-$failed_status = get_option('gicapi_failed_status', 'failed');
-$hook_priority = get_option('gicapi_hook_priority', '10');
-$complete_status = get_option('gicapi_complete_status', 'wc-completed');
-
-// Get WooCommerce order statuses
-$wc_order_statuses = array();
-if (class_exists('WooCommerce')) {
-    $wc_order_statuses = wc_get_order_statuses();
-}
 ?>
 
 <div class="wrap">
