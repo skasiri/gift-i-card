@@ -63,13 +63,54 @@ class GICAPI_Public
         }
     }
 
+    /**
+     * Get mapped variant SKU for a WooCommerce product
+     * 
+     * @param int $product_id The product ID
+     * @param int $variation_id The variation ID (if applicable)
+     * @return string|false The variant SKU or false if not mapped
+     */
+    private function get_mapped_variant_sku($product_id, $variation_id = 0)
+    {
+        // Determine which product ID to use for mapping
+        $mapping_product_id = $variation_id ? $variation_id : $product_id;
+
+        // Get mapped variant SKUs from the new mapping system
+        $mapped_variant_skus = get_post_meta($mapping_product_id, '_gicapi_mapped_variant_skus', true);
+
+        // Fallback to old system for backward compatibility
+        if (empty($mapped_variant_skus)) {
+            $variant_sku = get_post_meta($mapping_product_id, '_gic_variant_sku', true);
+            if ($variant_sku) {
+                $mapped_variant_skus = array($variant_sku);
+            }
+        }
+
+        // Ensure mapped_variant_skus is an array
+        if (!is_array($mapped_variant_skus)) {
+            $mapped_variant_skus = array($mapped_variant_skus);
+        }
+
+        // Filter out empty values
+        $mapped_variant_skus = array_filter($mapped_variant_skus);
+
+        if (empty($mapped_variant_skus)) {
+            return false;
+        }
+
+        // Use the first mapped variant SKU
+        return reset($mapped_variant_skus);
+    }
+
     private function process_order($order)
     {
         $items = array();
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
-            $variant_sku = get_post_meta($product_id, '_gic_variant_sku', true);
+            $variation_id = $item->get_variation_id();
+
+            $variant_sku = $this->get_mapped_variant_sku($product_id, $variation_id);
 
             if (!$variant_sku) {
                 continue;

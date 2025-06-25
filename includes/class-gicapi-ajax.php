@@ -36,7 +36,7 @@ class GICAPI_Ajax
         $args = array(
             'post_type' => array('product', 'product_variation'),
             'post_status' => 'publish',
-            'posts_per_page' => 10,
+            'posts_per_page' => 15,
             's' => $search,
             'orderby' => 'title',
             'order' => 'ASC'
@@ -50,9 +50,50 @@ class GICAPI_Ajax
                 $query->the_post();
                 $product = wc_get_product(get_the_ID());
                 if ($product) {
+                    $product_type = $product->get_type();
+                    $product_name = $product->get_name();
+                    $product_sku = $product->get_sku();
+
+                    // Add product type information for better identification
+                    $type_label = '';
+                    switch ($product_type) {
+                        case 'simple':
+                            $type_label = __('Simple Product', 'gift-i-card');
+                            break;
+                        case 'variable':
+                            $type_label = __('Variable Product', 'gift-i-card');
+                            break;
+                        case 'variation':
+                            $parent_product = wc_get_product($product->get_parent_id());
+                            if ($parent_product) {
+                                $type_label = sprintf(__('Variation of: %s', 'gift-i-card'), $parent_product->get_name());
+                            } else {
+                                $type_label = __('Product Variation', 'gift-i-card');
+                            }
+                            break;
+                        case 'grouped':
+                            $type_label = __('Grouped Product', 'gift-i-card');
+                            break;
+                        case 'external':
+                            $type_label = __('External Product', 'gift-i-card');
+                            break;
+                        default:
+                            $type_label = __('Product', 'gift-i-card');
+                    }
+
+                    // Create display text with product type information
+                    $display_text = $product_name;
+                    if ($product_sku) {
+                        $display_text .= ' (SKU: ' . $product_sku . ')';
+                    }
+                    $display_text .= ' - ' . $type_label;
+
                     $products[] = array(
                         'id' => $product->get_id(),
-                        'text' => $product->get_name() . ' (' . $product->get_sku() . ')'
+                        'text' => $display_text,
+                        'type' => $product_type,
+                        'sku' => $product_sku,
+                        'name' => $product_name
                     );
                 }
             }
