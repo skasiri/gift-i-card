@@ -22,7 +22,7 @@ class GICAPI_Activator
         add_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
         add_option('gicapi_auto_complete_orders', 'none');
         add_option('gicapi_change_failed_status', 'none');
-        add_option('gicapi_failed_status', 'failed');
+        add_option('gicapi_failed_status', 'wc-failed');
         add_option('gicapi_hook_priority', 10);
         add_option('gicapi_add_to_email', 'no');
         add_option('gicapi_add_to_order_details', 'no');

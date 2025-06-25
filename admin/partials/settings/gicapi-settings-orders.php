@@ -9,7 +9,7 @@ $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_s
 $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
 $auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
 $change_failed_status = get_option('gicapi_change_failed_status', 'none');
-$failed_status = get_option('gicapi_failed_status', 'failed');
+$failed_status = get_option('gicapi_failed_status', 'wc-failed');
 $hook_priority = get_option('gicapi_hook_priority', '10');
 $complete_status = get_option('gicapi_complete_status', 'wc-completed');
 
