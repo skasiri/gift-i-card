@@ -52,12 +52,18 @@ class GICAPI_Public
 
         $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
         if ($new_status == $gift_i_card_create_order_status) {
-            $this->process_order($order_id);
+            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            if ($process_order !== 'yes') {
+                $this->process_order($order_id);
+            }
         }
 
         $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
         if ($new_status == $gift_i_card_confirm_order_status) {
-            $this->confirm_order($order_id);
+            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            if ($process_order === 'yes') {
+                $this->confirm_order($order_id);
+            }
         }
     }
 
@@ -102,7 +108,9 @@ class GICAPI_Public
 
     private function process_order($order)
     {
-        $items = array();
+
+        // Process flag
+        update_post_meta($order->get_id(), '_gicapi_process_order', 'yes');
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
@@ -114,37 +122,23 @@ class GICAPI_Public
                 continue;
             }
 
-            $items[] = array(
-                'variant_sku' => $variant_sku,
-                'quantity' => $item->get_quantity()
-            );
-        }
+            $response = $this->api->buy_product($variant_sku, $item->get_quantity());
 
-        if (empty($items)) {
-            return;
-        }
+            if (is_wp_error($response)) {
+                $order->add_order_note(sprintf(
+                    __('Failed to create Gift-i-Card order: %s', 'gift-i-card'),
+                    $response->get_error_message()
+                ));
+                return;
+            }
 
-        $response = $this->api->create_order(array(
-            'order_id' => $order->get_id(),
-            'customer_email' => $order->get_billing_email(),
-            'customer_name' => $order->get_formatted_billing_full_name(),
-            'items' => $items
-        ));
-
-        if (is_wp_error($response)) {
             $order->add_order_note(sprintf(
-                __('Failed to create Gift-i-Card order: %s', 'gift-i-card'),
-                $response->get_error_message()
+                __('Gift-i-Card order created: %s', 'gift-i-card'),
+                $response['order_id']
             ));
-            return;
+
+            update_post_meta($order->get_id(), '_gic_order_id', $response['id']);
         }
-
-        $order->add_order_note(sprintf(
-            __('Gift-i-Card order created: %s', 'gift-i-card'),
-            $response['order_id']
-        ));
-
-        update_post_meta($order->get_id(), '_gic_order_id', $response['order_id']);
 
         $complete_orders = get_option('gicapi_complete_orders', 'yes');
         if ($complete_orders === 'yes') {
