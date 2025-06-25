@@ -112,6 +112,7 @@ class GICAPI_Public
         // Process flag
         update_post_meta($order->get_id(), '_gicapi_process_order', 'yes');
 
+        $orders = array();
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
             $variation_id = $item->get_variation_id();
@@ -129,7 +130,7 @@ class GICAPI_Public
                     __('Failed to create Gift-i-Card order: %s', 'gift-i-card'),
                     $response->get_error_message()
                 ));
-                return;
+                continue;
             }
 
             $order->add_order_note(sprintf(
@@ -137,21 +138,51 @@ class GICAPI_Public
                 $response['order_id']
             ));
 
-            update_post_meta($order->get_id(), '_gic_order_id', $response['id']);
+            $orders[] = array(
+                'order_id' => $response['id'],
+                'status' => $response['status'],
+                'total_price' => $response['total_price'],
+                'currency' => $response['currency'],
+                'expires_at' => $response['expires_at'],
+                'item_id' => $item->get_id(),
+                'product_id' => $product_id,
+                'variation_id' => $variation_id,
+                'variant_sku' => $variant_sku,
+                'quantity' => $item->get_quantity()
+            );
         }
 
-        $complete_orders = get_option('gicapi_complete_orders', 'yes');
-        if ($complete_orders === 'yes') {
-            $order->update_status('completed');
-        }
+        update_post_meta($order->get_id(), '_gicapi_orders', $orders);
     }
 
     private function confirm_order($order_id)
     {
-        $response = $this->api->confirm_order($order_id);
-        if (is_wp_error($response)) {
+        $orders = get_post_meta($order_id, '_gicapi_orders', true);
+        if (empty($orders)) {
             return;
         }
+
+        foreach ($orders as $key => $order) {
+            $response = $this->api->confirm_order($order['order_id']);
+
+            if (is_wp_error($response)) {
+                $order_id->add_order_note(sprintf(
+                    __('Failed to confirm Gift-i-Card order: %s', 'gift-i-card'),
+                    $response->get_error_message()
+                ));
+                $orders[$key]['status'] = 'failed';
+                continue;
+            }
+
+            $order_id->add_order_note(sprintf(
+                __('Gift-i-Card order confirmed: %s', 'gift-i-card'),
+                $response['id']
+            ));
+
+            $orders[$key]['status'] = $response['status'];
+        }
+
+        update_post_meta($order_id, '_gicapi_orders', $orders);
     }
 
     public function add_redeem_data_to_email($order, $sent_to_admin, $plain_text, $email)
