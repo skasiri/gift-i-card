@@ -151,7 +151,7 @@ if (class_exists('WooCommerce')) {
                 <select name="gicapi_change_failed_status" id="gicapi_change_failed_status">
                     <option value="none" <?php selected($change_failed_status, 'none'); ?>><?php _e('None', 'gift-i-card'); ?></option>
                     <option value="all" <?php selected($change_failed_status, 'all'); ?>><?php _e('All', 'gift-i-card'); ?></option>
-                    <option value="mapped" <?php selected($change_failed_status, 'mapped'); ?>><?php _e('Mapped', 'gift-i-card'); ?></option>
+                    <option value="mapped" <?php selected($change_failed_status, 'mapped'); ?>><?php _e('Orders with mapped items', 'gift-i-card'); ?></option>
                 </select>
                 <p class="description"><?php _e('Change Order Status When Failed', 'gift-i-card'); ?></p>
             </td>
