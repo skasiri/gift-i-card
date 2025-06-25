@@ -43,13 +43,13 @@ if (class_exists('WooCommerce')) {
 
         <tr>
             <th colspan="2">
-                <h3><?php _e('🔄 Order Processing', 'gift-i-card'); ?></h3>
+                <h3><?php _e('🔄 Gift-i-Card Order Processing', 'gift-i-card'); ?></h3>
             </th>
         </tr>
 
         <tr>
             <th scope="row">
-                <label for="gicapi_gift_i_card_create_order_status"><?php _e('Create Gift-i-Card Order at Status', 'gift-i-card'); ?></label>
+                <label for="gicapi_gift_i_card_create_order_status"><?php _e('Create Order at Status', 'gift-i-card'); ?></label>
             </th>
             <td>
                 <select name="gicapi_gift_i_card_create_order_status" id="gicapi_gift_i_card_create_order_status">
@@ -59,7 +59,7 @@ if (class_exists('WooCommerce')) {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <p class="description"><?php _e('Status to set when creating Gift-i-Card orders', 'gift-i-card'); ?></p>
+                <p class="description"><?php _e('Status to set when creating Gift-i-Card pending order. This status will be used to create the order in the Gift-i-Card system.', 'gift-i-card'); ?></p>
             </td>
         </tr>
 
@@ -75,7 +75,7 @@ if (class_exists('WooCommerce')) {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <p class="description"><?php _e('Status to set when confirming Gift-i-Card orders', 'gift-i-card'); ?></p>
+                <p class="description"><?php _e('Status to set when confirming Gift-i-Card order. This status will be used to confirm the order in the Gift-i-Card system. After this status, the order will be processed.', 'gift-i-card'); ?></p>
             </td>
         </tr>
 
