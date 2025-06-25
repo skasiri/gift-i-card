@@ -168,6 +168,7 @@ class GICAPI_Admin
         // New order processing settings
         register_setting('gicapi_settings', 'gicapi_enable');
         register_setting('gicapi_settings', 'gicapi_gift_i_card_create_order_status');
+        register_setting('gicapi_settings', 'gicapi_gift_i_card_confirm_order_status');
         register_setting('gicapi_settings', 'gicapi_auto_complete_orders');
         register_setting('gicapi_settings', 'gicapi_change_failed_status');
         register_setting('gicapi_settings', 'gicapi_failed_status');

@@ -5,7 +5,8 @@ if (!defined('ABSPATH')) {
 
 // New order processing options
 $enable_order_processing = get_option('gicapi_enable', 'no');
-$gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-processing');
+$gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
+$gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
 $auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
 $change_failed_status = get_option('gicapi_change_failed_status', 'none');
 $failed_status = get_option('gicapi_failed_status', 'failed');
@@ -59,6 +60,22 @@ if (class_exists('WooCommerce')) {
                     <?php endforeach; ?>
                 </select>
                 <p class="description"><?php _e('Status to set when creating Gift-i-Card orders', 'gift-i-card'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="gicapi_gift_i_card_confirm_order_status"><?php _e('Confirm Gift-i-Card Order at Status', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <select name="gicapi_gift_i_card_confirm_order_status" id="gicapi_gift_i_card_confirm_order_status">
+                    <?php foreach ($wc_order_statuses as $status_key => $status_label) : ?>
+                        <option value="<?php echo esc_attr($status_key); ?>" <?php selected($gift_i_card_confirm_order_status, $status_key); ?>>
+                            <?php echo esc_html($status_label); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <p class="description"><?php _e('Status to set when confirming Gift-i-Card orders', 'gift-i-card'); ?></p>
             </td>
         </tr>
 

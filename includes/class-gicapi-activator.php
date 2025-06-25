@@ -18,7 +18,8 @@ class GICAPI_Activator
         add_option('gicapi_consumer_secret', '');
         add_option('gicapi_complete_status', 'wc-completed');
         add_option('gicapi_enable', 'no');
-        add_option('gicapi_gift_i_card_create_order_status', 'wc-processing');
+        add_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
+        add_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
         add_option('gicapi_auto_complete_orders', 'none');
         add_option('gicapi_change_failed_status', 'none');
         add_option('gicapi_failed_status', 'failed');
