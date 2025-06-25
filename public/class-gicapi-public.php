@@ -53,13 +53,11 @@ class GICAPI_Public
         $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
         if ($new_status == $gift_i_card_create_order_status) {
             $this->process_order($order_id);
-            return;
         }
 
         $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
         if ($new_status == $gift_i_card_confirm_order_status) {
             $this->confirm_order($order_id);
-            return;
         }
     }
 
