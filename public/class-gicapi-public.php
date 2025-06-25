@@ -17,12 +17,13 @@ class GICAPI_Public
         $base_url = get_option('gicapi_base_url');
         $consumer_key = get_option('gicapi_consumer_key');
         $consumer_secret = get_option('gicapi_consumer_secret');
+        $order_hook_priority = get_option('gicapi_hook_priority', 10);
 
         if ($base_url && $consumer_key && $consumer_secret) {
             $this->api = new GICAPI_API($base_url, $consumer_key, $consumer_secret);
         }
 
-        add_action('woocommerce_order_status_changed', array($this, 'handle_order_status_change'), 10, 3);
+        add_action('woocommerce_order_status_changed', array($this, 'handle_order_status_change'), $order_hook_priority, 3);
         add_action('woocommerce_email_order_details', array($this, 'add_redeem_data_to_email'), 10, 4);
         add_action('woocommerce_order_details_after_order_table', array($this, 'add_redeem_data_to_order_details'));
         add_action('woocommerce_thankyou', array($this, 'add_redeem_data_to_thank_you'));
@@ -47,27 +48,6 @@ class GICAPI_Public
         $order = wc_get_order($order_id);
         if (!$order) {
             return;
-        }
-
-        $ignore_other_orders = get_option('gicapi_ignore_other_orders', 'yes');
-        $has_gift_card = false;
-
-        foreach ($order->get_items() as $item) {
-            $product_id = $item->get_product_id();
-            $variant_sku = get_post_meta($product_id, '_gic_variant_sku', true);
-
-            if ($variant_sku) {
-                $has_gift_card = true;
-                break;
-            }
-        }
-
-        if (!$has_gift_card && $ignore_other_orders === 'yes') {
-            return;
-        }
-
-        if ($new_status === 'processing') {
-            $this->process_order($order);
         }
     }
 
