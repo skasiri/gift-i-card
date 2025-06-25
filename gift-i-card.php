@@ -87,7 +87,11 @@ if (!class_exists('GICAPI')) {
 
         private function define_public_hooks()
         {
-            $plugin_public = new GICAPI_Public($this->plugin_name, $this->version);
+            $enable_order_processing = get_option('gicapi_enable', 'no');
+
+            if ($enable_order_processing === 'yes') {
+                $plugin_public = new GICAPI_Public($this->plugin_name, $this->version);
+            }
 
             add_action('wp_enqueue_scripts', array($plugin_public, 'enqueue_styles'));
             add_action('wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts'));
