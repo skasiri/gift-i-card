@@ -111,6 +111,12 @@ if (class_exists('WooCommerce')) {
                 </tr>
 
                 <tr>
+                    <th colspan="2">
+                        <h3><?php _e('Order Processing', 'gift-i-card'); ?></h3>
+                    </th>
+                </tr>
+
+                <tr>
                     <th scope="row">
                         <label for="gicapi_gift_card_order_status"><?php _e('Create Gift-i-Card Order at Status', 'gift-i-card'); ?></label>
                     </th>
@@ -144,8 +150,14 @@ if (class_exists('WooCommerce')) {
                 </tr>
 
                 <tr>
+                    <th colspan="2">
+                        <h3><?php _e('✅ Successfully Processed Orders', 'gift-i-card'); ?></h3>
+                    </th>
+                </tr>
+
+                <tr>
                     <th scope="row">
-                        <label for="gicapi_auto_complete_orders"><?php _e('Auto Complete Orders', 'gift-i-card'); ?></label>
+                        <label for="gicapi_auto_complete_orders"><?php _e('Change Order Status', 'gift-i-card'); ?></label>
                     </th>
                     <td>
                         <select name="gicapi_auto_complete_orders" id="gicapi_auto_complete_orders">
@@ -153,13 +165,13 @@ if (class_exists('WooCommerce')) {
                             <option value="all" <?php selected($auto_complete_orders, 'all'); ?>><?php _e('All', 'gift-i-card'); ?></option>
                             <option value="mapped" <?php selected($auto_complete_orders, 'mapped'); ?>><?php _e('Orders with mapped items', 'gift-i-card'); ?></option>
                         </select>
-                        <p class="description"><?php _e('Automatically complete orders based on selection', 'gift-i-card'); ?></p>
+                        <p class="description"><?php _e('Change Order Status After Successfully Processing', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
 
                 <tr>
                     <th scope="row">
-                        <label for="gicapi_complete_status"><?php _e('Complete Status', 'gift-i-card'); ?></label>
+                        <label for="gicapi_complete_status"><?php _e('Status', 'gift-i-card'); ?></label>
                     </th>
                     <td>
                         <select name="gicapi_complete_status" id="gicapi_complete_status">
@@ -169,13 +181,25 @@ if (class_exists('WooCommerce')) {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php _e('Status to set when completing orders', 'gift-i-card'); ?></p>
+                        <p class="description"><?php _e('Status to set when successfully processed orders', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
 
                 <tr>
+                    <td colspan="2">
+                        <hr>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th colspan="2">
+                        <h3><?php _e('❌ Failed Orders', 'gift-i-card'); ?></h3>
+                    </th>
+                </tr>
+
+                <tr>
                     <th scope="row">
-                        <label for="gicapi_change_failed_status"><?php _e('Change Failed Status', 'gift-i-card'); ?></label>
+                        <label for="gicapi_change_failed_status"><?php _e('Change Order Status', 'gift-i-card'); ?></label>
                     </th>
                     <td>
                         <select name="gicapi_change_failed_status" id="gicapi_change_failed_status">
@@ -183,13 +207,13 @@ if (class_exists('WooCommerce')) {
                             <option value="all" <?php selected($change_failed_status, 'all'); ?>><?php _e('All', 'gift-i-card'); ?></option>
                             <option value="mapped" <?php selected($change_failed_status, 'mapped'); ?>><?php _e('Mapped', 'gift-i-card'); ?></option>
                         </select>
-                        <p class="description"><?php _e('Orders to change status when failed', 'gift-i-card'); ?></p>
+                        <p class="description"><?php _e('Change Order Status When Failed', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
 
                 <tr>
                     <th scope="row">
-                        <label for="gicapi_failed_status"><?php _e('Failed Status', 'gift-i-card'); ?></label>
+                        <label for="gicapi_failed_status"><?php _e('Status', 'gift-i-card'); ?></label>
                     </th>
                     <td>
                         <select name="gicapi_failed_status" id="gicapi_failed_status">
@@ -199,7 +223,7 @@ if (class_exists('WooCommerce')) {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php _e('Status to set when orders fail', 'gift-i-card'); ?></p>
+                        <p class="description"><?php _e('Status to set when failed orders', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
             </table>
