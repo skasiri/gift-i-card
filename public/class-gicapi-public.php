@@ -45,8 +45,20 @@ class GICAPI_Public
             return;
         }
 
-        $order = wc_get_order($order_id);
-        if (!$order) {
+        $enable_order_processing = get_option('gicapi_enable', 'no');
+        if ($enable_order_processing !== 'yes') {
+            return;
+        }
+
+        $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
+        if ($new_status == $gift_i_card_create_order_status) {
+            $this->process_order($order_id);
+            return;
+        }
+
+        $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
+        if ($new_status == $gift_i_card_confirm_order_status) {
+            $this->confirm_order($order_id);
             return;
         }
     }
@@ -98,6 +110,14 @@ class GICAPI_Public
         $complete_orders = get_option('gicapi_complete_orders', 'yes');
         if ($complete_orders === 'yes') {
             $order->update_status('completed');
+        }
+    }
+
+    private function confirm_order($order_id)
+    {
+        $response = $this->api->confirm_order($order_id);
+        if (is_wp_error($response)) {
+            return;
         }
     }
 
