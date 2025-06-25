@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-24 03:59+0330\n"
-"PO-Revision-Date: 2025-06-24 04:03+0330\n"
+"POT-Creation-Date: 2025-06-25 04:19+0330\n"
+"PO-Revision-Date: 2025-06-25 04:19+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -45,12 +45,12 @@ msgstr "موجودی"
 msgid "Disconnected"
 msgstr "قطع"
 
-#: admin/class-gicapi-admin.php:597 admin/class-gicapi-admin.php:644
-#: admin/class-gicapi-admin.php:665
+#: admin/class-gicapi-admin.php:596 admin/class-gicapi-admin.php:643
+#: admin/class-gicapi-admin.php:664
 msgid "You do not have permission to perform this action."
 msgstr "دسترسی لازم برای این کار را ندارید."
 
-#: admin/class-gicapi-admin.php:606
+#: admin/class-gicapi-admin.php:605
 msgid ""
 "Token refreshed successfully. Please refresh the page or save the settings to "
 "see the new connection status."
@@ -58,198 +58,201 @@ msgstr ""
 "توکن با موفقیت نوسازی شد. لطفاً صفحه را به‌روزرسانی کنید تا وضعیت اتصال جدید را "
 "مشاهده کنید."
 
-#: admin/class-gicapi-admin.php:608
+#: admin/class-gicapi-admin.php:607
 msgid "Error refreshing token. Please check the API settings and try again."
 msgstr "خطا در نوسازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید."
 
-#: admin/class-gicapi-admin.php:652
+#: admin/class-gicapi-admin.php:651
 msgid "Invalid product or variant ID."
 msgstr ""
 
-#: admin/class-gicapi-admin.php:657
+#: admin/class-gicapi-admin.php:656
 msgid "Variant mapped successfully."
 msgstr ""
 
-#: admin/class-gicapi-admin.php:674
+#: admin/class-gicapi-admin.php:673
 msgid "All plugin data has been deleted successfully."
 msgstr ""
 
-#: admin/class-gicapi-admin.php:676
+#: admin/class-gicapi-admin.php:675
 msgid "Error deleting data: "
 msgstr ""
 
-#: admin/partials/gicapi-admin-display.php:30
+#: admin/partials/gicapi-admin-display.php:31
 msgid "Gift-i-Card Settings"
 msgstr "تنظیمات گیفتی کارت"
 
-#: admin/partials/gicapi-admin-display.php:33
-msgid "اتصال"
-msgstr ""
-
 #: admin/partials/gicapi-admin-display.php:34
-msgid "سفارشات"
-msgstr ""
+msgid "Connection"
+msgstr "اتصال"
 
 #: admin/partials/gicapi-admin-display.php:35
-msgid "نمایش"
-msgstr ""
+msgid "Orders"
+msgstr "سفارشات"
 
 #: admin/partials/gicapi-admin-display.php:36
-msgid "داده ها"
-msgstr ""
+msgid "Display"
+msgstr "نمایش"
 
-#: admin/partials/gicapi-admin-display.php:46
+#: admin/partials/gicapi-admin-display.php:37
+#: admin/partials/gicapi-admin-display.php:273
+msgid "Data Management"
+msgstr "مدیریت داده"
+
+#: admin/partials/gicapi-admin-display.php:47
 msgid "Base URL"
 msgstr "آدرس اتصال"
 
-#: admin/partials/gicapi-admin-display.php:50
+#: admin/partials/gicapi-admin-display.php:51
 msgid "The base URL of the gift-i-card service API"
 msgstr "آدرس اتصال به وب سرویس گیفتی کارت"
 
-#: admin/partials/gicapi-admin-display.php:56
+#: admin/partials/gicapi-admin-display.php:57
 msgid "Consumer Key"
 msgstr "کلید مصرف کننده"
 
-#: admin/partials/gicapi-admin-display.php:60
+#: admin/partials/gicapi-admin-display.php:61
 msgid "The consumer key for API authentication"
 msgstr "کلید مصرف کننده برای اعتبارسنجی وب سرویس"
 
-#: admin/partials/gicapi-admin-display.php:66
+#: admin/partials/gicapi-admin-display.php:67
 msgid "Consumer Secret"
 msgstr "رمز مصرف کننده"
 
-#: admin/partials/gicapi-admin-display.php:70
+#: admin/partials/gicapi-admin-display.php:71
 msgid "The consumer secret for API authentication"
 msgstr "رمز مصرف کننده برای اعتبارسنجی وب سرویس"
 
-#: admin/partials/gicapi-admin-display.php:78
+#: admin/partials/gicapi-admin-display.php:79
 msgid "Refresh Token"
 msgstr "نوسازی توکن"
 
-#: admin/partials/gicapi-admin-display.php:81
+#: admin/partials/gicapi-admin-display.php:82
 msgid "Get New Token"
 msgstr "دریافت توکن جدید"
 
-#: admin/partials/gicapi-admin-display.php:83
+#: admin/partials/gicapi-admin-display.php:84
 msgid ""
 "Click this button to discard the current token and get a new one from the API."
-msgstr ""
+msgstr "برای ابطال توکن فعلی و دریافت توکن جدید این دکمه را بزنید."
 
-#: admin/partials/gicapi-admin-display.php:95
+#: admin/partials/gicapi-admin-display.php:96
 msgid "Enable Order Processing"
 msgstr "فعال‌سازی پردازش سفارشات"
 
-#: admin/partials/gicapi-admin-display.php:100
+#: admin/partials/gicapi-admin-display.php:101
 msgid "Enable order processing functionality"
 msgstr "فعال‌سازی قابلیت پردازش سفارشات"
 
-#: admin/partials/gicapi-admin-display.php:102
+#: admin/partials/gicapi-admin-display.php:103
 msgid "By disabling this, orders will not be processed automatically."
-msgstr ""
+msgstr "با غیرفعال کردن این گزینه، سفارشات بطور خودکار پردازش نخواهند شد."
 
-#: admin/partials/gicapi-admin-display.php:114
+#: admin/partials/gicapi-admin-display.php:115
+msgid "🔄 Order Processing"
+msgstr "🔄 پردازش سفارشات"
+
+#: admin/partials/gicapi-admin-display.php:121
 msgid "Create Gift-i-Card Order at Status"
 msgstr "ثبت سفارش گیفتی کارت در وضعیت"
 
-#: admin/partials/gicapi-admin-display.php:124
+#: admin/partials/gicapi-admin-display.php:131
 msgid "Status to set when creating Gift-i-Card orders"
 msgstr "در وضعیتی از سفارش ووکامرس که سفارش گیفتی کارت ایجاد شود"
 
-#: admin/partials/gicapi-admin-display.php:131
+#: admin/partials/gicapi-admin-display.php:138
 msgid "Hook Priority"
 msgstr "اولویت اجرای هوک"
 
-#: admin/partials/gicapi-admin-display.php:135
+#: admin/partials/gicapi-admin-display.php:142
 msgid "Priority for hook execution (default: 10)"
 msgstr "اولویت اجرای هوک (پیش‌فرض: ۱۰)"
 
-#: admin/partials/gicapi-admin-display.php:147
-msgid "Auto Complete Orders"
-msgstr "تکمیل خودکار سفارشات"
+#: admin/partials/gicapi-admin-display.php:154
+msgid "✅ Successfully Processed Orders"
+msgstr "✅ سفارشات موفق"
 
-#: admin/partials/gicapi-admin-display.php:151
-#: admin/partials/gicapi-admin-display.php:181
+#: admin/partials/gicapi-admin-display.php:160
+#: admin/partials/gicapi-admin-display.php:202
+msgid "Change Order Status"
+msgstr "تغییر وضعیت سفارش"
+
+#: admin/partials/gicapi-admin-display.php:164
+#: admin/partials/gicapi-admin-display.php:206
 msgid "None"
 msgstr "هیچکدام"
 
-#: admin/partials/gicapi-admin-display.php:152
-#: admin/partials/gicapi-admin-display.php:182
+#: admin/partials/gicapi-admin-display.php:165
+#: admin/partials/gicapi-admin-display.php:207
 msgid "All"
 msgstr "همه"
 
-#: admin/partials/gicapi-admin-display.php:153
+#: admin/partials/gicapi-admin-display.php:166
 msgid "Orders with mapped items"
 msgstr "سفارشات دارای آیتم مپ شده"
 
-#: admin/partials/gicapi-admin-display.php:155
-msgid "Automatically complete orders based on selection"
-msgstr "تکمیل خودکار سفارشات بر اساس انتخاب"
+#: admin/partials/gicapi-admin-display.php:168
+msgid "Change Order Status After Successfully Processing"
+msgstr "تغییر وضعیت سفارش بعد از عملیات موفق"
 
-#: admin/partials/gicapi-admin-display.php:161
-msgid "Complete Status"
-msgstr "وضعیت تکمیل شده"
+#: admin/partials/gicapi-admin-display.php:174
+#: admin/partials/gicapi-admin-display.php:216
+msgid "Status"
+msgstr "وضعیت"
 
-#: admin/partials/gicapi-admin-display.php:171
-msgid "Status to set when completing orders"
-msgstr "وضعیتی که هنگام تکمیل سفارشات تنظیم می‌شود"
+#: admin/partials/gicapi-admin-display.php:184
+msgid "Status to set when successfully processed orders"
+msgstr "وضعیت سفارش زمانیکه موفقیت آمیز باشد"
 
-#: admin/partials/gicapi-admin-display.php:177
-msgid "Change Failed Status"
-msgstr "تغییر وضعیت ناموفق"
+#: admin/partials/gicapi-admin-display.php:196
+msgid "❌ Failed Orders"
+msgstr "❌ سفارشات ناموفق"
 
-#: admin/partials/gicapi-admin-display.php:183
+#: admin/partials/gicapi-admin-display.php:208
 msgid "Mapped"
 msgstr "مپ شده"
 
-#: admin/partials/gicapi-admin-display.php:185
-msgid "Orders to change status when failed"
-msgstr "سفارشاتی که هنگام ناموفق بودن وضعیتشان تغییر کند"
+#: admin/partials/gicapi-admin-display.php:210
+msgid "Change Order Status When Failed"
+msgstr "تغییر وضعیت سفارش زمانیکه ناموفق باشد"
 
-#: admin/partials/gicapi-admin-display.php:191
-msgid "Failed Status"
-msgstr "وضعیت ناموفق"
+#: admin/partials/gicapi-admin-display.php:226
+msgid "Status to set when failed orders"
+msgstr "وضعیت سفارش زمانیکه ناموفق باشد"
 
-#: admin/partials/gicapi-admin-display.php:201
-msgid "Status to set when orders fail"
-msgstr "وضعیتی که هنگام ناموفق بودن سفارشات تنظیم می‌شود"
-
-#: admin/partials/gicapi-admin-display.php:211
+#: admin/partials/gicapi-admin-display.php:236
 msgid "Add to Email"
 msgstr "افزودن به ایمیل"
 
-#: admin/partials/gicapi-admin-display.php:216
+#: admin/partials/gicapi-admin-display.php:241
 msgid "Add redeem data to order emails"
 msgstr "افزودن کدهای شارژ به ایمیل سفارشات ووکامرس"
 
-#: admin/partials/gicapi-admin-display.php:223
+#: admin/partials/gicapi-admin-display.php:248
 msgid "Add to Order Details"
 msgstr "افزودن به جزئیات سفارش"
 
-#: admin/partials/gicapi-admin-display.php:228
+#: admin/partials/gicapi-admin-display.php:253
 msgid "Add redeem data to order details page"
 msgstr "افزودن کدهای شارژ به صفحه جزئیات سفارش ووکامرس"
 
-#: admin/partials/gicapi-admin-display.php:235
+#: admin/partials/gicapi-admin-display.php:260
 msgid "Add to Thank You"
 msgstr "افزودن به صفحه تشکر از پرداخت"
 
-#: admin/partials/gicapi-admin-display.php:240
+#: admin/partials/gicapi-admin-display.php:265
 msgid "Add redeem data to thank you page"
 msgstr "افزودن کدهای شارژ به صفحه بعد از پرداخت موفق ووکامرس"
 
-#: admin/partials/gicapi-admin-display.php:248
-msgid "Data Management"
-msgstr ""
-
-#: admin/partials/gicapi-admin-display.php:251
+#: admin/partials/gicapi-admin-display.php:276
 msgid "Delete All Data"
 msgstr "حذف تمام اطلاعات افزونه"
 
-#: admin/partials/gicapi-admin-display.php:254
+#: admin/partials/gicapi-admin-display.php:279
 msgid "Delete All Plugin Data"
 msgstr "حذف تمام اطلاعات افزونه"
 
-#: admin/partials/gicapi-admin-display.php:257
+#: admin/partials/gicapi-admin-display.php:282
 msgid ""
 "Warning: This will permanently delete all plugin data. This action cannot be "
 "undone!"
@@ -514,6 +517,21 @@ msgstr "نام شما"
 #. Author URI of the plugin/theme
 msgid "https://example.com"
 msgstr "https://example.com"
+
+#~ msgid "Auto Complete Orders"
+#~ msgstr "تکمیل خودکار سفارشات"
+
+#~ msgid "Automatically complete orders based on selection"
+#~ msgstr "تکمیل خودکار سفارشات بر اساس انتخاب"
+
+#~ msgid "Complete Status"
+#~ msgstr "وضعیت تکمیل شده"
+
+#~ msgid "Failed Status"
+#~ msgstr "وضعیت ناموفق"
+
+#~ msgid "Status to set when orders fail"
+#~ msgstr "وضعیتی که هنگام ناموفق بودن سفارشات تنظیم می‌شود"
 
 #~ msgid "Complete Orders"
 #~ msgstr "تکمیل سفارشات"

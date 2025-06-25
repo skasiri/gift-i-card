@@ -31,10 +31,10 @@ if (class_exists('WooCommerce')) {
     <h1><?php _e('Gift-i-Card Settings', 'gift-i-card'); ?></h1>
 
     <h2 class="nav-tab-wrapper">
-        <a href="#connection" class="nav-tab nav-tab-active"><?php _e('اتصال', 'gift-i-card'); ?></a>
-        <a href="#orders" class="nav-tab"><?php _e('سفارشات', 'gift-i-card'); ?></a>
-        <a href="#display" class="nav-tab"><?php _e('نمایش', 'gift-i-card'); ?></a>
-        <a href="#data-management" class="nav-tab"><?php _e('داده ها', 'gift-i-card'); ?></a>
+        <a href="#connection" class="nav-tab nav-tab-active"><?php _e('Connection', 'gift-i-card'); ?></a>
+        <a href="#orders" class="nav-tab"><?php _e('Orders', 'gift-i-card'); ?></a>
+        <a href="#display" class="nav-tab"><?php _e('Display', 'gift-i-card'); ?></a>
+        <a href="#data-management" class="nav-tab"><?php _e('Data Management', 'gift-i-card'); ?></a>
     </h2>
 
     <form method="post" action="options.php">
@@ -112,7 +112,7 @@ if (class_exists('WooCommerce')) {
 
                 <tr>
                     <th colspan="2">
-                        <h3><?php _e('Order Processing', 'gift-i-card'); ?></h3>
+                        <h3><?php _e('🔄 Order Processing', 'gift-i-card'); ?></h3>
                     </th>
                 </tr>
 
