@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-25 06:04+0330\n"
-"PO-Revision-Date: 2025-06-25 06:06+0330\n"
+"POT-Creation-Date: 2025-06-25 06:30+0330\n"
+"PO-Revision-Date: 2025-06-25 06:31+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -421,12 +421,12 @@ msgstr "تغییر وضعیت سفارش بعد از عملیات موفق"
 
 #: admin/partials/settings/gicapi-settings-orders.php:120
 #: admin/partials/settings/gicapi-settings-orders.php:162
-msgid "Status"
-msgstr "وضعیت"
+msgid "Change to Status"
+msgstr "تغییر به وضعیت"
 
 #: admin/partials/settings/gicapi-settings-orders.php:130
 msgid "Status to set when successfully processed orders"
-msgstr "وضعیت سفارش زمانیکه موفقیت آمیز باشد"
+msgstr "سفارش موفق به این وضعیت تغییر میکند"
 
 #: admin/partials/settings/gicapi-settings-orders.php:142
 msgid "❌ Failed Orders"
@@ -442,7 +442,7 @@ msgstr "تغییر وضعیت سفارش زمانیکه ناموفق باشد"
 
 #: admin/partials/settings/gicapi-settings-orders.php:172
 msgid "Status to set when failed orders"
-msgstr "وضعیت سفارش زمانیکه ناموفق باشد"
+msgstr "سفارش ناموفق به این وضعیت تغییر میکند"
 
 #: includes/class-gicapi-ajax.php:27 includes/class-gicapi-ajax.php:70
 #: includes/class-gicapi-ajax.php:122
@@ -534,6 +534,9 @@ msgstr "نام شما"
 #. Author URI of the plugin/theme
 msgid "https://example.com"
 msgstr "https://example.com"
+
+#~ msgid "Status"
+#~ msgstr "وضعیت"
 
 #~ msgid "Status to set when creating Gift-i-Card orders"
 #~ msgstr "در وضعیتی از سفارش ووکامرس که سفارش گیفتی کارت ایجاد شود"

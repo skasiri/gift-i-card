@@ -117,7 +117,7 @@ if (class_exists('WooCommerce')) {
 
         <tr>
             <th scope="row">
-                <label for="gicapi_complete_status"><?php _e('Status', 'gift-i-card'); ?></label>
+                <label for="gicapi_complete_status"><?php _e('Change to Status', 'gift-i-card'); ?></label>
             </th>
             <td>
                 <select name="gicapi_complete_status" id="gicapi_complete_status">
@@ -159,7 +159,7 @@ if (class_exists('WooCommerce')) {
 
         <tr>
             <th scope="row">
-                <label for="gicapi_failed_status"><?php _e('Status', 'gift-i-card'); ?></label>
+                <label for="gicapi_failed_status"><?php _e('Change to Status', 'gift-i-card'); ?></label>
             </th>
             <td>
                 <select name="gicapi_failed_status" id="gicapi_failed_status">
