@@ -9,6 +9,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Define plugin name for this file
+$plugin_name = 'gift-i-card';
+
 $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
 $product_sku = isset($_GET['product']) ? sanitize_text_field($_GET['product']) : '';
 
@@ -28,8 +31,8 @@ if (!is_wp_error($categories)) {
     }
 }
 
-$products_page_url = add_query_arg('category', $category_sku, menu_page_url($plugin_name . '-products', false));
-$categories_page_url = menu_page_url($plugin_name . '-products', false);
+$products_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku));
+$categories_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 
 // Get variants from API
 $variants = $api->get_variants($product_sku);

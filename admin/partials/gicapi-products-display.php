@@ -9,8 +9,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Define plugin name for this file
+$plugin_name = 'gift-i-card';
+
+echo 'products-display';
+
 $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
-$parent_page_url = menu_page_url($plugin_name . '-products', false);
+$parent_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 
 // Get current page and items per page
 $paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
@@ -78,7 +83,7 @@ if (!is_wp_error($categories)) {
                 $product_sku = $product['sku'];
                 $product_image_url = isset($product['image_url']) ? $product['image_url'] : '';
                 $product_variant_count = isset($product['variant_count']) ? $product['variant_count'] : 0;
-                $variants_page_url = add_query_arg('product', $product_sku);
+                $variants_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'product' => $product_sku));
             ?>
                 <tr>
                     <td class="column-thumbnail">
@@ -114,7 +119,7 @@ if (!is_wp_error($categories)) {
                 <span class="pagination-links">
                     <?php
                     echo paginate_links(array(
-                        'base' => add_query_arg('paged', '%#%'),
+                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'paged' => '%#%')),
                         'format' => '',
                         'prev_text' => __('&laquo;'),
                         'next_text' => __('&raquo;'),

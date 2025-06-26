@@ -3,6 +3,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Define plugin name for this file
+$plugin_name = 'gift-i-card';
+
 // Get search query
 $search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 
@@ -64,7 +67,7 @@ $categories = array_slice($categories, $offset, $per_page);
                     $category_sku = $category['sku'];
                     $category_count = $category['count'];
                     $category_thumbnail = isset($category['thumbnail']) ? $category['thumbnail'] : '';
-                    $products_page_url = add_query_arg('category', $category_sku, menu_page_url($plugin_name . '-products', false));
+                    $products_page_url = add_query_arg('category', $category_sku, admin_url('admin.php?page=' . $plugin_name . '-products'));
             ?>
                     <tr>
                         <td class="column-thumbnail">
@@ -100,7 +103,7 @@ $categories = array_slice($categories, $offset, $per_page);
                 <span class="pagination-links">
                     <?php
                     echo paginate_links(array(
-                        'base' => add_query_arg('paged', '%#%'),
+                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'paged' => '%#%')),
                         'format' => '',
                         'prev_text' => __('&laquo;'),
                         'next_text' => __('&raquo;'),
