@@ -24,6 +24,8 @@ class GICAPI_Public
         }
 
         add_action('woocommerce_order_status_changed', array($this, 'handle_order_status_change'), $order_hook_priority, 3);
+        add_action('woocommerce_new_order', array($this, 'handle_order_creation'), $order_hook_priority, 1);
+
         add_action('woocommerce_email_order_details', array($this, 'add_redeem_data_to_email'), 10, 4);
         add_action('woocommerce_order_details_after_order_table', array($this, 'add_redeem_data_to_order_details'));
         add_action('woocommerce_thankyou', array($this, 'add_redeem_data_to_thank_you'));
@@ -50,11 +52,16 @@ class GICAPI_Public
             return;
         }
 
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
+
         $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
         if ($new_status == $gift_i_card_create_order_status) {
             $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
             if ($process_order !== 'yes') {
-                $this->process_order($order_id);
+                $this->process_order($order);
             }
         }
 
@@ -63,6 +70,33 @@ class GICAPI_Public
             $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
             if ($process_order === 'yes') {
                 $this->confirm_order($order_id);
+            }
+        }
+    }
+
+    public function handle_order_creation($order_id)
+    {
+        if (!$this->api) {
+            return;
+        }
+
+        $enable_order_processing = get_option('gicapi_enable', 'no');
+        if ($enable_order_processing !== 'yes') {
+            return;
+        }
+
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
+
+        $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
+        $current_status = 'wc-' . $order->get_status();
+
+        if ($current_status == $gift_i_card_create_order_status) {
+            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            if ($process_order !== 'yes') {
+                $this->process_order($order);
             }
         }
     }
