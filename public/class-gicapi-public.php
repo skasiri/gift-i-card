@@ -205,7 +205,8 @@ class GICAPI_Public
                 'product_id' => $product_id,
                 'variation_id' => $variation_id,
                 'variant_sku' => $variant_sku,
-                'quantity' => $item->get_quantity()
+                'quantity' => $item->get_quantity(),
+                'total_price' => $response['total_price']
             );
         }
 
