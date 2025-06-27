@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-27 06:01+0330\n"
-"PO-Revision-Date: 2025-06-27 06:06+0330\n"
+"POT-Creation-Date: 2025-06-27 06:07+0330\n"
+"PO-Revision-Date: 2025-06-27 06:09+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -331,10 +331,8 @@ msgid ""
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:68
-#, fuzzy
-#| msgid "Change to Status"
 msgid "🕒 Cron Job Status"
-msgstr "تغییر به وضعیت"
+msgstr "🕒 وضعیت کرون جاب"
 
 #: admin/partials/settings/gicapi-settings-cron.php:74
 msgid "Status"
@@ -342,38 +340,36 @@ msgstr "وضعیت"
 
 #: admin/partials/settings/gicapi-settings-cron.php:80
 msgid "Enabled:"
-msgstr ""
+msgstr "فعال:"
 
 #: admin/partials/settings/gicapi-settings-cron.php:82
 msgid "Yes"
-msgstr ""
+msgstr "بله"
 
 #: admin/partials/settings/gicapi-settings-cron.php:82
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "هیچکدام"
+msgstr "خیر"
 
 #: admin/partials/settings/gicapi-settings-cron.php:88
 msgid "Next Run:"
-msgstr ""
+msgstr "اجرای بعدی:"
 
 #: admin/partials/settings/gicapi-settings-cron.php:94
 msgid "Interval:"
-msgstr ""
+msgstr "بازه زمانی:"
 
 #: admin/partials/settings/gicapi-settings-cron.php:99
 msgid "Cron status information not available."
-msgstr ""
+msgstr "اطلاعات کرون جاب در دسترس نیست."
 
 #: admin/partials/settings/gicapi-settings-cron.php:106
 msgid "Manual Update"
-msgstr ""
+msgstr "بروزرسانی دستی"
 
 #: admin/partials/settings/gicapi-settings-cron.php:110
 #: admin/partials/settings/gicapi-settings-cron.php:202
 msgid "Update Pending/Processing Orders Now"
-msgstr ""
+msgstr "بروزرسانی سفارشات در انتظار / درحال انجام"
 
 #: admin/partials/settings/gicapi-settings-cron.php:113
 msgid ""
@@ -383,7 +379,7 @@ msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:127
 msgid "📋 How It Works"
-msgstr ""
+msgstr "📋 چطور کار میکند"
 
 #: admin/partials/settings/gicapi-settings-cron.php:135
 msgid ""
@@ -660,17 +656,14 @@ msgid "Gift Card Information"
 msgstr "اطلاعات گیفت کارت"
 
 #: includes/class-gicapi-gift-card-display.php:51
-#, fuzzy
-#| msgid "Gift-i-Card order created: %s"
+#: includes/class-gicapi-gift-card-display.php:155
 msgid "Gift-i-Card Order ID:"
-msgstr "سفارش گیفتی کارت ایجاد شد: %s"
+msgstr "شماره سفارش گیفتی کارت: %s"
 
 #: includes/class-gicapi-gift-card-display.php:52
 #: includes/class-gicapi-gift-card-display.php:156
-#, fuzzy
-#| msgid "Status"
 msgid "Status:"
-msgstr "وضعیت"
+msgstr "وضعیت:"
 
 #: includes/class-gicapi-gift-card-display.php:53
 msgid "Total Price:"
@@ -726,12 +719,6 @@ msgstr "چاپ اطلاعات"
 msgid "Export to CSV"
 msgstr "خروجی CSV"
 
-#: includes/class-gicapi-gift-card-display.php:155
-#, fuzzy
-#| msgid "Gift-i-Card order created: %s"
-msgid "Gift Card Order ID:"
-msgstr "سفارش گیفتی کارت ایجاد شد: %s"
-
 #: includes/class-gicapi-gift-card-display.php:159
 msgid "Redemption Codes"
 msgstr "کدهای ردیم"
@@ -785,7 +772,8 @@ msgid "Gift-i-Card"
 msgstr "گیفتی کارت"
 
 #. Plugin URI of the plugin/theme
-msgid "https://example.com/gift-card"
+#. Author URI of the plugin/theme
+msgid "https://gifticard.ir"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -793,12 +781,19 @@ msgid "A plugin to integrate WooCommerce with a gift card service"
 msgstr "افزونه ای برای سازگاری ووکامرس با سرویس دهنده گیفت کارت"
 
 #. Author of the plugin/theme
-msgid "Your Name"
-msgstr "نام شما"
+msgid "Saeid Kasiri"
+msgstr ""
 
-#. Author URI of the plugin/theme
-msgid "https://example.com"
-msgstr "https://example.com"
+#, fuzzy
+#~| msgid "Gift-i-Card order created: %s"
+#~ msgid "Gift Card Order ID:"
+#~ msgstr "سفارش گیفتی کارت ایجاد شد: %s"
+
+#~ msgid "Your Name"
+#~ msgstr "نام شما"
+
+#~ msgid "https://example.com"
+#~ msgstr "https://example.com"
 
 #~ msgid "Mapped"
 #~ msgstr "مپ شده"
