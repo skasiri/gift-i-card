@@ -186,3 +186,43 @@
 .notice strong {
     font-weight: 600;
 }
+
+/* Status indicators for admin area */
+.gicapi-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.gicapi-status-pending {
+    background: #6c757d;
+    color: #ffffff;
+    border: 1px solid #5a6268;
+}
+
+.gicapi-status-processing {
+    background: #007bff;
+    color: #ffffff;
+    border: 1px solid #0056b3;
+}
+
+.gicapi-status-completed {
+    background: #28a745;
+    color: #ffffff;
+    border: 1px solid #1e7e34;
+}
+
+.gicapi-status-failed {
+    background: #dc3545;
+    color: #ffffff;
+    border: 1px solid #c82333;
+}
+
+.gicapi-status-confirmed {
+    background: #28a745;
+    color: #ffffff;
+    border: 1px solid #1e7e34;
+}
