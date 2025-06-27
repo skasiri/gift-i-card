@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-27 07:24+0330\n"
-"PO-Revision-Date: 2025-06-27 07:25+0330\n"
+"POT-Creation-Date: 2025-06-27 07:31+0330\n"
+"PO-Revision-Date: 2025-06-27 07:35+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -307,22 +307,30 @@ msgid ""
 msgstr "برای ابطال توکن فعلی و دریافت توکن جدید این دکمه را بزنید."
 
 #: admin/partials/settings/gicapi-settings-cron.php:33
-msgid "Enable Automatic Order Updates"
+msgid "Order Updating through Cron Job"
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:38
-msgid "Enable automatic updates of pending and processing orders"
+msgid ""
+"Enable automatic updates of pending and processing orders through cron job "
+"(not recommended)"
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:41
 msgid ""
-"When enabled, the system will automatically check and update the status of "
-"Gift-i-Card orders that are in pending or processing status."
+"If your WooCommerce store is running on a real domain with HTTPS, orders are "
+"automatically updated via webhooks and you do not need to enable cron jobs. "
+"Cron jobs are only recommended for development/testing environments or when "
+"webhooks are not available."
 msgstr ""
+"اگر فروشگاه شما از دامنه واقعی و HTTPS استفاده میکند، سفارشات بطور خودکار "
+"بوسیله وب هوک بروزرسانی میشوند و نیاز به فعالسازی این گزینه ندارید. کرون جاب "
+"ها برای محیط تست/توسعه و یا در جایی که وب هوک های در دسترس نیستند توصیه "
+"میشوند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:48
 msgid "Update Interval"
-msgstr ""
+msgstr "دوره زمانی"
 
 #: admin/partials/settings/gicapi-settings-cron.php:59
 msgid ""
@@ -671,7 +679,7 @@ msgstr "ارتباط حذف شد"
 
 #: includes/class-gicapi-cron.php:74
 msgid "Every 5 minutes"
-msgstr ""
+msgstr "هر 5 دقیقه"
 
 #: includes/class-gicapi-cron.php:308
 #, php-format
@@ -691,18 +699,16 @@ msgid "Manual order update completed"
 msgstr "بروزرسانی دستی سفارش انجام شد"
 
 #: includes/class-gicapi-cron.php:391
-#, fuzzy
-#| msgid "Webhook processed successfully"
 msgid "Cron job rescheduled successfully"
-msgstr "وب هوک با موفقیت پردازش شد"
+msgstr "رویداد کرون با موفقیت زمانبندی شد"
 
 #: includes/class-gicapi-cron.php:554
 msgid "Cron job checked and repaired successfully"
-msgstr ""
+msgstr "رویداد کرون با موفقیت عیب یابی و ترمیم شد"
 
 #: includes/class-gicapi-cron.php:556
 msgid "Cron job check and repair failed"
-msgstr ""
+msgstr "خطا در ترمیم رویداد کرون"
 
 #: includes/class-gicapi-gift-card-display.php:47
 msgid "Gift Card Information"
@@ -803,7 +809,7 @@ msgstr "وب هوک با موفقیت پردازش شد"
 #: public/class-gicapi-public.php:191
 #, php-format
 msgid "Failed to create Gift-i-Card order: %s"
-msgstr ""
+msgstr "خطا در ایجاد سفارش گیفتی کارت: %s"
 
 #: public/class-gicapi-public.php:198
 #, php-format
@@ -827,7 +833,7 @@ msgstr "گیفتی کارت"
 #. Plugin URI of the plugin/theme
 #. Author URI of the plugin/theme
 msgid "https://gifticard.ir"
-msgstr ""
+msgstr "https://gifticard.ir"
 
 #. Description of the plugin/theme
 msgid "A plugin to integrate WooCommerce with a gift card service"
@@ -835,7 +841,7 @@ msgstr "افزونه ای برای سازگاری ووکامرس با سرویس
 
 #. Author of the plugin/theme
 msgid "Saeid Kasiri"
-msgstr ""
+msgstr "سعید کثیری"
 
 #, fuzzy
 #~| msgid "Gift-i-Card order created: %s"
