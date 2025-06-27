@@ -133,6 +133,24 @@ class GICAPI_Admin
 
     public function display_connection_status()
     {
+        // Only show on plugin pages
+        $screen = get_current_screen();
+        $current_page = isset($_GET['page']) ? $_GET['page'] : '';
+
+        // Check if we're on a plugin page
+        $is_plugin_page = false;
+        if ($screen && strpos($screen->id, 'gift-i-card') !== false) {
+            $is_plugin_page = true;
+        }
+        if (strpos($current_page, 'gift-i-card') !== false) {
+            $is_plugin_page = true;
+        }
+
+        // If not on plugin page, don't show the notice
+        if (!$is_plugin_page) {
+            return;
+        }
+
         $api = new GICAPI_API();
         $response = $api->get_balance();
         // echo 'response: ' . json_encode($response);
