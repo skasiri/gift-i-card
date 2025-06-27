@@ -78,6 +78,7 @@ class GICAPI_Public
 
         $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
         if ($this->normalize_status($new_status) == $this->normalize_status($gift_i_card_confirm_order_status)) {
+            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
             if ($process_order === 'yes') {
                 $this->confirm_order($order_id);
             }
@@ -107,6 +108,14 @@ class GICAPI_Public
             $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
             if ($process_order !== 'yes') {
                 $this->process_order($order);
+            }
+        }
+
+        $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
+        if ($this->normalize_status($current_status) == $this->normalize_status($gift_i_card_confirm_order_status)) {
+            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            if ($process_order === 'yes') {
+                $this->confirm_order($order_id);
             }
         }
     }
