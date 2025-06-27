@@ -11,6 +11,10 @@ $cron_interval = get_option('gicapi_cron_interval', 'gicapi_five_minutes');
 $cron_status = array();
 if (class_exists('GICAPI_Cron')) {
     $cron = GICAPI_Cron::get_instance();
+
+    // Check and repair cron job if needed
+    $cron->check_and_repair_cron();
+
     $cron_status = $cron->get_cron_status();
 }
 
@@ -124,8 +128,11 @@ foreach ($cron_intervals as $interval => $schedule) {
                 <button type="button" id="gicapi-reschedule-cron" class="button button-secondary">
                     <?php _e('Reschedule Cron Job', 'gift-i-card'); ?>
                 </button>
+                <button type="button" id="gicapi-check-repair-cron" class="button button-secondary">
+                    <?php _e('Check & Repair Cron Job', 'gift-i-card'); ?>
+                </button>
                 <p class="description">
-                    <?php _e('If the cron job is not running, click this button to clear and recreate the cron job.', 'gift-i-card'); ?>
+                    <?php _e('If the cron job is not running, click these buttons to troubleshoot. "Reschedule" will clear and recreate the cron job. "Check & Repair" will automatically detect and fix issues.', 'gift-i-card'); ?>
                 </p>
                 <div id="gicapi-debug-result" style="margin-top: 10px;"></div>
             </td>
@@ -249,6 +256,40 @@ foreach ($cron_intervals as $interval => $schedule) {
                 },
                 complete: function() {
                     button.prop('disabled', false).text('<?php _e('Reschedule Cron Job', 'gift-i-card'); ?>');
+                }
+            });
+        });
+
+        $('#gicapi-check-repair-cron').on('click', function() {
+            var button = $(this);
+            var resultDiv = $('#gicapi-debug-result');
+
+            button.prop('disabled', true).text('<?php _e('Checking...', 'gift-i-card'); ?>');
+            resultDiv.html('');
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'gicapi_check_repair_cron',
+                    nonce: '<?php echo wp_create_nonce('gicapi_check_repair_cron'); ?>'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        resultDiv.html('<div class="notice notice-success"><p>' + response.data + '</p></div>');
+                        // Reload page after 2 seconds to show updated status
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        resultDiv.html('<div class="notice notice-error"><p>' + response.data + '</p></div>');
+                    }
+                },
+                error: function() {
+                    resultDiv.html('<div class="notice notice-error"><p><?php _e('An error occurred while checking cron job.', 'gift-i-card'); ?></p></div>');
+                },
+                complete: function() {
+                    button.prop('disabled', false).text('<?php _e('Check & Repair Cron Job', 'gift-i-card'); ?>');
                 }
             });
         });

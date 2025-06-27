@@ -53,6 +53,15 @@ class GICAPI_Cron
 
         // Debug tool to test cron execution (AJAX)
         add_action('wp_ajax_gicapi_test_cron_execution', array($this, 'ajax_test_cron_execution'));
+
+        // Reschedule cron when interval changes
+        add_action('update_option_gicapi_cron_interval', array($this, 'reschedule_cron_on_interval_change'), 10, 3);
+
+        // Reschedule cron when enable setting changes
+        add_action('update_option_gicapi_enable_cron_updates', array($this, 'reschedule_cron_on_enable_change'), 10, 3);
+
+        // Debug tools
+        add_action('wp_ajax_gicapi_check_repair_cron', array($this, 'ajax_check_repair_cron'));
     }
 
     /**
@@ -72,8 +81,28 @@ class GICAPI_Cron
      */
     public function schedule_cron()
     {
+        // Clear any existing cron job first
+        $this->unschedule_cron();
+
+        // Get the configured interval
+        $configured_interval = get_option('gicapi_cron_interval', $this->cron_interval);
+
+        // Check if cron is enabled
+        if (get_option('gicapi_enable_cron_updates', 'yes') !== 'yes') {
+            error_log('GICAPI Cron: Cron job is disabled in settings');
+            return;
+        }
+
+        // Schedule the cron job
         if (!wp_next_scheduled($this->cron_hook)) {
-            wp_schedule_event(time(), $this->cron_interval, $this->cron_hook);
+            $scheduled = wp_schedule_event(time(), $configured_interval, $this->cron_hook);
+            if ($scheduled) {
+                error_log('GICAPI Cron: Cron job scheduled successfully with interval: ' . $configured_interval);
+            } else {
+                error_log('GICAPI Cron: Failed to schedule cron job');
+            }
+        } else {
+            error_log('GICAPI Cron: Cron job already scheduled');
         }
     }
 
@@ -87,6 +116,34 @@ class GICAPI_Cron
             wp_unschedule_event($timestamp, $this->cron_hook);
         }
         wp_clear_scheduled_hook($this->cron_hook);
+        error_log('GICAPI Cron: Cron job unscheduled');
+    }
+
+    /**
+     * Reschedule cron when interval changes
+     */
+    public function reschedule_cron_on_interval_change($old_value, $new_value, $option)
+    {
+        if ($old_value !== $new_value) {
+            error_log('GICAPI Cron: Interval changed from ' . $old_value . ' to ' . $new_value . ', rescheduling cron');
+            $this->schedule_cron();
+        }
+    }
+
+    /**
+     * Reschedule cron when enable setting changes
+     */
+    public function reschedule_cron_on_enable_change($old_value, $new_value, $option)
+    {
+        if ($old_value !== $new_value) {
+            if ($new_value === 'yes') {
+                error_log('GICAPI Cron: Cron enabled, scheduling cron job');
+                $this->schedule_cron();
+            } else {
+                error_log('GICAPI Cron: Cron disabled, unscheduling cron job');
+                $this->unschedule_cron();
+            }
+        }
     }
 
     /**
@@ -407,12 +464,96 @@ class GICAPI_Cron
     {
         $next_scheduled = wp_next_scheduled($this->cron_hook);
         $is_enabled = get_option('gicapi_enable_cron_updates', 'yes') === 'yes';
+        $configured_interval = get_option('gicapi_cron_interval', $this->cron_interval);
 
         return array(
             'enabled' => $is_enabled,
             'next_run' => $next_scheduled ? date('Y-m-d H:i:s', $next_scheduled) : null,
-            'interval' => $this->cron_interval,
-            'hook' => $this->cron_hook
+            'interval' => $configured_interval,
+            'hook' => $this->cron_hook,
+            'is_scheduled' => $next_scheduled !== false
         );
+    }
+
+    /**
+     * Force reschedule the cron job (for debugging)
+     */
+    public function force_reschedule()
+    {
+        error_log('GICAPI Cron: Force rescheduling cron job');
+        $this->schedule_cron();
+    }
+
+    /**
+     * Check and repair cron job if needed
+     */
+    public function check_and_repair_cron()
+    {
+        $configured_interval = get_option('gicapi_cron_interval', $this->cron_interval);
+        $is_enabled = get_option('gicapi_enable_cron_updates', 'yes') === 'yes';
+        $next_scheduled = wp_next_scheduled($this->cron_hook);
+
+        // If cron is disabled, unschedule it
+        if (!$is_enabled) {
+            if ($next_scheduled !== false) {
+                error_log('GICAPI Cron: Cron is disabled but still scheduled, unscheduling');
+                $this->unschedule_cron();
+            }
+            return false;
+        }
+
+        // If cron is enabled but not scheduled, schedule it
+        if ($next_scheduled === false) {
+            error_log('GICAPI Cron: Cron is enabled but not scheduled, scheduling now');
+            $this->schedule_cron();
+            return true;
+        }
+
+        // Check if the scheduled interval matches the configured interval
+        $scheduled_events = _get_cron_array();
+        $current_interval = null;
+
+        foreach ($scheduled_events as $timestamp => $events) {
+            if (isset($events[$this->cron_hook])) {
+                foreach ($events[$this->cron_hook] as $event) {
+                    if (isset($event['schedule'])) {
+                        $current_interval = $event['schedule'];
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        // If interval doesn't match, reschedule
+        if ($current_interval !== $configured_interval) {
+            error_log('GICAPI Cron: Interval mismatch (current: ' . $current_interval . ', configured: ' . $configured_interval . '), rescheduling');
+            $this->schedule_cron();
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * AJAX handler for checking and repairing the cron job
+     */
+    public function ajax_check_repair_cron()
+    {
+        // Verify nonce
+        check_ajax_referer('gicapi_check_repair_cron', 'nonce');
+
+        // Check permissions
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        // Run the check and repair
+        $result = $this->check_and_repair_cron();
+
+        if ($result) {
+            wp_send_json_success(__('Cron job checked and repaired successfully', 'gift-i-card'));
+        } else {
+            wp_send_json_error(__('Cron job check and repair failed', 'gift-i-card'));
+        }
     }
 }
