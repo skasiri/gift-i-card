@@ -41,6 +41,17 @@ class GICAPI_Public
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/gicapi-public.js', array('jquery'), $this->version, false);
     }
 
+    /**
+     * Normalize order status for comparison (handles both with and without 'wc-' prefix)
+     * 
+     * @param string $status The status to normalize
+     * @return string The normalized status
+     */
+    private function normalize_status($status)
+    {
+        return str_replace('wc-', '', $status);
+    }
+
     public function handle_order_status_change($order_id, $old_status, $new_status)
     {
         if (!$this->api) {
@@ -58,7 +69,7 @@ class GICAPI_Public
         }
 
         $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
-        if ($new_status == $gift_i_card_create_order_status) {
+        if ($this->normalize_status($new_status) == $this->normalize_status($gift_i_card_create_order_status)) {
             $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
             if ($process_order !== 'yes') {
                 $this->process_order($order);
@@ -66,8 +77,7 @@ class GICAPI_Public
         }
 
         $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
-        if ($new_status == $gift_i_card_confirm_order_status) {
-            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+        if ($this->normalize_status($new_status) == $this->normalize_status($gift_i_card_confirm_order_status)) {
             if ($process_order === 'yes') {
                 $this->confirm_order($order_id);
             }
@@ -91,9 +101,9 @@ class GICAPI_Public
         }
 
         $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
-        $current_status = 'wc-' . $order->get_status();
+        $current_status = $order->get_status();
 
-        if ($current_status == $gift_i_card_create_order_status) {
+        if ($this->normalize_status($current_status) == $this->normalize_status($gift_i_card_create_order_status)) {
             $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
             if ($process_order !== 'yes') {
                 $this->process_order($order);
@@ -142,7 +152,6 @@ class GICAPI_Public
 
     private function process_order($order)
     {
-
         // Process flag
         update_post_meta($order->get_id(), '_gicapi_process_order', 'yes');
 
@@ -156,6 +165,7 @@ class GICAPI_Public
             if (!$variant_sku) {
                 continue;
             }
+
 
             $response = $this->api->buy_product($variant_sku, $item->get_quantity());
 
@@ -191,16 +201,21 @@ class GICAPI_Public
 
     private function confirm_order($order_id)
     {
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
+
         $orders = get_post_meta($order_id, '_gicapi_orders', true);
         if (empty($orders)) {
             return;
         }
 
-        foreach ($orders as $key => $order) {
-            $response = $this->api->confirm_order($order['order_id']);
+        foreach ($orders as $key => $order_data) {
+            $response = $this->api->confirm_order($order_data['order_id']);
 
             if (is_wp_error($response)) {
-                $order_id->add_order_note(sprintf(
+                $order->add_order_note(sprintf(
                     __('Failed to confirm Gift-i-Card order: %s', 'gift-i-card'),
                     $response->get_error_message()
                 ));
@@ -208,9 +223,9 @@ class GICAPI_Public
                 continue;
             }
 
-            $order_id->add_order_note(sprintf(
+            $order->add_order_note(sprintf(
                 __('Gift-i-Card order confirmed: %s', 'gift-i-card'),
-                $response['id']
+                $response['order_id']
             ));
 
             $orders[$key]['status'] = $response['status'];
