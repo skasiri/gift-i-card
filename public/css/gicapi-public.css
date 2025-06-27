@@ -1,0 +1,257 @@
+/* Gift Card Information Styles */
+.gicapi-item-gift-card-info,
+.gicapi-gift-card-summary {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gicapi-item-gift-card-info h4,
+.gicapi-gift-card-summary h2 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+.gicapi-gift-card-summary h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.gicapi-gift-card-details,
+.gicapi-order-summary {
+    margin: 15px 0;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+}
+
+.gicapi-gift-card-details p,
+.gicapi-order-summary p {
+    margin: 8px 0;
+    color: #495057;
+    font-size: 14px;
+}
+
+.gicapi-gift-card-details strong,
+.gicapi-order-summary strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Status indicators */
+.gicapi-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.gicapi-status-confirmed {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.gicapi-status-pending {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.gicapi-status-failed {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.gicapi-status-processing {
+    background: #cce5ff;
+    color: #004085;
+    border: 1px solid #b3d7ff;
+}
+
+/* Summary actions */
+.gicapi-summary-actions {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.gicapi-summary-actions .button {
+    margin: 0 10px;
+    padding: 8px 16px;
+    background: #007cba;
+    border-color: #007cba;
+    color: #ffffff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.gicapi-summary-actions .button:hover {
+    background: #005a87;
+    border-color: #005a87;
+}
+
+.gicapi-redeem-link {
+    background: #27ae60;
+    border-color: #27ae60;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.gicapi-redeem-link:hover {
+    background: #229954;
+    border-color: #229954;
+    color: #ffffff;
+}
+
+.gicapi-redemption-details,
+.gicapi-redemption-summary {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+}
+
+.gicapi-redemption-details h5,
+.gicapi-redemption-summary h4 {
+    margin: 0 0 12px 0;
+    color: #27ae60;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gicapi-redemption-table,
+.gicapi-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.gicapi-redemption-table th,
+.gicapi-summary-table th {
+    background: #3498db;
+    color: #ffffff;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.gicapi-redemption-table td,
+.gicapi-summary-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 13px;
+    color: #495057;
+    vertical-align: middle;
+}
+
+.gicapi-redemption-table tr:last-child td,
+.gicapi-summary-table tr:last-child td {
+    border-bottom: none;
+}
+
+.gicapi-redemption-table tr:hover,
+.gicapi-summary-table tr:hover {
+    background: #f8f9fa;
+}
+
+.gicapi-item-summary {
+    margin: 20px 0;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+.gicapi-item-summary h3 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 8px;
+}
+
+/* Button styles */
+.gicapi-redemption-table .button,
+.gicapi-summary-table .button {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #27ae60;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.gicapi-redemption-table .button:hover,
+.gicapi-summary-table .button:hover {
+    background: #229954;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+
+    .gicapi-redemption-table,
+    .gicapi-summary-table {
+        font-size: 12px;
+    }
+
+    .gicapi-redemption-table th,
+    .gicapi-redemption-table td,
+    .gicapi-summary-table th,
+    .gicapi-summary-table td {
+        padding: 8px 6px;
+    }
+
+    .gicapi-item-gift-card-info,
+    .gicapi-gift-card-summary {
+        margin: 15px 0;
+        padding: 12px;
+    }
+
+    .gicapi-summary-actions .button {
+        display: block;
+        margin: 10px auto;
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* Print styles */
+@media print {
+
+    .gicapi-item-gift-card-info,
+    .gicapi-gift-card-summary {
+        background: #ffffff !important;
+        border: 1px solid #000000 !important;
+        box-shadow: none !important;
+    }
+
+    .gicapi-redemption-table .button,
+    .gicapi-summary-table .button,
+    .gicapi-summary-actions {
+        display: none !important;
+    }
+}
