@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-27 07:31+0330\n"
-"PO-Revision-Date: 2025-06-27 07:35+0330\n"
+"POT-Creation-Date: 2025-06-27 07:36+0330\n"
+"PO-Revision-Date: 2025-06-27 07:37+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -311,10 +311,8 @@ msgid "Order Updating through Cron Job"
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:38
-msgid ""
-"Enable automatic updates of pending and processing orders through cron job "
-"(not recommended)"
-msgstr ""
+msgid "Enable Cron Job for Order Updating (not recommended)"
+msgstr "فعالسازی کرون جاب برای بروزرسانی سفارشات (توصیه نمیشود)"
 
 #: admin/partials/settings/gicapi-settings-cron.php:41
 msgid ""

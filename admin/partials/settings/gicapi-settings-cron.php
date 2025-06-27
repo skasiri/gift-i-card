@@ -35,7 +35,7 @@ foreach ($cron_intervals as $interval => $schedule) {
             <td>
                 <label>
                     <input type="checkbox" name="gicapi_enable_cron_updates" value="yes" <?php checked($enable_cron_updates, 'yes'); ?>>
-                    <?php _e('Enable automatic updates of pending and processing orders through cron job (not recommended)', 'gift-i-card'); ?>
+                    <?php _e('Enable Cron Job for Order Updating (not recommended)', 'gift-i-card'); ?>
                 </label>
                 <p class="description">
                     <?php _e('If your WooCommerce store is running on a real domain with HTTPS, orders are automatically updated via webhooks and you do not need to enable cron jobs. Cron jobs are only recommended for development/testing environments or when webhooks are not available.', 'gift-i-card'); ?>
