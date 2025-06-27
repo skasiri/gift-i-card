@@ -117,6 +117,21 @@ foreach ($cron_intervals as $interval => $schedule) {
         </tr>
 
         <tr>
+            <th scope="row">
+                <?php _e('Troubleshooting', 'gift-i-card'); ?>
+            </th>
+            <td>
+                <button type="button" id="gicapi-reschedule-cron" class="button button-secondary">
+                    <?php _e('Reschedule Cron Job', 'gift-i-card'); ?>
+                </button>
+                <p class="description">
+                    <?php _e('If the cron job is not running, click this button to clear and recreate the cron job.', 'gift-i-card'); ?>
+                </p>
+                <div id="gicapi-debug-result" style="margin-top: 10px;"></div>
+            </td>
+        </tr>
+
+        <tr>
             <td colspan="2">
                 <hr>
             </td>
@@ -200,6 +215,40 @@ foreach ($cron_intervals as $interval => $schedule) {
                 },
                 complete: function() {
                     button.prop('disabled', false).text('<?php _e('Update Pending/Processing Orders Now', 'gift-i-card'); ?>');
+                }
+            });
+        });
+
+        $('#gicapi-reschedule-cron').on('click', function() {
+            var button = $(this);
+            var resultDiv = $('#gicapi-debug-result');
+
+            button.prop('disabled', true).text('<?php _e('Rescheduling...', 'gift-i-card'); ?>');
+            resultDiv.html('');
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'gicapi_reschedule_cron',
+                    nonce: '<?php echo wp_create_nonce('gicapi_reschedule_cron'); ?>'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        resultDiv.html('<div class="notice notice-success"><p>' + response.data + '</p></div>');
+                        // Reload page after 2 seconds to show updated status
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        resultDiv.html('<div class="notice notice-error"><p>' + response.data + '</p></div>');
+                    }
+                },
+                error: function() {
+                    resultDiv.html('<div class="notice notice-error"><p><?php _e('An error occurred while rescheduling cron job.', 'gift-i-card'); ?></p></div>');
+                },
+                complete: function() {
+                    button.prop('disabled', false).text('<?php _e('Reschedule Cron Job', 'gift-i-card'); ?>');
                 }
             });
         });

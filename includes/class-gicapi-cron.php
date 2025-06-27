@@ -47,6 +47,12 @@ class GICAPI_Cron
 
         // Manual trigger for testing
         add_action('wp_ajax_gicapi_manual_update_orders', array($this, 'manual_update_orders'));
+
+        // Debug tool to reschedule the cron job (AJAX)
+        add_action('wp_ajax_gicapi_reschedule_cron', array($this, 'ajax_reschedule_cron'));
+
+        // Debug tool to test cron execution (AJAX)
+        add_action('wp_ajax_gicapi_test_cron_execution', array($this, 'ajax_test_cron_execution'));
     }
 
     /**
@@ -307,6 +313,91 @@ class GICAPI_Cron
         $this->update_processing_orders();
 
         wp_send_json_success(__('Manual order update completed', 'gift-i-card'));
+    }
+
+    /**
+     * Debug tool to reschedule the cron job (AJAX)
+     */
+    public function ajax_reschedule_cron()
+    {
+        // Verify nonce
+        check_ajax_referer('gicapi_reschedule_cron', 'nonce');
+
+        // Check permissions
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        // Force reschedule the cron job
+        $this->force_reschedule();
+
+        wp_send_json_success(__('Cron job rescheduled successfully', 'gift-i-card'));
+    }
+
+    /**
+     * Debug tool to test cron execution (AJAX)
+     */
+    public function ajax_test_cron_execution()
+    {
+        // Verify nonce
+        check_ajax_referer('gicapi_test_cron_execution', 'nonce');
+
+        // Check permissions
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        // Capture logs for this test run
+        $logs = array();
+
+        // Check if cron is enabled
+        if (get_option('gicapi_enable_cron_updates', 'yes') !== 'yes') {
+            $logs[] = 'Cron job is disabled in settings';
+            wp_send_json_success(array('logs' => $logs));
+            return;
+        }
+
+        // Check if API is configured
+        if (!$this->api || !$this->api->is_configured()) {
+            $logs[] = 'API is not properly configured';
+            wp_send_json_success(array('logs' => $logs));
+            return;
+        }
+
+        $logs[] = 'API is properly configured';
+
+        // Get pending and processing orders
+        $active_orders = $this->get_processing_orders();
+        $logs[] = 'Found ' . count($active_orders) . ' orders to update';
+
+        if (empty($active_orders)) {
+            $logs[] = 'No pending or processing orders found';
+            wp_send_json_success(array('logs' => $logs));
+            return;
+        }
+
+        $updated_count = 0;
+        $error_count = 0;
+
+        foreach ($active_orders as $order_id) {
+            try {
+                $result = $this->update_single_order($order_id);
+                if ($result === true) {
+                    $updated_count++;
+                    $logs[] = 'Successfully updated order ' . $order_id;
+                } else {
+                    $error_count++;
+                    $logs[] = 'Failed to update order ' . $order_id;
+                }
+            } catch (Exception $e) {
+                $error_count++;
+                $logs[] = 'Exception while updating order ' . $order_id . ': ' . $e->getMessage();
+            }
+        }
+
+        $logs[] = 'Test completed - Updated: ' . $updated_count . ', Errors: ' . $error_count;
+
+        wp_send_json_success(array('logs' => $logs));
     }
 
     /**

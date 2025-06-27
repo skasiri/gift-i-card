@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
 "POT-Creation-Date: 2025-06-27 06:07+0330\n"
-"PO-Revision-Date: 2025-06-27 06:09+0330\n"
+"PO-Revision-Date: 2025-06-27 06:16+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -316,8 +316,8 @@ msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:37
 msgid ""
-"When enabled, the system will automatically check and update the status of "
-"Gift-i-Card orders that are in pending or processing status."
+"When enabled, the system will automatically check and update the status of Gift-"
+"i-Card orders that are in pending or processing status."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:44
@@ -383,14 +383,14 @@ msgstr "📋 چطور کار میکند"
 
 #: admin/partials/settings/gicapi-settings-cron.php:135
 msgid ""
-"The cron job runs automatically at the specified interval (recommended: every "
-"5 minutes)."
+"The cron job runs automatically at the specified interval (recommended: every 5 "
+"minutes)."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:136
 msgid ""
-"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
-"or \"processing\" status."
+"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" or "
+"\"processing\" status."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:137
@@ -420,9 +420,9 @@ msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:146
 msgid ""
-"This feature requires WordPress cron to be working properly. If you're using "
-"a real cron job, make sure to disable WordPress cron and set up a real cron "
-"job to call wp-cron.php."
+"This feature requires WordPress cron to be working properly. If you're using a "
+"real cron job, make sure to disable WordPress cron and set up a real cron job "
+"to call wp-cron.php."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:181
@@ -495,8 +495,8 @@ msgstr "ثبت سفارش در وضعیت"
 
 #: admin/partials/settings/gicapi-settings-orders.php:62
 msgid ""
-"Status to set when creating Gift-i-Card pending order. This status will be "
-"used to create the order in the Gift-i-Card system."
+"Status to set when creating Gift-i-Card pending order. This status will be used "
+"to create the order in the Gift-i-Card system."
 msgstr ""
 "وضعیتی که سفارش در انتظار در گیفتی کارت ایجاد شود. این وضعیت برای ایجاد سفارش "
 "در سیستم گیفتی کارت استفاده میشود."
@@ -508,11 +508,11 @@ msgstr "تایید سفارش در وضعیت"
 #: admin/partials/settings/gicapi-settings-orders.php:78
 msgid ""
 "Status to set when confirming Gift-i-Card order. This status will be used to "
-"confirm the order in the Gift-i-Card system. After this status, the order "
-"will be processed."
+"confirm the order in the Gift-i-Card system. After this status, the order will "
+"be processed."
 msgstr ""
-"وضعیتی که سفارش گیفتی کارت تایید شود. این وضعیت برای تایید سفارش در سیستم "
-"گیفتی کارت استفاده میشود. بعد از این وضعیت سفارش پردازش میشود."
+"وضعیتی که سفارش گیفتی کارت تایید شود. این وضعیت برای تایید سفارش در سیستم گیفتی "
+"کارت استفاده میشود. بعد از این وضعیت سفارش پردازش میشود."
 
 #: admin/partials/settings/gicapi-settings-orders.php:84
 msgid "Hook Priority"
@@ -658,7 +658,7 @@ msgstr "اطلاعات گیفت کارت"
 #: includes/class-gicapi-gift-card-display.php:51
 #: includes/class-gicapi-gift-card-display.php:155
 msgid "Gift-i-Card Order ID:"
-msgstr "شماره سفارش گیفتی کارت: %s"
+msgstr "شماره سفارش گیفتی کارت:"
 
 #: includes/class-gicapi-gift-card-display.php:52
 #: includes/class-gicapi-gift-card-display.php:156
