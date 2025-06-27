@@ -152,7 +152,7 @@ class GICAPI_Gift_Card_Display
             foreach ($item_orders as $gic_order) {
                 if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
                     echo '<div class="gicapi-order-summary">';
-                    echo '<p><strong>' . __('Gift Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
+                    echo '<p><strong>' . __('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
                     echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($gic_order['status']) . '</span></p>';
 
                     echo '<div class="gicapi-redemption-summary">';
