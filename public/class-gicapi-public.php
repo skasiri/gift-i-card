@@ -268,13 +268,20 @@ class GICAPI_Public
 
     private function display_redeem_data($order)
     {
-        $gic_order_id = get_post_meta($order->get_id(), '_gic_order_id', true);
-        if (!$gic_order_id) {
+        $gicapi_orders = get_post_meta($order->get_id(), '_gicapi_orders', true);
+        if (empty($gicapi_orders) || !is_array($gicapi_orders)) {
             return;
         }
 
-        $response = $this->api->get_order($gic_order_id);
-        if (is_wp_error($response)) {
+        $has_redeem_data = false;
+        foreach ($gicapi_orders as $gic_order) {
+            if (isset($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
+                $has_redeem_data = true;
+                break;
+            }
+        }
+
+        if (!$has_redeem_data) {
             return;
         }
 
@@ -285,17 +292,31 @@ class GICAPI_Public
                 <thead>
                     <tr>
                         <th><?php _e('Product', 'gift-i-card'); ?></th>
-                        <th><?php _e('Code', 'gift-i-card'); ?></th>
-                        <th><?php _e('Value', 'gift-i-card'); ?></th>
+                        <th><?php _e('License Key', 'gift-i-card'); ?></th>
+                        <th><?php _e('Serial Number', 'gift-i-card'); ?></th>
+                        <th><?php _e('Card Code', 'gift-i-card'); ?></th>
+                        <th><?php _e('Redeem Link', 'gift-i-card'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($response['items'] as $item): ?>
-                        <tr>
-                            <td><?php echo esc_html($item['product_name']); ?></td>
-                            <td><?php echo esc_html($item['code']); ?></td>
-                            <td><?php echo esc_html($item['value'] . ' ' . $item['currency']); ?></td>
-                        </tr>
+                    <?php foreach ($gicapi_orders as $gic_order): ?>
+                        <?php if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data'])): ?>
+                            <?php foreach ($gic_order['redeem_data'] as $redeem_item): ?>
+                                <tr>
+                                    <td><?php echo esc_html($redeem_item['variant'] ?? ''); ?></td>
+                                    <td><?php echo esc_html($redeem_item['license_key'] ?? ''); ?></td>
+                                    <td><?php echo esc_html($redeem_item['redeem_serial_number'] ?? ''); ?></td>
+                                    <td><?php echo esc_html($redeem_item['redeem_card_code'] ?? ''); ?></td>
+                                    <td>
+                                        <?php if (!empty($redeem_item['redeem_link'])): ?>
+                                            <a href="<?php echo esc_url($redeem_item['redeem_link']); ?>" target="_blank" class="button button-small">
+                                                <?php _e('Redeem', 'gift-i-card'); ?>
+                                            </a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>

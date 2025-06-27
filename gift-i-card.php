@@ -60,9 +60,10 @@ if (!class_exists('GICAPI')) {
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-activator.php';
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-deactivator.php';
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-api.php';
+            require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-jwt.php';
+            require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-cron.php';
             require_once GICAPI_PLUGIN_DIR . 'admin/class-gicapi-admin.php';
             require_once GICAPI_PLUGIN_DIR . 'public/class-gicapi-public.php';
-            require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-jwt.php';
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-ajax.php';
         }
 
@@ -83,6 +84,9 @@ if (!class_exists('GICAPI')) {
             add_action('admin_enqueue_scripts', array($plugin_admin, 'enqueue_scripts'));
             add_action('admin_menu', array($plugin_admin, 'add_plugin_admin_menu'));
             add_action('admin_init', array($plugin_admin, 'register_settings'));
+
+            // Initialize cron job
+            GICAPI_Cron::get_instance();
         }
 
         private function define_public_hooks()

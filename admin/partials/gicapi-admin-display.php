@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
     <h2 class="nav-tab-wrapper">
         <a href="#connection" class="nav-tab nav-tab-active"><?php _e('Connection', 'gift-i-card'); ?></a>
         <a href="#orders" class="nav-tab"><?php _e('Orders', 'gift-i-card'); ?></a>
+        <a href="#cron" class="nav-tab"><?php _e('Cron Jobs', 'gift-i-card'); ?></a>
         <a href="#display" class="nav-tab"><?php _e('Display', 'gift-i-card'); ?></a>
         <a href="#data-management" class="nav-tab"><?php _e('Data Management', 'gift-i-card'); ?></a>
     </h2>
@@ -19,6 +20,7 @@ if (!defined('ABSPATH')) {
 
         <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-connection.php'; ?>
         <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-orders.php'; ?>
+        <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-cron.php'; ?>
         <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-display.php'; ?>
         <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-data-management.php'; ?>
 

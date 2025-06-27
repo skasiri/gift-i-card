@@ -8,6 +8,7 @@ class GICAPI_Activator
     public static function activate()
     {
         self::create_options();
+        self::schedule_cron_job();
         flush_rewrite_rules();
     }
 
@@ -27,5 +28,15 @@ class GICAPI_Activator
         add_option('gicapi_add_to_email', 'no');
         add_option('gicapi_add_to_order_details', 'no');
         add_option('gicapi_add_to_thank_you', 'no');
+
+        // Cron job settings
+        add_option('gicapi_enable_cron_updates', 'yes');
+        add_option('gicapi_cron_interval', 'gicapi_five_minutes');
+    }
+
+    private static function schedule_cron_job()
+    {
+        // Trigger the cron job scheduling
+        do_action('gicapi_activate');
     }
 }

@@ -195,6 +195,10 @@ class GICAPI_Admin
             'default' => 10,
             'sanitize_callback' => array($this, 'sanitize_hook_priority')
         ));
+
+        // Cron job settings
+        register_setting('gicapi_settings', 'gicapi_enable_cron_updates');
+        register_setting('gicapi_settings', 'gicapi_cron_interval');
     }
 
     public function sanitize_base_url($url)
