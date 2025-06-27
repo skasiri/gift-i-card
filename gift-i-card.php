@@ -2,11 +2,11 @@
 
 /**
  * Plugin Name: Gift-i-Card
- * Plugin URI: https://example.com/gift-card
+ * Plugin URI: https://gifticard.ir
  * Description: A plugin to integrate WooCommerce with a gift card service
  * Version: 1.0.0
- * Author: Your Name
- * Author URI: https://example.com
+ * Author: Saeid Kasiri
+ * Author URI: https://gifticard.ir
  * Text Domain: gift-i-card
  * Domain Path: /languages
  * Requires at least: 5.0
