@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-27 06:07+0330\n"
-"PO-Revision-Date: 2025-06-27 06:16+0330\n"
+"POT-Creation-Date: 2025-06-27 07:24+0330\n"
+"PO-Revision-Date: 2025-06-27 07:25+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -204,7 +204,7 @@ msgstr "خطا در دریافت لیست واریانت از API"
 
 #: admin/partials/gicapi-variants-display.php:54
 msgid "No variants found for this product."
-msgstr ""
+msgstr "هیچ واریانتی برای این محصول یافت نشد."
 
 #: admin/partials/gicapi-variants-display.php:64
 msgid "Variants"
@@ -306,131 +306,168 @@ msgid ""
 "Click this button to discard the current token and get a new one from the API."
 msgstr "برای ابطال توکن فعلی و دریافت توکن جدید این دکمه را بزنید."
 
-#: admin/partials/settings/gicapi-settings-cron.php:29
+#: admin/partials/settings/gicapi-settings-cron.php:33
 msgid "Enable Automatic Order Updates"
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:34
+#: admin/partials/settings/gicapi-settings-cron.php:38
 msgid "Enable automatic updates of pending and processing orders"
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:37
+#: admin/partials/settings/gicapi-settings-cron.php:41
 msgid ""
-"When enabled, the system will automatically check and update the status of Gift-"
-"i-Card orders that are in pending or processing status."
+"When enabled, the system will automatically check and update the status of "
+"Gift-i-Card orders that are in pending or processing status."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:44
+#: admin/partials/settings/gicapi-settings-cron.php:48
 msgid "Update Interval"
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:55
+#: admin/partials/settings/gicapi-settings-cron.php:59
 msgid ""
 "How often the system should check for order updates. Recommended: Every 5 "
 "minutes for fastest updates."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:68
+#: admin/partials/settings/gicapi-settings-cron.php:72
 msgid "🕒 Cron Job Status"
 msgstr "🕒 وضعیت کرون جاب"
 
-#: admin/partials/settings/gicapi-settings-cron.php:74
+#: admin/partials/settings/gicapi-settings-cron.php:78
 msgid "Status"
 msgstr "وضعیت"
 
-#: admin/partials/settings/gicapi-settings-cron.php:80
+#: admin/partials/settings/gicapi-settings-cron.php:84
 msgid "Enabled:"
 msgstr "فعال:"
 
-#: admin/partials/settings/gicapi-settings-cron.php:82
+#: admin/partials/settings/gicapi-settings-cron.php:86
 msgid "Yes"
 msgstr "بله"
 
-#: admin/partials/settings/gicapi-settings-cron.php:82
+#: admin/partials/settings/gicapi-settings-cron.php:86
 msgid "No"
 msgstr "خیر"
 
-#: admin/partials/settings/gicapi-settings-cron.php:88
+#: admin/partials/settings/gicapi-settings-cron.php:92
 msgid "Next Run:"
 msgstr "اجرای بعدی:"
 
-#: admin/partials/settings/gicapi-settings-cron.php:94
+#: admin/partials/settings/gicapi-settings-cron.php:98
 msgid "Interval:"
 msgstr "بازه زمانی:"
 
-#: admin/partials/settings/gicapi-settings-cron.php:99
+#: admin/partials/settings/gicapi-settings-cron.php:103
 msgid "Cron status information not available."
 msgstr "اطلاعات کرون جاب در دسترس نیست."
 
-#: admin/partials/settings/gicapi-settings-cron.php:106
+#: admin/partials/settings/gicapi-settings-cron.php:110
 msgid "Manual Update"
 msgstr "بروزرسانی دستی"
 
-#: admin/partials/settings/gicapi-settings-cron.php:110
-#: admin/partials/settings/gicapi-settings-cron.php:202
+#: admin/partials/settings/gicapi-settings-cron.php:114
+#: admin/partials/settings/gicapi-settings-cron.php:224
 msgid "Update Pending/Processing Orders Now"
 msgstr "بروزرسانی سفارشات در انتظار / درحال انجام"
 
-#: admin/partials/settings/gicapi-settings-cron.php:113
+#: admin/partials/settings/gicapi-settings-cron.php:117
 msgid ""
 "Click this button to manually trigger an update of all pending and processing "
 "orders. This is useful for testing or immediate updates."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:127
-msgid "📋 How It Works"
-msgstr "📋 چطور کار میکند"
+#: admin/partials/settings/gicapi-settings-cron.php:125
+msgid "Troubleshooting"
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-cron.php:129
+#: admin/partials/settings/gicapi-settings-cron.php:258
+msgid "Reschedule Cron Job"
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-cron.php:132
+#: admin/partials/settings/gicapi-settings-cron.php:292
+msgid "Check & Repair Cron Job"
+msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:135
 msgid ""
-"The cron job runs automatically at the specified interval (recommended: every 5 "
-"minutes)."
+"If the cron job is not running, click these buttons to troubleshoot. "
+"\"Reschedule\" will clear and recreate the cron job. \"Check & Repair\" will "
+"automatically detect and fix issues."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:136
+#: admin/partials/settings/gicapi-settings-cron.php:149
+msgid "📋 How It Works"
+msgstr "📋 چطور کار میکند"
+
+#: admin/partials/settings/gicapi-settings-cron.php:157
 msgid ""
-"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" or "
-"\"processing\" status."
+"The cron job runs automatically at the specified interval (recommended: every "
+"5 minutes)."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:137
+#: admin/partials/settings/gicapi-settings-cron.php:158
+msgid ""
+"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
+"or \"processing\" status."
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-cron.php:159
 msgid ""
 "For each active order, it calls the Gift-i-Card API to get the latest status."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:138
+#: admin/partials/settings/gicapi-settings-cron.php:160
 msgid "If the status has changed, it updates the order and adds a note."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:139
+#: admin/partials/settings/gicapi-settings-cron.php:161
 msgid ""
 "If all Gift-i-Card orders in a WooCommerce order are completed, it can "
 "automatically complete the WooCommerce order (if enabled)."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:140
+#: admin/partials/settings/gicapi-settings-cron.php:162
 msgid ""
 "If any Gift-i-Card orders fail, it can automatically change the WooCommerce "
 "order status (if enabled)."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:145
+#: admin/partials/settings/gicapi-settings-cron.php:167
 msgid "Note:"
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:146
+#: admin/partials/settings/gicapi-settings-cron.php:168
 msgid ""
-"This feature requires WordPress cron to be working properly. If you're using a "
-"real cron job, make sure to disable WordPress cron and set up a real cron job "
-"to call wp-cron.php."
+"This feature requires WordPress cron to be working properly. If you're using "
+"a real cron job, make sure to disable WordPress cron and set up a real cron "
+"job to call wp-cron.php."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:181
+#: admin/partials/settings/gicapi-settings-cron.php:203
 msgid "Updating..."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-cron.php:199
+#: admin/partials/settings/gicapi-settings-cron.php:221
 msgid "An error occurred while updating orders."
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-cron.php:233
+msgid "Rescheduling..."
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-cron.php:255
+msgid "An error occurred while rescheduling cron job."
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-cron.php:267
+msgid "Checking..."
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-cron.php:289
+msgid "An error occurred while checking cron job."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-data-management.php:11
@@ -495,8 +532,8 @@ msgstr "ثبت سفارش در وضعیت"
 
 #: admin/partials/settings/gicapi-settings-orders.php:62
 msgid ""
-"Status to set when creating Gift-i-Card pending order. This status will be used "
-"to create the order in the Gift-i-Card system."
+"Status to set when creating Gift-i-Card pending order. This status will be "
+"used to create the order in the Gift-i-Card system."
 msgstr ""
 "وضعیتی که سفارش در انتظار در گیفتی کارت ایجاد شود. این وضعیت برای ایجاد سفارش "
 "در سیستم گیفتی کارت استفاده میشود."
@@ -508,11 +545,11 @@ msgstr "تایید سفارش در وضعیت"
 #: admin/partials/settings/gicapi-settings-orders.php:78
 msgid ""
 "Status to set when confirming Gift-i-Card order. This status will be used to "
-"confirm the order in the Gift-i-Card system. After this status, the order will "
-"be processed."
+"confirm the order in the Gift-i-Card system. After this status, the order "
+"will be processed."
 msgstr ""
-"وضعیتی که سفارش گیفتی کارت تایید شود. این وضعیت برای تایید سفارش در سیستم گیفتی "
-"کارت استفاده میشود. بعد از این وضعیت سفارش پردازش میشود."
+"وضعیتی که سفارش گیفتی کارت تایید شود. این وضعیت برای تایید سفارش در سیستم "
+"گیفتی کارت استفاده میشود. بعد از این وضعیت سفارش پردازش میشود."
 
 #: admin/partials/settings/gicapi-settings-orders.php:84
 msgid "Hook Priority"
@@ -572,7 +609,9 @@ msgid "Status to set when failed orders"
 msgstr "سفارش ناموفق به این وضعیت تغییر میکند"
 
 #: includes/class-gicapi-ajax.php:27 includes/class-gicapi-ajax.php:111
-#: includes/class-gicapi-ajax.php:163 includes/class-gicapi-cron.php:303
+#: includes/class-gicapi-ajax.php:163 includes/class-gicapi-cron.php:366
+#: includes/class-gicapi-cron.php:385 includes/class-gicapi-cron.php:404
+#: includes/class-gicapi-cron.php:547
 msgid "Permission denied"
 msgstr "دسترسی غیر مجاز"
 
@@ -630,26 +669,40 @@ msgstr "حذف در حذف ارتباط محصول"
 msgid "Mapping removed successfully"
 msgstr "ارتباط حذف شد"
 
-#: includes/class-gicapi-cron.php:59
+#: includes/class-gicapi-cron.php:74
 msgid "Every 5 minutes"
 msgstr ""
 
-#: includes/class-gicapi-cron.php:245
+#: includes/class-gicapi-cron.php:308
 #, php-format
 msgid "Gift-i-Card order %s status updated from %s to %s"
 msgstr "وضعیت سفارش %s گیفتی کارت از %s به %s تغییر یافت"
 
-#: includes/class-gicapi-cron.php:284
+#: includes/class-gicapi-cron.php:347
 msgid "All Gift-i-Card orders completed automatically"
 msgstr "تمام سفارشات گیفتی کارت بطور خودکار تکمیل شدند"
 
-#: includes/class-gicapi-cron.php:289
+#: includes/class-gicapi-cron.php:352
 msgid "Gift-i-Card order failed automatically"
 msgstr "سفارش گیفتی کارت با خطا مواجه شد"
 
-#: includes/class-gicapi-cron.php:309
+#: includes/class-gicapi-cron.php:372
 msgid "Manual order update completed"
 msgstr "بروزرسانی دستی سفارش انجام شد"
+
+#: includes/class-gicapi-cron.php:391
+#, fuzzy
+#| msgid "Webhook processed successfully"
+msgid "Cron job rescheduled successfully"
+msgstr "وب هوک با موفقیت پردازش شد"
+
+#: includes/class-gicapi-cron.php:554
+msgid "Cron job checked and repaired successfully"
+msgstr ""
+
+#: includes/class-gicapi-cron.php:556
+msgid "Cron job check and repair failed"
+msgstr ""
 
 #: includes/class-gicapi-gift-card-display.php:47
 msgid "Gift Card Information"
