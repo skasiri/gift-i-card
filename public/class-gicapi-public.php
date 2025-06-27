@@ -173,7 +173,7 @@ class GICAPI_Public
             ));
 
             $orders[] = array(
-                'order_id' => $response['id'],
+                'order_id' => $response['order_id'],
                 'status' => $response['status'],
                 'total_price' => $response['total_price'],
                 'currency' => $response['currency'],
