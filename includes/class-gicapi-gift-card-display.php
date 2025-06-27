@@ -50,7 +50,7 @@ class GICAPI_Gift_Card_Display
             echo '<div class="gicapi-gift-card-details">';
             echo '<p><strong>' . __('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
             echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($gic_order['status']) . '</span></p>';
-            echo '<p><strong>' . __('Total Price:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['total_price']) . ' ' . esc_html($gic_order['currency']) . '</p>';
+            echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['price']) . ' ' . esc_html($gic_order['currency']) . '</p>';
 
             if (!empty($gic_order['expires_at'])) {
                 echo '<p><strong>' . __('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';

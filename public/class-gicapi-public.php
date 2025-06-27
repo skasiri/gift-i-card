@@ -202,7 +202,8 @@ class GICAPI_Public
             $orders[] = array(
                 'order_id' => $response['order_id'],
                 'status' => $response['status'],
-                'total_price' => $response['total_price'],
+                'price' => $response['price'],
+                'total' => $response['total'],
                 'currency' => $response['currency'],
                 'expires_at' => $response['expires_at'],
                 'item_id' => $item->get_id(),
