@@ -12,8 +12,6 @@ if (!defined('ABSPATH')) {
 // Define plugin name for this file
 $plugin_name = 'gift-i-card';
 
-echo 'products-display';
-
 $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
 $parent_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 

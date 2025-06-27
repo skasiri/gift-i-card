@@ -151,6 +151,11 @@ class GICAPI_API
             return false;
         }
 
+        $response_body = wp_remote_retrieve_body($response);
+        if (empty($response_body)) {
+            return false;
+        }
+
         return json_decode(wp_remote_retrieve_body($response), true);
     }
 

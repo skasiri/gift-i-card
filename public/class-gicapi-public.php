@@ -186,11 +186,10 @@ class GICAPI_Public
 
             $response = $this->api->buy_product($variant_sku, $item->get_quantity());
 
-            if (is_wp_error($response)) {
-                $order->add_order_note(sprintf(
-                    __('Failed to create Gift-i-Card order: %s', 'gift-i-card'),
-                    $response->get_error_message()
-                ));
+            if (!$response) {
+                $order->add_order_note(
+                    __('Failed to create Gift-i-Card order', 'gift-i-card'),
+                );
                 continue;
             }
 
@@ -232,11 +231,10 @@ class GICAPI_Public
         foreach ($orders as $key => $order_data) {
             $response = $this->api->confirm_order($order_data['order_id']);
 
-            if (is_wp_error($response)) {
-                $order->add_order_note(sprintf(
-                    __('Failed to confirm Gift-i-Card order: %s', 'gift-i-card'),
-                    $response->get_error_message()
-                ));
+            if (!$response) {
+                $order->add_order_note(
+                    __('Failed to confirm Gift-i-Card order', 'gift-i-card'),
+                );
                 $orders[$key]['status'] = 'failed';
                 continue;
             }

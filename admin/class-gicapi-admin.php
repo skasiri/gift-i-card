@@ -231,8 +231,8 @@ class GICAPI_Admin
         $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
         $product_sku = isset($_GET['product']) ? sanitize_text_field($_GET['product']) : '';
 
-        echo 'product_sku: ' . $product_sku . '<br>';
-        echo 'category_sku: ' . $category_sku . '<br>';
+        // echo 'product_sku: ' . $product_sku . '<br>';
+        // echo 'category_sku: ' . $category_sku . '<br>';
 
         if ($product_sku) {
             include_once plugin_dir_path(__FILE__) . 'partials/gicapi-variants-display.php';
