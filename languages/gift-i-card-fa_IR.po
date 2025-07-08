@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-06-27 07:36+0330\n"
-"PO-Revision-Date: 2025-06-27 07:37+0330\n"
+"POT-Creation-Date: 2025-07-08 12:24+0330\n"
+"PO-Revision-Date: 2025-07-08 12:27+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -124,15 +124,15 @@ msgid "Thumbnail"
 msgstr "تصویر"
 
 #: admin/partials/gicapi-categories-display.php:57
-#: admin/partials/gicapi-products-display.php:74
-#: admin/partials/gicapi-products-display.php:109
+#: admin/partials/gicapi-products-display.php:72
+#: admin/partials/gicapi-products-display.php:107
 #: admin/partials/gicapi-variants-display.php:74
 msgid "Name"
 msgstr "نام"
 
 #: admin/partials/gicapi-categories-display.php:58
-#: admin/partials/gicapi-products-display.php:75
-#: admin/partials/gicapi-products-display.php:110
+#: admin/partials/gicapi-products-display.php:73
+#: admin/partials/gicapi-products-display.php:108
 #: admin/partials/gicapi-variants-display.php:75
 msgid "SKU"
 msgstr "شناسه SKU"
@@ -146,7 +146,7 @@ msgid "No categories found."
 msgstr "دسته بندی یافت نشد."
 
 #: admin/partials/gicapi-categories-display.php:102
-#: admin/partials/gicapi-products-display.php:118
+#: admin/partials/gicapi-products-display.php:116
 #, php-format
 msgid "%s item"
 msgid_plural "%s items"
@@ -154,43 +154,43 @@ msgstr[0] "%s آیتم"
 msgstr[1] "%s آیتم"
 
 #: admin/partials/gicapi-categories-display.php:108
-#: admin/partials/gicapi-products-display.php:124
+#: admin/partials/gicapi-products-display.php:122
 msgid "&laquo;"
 msgstr ""
 
 #: admin/partials/gicapi-categories-display.php:109
-#: admin/partials/gicapi-products-display.php:125
+#: admin/partials/gicapi-products-display.php:123
 msgid "&raquo;"
 msgstr ""
 
-#: admin/partials/gicapi-products-display.php:25
+#: admin/partials/gicapi-products-display.php:23
 msgid "Category is not valid."
 msgstr "دسته بندی نامعتبر است."
 
-#: admin/partials/gicapi-products-display.php:34
+#: admin/partials/gicapi-products-display.php:32
 msgid "Error fetching products from API"
 msgstr "خطا در دریافت لیست محصولات از API"
 
-#: admin/partials/gicapi-products-display.php:43
+#: admin/partials/gicapi-products-display.php:41
 msgid "No products found for this category."
 msgstr "هیچ محصولی برای این دسته بندی یافت نشد."
 
-#: admin/partials/gicapi-products-display.php:49
+#: admin/partials/gicapi-products-display.php:47
 #: admin/partials/gicapi-variants-display.php:23
 msgid "Unknown Category"
 msgstr "دسته بندی ناشناخته"
 
-#: admin/partials/gicapi-products-display.php:63
+#: admin/partials/gicapi-products-display.php:61
 msgid "Products"
 msgstr "محصولات"
 
-#: admin/partials/gicapi-products-display.php:73
-#: admin/partials/gicapi-products-display.php:108
+#: admin/partials/gicapi-products-display.php:71
+#: admin/partials/gicapi-products-display.php:106
 msgid "Image"
 msgstr "تصویر"
 
-#: admin/partials/gicapi-products-display.php:76
-#: admin/partials/gicapi-products-display.php:111
+#: admin/partials/gicapi-products-display.php:74
+#: admin/partials/gicapi-products-display.php:109
 msgid "Variant Count"
 msgstr "تعداد واریانت"
 
@@ -308,7 +308,7 @@ msgstr "برای ابطال توکن فعلی و دریافت توکن جدید 
 
 #: admin/partials/settings/gicapi-settings-cron.php:33
 msgid "Order Updating through Cron Job"
-msgstr ""
+msgstr "بروزرسانی سفارشات از طریق کرون جاب"
 
 #: admin/partials/settings/gicapi-settings-cron.php:38
 msgid "Enable Cron Job for Order Updating (not recommended)"
@@ -385,17 +385,17 @@ msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:125
 msgid "Troubleshooting"
-msgstr ""
+msgstr "عیب یابی"
 
 #: admin/partials/settings/gicapi-settings-cron.php:129
 #: admin/partials/settings/gicapi-settings-cron.php:258
 msgid "Reschedule Cron Job"
-msgstr ""
+msgstr "زمانبندی مجدد کرون جاب"
 
 #: admin/partials/settings/gicapi-settings-cron.php:132
 #: admin/partials/settings/gicapi-settings-cron.php:292
 msgid "Check & Repair Cron Job"
-msgstr ""
+msgstr "بررسی . تعمیر کرون جاب"
 
 #: admin/partials/settings/gicapi-settings-cron.php:135
 msgid ""
@@ -443,7 +443,7 @@ msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:167
 msgid "Note:"
-msgstr ""
+msgstr "یادداشت:"
 
 #: admin/partials/settings/gicapi-settings-cron.php:168
 msgid ""
@@ -581,13 +581,13 @@ msgstr "هیچکدام"
 
 #: admin/partials/settings/gicapi-settings-orders.php:111
 #: admin/partials/settings/gicapi-settings-orders.php:153
-msgid "All"
-msgstr "همه"
+msgid "Orders with all items mapped"
+msgstr "سفارشات با تمام آیتم های مپ شده"
 
 #: admin/partials/settings/gicapi-settings-orders.php:112
 #: admin/partials/settings/gicapi-settings-orders.php:154
 msgid "Orders with mapped items"
-msgstr "سفارشات دارای آیتم مپ شده"
+msgstr "سفارشات صرفا دارای آیتم مپ شده"
 
 #: admin/partials/settings/gicapi-settings-orders.php:114
 msgid "Change Order Status After Successfully Processing"
@@ -632,7 +632,7 @@ msgstr "محصول متغیر"
 #: includes/class-gicapi-ajax.php:69
 #, php-format
 msgid "Variation of: %s"
-msgstr ""
+msgstr "متغیر محصول: %s"
 
 #: includes/class-gicapi-ajax.php:71
 msgid "Product Variation"
@@ -657,7 +657,7 @@ msgstr "پارامترهای نامعتبر"
 
 #: includes/class-gicapi-ajax.php:127
 msgid "This product is already mapped to this variant"
-msgstr ""
+msgstr "این محصول از قبل به این واریانت مپ شده است"
 
 #: includes/class-gicapi-ajax.php:142
 msgid "Error saving product mapping"
@@ -665,7 +665,7 @@ msgstr "خطا در ذخیره ارتباط محصول"
 
 #: includes/class-gicapi-ajax.php:155
 msgid "Mapping added successfully"
-msgstr ""
+msgstr "با موفقیت مپ  شد"
 
 #: includes/class-gicapi-ajax.php:183
 msgid "Error removing product mapping"
@@ -723,8 +723,10 @@ msgid "Status:"
 msgstr "وضعیت:"
 
 #: includes/class-gicapi-gift-card-display.php:53
-msgid "Total Price:"
-msgstr "مبلغ:"
+#, fuzzy
+#| msgid "Price"
+msgid "Price:"
+msgstr "قیمت"
 
 #: includes/class-gicapi-gift-card-display.php:56
 msgid "Expires At:"
@@ -805,21 +807,19 @@ msgid "Webhook processed successfully"
 msgstr "وب هوک با موفقیت پردازش شد"
 
 #: public/class-gicapi-public.php:191
-#, php-format
-msgid "Failed to create Gift-i-Card order: %s"
-msgstr "خطا در ایجاد سفارش گیفتی کارت: %s"
+msgid "Failed to create Gift-i-Card order"
+msgstr "خطا در ایجاد سفارش گیفتی کارت"
 
-#: public/class-gicapi-public.php:198
+#: public/class-gicapi-public.php:197
 #, php-format
 msgid "Gift-i-Card order created: %s"
 msgstr "سفارش گیفتی کارت ایجاد شد: %s"
 
 #: public/class-gicapi-public.php:236
-#, php-format
-msgid "Failed to confirm Gift-i-Card order: %s"
-msgstr "خطا در تایید سفارش گیفتی کارت: %s"
+msgid "Failed to confirm Gift-i-Card order"
+msgstr "خطا در تایید سفارش گیفتی کارت"
 
-#: public/class-gicapi-public.php:244
+#: public/class-gicapi-public.php:243
 #, php-format
 msgid "Gift-i-Card order confirmed: %s"
 msgstr "سفارش گیفتی کارت تایید شد: %s"
@@ -840,6 +840,12 @@ msgstr "افزونه ای برای سازگاری ووکامرس با سرویس
 #. Author of the plugin/theme
 msgid "Saeid Kasiri"
 msgstr "سعید کثیری"
+
+#~ msgid "All"
+#~ msgstr "همه"
+
+#~ msgid "Total Price:"
+#~ msgstr "مبلغ:"
 
 #, fuzzy
 #~| msgid "Gift-i-Card order created: %s"
