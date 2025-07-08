@@ -9,6 +9,7 @@ class GICAPI_Public
     private $version;
     private $api;
     private $gift_card_display;
+    private $order;
 
     public function __construct($plugin_name, $version)
     {
@@ -27,6 +28,8 @@ class GICAPI_Public
         // Initialize gift card display class
         require_once dirname(__FILE__, 2) . '/includes/class-gicapi-gift-card-display.php';
         $this->gift_card_display = new GICAPI_Gift_Card_Display();
+
+        $this->order = GICAPI_Order::get_instance();
 
         add_action('woocommerce_order_status_changed', array($this, 'handle_order_status_change'), $order_hook_priority, 3);
         add_action('woocommerce_new_order', array($this, 'handle_order_creation'), $order_hook_priority, 1);
@@ -128,45 +131,6 @@ class GICAPI_Public
         }
     }
 
-    /**
-     * Get mapped variant SKU for a WooCommerce product
-     * 
-     * @param int $product_id The product ID
-     * @param int $variation_id The variation ID (if applicable)
-     * @return string|false The variant SKU or false if not mapped
-     */
-    private function get_mapped_variant_sku($product_id, $variation_id = 0)
-    {
-        // Determine which product ID to use for mapping
-        $mapping_product_id = $variation_id ? $variation_id : $product_id;
-
-        // Get mapped variant SKUs from the new mapping system
-        $mapped_variant_skus = get_post_meta($mapping_product_id, '_gicapi_mapped_variant_skus', true);
-
-        // Fallback to old system for backward compatibility
-        if (empty($mapped_variant_skus)) {
-            $variant_sku = get_post_meta($mapping_product_id, '_gic_variant_sku', true);
-            if ($variant_sku) {
-                $mapped_variant_skus = array($variant_sku);
-            }
-        }
-
-        // Ensure mapped_variant_skus is an array
-        if (!is_array($mapped_variant_skus)) {
-            $mapped_variant_skus = array($mapped_variant_skus);
-        }
-
-        // Filter out empty values
-        $mapped_variant_skus = array_filter($mapped_variant_skus);
-
-        if (empty($mapped_variant_skus)) {
-            return false;
-        }
-
-        // Use the first mapped variant SKU
-        return reset($mapped_variant_skus);
-    }
-
     private function process_order($order)
     {
         // Process flag
@@ -177,7 +141,7 @@ class GICAPI_Public
             $product_id = $item->get_product_id();
             $variation_id = $item->get_variation_id();
 
-            $variant_sku = $this->get_mapped_variant_sku($product_id, $variation_id);
+            $variant_sku = $this->order->get_mapped_variant_sku($product_id, $variation_id);
 
             if (!$variant_sku) {
                 continue;
