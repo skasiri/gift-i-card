@@ -24,111 +24,124 @@ class GICAPI_Gift_Card_Display
             return;
         }
 
-        // Get gift card orders from order meta
-        $gicapi_orders = get_post_meta($order->get_id(), '_gicapi_orders', true);
-        if (empty($gicapi_orders) || !is_array($gicapi_orders)) {
+        // Check if this item is mapped to a gift card variant
+        $gicapi_order = GICAPI_Order::get_instance();
+        $variant_sku = $gicapi_order->get_mapped_variant_sku($item->get_product_id(), $item->get_variation_id());
+
+        if (!$variant_sku) {
+            // Item is not mapped, don't display anything
             return;
         }
+
+        // Get gift card orders from order meta
+        $gicapi_orders = get_post_meta($order->get_id(), '_gicapi_orders', true);
 
         // Find gift card orders for this specific item
         $item_gift_orders = array();
-        foreach ($gicapi_orders as $gic_order) {
-            if (isset($gic_order['item_id']) && $gic_order['item_id'] == $item_id) {
-                $item_gift_orders[] = $gic_order;
+        if (!empty($gicapi_orders) && is_array($gicapi_orders)) {
+            foreach ($gicapi_orders as $gic_order) {
+                if (isset($gic_order['item_id']) && $gic_order['item_id'] == $item_id) {
+                    $item_gift_orders[] = $gic_order;
+                }
             }
-        }
-
-        if (empty($item_gift_orders)) {
-            return;
         }
 
         // Display gift card information for this item
         echo '<div class="gicapi-item-gift-card-info">';
         echo '<h4>' . __('Gift Card Information', 'gift-i-card') . '</h4>';
 
-        foreach ($item_gift_orders as $gic_order) {
-            $item_status = $gic_order['status'];
-            switch (strtolower($item_status)) {
-                case 'pending':
-                    $item_status = __('Pending', 'gift-i-card');
-                    break;
-                case 'processing':
-                    $item_status = __('Processing', 'gift-i-card');
-                    break;
-                case 'completed':
-                    $item_status = __('Completed', 'gift-i-card');
-                    break;
-                case 'failed':
-                    $item_status = __('Failed', 'gift-i-card');
-                    break;
-                default:
-                    $item_status = $item_status;
-                    break;
-            }
-
-
-            $currency = $gic_order['currency'];
-            switch (strtolower($currency)) {
-                case 'eur':
-                    $currency = __('€', 'gift-i-card');
-                    break;
-                case 'usd':
-                    $currency = __('$', 'gift-i-card');
-                    break;
-                case 'irt':
-                    $currency = __('IRT', 'gift-i-card');
-                    break;
-                default:
-                    $currency = $currency;
-                    break;
-            }
-
-            $price = $gic_order['price'];
-            $decimals = get_option('woocommerce_price_num_decimals', 2);
-            $decimal_separator = get_option('woocommerce_price_decimal_sep');
-            $thousand_separator = get_option('woocommerce_price_thousand_sep');
-            $price = number_format($price, $decimals, $decimal_separator, $thousand_separator);
-
+        if (empty($item_gift_orders)) {
+            // No gift card order created yet for this mapped item
             echo '<div class="gicapi-gift-card-details">';
-            echo '<p><strong>' . __('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
-            echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($item_status) . '</span></p>';
-            echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($price) . ' ' . esc_html($currency) . '</p>';
-
-            if (!empty($gic_order['expires_at'])) {
-                echo '<p><strong>' . __('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';
-            }
-
-            // Display redemption data if available
-            if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
-                echo '<div class="gicapi-redemption-details">';
-                echo '<h5>' . __('Redemption Details', 'gift-i-card') . '</h5>';
-                echo '<table class="gicapi-redemption-table">';
-                echo '<thead><tr>';
-                echo '<th>' . __('License Key', 'gift-i-card') . '</th>';
-                echo '<th>' . __('Serial Number', 'gift-i-card') . '</th>';
-                echo '<th>' . __('Card Code', 'gift-i-card') . '</th>';
-                echo '<th>' . __('Redeem Link', 'gift-i-card') . '</th>';
-                echo '</tr></thead>';
-                echo '<tbody>';
-
-                foreach ($gic_order['redeem_data'] as $redeem_item) {
-                    echo '<tr>';
-                    echo '<td>' . esc_html($redeem_item['license_key'] ?? '') . '</td>';
-                    echo '<td>' . esc_html($redeem_item['redeem_serial_number'] ?? '') . '</td>';
-                    echo '<td>' . esc_html($redeem_item['redeem_card_code'] ?? '') . '</td>';
-                    echo '<td>';
-                    if (!empty($redeem_item['redeem_link'])) {
-                        echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
-                    }
-                    echo '</td>';
-                    echo '</tr>';
+            echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-pending-create">' . __('Pending Order Creation', 'gift-i-card') . '</span></p>';
+            echo '<p><strong>' . __('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
+            echo '</div>';
+        } else {
+            // Display existing gift card orders
+            foreach ($item_gift_orders as $gic_order) {
+                $item_status = $gic_order['status'];
+                switch (strtolower($item_status)) {
+                    case 'pending':
+                        $item_status = __('Pending', 'gift-i-card');
+                        break;
+                    case 'processing':
+                        $item_status = __('Processing', 'gift-i-card');
+                        break;
+                    case 'completed':
+                        $item_status = __('Completed', 'gift-i-card');
+                        break;
+                    case 'failed':
+                        $item_status = __('Failed', 'gift-i-card');
+                        break;
+                    default:
+                        $item_status = $item_status;
+                        break;
                 }
 
-                echo '</tbody></table>';
+                $currency = $gic_order['currency'];
+                switch (strtolower($currency)) {
+                    case 'eur':
+                        $currency = __('€', 'gift-i-card');
+                        break;
+                    case 'usd':
+                        $currency = __('$', 'gift-i-card');
+                        break;
+                    case 'irt':
+                        $currency = __('IRT', 'gift-i-card');
+                        break;
+                    default:
+                        $currency = $currency;
+                        break;
+                }
+
+                $price = $gic_order['price'];
+                $decimals = get_option('woocommerce_price_num_decimals', 2);
+                $decimal_separator = get_option('woocommerce_price_decimal_sep');
+                $thousand_separator = get_option('woocommerce_price_thousand_sep');
+                $price = number_format($price, $decimals, $decimal_separator, $thousand_separator);
+
+                echo '<div class="gicapi-gift-card-details">';
+                echo '<p><strong>' . __('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
+                echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($item_status) . '</span></p>';
+                echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($price) . ' ' . esc_html($currency) . '</p>';
+                echo '<p><strong>' . __('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
+
+                if (!empty($gic_order['expires_at'])) {
+                    echo '<p><strong>' . __('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';
+                }
+
+                // Display redemption data if available
+                if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
+                    echo '<div class="gicapi-redemption-details">';
+                    echo '<h5>' . __('Redemption Details', 'gift-i-card') . '</h5>';
+                    echo '<table class="gicapi-redemption-table">';
+                    echo '<thead><tr>';
+                    echo '<th>' . __('License Key', 'gift-i-card') . '</th>';
+                    echo '<th>' . __('Serial Number', 'gift-i-card') . '</th>';
+                    echo '<th>' . __('Card Code', 'gift-i-card') . '</th>';
+                    echo '<th>' . __('Redeem Link', 'gift-i-card') . '</th>';
+                    echo '</tr></thead>';
+                    echo '<tbody>';
+
+                    foreach ($gic_order['redeem_data'] as $redeem_item) {
+                        echo '<tr>';
+                        echo '<td>' . esc_html($redeem_item['license_key'] ?? '') . '</td>';
+                        echo '<td>' . esc_html($redeem_item['redeem_serial_number'] ?? '') . '</td>';
+                        echo '<td>' . esc_html($redeem_item['redeem_card_code'] ?? '') . '</td>';
+                        echo '<td>';
+                        if (!empty($redeem_item['redeem_link'])) {
+                            echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
+                        }
+                        echo '</td>';
+                        echo '</tr>';
+                    }
+
+                    echo '</tbody></table>';
+                    echo '</div>';
+                }
+
                 echo '</div>';
             }
-
-            echo '</div>';
         }
 
         echo '</div>';

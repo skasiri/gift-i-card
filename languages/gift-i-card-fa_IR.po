@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-07-08 15:28+0330\n"
-"PO-Revision-Date: 2025-07-08 15:28+0330\n"
+"POT-Creation-Date: 2025-07-08 21:05+0330\n"
+"PO-Revision-Date: 2025-07-08 21:08+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -322,9 +322,8 @@ msgid ""
 "webhooks are not available."
 msgstr ""
 "اگر فروشگاه شما از دامنه واقعی و HTTPS استفاده میکند، سفارشات بطور خودکار "
-"بوسیله وب هوک بروزرسانی میشوند و نیاز به فعالسازی این گزینه ندارید. کرون جاب "
-"ها برای محیط تست/توسعه و یا در جایی که وب هوک های در دسترس نیستند توصیه "
-"میشوند."
+"بوسیله وب هوک بروزرسانی میشوند و نیاز به فعالسازی این گزینه ندارید. کرون جاب ها "
+"برای محیط تست/توسعه و یا در جایی که وب هوک های در دسترس نیستند توصیه میشوند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:48
 msgid "Update Interval"
@@ -410,14 +409,14 @@ msgstr "📋 چطور کار میکند"
 
 #: admin/partials/settings/gicapi-settings-cron.php:157
 msgid ""
-"The cron job runs automatically at the specified interval (recommended: every "
-"5 minutes)."
+"The cron job runs automatically at the specified interval (recommended: every 5 "
+"minutes)."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:158
 msgid ""
-"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
-"or \"processing\" status."
+"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" or "
+"\"processing\" status."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:159
@@ -447,9 +446,9 @@ msgstr "یادداشت:"
 
 #: admin/partials/settings/gicapi-settings-cron.php:168
 msgid ""
-"This feature requires WordPress cron to be working properly. If you're using "
-"a real cron job, make sure to disable WordPress cron and set up a real cron "
-"job to call wp-cron.php."
+"This feature requires WordPress cron to be working properly. If you're using a "
+"real cron job, make sure to disable WordPress cron and set up a real cron job "
+"to call wp-cron.php."
 msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:203
@@ -538,8 +537,8 @@ msgstr "ثبت سفارش در وضعیت"
 
 #: admin/partials/settings/gicapi-settings-orders.php:62
 msgid ""
-"Status to set when creating Gift-i-Card pending order. This status will be "
-"used to create the order in the Gift-i-Card system."
+"Status to set when creating Gift-i-Card pending order. This status will be used "
+"to create the order in the Gift-i-Card system."
 msgstr ""
 "وضعیتی که سفارش در انتظار در گیفتی کارت ایجاد شود. این وضعیت برای ایجاد سفارش "
 "در سیستم گیفتی کارت استفاده میشود."
@@ -551,11 +550,11 @@ msgstr "تایید سفارش در وضعیت"
 #: admin/partials/settings/gicapi-settings-orders.php:78
 msgid ""
 "Status to set when confirming Gift-i-Card order. This status will be used to "
-"confirm the order in the Gift-i-Card system. After this status, the order "
-"will be processed."
+"confirm the order in the Gift-i-Card system. After this status, the order will "
+"be processed."
 msgstr ""
-"وضعیتی که سفارش گیفتی کارت تایید شود. این وضعیت برای تایید سفارش در سیستم "
-"گیفتی کارت استفاده میشود. بعد از این وضعیت سفارش پردازش میشود."
+"وضعیتی که سفارش گیفتی کارت تایید شود. این وضعیت برای تایید سفارش در سیستم گیفتی "
+"کارت استفاده میشود. بعد از این وضعیت سفارش پردازش میشود."
 
 #: admin/partials/settings/gicapi-settings-orders.php:84
 msgid "Hook Priority"
@@ -647,7 +646,7 @@ msgid "External Product"
 msgstr "محصول خارجی"
 
 #: includes/class-gicapi-ajax.php:81
-#: includes/class-gicapi-gift-card-display.php:260
+#: includes/class-gicapi-gift-card-display.php:279
 msgid "Product"
 msgstr "محصول"
 
@@ -695,107 +694,117 @@ msgstr "رویداد کرون با موفقیت عیب یابی و ترمیم ش
 msgid "Cron job check and repair failed"
 msgstr "خطا در ترمیم رویداد کرون"
 
-#: includes/class-gicapi-gift-card-display.php:47
+#: includes/class-gicapi-gift-card-display.php:51
 msgid "Gift Card Information"
 msgstr "اطلاعات گیفت کارت"
 
-#: includes/class-gicapi-gift-card-display.php:53
-msgid "Pending"
-msgstr "در انتظار تایید"
-
 #: includes/class-gicapi-gift-card-display.php:56
-msgid "Processing"
-msgstr "در حال انجام"
-
-#: includes/class-gicapi-gift-card-display.php:59
-msgid "Completed"
-msgstr "تکمیل شده"
-
-#: includes/class-gicapi-gift-card-display.php:62
-msgid "Failed"
-msgstr "ناموفق"
-
-#: includes/class-gicapi-gift-card-display.php:73
-msgid "€"
-msgstr ""
-
-#: includes/class-gicapi-gift-card-display.php:76
-msgid "$"
-msgstr ""
-
-#: includes/class-gicapi-gift-card-display.php:79
-msgid "IRT"
-msgstr "تومان"
-
-#: includes/class-gicapi-gift-card-display.php:87
-#: includes/class-gicapi-gift-card-display.php:191
-msgid "Gift-i-Card Order ID:"
-msgstr "شماره سفارش گیفتی کارت:"
-
-#: includes/class-gicapi-gift-card-display.php:88
-#: includes/class-gicapi-gift-card-display.php:192
+#: includes/class-gicapi-gift-card-display.php:105
+#: includes/class-gicapi-gift-card-display.php:211
 msgid "Status:"
 msgstr "وضعیت:"
 
-#: includes/class-gicapi-gift-card-display.php:89
+#: includes/class-gicapi-gift-card-display.php:56
+msgid "Pending Order Creation"
+msgstr "در انتظار ایجاد"
+
+#: includes/class-gicapi-gift-card-display.php:57
+#: includes/class-gicapi-gift-card-display.php:107
+msgid "Mapped Variant SKU:"
+msgstr "شناسه SKU محصول مرتبط:"
+
+#: includes/class-gicapi-gift-card-display.php:65
+msgid "Pending"
+msgstr "در انتظار تایید"
+
+#: includes/class-gicapi-gift-card-display.php:68
+msgid "Processing"
+msgstr "در حال انجام"
+
+#: includes/class-gicapi-gift-card-display.php:71
+msgid "Completed"
+msgstr "تکمیل شده"
+
+#: includes/class-gicapi-gift-card-display.php:74
+msgid "Failed"
+msgstr "ناموفق"
+
+#: includes/class-gicapi-gift-card-display.php:84
+msgid "€"
+msgstr ""
+
+#: includes/class-gicapi-gift-card-display.php:87
+msgid "$"
+msgstr ""
+
+#: includes/class-gicapi-gift-card-display.php:90
+msgid "IRT"
+msgstr "تومان"
+
+#: includes/class-gicapi-gift-card-display.php:104
+#: includes/class-gicapi-gift-card-display.php:210
+msgid "Gift-i-Card Order ID:"
+msgstr "شماره سفارش گیفتی کارت:"
+
+#: includes/class-gicapi-gift-card-display.php:106
 msgid "Price:"
 msgstr "مبلغ:"
 
-#: includes/class-gicapi-gift-card-display.php:92
+#: includes/class-gicapi-gift-card-display.php:110
 msgid "Expires At:"
 msgstr "انقضا در:"
 
-#: includes/class-gicapi-gift-card-display.php:98
+#: includes/class-gicapi-gift-card-display.php:116
 msgid "Redemption Details"
 msgstr "اطلاعات ردیم"
 
-#: includes/class-gicapi-gift-card-display.php:101
-#: includes/class-gicapi-gift-card-display.php:198
-#: includes/class-gicapi-gift-card-display.php:261
+#: includes/class-gicapi-gift-card-display.php:119
+#: includes/class-gicapi-gift-card-display.php:217
+#: includes/class-gicapi-gift-card-display.php:280
 msgid "License Key"
 msgstr "کلید لایسنس"
 
-#: includes/class-gicapi-gift-card-display.php:102
-#: includes/class-gicapi-gift-card-display.php:199
-#: includes/class-gicapi-gift-card-display.php:262
+#: includes/class-gicapi-gift-card-display.php:120
+#: includes/class-gicapi-gift-card-display.php:218
+#: includes/class-gicapi-gift-card-display.php:281
 msgid "Serial Number"
 msgstr "سريال"
 
-#: includes/class-gicapi-gift-card-display.php:103
-#: includes/class-gicapi-gift-card-display.php:200
-#: includes/class-gicapi-gift-card-display.php:263
+#: includes/class-gicapi-gift-card-display.php:121
+#: includes/class-gicapi-gift-card-display.php:219
+#: includes/class-gicapi-gift-card-display.php:282
 msgid "Card Code"
 msgstr "کد کارت"
 
-#: includes/class-gicapi-gift-card-display.php:104
-#: includes/class-gicapi-gift-card-display.php:201
-#: includes/class-gicapi-gift-card-display.php:264
+#: includes/class-gicapi-gift-card-display.php:122
+#: includes/class-gicapi-gift-card-display.php:220
+#: includes/class-gicapi-gift-card-display.php:283
 msgid "Redeem Link"
 msgstr "لینک"
 
-#: includes/class-gicapi-gift-card-display.php:115
-#: includes/class-gicapi-gift-card-display.php:212
-#: includes/class-gicapi-gift-card-display.php:279
+#: includes/class-gicapi-gift-card-display.php:133
+#: includes/class-gicapi-gift-card-display.php:231
+#: includes/class-gicapi-gift-card-display.php:298
 msgid "Redeem"
 msgstr "ردیم"
 
-#: includes/class-gicapi-gift-card-display.php:158
+#: includes/class-gicapi-gift-card-display.php:177
 msgid "Gift Card Summary"
 msgstr ""
 
-#: includes/class-gicapi-gift-card-display.php:162
+#: includes/class-gicapi-gift-card-display.php:181
 msgid "Print Information"
 msgstr "چاپ اطلاعات"
 
-#: includes/class-gicapi-gift-card-display.php:163
+#: includes/class-gicapi-gift-card-display.php:182
 msgid "Export to CSV"
 msgstr "خروجی CSV"
 
-#: includes/class-gicapi-gift-card-display.php:195
+#: includes/class-gicapi-gift-card-display.php:214
 msgid "Redemption Codes"
 msgstr "کدهای ردیم"
 
-#: includes/class-gicapi-gift-card-display.php:256
+#: includes/class-gicapi-gift-card-display.php:275
 msgid "Gift Card Redemption Details"
 msgstr "اطلاعات ردیم گیفت کارت"
 

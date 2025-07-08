@@ -226,3 +226,9 @@
     color: #ffffff;
     border: 1px solid #1e7e34;
 }
+
+.gicapi-status-pending-create {
+    background: #ffc107;
+    color: #212529;
+    border: 1px solid #e0a800;
+}
