@@ -127,17 +127,32 @@ class GICAPI_API
             'method' => $method,
             'headers' => array(
                 'Authorization' => 'Bearer ' . $token,
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                'Pragma' => 'no-cache',
+                'Expires' => '0'
             )
         );
 
         $url = $this->base_url . $endpoint;
 
+        // Add timestamp to prevent caching
+        $timestamp = time();
+
         if (!empty($body)) {
             if (strtoupper($method) === 'GET') {
+                $body['_t'] = $timestamp; // Add timestamp parameter
                 $url = add_query_arg($body, $url);
             } else {
+                $body['_t'] = $timestamp; // Add timestamp to POST body
                 $args['body'] = json_encode($body);
+            }
+        } else {
+            // Add timestamp even if no body parameters
+            if (strtoupper($method) === 'GET') {
+                $url = add_query_arg(array('_t' => $timestamp), $url);
+            } else {
+                $args['body'] = json_encode(array('_t' => $timestamp));
             }
         }
 
