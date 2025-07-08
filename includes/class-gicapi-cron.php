@@ -152,7 +152,7 @@ class GICAPI_Cron
     public function update_processing_orders()
     {
         // Check if cron job is enabled
-        if (get_option('gicapi_enable_cron_updates', 'yes') !== 'yes') {
+        if (get_option('gicapi_enable_cron_updates', 'no') !== 'yes') {
             return;
         }
 
@@ -160,7 +160,6 @@ class GICAPI_Cron
         $active_orders = $this->get_processing_orders();
 
         if (empty($active_orders)) {
-            error_log('GICAPI Cron: No pending or processing orders found to update');
             return;
         }
 
@@ -168,6 +167,15 @@ class GICAPI_Cron
         $error_count = 0;
 
         foreach ($active_orders as $order_id) {
+
+            if (empty($order_id)) {
+                continue;
+            }
+
+            if (!is_numeric($order_id)) {
+                continue;
+            }
+
             $result = $this->update_single_order($order_id);
 
             if ($result === true) {
