@@ -159,15 +159,18 @@ class GICAPI_API
         $response = wp_remote_request($url, $args);
 
         if (is_wp_error($response)) {
+            error_log('GICAPI API: WP_Error: ' . $response->get_error_message());
             return false;
         }
 
         if (wp_remote_retrieve_response_code($response) !== 200) {
+            error_log('GICAPI API: Invalid response code: ' . wp_remote_retrieve_response_code($response));
             return false;
         }
 
         $response_body = wp_remote_retrieve_body($response);
         if (empty($response_body)) {
+            error_log('GICAPI API: Empty response body');
             return false;
         }
 
