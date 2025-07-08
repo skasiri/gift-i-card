@@ -227,6 +227,8 @@
     border-color: #6c757d;
     color: #ffffff;
     cursor: not-allowed;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
 }
 
 .gicapi-confirm-order-manually {
@@ -249,6 +251,8 @@
     border-color: #6c757d;
     color: #ffffff;
     cursor: not-allowed;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
 }
 
 .gicapi-update-status-manually {
@@ -271,12 +275,34 @@
     border-color: #6c757d;
     color: #ffffff;
     cursor: not-allowed;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
 }
 
 .gicapi-loading {
     color: #007cba;
     font-style: italic;
     font-size: 13px;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.gicapi-loading:before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #007cba;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-right: 5px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Notice styles for success/error messages */
@@ -285,6 +311,8 @@
     padding: 10px 15px;
     border-radius: 4px;
     font-size: 13px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
 }
 
 .gicapi-gift-card-details .notice-success {
@@ -297,6 +325,18 @@
     background: #f8d7da;
     border: 1px solid #f5c6cb;
     color: #721c24;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Button styles */

@@ -10,11 +10,16 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var $button = $(this);
+        var $loading = $button.siblings('.gicapi-loading');
         var orderId = $button.data('order-id');
         var itemId = $button.data('item-id');
         var nonce = $button.data('nonce');
 
         console.log('Order ID:', orderId, 'Item ID:', itemId, 'Nonce:', nonce); // Debug log
+
+        // Show loading state
+        $button.prop('disabled', true);
+        $loading.show();
 
         // Make AJAX request
         $.ajax({
@@ -27,12 +32,33 @@ jQuery(document).ready(function ($) {
                 nonce: nonce
             },
             success: function (response) {
-                window.location.reload();
-                console.log('AJAX response:', response);
+                if (response.success) {
+                    // Show success message
+                    $button.closest('.gicapi-gift-card-details').append(
+                        '<div class="notice notice-success"><p>' + response.data + '</p></div>'
+                    );
+
+                    // Reload the page after a short delay to show updated information
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    // Show error message
+                    $button.closest('.gicapi-gift-card-details').append(
+                        '<div class="notice notice-error"><p>' + (response.data || 'An error occurred') + '</p></div>'
+                    );
+                }
             },
             error: function (xhr, status, error) {
-                window.location.reload();
-                console.log('AJAX error:', status, error);
+                // Show error message
+                $button.closest('.gicapi-gift-card-details').append(
+                    '<div class="notice notice-error"><p>Network error occurred</p></div>'
+                );
+            },
+            complete: function () {
+                // Hide loading state
+                $button.prop('disabled', false);
+                $loading.hide();
             }
         });
     });
@@ -42,10 +68,15 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var $button = $(this);
+        var $loading = $button.siblings('.gicapi-loading');
         var orderId = $button.data('order-id');
         var nonce = $button.data('nonce');
 
         console.log('Confirm Order ID:', orderId, 'Nonce:', nonce); // Debug log
+
+        // Show loading state
+        $button.prop('disabled', true);
+        $loading.show();
 
         // Make AJAX request
         $.ajax({
@@ -57,12 +88,33 @@ jQuery(document).ready(function ($) {
                 nonce: nonce
             },
             success: function (response) {
-                window.location.reload();
-                console.log('AJAX response:', response);
+                if (response.success) {
+                    // Show success message
+                    $button.closest('.gicapi-gift-card-details').append(
+                        '<div class="notice notice-success"><p>' + response.data + '</p></div>'
+                    );
+
+                    // Reload the page after a short delay to show updated information
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    // Show error message
+                    $button.closest('.gicapi-gift-card-details').append(
+                        '<div class="notice notice-error"><p>' + (response.data || 'An error occurred') + '</p></div>'
+                    );
+                }
             },
             error: function (xhr, status, error) {
-                window.location.reload();
-                console.log('AJAX error:', status, error);
+                // Show error message
+                $button.closest('.gicapi-gift-card-details').append(
+                    '<div class="notice notice-error"><p>Network error occurred</p></div>'
+                );
+            },
+            complete: function () {
+                // Hide loading state
+                $button.prop('disabled', false);
+                $loading.hide();
             }
         });
     });
@@ -72,10 +124,15 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var $button = $(this);
+        var $loading = $button.siblings('.gicapi-loading');
         var orderId = $button.data('order-id');
         var nonce = $button.data('nonce');
 
         console.log('Update Status Order ID:', orderId, 'Nonce:', nonce); // Debug log
+
+        // Show loading state
+        $button.prop('disabled', true);
+        $loading.show();
 
         // Make AJAX request
         $.ajax({
@@ -87,12 +144,33 @@ jQuery(document).ready(function ($) {
                 nonce: nonce
             },
             success: function (response) {
-                window.location.reload();
-                console.log('AJAX response:', response);
+                if (response.success) {
+                    // Show success message
+                    $button.closest('.gicapi-gift-card-details').append(
+                        '<div class="notice notice-success"><p>' + response.data + '</p></div>'
+                    );
+
+                    // Reload the page after a short delay to show updated information
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    // Show error message
+                    $button.closest('.gicapi-gift-card-details').append(
+                        '<div class="notice notice-error"><p>' + (response.data || 'An error occurred') + '</p></div>'
+                    );
+                }
             },
             error: function (xhr, status, error) {
-                window.location.reload();
-                console.log('AJAX error:', status, error);
+                // Show error message
+                $button.closest('.gicapi-gift-card-details').append(
+                    '<div class="notice notice-error"><p>Network error occurred</p></div>'
+                );
+            },
+            complete: function () {
+                // Hide loading state
+                $button.prop('disabled', false);
+                $loading.hide();
             }
         });
     });
