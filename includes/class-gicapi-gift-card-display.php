@@ -55,6 +55,17 @@ class GICAPI_Gift_Card_Display
             echo '<div class="gicapi-gift-card-details">';
             echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-pending-create">' . __('Pending Order Creation', 'gift-i-card') . '</span></p>';
             echo '<p><strong>' . __('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
+
+            // Add manual order creation button
+            $order_id = $order->get_id();
+            $nonce = wp_create_nonce('gicapi_create_order_manually');
+            echo '<div class="gicapi-manual-order-actions">';
+            echo '<button type="button" class="button gicapi-create-order-manually" data-order-id="' . esc_attr($order_id) . '" data-item-id="' . esc_attr($item_id) . '" data-nonce="' . esc_attr($nonce) . '">';
+            echo __('Create Order Manually', 'gift-i-card');
+            echo '</button>';
+            echo '<span class="gicapi-loading" style="display: none;">' . __('Creating order...', 'gift-i-card') . '</span>';
+            echo '</div>';
+
             echo '</div>';
         } else {
             // Display existing gift card orders

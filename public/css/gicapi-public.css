@@ -198,8 +198,61 @@
     color: #2c3e50;
     font-size: 16px;
     font-weight: 600;
-    border-bottom: 1px solid #e9ecef;
-    padding-bottom: 8px;
+}
+
+/* Manual order creation styles */
+.gicapi-manual-order-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+}
+
+.gicapi-create-order-manually {
+    background: #28a745;
+    border-color: #28a745;
+    color: #ffffff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.gicapi-create-order-manually:hover {
+    background: #218838;
+    border-color: #1e7e34;
+    color: #ffffff;
+}
+
+.gicapi-create-order-manually:disabled {
+    background: #6c757d;
+    border-color: #6c757d;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+.gicapi-loading {
+    color: #007cba;
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* Notice styles for success/error messages */
+.gicapi-gift-card-details .notice {
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.gicapi-gift-card-details .notice-success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.gicapi-gift-card-details .notice-error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
 }
 
 /* Button styles */

@@ -7,7 +7,7 @@ class GICAPI_Public
 {
     private $plugin_name;
     private $version;
-    private $api;
+    public $api;
     private $gift_card_display;
     private $order;
 
@@ -31,6 +31,10 @@ class GICAPI_Public
 
         $this->order = GICAPI_Order::get_instance();
 
+        // Make this instance available globally for AJAX access
+        global $gicapi_public;
+        $gicapi_public = $this;
+
         add_action('woocommerce_order_status_changed', array($this, 'handle_order_status_change'), $order_hook_priority, 3);
         add_action('woocommerce_new_order', array($this, 'handle_order_creation'), $order_hook_priority, 1);
 
@@ -50,6 +54,12 @@ class GICAPI_Public
     public function enqueue_scripts()
     {
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/gicapi-public.js', array('jquery'), $this->version, false);
+
+        // Localize script for AJAX
+        wp_localize_script($this->plugin_name, 'gicapi_ajax', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('gicapi_create_order_manually')
+        ));
     }
 
     /**
@@ -131,7 +141,7 @@ class GICAPI_Public
         }
     }
 
-    private function process_order($order)
+    public function process_order($order)
     {
         // Process flag
         update_post_meta($order->get_id(), '_gicapi_process_order', 'yes');

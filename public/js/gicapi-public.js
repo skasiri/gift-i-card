@@ -5,6 +5,39 @@
 
 jQuery(document).ready(function ($) {
 
+    // Manual order creation
+    $('.gicapi-create-order-manually').on('click', function (e) {
+        e.preventDefault();
+
+
+        var $button = $(this);
+        var orderId = $button.data('order-id');
+        var itemId = $button.data('item-id');
+        var nonce = $button.data('nonce');
+
+        console.log('Order ID:', orderId, 'Item ID:', itemId, 'Nonce:', nonce); // Debug log
+
+        // Make AJAX request
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_create_order_manually',
+                order_id: orderId,
+                item_id: itemId,
+                nonce: nonce
+            },
+            success: function (response) {
+                window.location.reload();
+                console.log('AJAX response:', response);
+            },
+            error: function (xhr, status, error) {
+                window.location.reload();
+                console.log('AJAX error:', status, error);
+            }
+        });
+    });
+
     // Toggle redemption details visibility
     $('.gicapi-toggle-details').on('click', function (e) {
         e.preventDefault();
@@ -97,5 +130,7 @@ jQuery(document).ready(function ($) {
         link.click();
         document.body.removeChild(link);
     });
+
+
 
 }); 
