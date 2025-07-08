@@ -117,6 +117,30 @@ class GICAPI_Gift_Card_Display
                 echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($price) . ' ' . esc_html($currency) . '</p>';
                 echo '<p><strong>' . __('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
 
+                // Add confirm order button for pending status
+                if (strtolower($gic_order['status']) === 'pending') {
+                    $order_id = $order->get_id();
+                    $nonce = wp_create_nonce('gicapi_confirm_order_manually');
+                    echo '<div class="gicapi-manual-order-actions">';
+                    echo '<button type="button" class="button gicapi-confirm-order-manually" data-order-id="' . esc_attr($order_id) . '" data-nonce="' . esc_attr($nonce) . '">';
+                    echo __('Confirm Order Manually', 'gift-i-card');
+                    echo '</button>';
+                    echo '<span class="gicapi-loading" style="display: none;">' . __('Confirming order...', 'gift-i-card') . '</span>';
+                    echo '</div>';
+                }
+
+                // Add update status button for all statuses
+                if (in_array(strtolower($gic_order['status']), array('pending', 'processing', 'completed', 'failed'))) {
+                    $order_id = $order->get_id();
+                    $nonce = wp_create_nonce('gicapi_update_status_manually');
+                    echo '<div class="gicapi-manual-order-actions">';
+                    echo '<button type="button" class="button gicapi-update-status-manually" data-order-id="' . esc_attr($order_id) . '" data-nonce="' . esc_attr($nonce) . '">';
+                    echo __('Update Status', 'gift-i-card');
+                    echo '</button>';
+                    echo '<span class="gicapi-loading" style="display: none;">' . __('Updating status...', 'gift-i-card') . '</span>';
+                    echo '</div>';
+                }
+
                 if (!empty($gic_order['expires_at'])) {
                     echo '<p><strong>' . __('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';
                 }

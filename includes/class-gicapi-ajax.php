@@ -18,6 +18,8 @@ class GICAPI_Ajax
         add_action('wp_ajax_gicapi_add_mapping', array($this, 'add_mapping'));
         add_action('wp_ajax_gicapi_remove_mapping', array($this, 'remove_mapping'));
         add_action('wp_ajax_gicapi_create_order_manually', array($this, 'create_order_manually'));
+        add_action('wp_ajax_gicapi_confirm_order_manually', array($this, 'confirm_order_manually'));
+        add_action('wp_ajax_gicapi_update_status_manually', array($this, 'update_status_manually'));
     }
 
     public function search_products()
@@ -251,6 +253,109 @@ class GICAPI_Ajax
             wp_send_json_success(__('Order created successfully', 'gift-i-card'));
         } catch (Exception $e) {
             wp_send_json_error(__('Failed to create order: ', 'gift-i-card') . $e->getMessage());
+        }
+    }
+
+    public function confirm_order_manually()
+    {
+        check_ajax_referer('gicapi_confirm_order_manually', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
+
+        if (empty($order_id)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            wp_send_json_error(__('Order not found', 'gift-i-card'));
+        }
+
+        // Get the public class instance to access confirm_order method
+        global $gicapi_public;
+        if (!$gicapi_public) {
+            wp_send_json_error(__('GICAPI Public class not available', 'gift-i-card'));
+        }
+
+        // Check if API is available
+        if (!$gicapi_public->api) {
+            wp_send_json_error(__('GICAPI API not available', 'gift-i-card'));
+        }
+
+        // Check if order processing is enabled
+        $enable_order_processing = get_option('gicapi_enable', 'no');
+        if ($enable_order_processing !== 'yes') {
+            wp_send_json_error(__('Order processing is disabled', 'gift-i-card'));
+        }
+
+        // Check if order has been processed
+        $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+        if ($process_order !== 'yes') {
+            wp_send_json_error(__('Order has not been processed yet', 'gift-i-card'));
+        }
+
+        try {
+            // Call the confirm_order method directly
+            $gicapi_public->confirm_order($order_id);
+
+            wp_send_json_success(__('Order confirmed successfully', 'gift-i-card'));
+        } catch (Exception $e) {
+            wp_send_json_error(__('Failed to confirm order: ', 'gift-i-card') . $e->getMessage());
+        }
+    }
+
+    public function update_status_manually()
+    {
+        check_ajax_referer('gicapi_update_status_manually', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
+
+        if (empty($order_id)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            wp_send_json_error(__('Order not found', 'gift-i-card'));
+        }
+
+        // Get the order class instance to access update_single_order method
+        $order_handler = GICAPI_Order::get_instance();
+        if (!$order_handler) {
+            wp_send_json_error(__('GICAPI Order class not available', 'gift-i-card'));
+        }
+
+        // Check if order processing is enabled
+        $enable_order_processing = get_option('gicapi_enable', 'no');
+        if ($enable_order_processing !== 'yes') {
+            wp_send_json_error(__('Order processing is disabled', 'gift-i-card'));
+        }
+
+        // Check if order has been processed
+        $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+        if ($process_order !== 'yes') {
+            wp_send_json_error(__('Order has not been processed yet', 'gift-i-card'));
+        }
+
+        try {
+            // Call the update_single_order method
+            $result = $order_handler->update_single_order($order_id);
+
+            if ($result) {
+                wp_send_json_success(__('Order status updated successfully', 'gift-i-card'));
+            } else {
+                wp_send_json_error(__('No updates were made to the order status', 'gift-i-card'));
+            }
+        } catch (Exception $e) {
+            wp_send_json_error(__('Failed to update order status: ', 'gift-i-card') . $e->getMessage());
         }
     }
 }

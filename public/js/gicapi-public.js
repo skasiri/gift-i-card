@@ -9,7 +9,6 @@ jQuery(document).ready(function ($) {
     $('.gicapi-create-order-manually').on('click', function (e) {
         e.preventDefault();
 
-
         var $button = $(this);
         var orderId = $button.data('order-id');
         var itemId = $button.data('item-id');
@@ -25,6 +24,66 @@ jQuery(document).ready(function ($) {
                 action: 'gicapi_create_order_manually',
                 order_id: orderId,
                 item_id: itemId,
+                nonce: nonce
+            },
+            success: function (response) {
+                window.location.reload();
+                console.log('AJAX response:', response);
+            },
+            error: function (xhr, status, error) {
+                window.location.reload();
+                console.log('AJAX error:', status, error);
+            }
+        });
+    });
+
+    // Manual order confirmation
+    $('.gicapi-confirm-order-manually').on('click', function (e) {
+        e.preventDefault();
+
+        var $button = $(this);
+        var orderId = $button.data('order-id');
+        var nonce = $button.data('nonce');
+
+        console.log('Confirm Order ID:', orderId, 'Nonce:', nonce); // Debug log
+
+        // Make AJAX request
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_confirm_order_manually',
+                order_id: orderId,
+                nonce: nonce
+            },
+            success: function (response) {
+                window.location.reload();
+                console.log('AJAX response:', response);
+            },
+            error: function (xhr, status, error) {
+                window.location.reload();
+                console.log('AJAX error:', status, error);
+            }
+        });
+    });
+
+    // Manual status update
+    $('.gicapi-update-status-manually').on('click', function (e) {
+        e.preventDefault();
+
+        var $button = $(this);
+        var orderId = $button.data('order-id');
+        var nonce = $button.data('nonce');
+
+        console.log('Update Status Order ID:', orderId, 'Nonce:', nonce); // Debug log
+
+        // Make AJAX request
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_update_status_manually',
+                order_id: orderId,
                 nonce: nonce
             },
             success: function (response) {

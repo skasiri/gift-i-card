@@ -198,7 +198,7 @@ class GICAPI_Public
         update_post_meta($order->get_id(), '_gicapi_orders', $orders);
     }
 
-    private function confirm_order($order_id)
+    public function confirm_order($order_id)
     {
         $order = wc_get_order($order_id);
         if (!$order) {

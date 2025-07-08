@@ -229,6 +229,50 @@
     cursor: not-allowed;
 }
 
+.gicapi-confirm-order-manually {
+    background: #007cba;
+    border-color: #007cba;
+    color: #ffffff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.gicapi-confirm-order-manually:hover {
+    background: #005a87;
+    border-color: #005a87;
+    color: #ffffff;
+}
+
+.gicapi-confirm-order-manually:disabled {
+    background: #6c757d;
+    border-color: #6c757d;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+.gicapi-update-status-manually {
+    background: #17a2b8;
+    border-color: #17a2b8;
+    color: #ffffff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.gicapi-update-status-manually:hover {
+    background: #138496;
+    border-color: #117a8b;
+    color: #ffffff;
+}
+
+.gicapi-update-status-manually:disabled {
+    background: #6c757d;
+    border-color: #6c757d;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
 .gicapi-loading {
     color: #007cba;
     font-style: italic;
