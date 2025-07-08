@@ -193,6 +193,14 @@ class GICAPI_Public
                 continue;
             }
 
+            // Validate that the response contains a valid order_id
+            if (empty($response['order_id'])) {
+                $order->add_order_note(
+                    __('Gift-i-Card API returned empty order_id', 'gift-i-card'),
+                );
+                continue;
+            }
+
             $order->add_order_note(sprintf(
                 __('Gift-i-Card order created: %s', 'gift-i-card'),
                 $response['order_id']

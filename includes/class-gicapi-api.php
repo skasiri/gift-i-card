@@ -216,6 +216,12 @@ class GICAPI_API
 
     public function confirm_order($order_id)
     {
+        // Validate order_id before making request
+        if (empty($order_id)) {
+            error_log('GICAPI API: Empty order_id provided to confirm_order method');
+            return false;
+        }
+
         return $this->make_request('/giftcard/confirm', 'POST', array(
             'order_id' => $order_id
         ));
@@ -223,6 +229,12 @@ class GICAPI_API
 
     public function get_order($order_id)
     {
+        // Validate order_id before making request
+        if (empty($order_id)) {
+            error_log('GICAPI API: Empty order_id provided to get_order method');
+            return false;
+        }
+
         return $this->make_request('/giftcard/retrieve', 'GET', array(
             'order_id' => $order_id
         ));

@@ -232,6 +232,11 @@ class GICAPI_Cron
             // Check if any Gift-i-Card orders are in pending or processing status
             $has_active_status = false;
             foreach ($gicapi_orders as $gic_order) {
+                // Skip orders with empty order_id
+                if (empty($gic_order['order_id'])) {
+                    continue;
+                }
+
                 if (isset($gic_order['status']) && in_array($gic_order['status'], array('pending', 'processing'))) {
                     $has_active_status = true;
                     break;
@@ -275,6 +280,12 @@ class GICAPI_Cron
                 if ($gic_order['status'] === 'failed') {
                     $any_failed = true;
                 }
+                continue;
+            }
+
+            // Validate order_id before making API call
+            if (empty($gic_order['order_id'])) {
+                error_log("GICAPI Cron: Empty order_id found in WC order {$wc_order_id}, skipping API call");
                 continue;
             }
 
