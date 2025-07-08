@@ -47,9 +47,27 @@ class GICAPI_Gift_Card_Display
         echo '<h4>' . __('Gift Card Information', 'gift-i-card') . '</h4>';
 
         foreach ($item_gift_orders as $gic_order) {
+            $item_status = $gic_order['status'];
+            switch (strtolower($item_status)) {
+                case 'pending':
+                    $item_status = __('Pending', 'gift-i-card');
+                    break;
+                case 'processing':
+                    $item_status = __('Processing', 'gift-i-card');
+                    break;
+                case 'completed':
+                    $item_status = __('Completed', 'gift-i-card');
+                    break;
+                case 'failed':
+                    $item_status = __('Failed', 'gift-i-card');
+                    break;
+                default:
+                    $item_status = $item_status;
+                    break;
+            }
             echo '<div class="gicapi-gift-card-details">';
             echo '<p><strong>' . __('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
-            echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($gic_order['status']) . '</span></p>';
+            echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($item_status) . '</span></p>';
             echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['price']) . ' ' . esc_html($gic_order['currency']) . '</p>';
 
             if (!empty($gic_order['expires_at'])) {
