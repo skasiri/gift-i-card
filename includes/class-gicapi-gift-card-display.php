@@ -83,10 +83,16 @@ class GICAPI_Gift_Card_Display
                     break;
             }
 
+            $price = $gic_order['price'];
+            $decimals = get_option('woocommerce_price_num_decimals', 2);
+            $decimal_separator = get_option('woocommerce_price_decimal_sep');
+            $thousand_separator = get_option('woocommerce_price_thousand_sep');
+            $price = number_format($price, $decimals, $decimal_separator, $thousand_separator);
+
             echo '<div class="gicapi-gift-card-details">';
             echo '<p><strong>' . __('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
             echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($item_status) . '</span></p>';
-            echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['price']) . ' ' . esc_html($currency) . '</p>';
+            echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($price) . ' ' . esc_html($currency) . '</p>';
 
             if (!empty($gic_order['expires_at'])) {
                 echo '<p><strong>' . __('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';
