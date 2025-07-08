@@ -80,14 +80,18 @@ class GICAPI_Order
 
         $all_mapped = false;
         $any_mapped = false;
-
+        $mapped_count = 0;
         foreach ($order->get_items() as $item) {
 
             $variant_sku = $this->get_mapped_variant_sku($item->get_product_id(), $item->get_variation_id());
-            if (!$variant_sku) {
+            if ($variant_sku) {
+                $mapped_count++;
                 $any_mapped = true;
-                break;
             }
+        }
+
+        if ($mapped_count === count($order->get_items())) {
+            $all_mapped = true;
         }
 
         $orders_updated = false;
@@ -169,7 +173,7 @@ class GICAPI_Order
         }
 
         // Handle automatic order status changes based on settings
-        $this->handle_automatic_status_changes($order, $all_completed, $any_failed);
+        $this->handle_automatic_status_changes($order, $all_completed, $any_failed, $all_mapped, $any_mapped);
 
         return true;
     }
@@ -178,7 +182,7 @@ class GICAPI_Order
     /**
      * Handle automatic WooCommerce order status changes
      */
-    private function handle_automatic_status_changes($order, $all_completed, $any_failed)
+    private function handle_automatic_status_changes($order, $all_completed, $any_failed, $all_mapped, $any_mapped)
     {
         $auto_complete_orders = get_option('gicapi_auto_complete_orders', 'none');
         $change_failed_status = get_option('gicapi_change_failed_status', 'none');
@@ -186,14 +190,26 @@ class GICAPI_Order
         $complete_status = get_option('gicapi_complete_status', 'wc-completed');
         $failed_status = get_option('gicapi_failed_status', 'wc-failed');
 
-        // Auto complete orders if all Gift-i-Card orders are completed
-        if ($all_completed && $auto_complete_orders === 'all-mapped') {
-            $order->update_status($complete_status, __('All Gift-i-Card orders completed automatically', 'gift-i-card'));
-        }
-
-        // Change status for failed orders
-        if ($any_failed && $change_failed_status === 'all-mapped') {
-            $order->update_status($failed_status, __('Gift-i-Card order failed automatically', 'gift-i-card'));
+        if ($all_mapped) {
+            if ($all_completed) {
+                if ($auto_complete_orders === 'all-mapped') {
+                    $order->update_status($complete_status, __('Order completed because all mapped items are completed', 'gift-i-card'));
+                }
+            } elseif ($any_failed) {
+                if ($change_failed_status === 'all-mapped') {
+                    $order->update_status($failed_status, __('Order failed because one or more mapped items are failed', 'gift-i-card'));
+                }
+            }
+        } elseif ($any_mapped) {
+            if ($all_completed) {
+                if ($auto_complete_orders === 'any-mapped') {
+                    $order->update_status($complete_status, __('Order completed because one or more mapped items are completed', 'gift-i-card'));
+                }
+            } elseif ($any_failed) {
+                if ($change_failed_status === 'any-mapped') {
+                    $order->update_status($failed_status, __('Order failed because one or more mapped items are failed', 'gift-i-card'));
+                }
+            }
         }
     }
 
