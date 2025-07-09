@@ -7,6 +7,8 @@
  * Version: 1.0.0
  * Author: Saeid Kasiri
  * Author URI: https://gifticard.ir
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gift-i-card
  * Domain Path: /languages
  * Requires at least: 5.0
@@ -72,11 +74,7 @@ if (!class_exists('GICAPI')) {
 
         public function set_locale()
         {
-            load_plugin_textdomain(
-                'gift-i-card',
-                false,
-                dirname(plugin_basename(__FILE__)) . '/languages/'
-            );
+            // WordPress automatically loads translations for plugins hosted on WordPress.org
         }
 
         private function define_admin_hooks()

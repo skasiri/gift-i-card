@@ -2,7 +2,7 @@
 Contributors: saeidkasiri
 Tags: woocommerce, gift card, gifticard
 Requires at least: 5.0
-Tested up to: 6.5
+Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0

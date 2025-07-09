@@ -173,21 +173,57 @@ class GICAPI_Admin
             'type' => 'string',
             'sanitize_callback' => array($this, 'sanitize_base_url')
         ));
-        register_setting('gicapi_settings', 'gicapi_consumer_key');
-        register_setting('gicapi_settings', 'gicapi_consumer_secret');
-        register_setting('gicapi_settings', 'gicapi_complete_orders');
+        register_setting('gicapi_settings', 'gicapi_consumer_key', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_consumer_secret', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_complete_orders', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
         // register_setting('gicapi_settings', 'gicapi_ignore_other_orders');
-        register_setting('gicapi_settings', 'gicapi_add_to_email');
-        register_setting('gicapi_settings', 'gicapi_add_to_order_details');
-        register_setting('gicapi_settings', 'gicapi_add_to_thank_you');
+        register_setting('gicapi_settings', 'gicapi_add_to_email', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_add_to_order_details', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_add_to_thank_you', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
 
         // New order processing settings
-        register_setting('gicapi_settings', 'gicapi_enable');
-        register_setting('gicapi_settings', 'gicapi_gift_i_card_create_order_status');
-        register_setting('gicapi_settings', 'gicapi_gift_i_card_confirm_order_status');
-        register_setting('gicapi_settings', 'gicapi_auto_complete_orders');
-        register_setting('gicapi_settings', 'gicapi_change_failed_status');
-        register_setting('gicapi_settings', 'gicapi_failed_status');
+        register_setting('gicapi_settings', 'gicapi_enable', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_gift_i_card_create_order_status', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_gift_i_card_confirm_order_status', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_auto_complete_orders', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_change_failed_status', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_failed_status', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
         register_setting('gicapi_settings', 'gicapi_hook_priority', array(
             'type' => 'integer',
             'default' => 10,
@@ -195,8 +231,14 @@ class GICAPI_Admin
         ));
 
         // Cron job settings
-        register_setting('gicapi_settings', 'gicapi_enable_cron_updates');
-        register_setting('gicapi_settings', 'gicapi_cron_interval');
+        register_setting('gicapi_settings', 'gicapi_enable_cron_updates', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_cron_interval', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
     }
 
     public function sanitize_base_url($url)
