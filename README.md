@@ -28,8 +28,7 @@ Gift-i-Card is a WordPress plugin that integrates WooCommerce with the Gifticard
 
 ## Links
 
-- [Gifticard for Iran (gifticard.ir)](https://gifticard.ir)
-- [Gifticard for International (gifticard.pro)](https://gifticard.pro)
+- [Gifticard](https://gifticard.pro)
 
 ## License
 
@@ -69,8 +68,7 @@ This plugin is licensed under the GPLv2 or later. See the LICENSE file for detai
 
 ### لینک‌ها
 
-- [گیفتیکارت برای ایران (gifticard.ir)](https://gifticard.ir)
-- [Gifticard for International (gifticard.pro)](https://gifticard.pro)
+- [گیفتی کارت ](https://gifticard.ir)
 
 ### مجوز
 
