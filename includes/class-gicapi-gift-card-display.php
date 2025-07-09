@@ -154,6 +154,7 @@ class GICAPI_Gift_Card_Display
                     echo '<th>' . __('Serial Number', 'gift-i-card') . '</th>';
                     echo '<th>' . __('Card Code', 'gift-i-card') . '</th>';
                     echo '<th>' . __('Redeem Link', 'gift-i-card') . '</th>';
+                    echo '<th>' . __('Expires At', 'gift-i-card') . '</th>';
                     echo '</tr></thead>';
                     echo '<tbody>';
 
@@ -167,6 +168,7 @@ class GICAPI_Gift_Card_Display
                             echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
                         }
                         echo '</td>';
+                        echo '<td>' . esc_html($redeem_item['expiration_date'] ?? '') . '</td>';
                         echo '</tr>';
                     }
 
@@ -262,6 +264,7 @@ class GICAPI_Gift_Card_Display
                     echo '<th>' . __('Serial Number', 'gift-i-card') . '</th>';
                     echo '<th>' . __('Card Code', 'gift-i-card') . '</th>';
                     echo '<th>' . __('Redeem Link', 'gift-i-card') . '</th>';
+                    echo '<th>' . __('Expires At', 'gift-i-card') . '</th>';
                     echo '</tr></thead>';
                     echo '<tbody>';
 
@@ -275,6 +278,7 @@ class GICAPI_Gift_Card_Display
                             echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Click to Redeem', 'gift-i-card') . '</a>';
                         }
                         echo '</td>';
+                        echo '<td>' . esc_html($redeem_item['expiration_date'] ?? '') . '</td>';
                         echo '</tr>';
                     }
 
@@ -325,6 +329,7 @@ class GICAPI_Gift_Card_Display
                         <th><?php _e('Serial Number', 'gift-i-card'); ?></th>
                         <th><?php _e('Card Code', 'gift-i-card'); ?></th>
                         <th><?php _e('Redeem Link', 'gift-i-card'); ?></th>
+                        <th><?php _e('Expires At', 'gift-i-card'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -343,6 +348,7 @@ class GICAPI_Gift_Card_Display
                                             </a>
                                         <?php endif; ?>
                                     </td>
+                                    <td><?php echo esc_html($redeem_item['expiration_date'] ?? ''); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
