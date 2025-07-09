@@ -16,7 +16,7 @@ class GICAPI_Cron
 {
     private static $instance = null;
     private $api;
-    private $order;
+    private $order_manager;
     private $cron_hook = 'gicapi_update_processing_orders';
     private $cron_interval = 'gicapi_five_minutes';
 
@@ -32,7 +32,7 @@ class GICAPI_Cron
     private function __construct()
     {
         $this->api = GICAPI_API::get_instance();
-        $this->order = GICAPI_Order::get_instance();
+        $this->order_manager = GICAPI_Order_Manager::get_instance();
         $this->init_hooks();
     }
 
@@ -42,7 +42,7 @@ class GICAPI_Cron
         add_filter('cron_schedules', array($this, 'add_cron_interval'));
 
         // Register cron hook
-        add_action($this->cron_hook, array($this->order, 'update_processing_orders'));
+        add_action($this->cron_hook, array($this->order_manager, 'update_processing_orders'));
 
         // Activation/deactivation hooks
         add_action('gicapi_activate', array($this, 'schedule_cron'));
@@ -164,7 +164,7 @@ class GICAPI_Cron
         }
 
         // Run the update
-        $this->order->update_processing_orders();
+        $this->order_manager->update_processing_orders();
 
         wp_send_json_success(__('Manual order update completed', 'gift-i-card'));
     }
@@ -221,7 +221,7 @@ class GICAPI_Cron
         $logs[] = 'API is properly configured';
 
         // Get pending and processing orders
-        $active_orders = $this->order->get_processing_orders();
+        $active_orders = $this->order_manager->get_processing_orders();
         $logs[] = 'Found ' . count($active_orders) . ' orders to update';
 
         if (empty($active_orders)) {
@@ -235,7 +235,7 @@ class GICAPI_Cron
 
         foreach ($active_orders as $order_id) {
             try {
-                $result = $this->order->update_single_order($order_id);
+                $result = $this->order_manager->update_single_order($order_id);
                 if ($result === true) {
                     $updated_count++;
                     $logs[] = 'Successfully updated order ' . $order_id;

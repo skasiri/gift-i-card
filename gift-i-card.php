@@ -66,6 +66,8 @@ if (!class_exists('GICAPI')) {
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-api.php';
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-jwt.php';
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-cron.php';
+            require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-webhook.php';
+            require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-order-manager.php';
             require_once GICAPI_PLUGIN_DIR . 'admin/class-gicapi-admin.php';
             require_once GICAPI_PLUGIN_DIR . 'public/class-gicapi-public.php';
             require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-ajax.php';
@@ -104,6 +106,9 @@ if (!class_exists('GICAPI')) {
                 add_action('wp_enqueue_scripts', array($plugin_public, 'enqueue_styles'));
                 add_action('wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts'));
             }
+
+            // Register webhook endpoint
+            add_action('rest_api_init', array('GICAPI_Webhook', 'register_webhook_endpoint'));
         }
 
         public function run()
