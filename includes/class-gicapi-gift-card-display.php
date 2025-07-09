@@ -221,7 +221,7 @@ class GICAPI_Gift_Card_Display
         }
 
         echo '<div class="gicapi-gift-card-summary">';
-        echo '<h2>' . __('Gift Card Summary', 'gift-i-card') . '</h2>';
+        echo '<h2>' . __('Gift Card Information', 'gift-i-card') . '</h2>';
 
         // Add action buttons
         echo '<div class="gicapi-summary-actions">';
