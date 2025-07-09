@@ -61,9 +61,7 @@ class GICAPI_Admin
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('admin_notices', array($this, 'display_connection_status'));
         add_action('wp_ajax_gicapi_force_refresh_token', array($this, 'ajax_force_refresh_token'));
-        add_action('wp_ajax_gicapi_delete_all_data', array($this, 'ajax_delete_all_data'));
         add_action('wp_ajax_gicapi_map_variant', array($this, 'ajax_map_variant'));
-        add_action('wp_ajax_gicapi_delete_data', array($this, 'ajax_delete_data'));
     }
 
     /**
@@ -407,32 +405,7 @@ class GICAPI_Admin
         }
     }
 
-    public function ajax_delete_all_data()
-    {
-        check_ajax_referer('gicapi_admin_nonce', 'nonce');
 
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => 'You do not have permission to perform this action.'));
-            return;
-        }
-
-        try {
-            // حذف تمام پست‌های مرتبط با کارت هدیه
-            $post_types = array('gic_cat', 'gic_prod', 'gic_var'); // اضافه کردن سایر post type های مورد نیاز
-
-            foreach ($post_types as $post_type) {
-                $this->delete_all_posts($post_type);
-            }
-
-            wp_send_json_success(array(
-                'message' => 'All plugin data has been deleted successfully.'
-            ));
-        } catch (Exception $e) {
-            wp_send_json_error(array(
-                'message' => 'Error deleting data: ' . $e->getMessage()
-            ));
-        }
-    }
 
     public function ajax_map_variant()
     {
@@ -453,25 +426,5 @@ class GICAPI_Admin
 
         update_post_meta($gic_variant_id, '_gicapi_mapped_wc_product_id', $wc_product_id);
         wp_send_json_success(__('Variant mapped successfully.', 'gift-i-card'));
-    }
-
-    public function ajax_delete_data()
-    {
-        check_ajax_referer('gicapi_admin_nonce', 'nonce');
-
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('You do not have permission to perform this action.', 'gift-i-card'));
-            return;
-        }
-
-        try {
-            // Delete all mapped product meta
-            global $wpdb;
-            $wpdb->delete($wpdb->postmeta, array('meta_key' => '_gicapi_mapped_wc_product_id'));
-
-            wp_send_json_success(__('All plugin data has been deleted successfully.', 'gift-i-card'));
-        } catch (Exception $e) {
-            wp_send_json_error(__('Error deleting data: ', 'gift-i-card') . $e->getMessage());
-        }
     }
 }

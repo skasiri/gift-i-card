@@ -12,7 +12,6 @@ if (!defined('ABSPATH')) {
         <a href="#orders" class="nav-tab"><?php _e('Orders', 'gift-i-card'); ?></a>
         <a href="#cron" class="nav-tab"><?php _e('Cron Jobs', 'gift-i-card'); ?></a>
         <a href="#display" class="nav-tab"><?php _e('Display', 'gift-i-card'); ?></a>
-        <a href="#data-management" class="nav-tab"><?php _e('Data Management', 'gift-i-card'); ?></a>
     </h2>
 
     <form method="post" action="options.php">
@@ -22,7 +21,6 @@ if (!defined('ABSPATH')) {
         <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-orders.php'; ?>
         <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-cron.php'; ?>
         <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-display.php'; ?>
-        <?php include_once plugin_dir_path(__FILE__) . 'settings/gicapi-settings-data-management.php'; ?>
 
         <?php submit_button(); ?>
     </form>

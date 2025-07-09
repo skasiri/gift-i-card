@@ -177,40 +177,6 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    $('#gicapi-delete-all-data').on('click', function (e) {
-        e.preventDefault();
 
-        if (!confirm('آیا مطمئن هستید که می‌خواهید تمام داده‌های کارت هدیه را حذف کنید؟ این عمل غیرقابل بازگشت است!')) {
-            return;
-        }
-
-        const button = $(this);
-        const messageDiv = $('#gicapi-delete-data-message');
-
-        button.prop('disabled', true);
-        messageDiv.html('<p style="color: #666;">در حال حذف داده‌ها...</p>');
-
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'gicapi_delete_all_data',
-                nonce: gicapi_admin.nonce
-            },
-            success: function (response) {
-                if (response.success) {
-                    messageDiv.html('<p style="color: green;">' + response.data.message + '</p>');
-                } else {
-                    messageDiv.html('<p style="color: red;">' + response.data.message + '</p>');
-                }
-            },
-            error: function () {
-                messageDiv.html('<p style="color: red;">خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.</p>');
-            },
-            complete: function () {
-                button.prop('disabled', false);
-            }
-        });
-    });
 
 }); 
