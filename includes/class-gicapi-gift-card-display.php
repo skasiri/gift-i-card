@@ -146,34 +146,49 @@ class GICAPI_Gift_Card_Display
 
                 // Display redemption data if available
                 if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
-                    echo '<div class="gicapi-redemption-details">';
-                    echo '<h5>' . __('Redemption Details', 'gift-i-card') . '</h5>';
-                    echo '<table class="gicapi-redemption-table">';
-                    echo '<thead><tr>';
-                    echo '<th>' . __('License Key', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Serial Number', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Card Code', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Redeem Link', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Expires At', 'gift-i-card') . '</th>';
-                    echo '</tr></thead>';
-                    echo '<tbody>';
-
-                    foreach ($gic_order['redeem_data'] as $redeem_item) {
-                        echo '<tr>';
-                        echo '<td>' . esc_html($redeem_item['license_key'] ?? '') . '</td>';
-                        echo '<td>' . esc_html($redeem_item['redeem_serial_number'] ?? '') . '</td>';
-                        echo '<td>' . esc_html($redeem_item['redeem_card_code'] ?? '') . '</td>';
-                        echo '<td>';
-                        if (!empty($redeem_item['redeem_link'])) {
-                            echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
+                    // Dynamic columns logic
+                    $columns = [
+                        'license_key' => __('License Key', 'gift-i-card'),
+                        'redeem_serial_number' => __('Serial Number', 'gift-i-card'),
+                        'redeem_card_code' => __('Card Code', 'gift-i-card'),
+                        'redeem_link' => __('Redeem Link', 'gift-i-card'),
+                        'expiration_date' => __('Expires At', 'gift-i-card'),
+                    ];
+                    $active_columns = [];
+                    foreach ($columns as $key => $label) {
+                        foreach ($gic_order['redeem_data'] as $redeem_item) {
+                            if (!empty($redeem_item[$key])) {
+                                $active_columns[$key] = $label;
+                                break;
+                            }
                         }
-                        echo '</td>';
-                        echo '<td>' . esc_html($redeem_item['expiration_date'] ?? '') . '</td>';
-                        echo '</tr>';
                     }
-
-                    echo '</tbody></table>';
-                    echo '</div>';
+                    if (!empty($active_columns)) {
+                        echo '<div class="gicapi-redemption-details">';
+                        echo '<h5>' . __('Redemption Details', 'gift-i-card') . '</h5>';
+                        echo '<table class="gicapi-redemption-table">';
+                        echo '<thead><tr>';
+                        foreach ($active_columns as $label) {
+                            echo '<th>' . $label . '</th>';
+                        }
+                        echo '</tr></thead>';
+                        echo '<tbody>';
+                        foreach ($gic_order['redeem_data'] as $redeem_item) {
+                            echo '<tr>';
+                            foreach ($active_columns as $key => $label) {
+                                echo '<td>';
+                                if ($key === 'redeem_link' && !empty($redeem_item[$key])) {
+                                    echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
+                                } else {
+                                    echo esc_html($redeem_item[$key] ?? '');
+                                }
+                                echo '</td>';
+                            }
+                            echo '</tr>';
+                        }
+                        echo '</tbody></table>';
+                        echo '</div>';
+                    }
                 }
 
 
@@ -254,37 +269,49 @@ class GICAPI_Gift_Card_Display
 
             foreach ($item_orders as $gic_order) {
                 if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
-                    echo '<div class="gicapi-order-summary">';
-
-                    echo '<div class="gicapi-redemption-summary">';
-                    echo '<h4>' . __('Redemption Codes', 'gift-i-card') . '</h4>';
-                    echo '<table class="gicapi-summary-table">';
-                    echo '<thead><tr>';
-                    echo '<th>' . __('License Key', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Serial Number', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Card Code', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Redeem Link', 'gift-i-card') . '</th>';
-                    echo '<th>' . __('Expires At', 'gift-i-card') . '</th>';
-                    echo '</tr></thead>';
-                    echo '<tbody>';
-
-                    foreach ($gic_order['redeem_data'] as $redeem_item) {
-                        echo '<tr>';
-                        echo '<td>' . esc_html($redeem_item['license_key'] ?? '') . '</td>';
-                        echo '<td>' . esc_html($redeem_item['redeem_serial_number'] ?? '') . '</td>';
-                        echo '<td>' . esc_html($redeem_item['redeem_card_code'] ?? '') . '</td>';
-                        echo '<td>';
-                        if (!empty($redeem_item['redeem_link'])) {
-                            echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Click to Redeem', 'gift-i-card') . '</a>';
+                    // Dynamic columns logic
+                    $columns = [
+                        'license_key' => __('License Key', 'gift-i-card'),
+                        'redeem_serial_number' => __('Serial Number', 'gift-i-card'),
+                        'redeem_card_code' => __('Card Code', 'gift-i-card'),
+                        'redeem_link' => __('Redeem Link', 'gift-i-card'),
+                        'expiration_date' => __('Expires At', 'gift-i-card'),
+                    ];
+                    $active_columns = [];
+                    foreach ($columns as $key => $label) {
+                        foreach ($gic_order['redeem_data'] as $redeem_item) {
+                            if (!empty($redeem_item[$key])) {
+                                $active_columns[$key] = $label;
+                                break;
+                            }
                         }
-                        echo '</td>';
-                        echo '<td>' . esc_html($redeem_item['expiration_date'] ?? '') . '</td>';
-                        echo '</tr>';
                     }
-
-                    echo '</tbody></table>';
-                    echo '</div>';
-                    echo '</div>';
+                    if (!empty($active_columns)) {
+                        echo '<div class="gicapi-redemption-summary">';
+                        echo '<h4>' . __('Redemption Codes', 'gift-i-card') . '</h4>';
+                        echo '<table class="gicapi-summary-table">';
+                        echo '<thead><tr>';
+                        foreach ($active_columns as $label) {
+                            echo '<th>' . $label . '</th>';
+                        }
+                        echo '</tr></thead>';
+                        echo '<tbody>';
+                        foreach ($gic_order['redeem_data'] as $redeem_item) {
+                            echo '<tr>';
+                            foreach ($active_columns as $key => $label) {
+                                echo '<td>';
+                                if ($key === 'redeem_link' && !empty($redeem_item[$key])) {
+                                    echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Click to Redeem', 'gift-i-card') . '</a>';
+                                } else {
+                                    echo esc_html($redeem_item[$key] ?? '');
+                                }
+                                echo '</td>';
+                            }
+                            echo '</tr>';
+                        }
+                        echo '</tbody></table>';
+                        echo '</div>';
+                    }
                 }
             }
 
@@ -318,18 +345,40 @@ class GICAPI_Gift_Card_Display
             return;
         }
 
+        // Dynamic columns logic
+        $columns = [
+            'variant' => __('Product', 'gift-i-card'),
+            'license_key' => __('License Key', 'gift-i-card'),
+            'redeem_serial_number' => __('Serial Number', 'gift-i-card'),
+            'redeem_card_code' => __('Card Code', 'gift-i-card'),
+            'redeem_link' => __('Redeem Link', 'gift-i-card'),
+            'expiration_date' => __('Expires At', 'gift-i-card'),
+        ];
+        $active_columns = [];
+        foreach ($columns as $key => $label) {
+            foreach ($gicapi_orders as $gic_order) {
+                if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data'])) {
+                    foreach ($gic_order['redeem_data'] as $redeem_item) {
+                        if (!empty($redeem_item[$key])) {
+                            $active_columns[$key] = $label;
+                            break 2;
+                        }
+                    }
+                }
+            }
+        }
+        if (empty($active_columns)) {
+            return;
+        }
 ?>
         <div class="gicapi-redeem-data">
             <h2><?php _e('Gift Card Redemption Details', 'gift-i-card'); ?></h2>
             <table class="shop_table">
                 <thead>
                     <tr>
-                        <th><?php _e('Product', 'gift-i-card'); ?></th>
-                        <th><?php _e('License Key', 'gift-i-card'); ?></th>
-                        <th><?php _e('Serial Number', 'gift-i-card'); ?></th>
-                        <th><?php _e('Card Code', 'gift-i-card'); ?></th>
-                        <th><?php _e('Redeem Link', 'gift-i-card'); ?></th>
-                        <th><?php _e('Expires At', 'gift-i-card'); ?></th>
+                        <?php foreach ($active_columns as $label): ?>
+                            <th><?php echo $label; ?></th>
+                        <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -337,18 +386,17 @@ class GICAPI_Gift_Card_Display
                         <?php if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data'])): ?>
                             <?php foreach ($gic_order['redeem_data'] as $redeem_item): ?>
                                 <tr>
-                                    <td><?php echo esc_html($redeem_item['variant'] ?? ''); ?></td>
-                                    <td><?php echo esc_html($redeem_item['license_key'] ?? ''); ?></td>
-                                    <td><?php echo esc_html($redeem_item['redeem_serial_number'] ?? ''); ?></td>
-                                    <td><?php echo esc_html($redeem_item['redeem_card_code'] ?? ''); ?></td>
-                                    <td>
-                                        <?php if (!empty($redeem_item['redeem_link'])): ?>
-                                            <a href="<?php echo esc_url($redeem_item['redeem_link']); ?>" target="_blank" class="button button-small">
-                                                <?php _e('Redeem', 'gift-i-card'); ?>
-                                            </a>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><?php echo esc_html($redeem_item['expiration_date'] ?? ''); ?></td>
+                                    <?php foreach ($active_columns as $key => $label): ?>
+                                        <td>
+                                            <?php
+                                            if ($key === 'redeem_link' && !empty($redeem_item[$key])) {
+                                                echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small">' . __('Redeem', 'gift-i-card') . '</a>';
+                                            } else {
+                                                echo esc_html($redeem_item[$key] ?? '');
+                                            }
+                                            ?>
+                                        </td>
+                                    <?php endforeach; ?>
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
