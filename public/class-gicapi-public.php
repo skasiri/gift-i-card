@@ -147,6 +147,7 @@ class GICAPI_Public
         update_post_meta($order->get_id(), '_gicapi_process_order', 'yes');
 
         $orders = array();
+        $failed_items = array();
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
             $variation_id = $item->get_variation_id();
@@ -164,6 +165,7 @@ class GICAPI_Public
                 $order->add_order_note(
                     __('Failed to create Gift-i-Card order', 'gift-i-card'),
                 );
+                $failed_items[] = $item->get_id();
                 continue;
             }
 
@@ -172,6 +174,7 @@ class GICAPI_Public
                 $order->add_order_note(
                     __('Gift-i-Card API returned empty order_id', 'gift-i-card'),
                 );
+                $failed_items[] = $item->get_id();
                 continue;
             }
 
@@ -196,6 +199,7 @@ class GICAPI_Public
         }
 
         update_post_meta($order->get_id(), '_gicapi_orders', $orders);
+        update_post_meta($order->get_id(), '_gicapi_created_failed_items', $failed_items);
     }
 
     public function confirm_order($order_id)
@@ -210,6 +214,7 @@ class GICAPI_Public
             return;
         }
 
+        $failed_items = array();
         foreach ($orders as $key => $order_data) {
             $response = $this->api->confirm_order($order_data['order_id']);
 
@@ -218,6 +223,7 @@ class GICAPI_Public
                     __('Failed to confirm Gift-i-Card order', 'gift-i-card'),
                 );
                 $orders[$key]['status'] = 'failed';
+                $failed_items[] = $order_data['item_id'];
                 continue;
             }
 
@@ -230,6 +236,7 @@ class GICAPI_Public
         }
 
         update_post_meta($order_id, '_gicapi_orders', $orders);
+        update_post_meta($order_id, '_gicapi_confirmed_failed_items', $failed_items);
     }
 
     public function add_redeem_data_to_email($order, $sent_to_admin, $plain_text, $email)
