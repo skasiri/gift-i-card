@@ -244,7 +244,7 @@ class GICAPI_Public
             return;
         }
 
-        $this->gift_card_display->display_redeem_data($order);
+        $this->gift_card_display->display_redeem_data_email($order);
     }
 
     public function add_redeem_data_to_order_details($order)
