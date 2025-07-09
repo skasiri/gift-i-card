@@ -133,7 +133,7 @@ class GICAPI_Admin
     {
         // Only show on plugin pages
         $screen = get_current_screen();
-        $current_page = isset($_GET['page']) ? $_GET['page'] : '';
+        $current_page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
         // Check if we're on a plugin page
         $is_plugin_page = false;
@@ -158,11 +158,11 @@ class GICAPI_Admin
             $balance = number_format($response['balance'], 0, '.', ',');
             $currency = $response['currency'];
             echo '<div class="notice notice-success is-dismissible">
-                <p>Gift-i-Card API: <strong style="color: green;">' . __('Connected', 'gift-i-card') . '</strong> | ' . __('Balance', 'gift-i-card') . ': <strong>' . $balance . ' ' . $currency . '</strong></p>
+                <p>Gift-i-Card API: <strong style="color: green;">' . esc_html__('Connected', 'gift-i-card') . '</strong> | ' . esc_html__('Balance', 'gift-i-card') . ': <strong>' . esc_html($balance) . ' ' . esc_html($currency) . '</strong></p>
             </div>';
         } else {
             echo '<div class="notice notice-error is-dismissible">
-                <p>Gift-i-Card API: <strong style="color: red;">' . __('Disconnected', 'gift-i-card') . '</strong></p>
+                <p>Gift-i-Card API: <strong style="color: red;">' . esc_html__('Disconnected', 'gift-i-card') . '</strong></p>
             </div>';
         }
     }
@@ -268,8 +268,8 @@ class GICAPI_Admin
 
     public function display_plugin_products_page()
     {
-        $category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
-        $product_sku = isset($_GET['product']) ? sanitize_text_field($_GET['product']) : '';
+        $category_sku = isset($_GET['category']) ? sanitize_text_field(wp_unslash($_GET['category'])) : '';
+        $product_sku = isset($_GET['product']) ? sanitize_text_field(wp_unslash($_GET['product'])) : '';
 
         // echo 'product_sku: ' . $product_sku . '<br>';
         // echo 'category_sku: ' . $category_sku . '<br>';
@@ -458,8 +458,8 @@ class GICAPI_Admin
             return;
         }
 
-        $wc_product_id = isset($_POST['wc_product_id']) ? absint($_POST['wc_product_id']) : 0;
-        $gic_variant_id = isset($_POST['gic_variant_id']) ? sanitize_text_field($_POST['gic_variant_id']) : '';
+        $wc_product_id = isset($_POST['wc_product_id']) ? absint(wp_unslash($_POST['wc_product_id'])) : 0;
+        $gic_variant_id = isset($_POST['gic_variant_id']) ? sanitize_text_field(wp_unslash($_POST['gic_variant_id'])) : '';
 
         if (!$wc_product_id || !$gic_variant_id) {
             wp_send_json_error(__('Invalid product or variant ID.', 'gift-i-card'));

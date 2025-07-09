@@ -37,13 +37,13 @@ $categories = array_slice($categories, $offset, $per_page);
 ?>
 
 <div class="wrap gicapi-admin-page">
-    <h1><?php echo esc_html(get_admin_page_title()); ?> - <?php _e('Categories', 'gift-i-card'); ?></h1>
+    <h1><?php echo esc_html(get_admin_page_title()); ?> - <?php esc_html_e('Categories', 'gift-i-card'); ?></h1>
 
     <div class="gicapi-toolbar">
         <form method="get" class="search-form">
             <input type="hidden" name="page" value="<?php echo esc_attr($plugin_name . '-products'); ?>">
             <p class="search-box">
-                <label class="screen-reader-text" for="post-search-input"><?php _e('Search Categories:', 'gift-i-card'); ?></label>
+                <label class="screen-reader-text" for="post-search-input"><?php esc_html_e('Search Categories:', 'gift-i-card'); ?></label>
                 <input type="search" id="post-search-input" name="s" value="<?php echo esc_attr($search); ?>">
                 <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e('Search Categories', 'gift-i-card'); ?>">
             </p>
@@ -53,10 +53,10 @@ $categories = array_slice($categories, $offset, $per_page);
     <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
             <tr>
-                <th scope="col" class="manage-column column-thumbnail"><?php _e('Thumbnail', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Product Count', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-thumbnail"><?php esc_html_e('Thumbnail', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Product Count', 'gift-i-card'); ?></th>
             </tr>
         </thead>
         <tbody id="the-list">
@@ -90,7 +90,7 @@ $categories = array_slice($categories, $offset, $per_page);
             else :
                 ?>
                 <tr>
-                    <td colspan="4"><?php _e('No categories found.', 'gift-i-card'); ?></td>
+                    <td colspan="4"><?php esc_html_e('No categories found.', 'gift-i-card'); ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -102,17 +102,17 @@ $categories = array_slice($categories, $offset, $per_page);
                 <?php
                 /* translators: %s: number of items */
                 ?>
-                <span class="displaying-num"><?php printf(_n('%s item', '%s items', $total_categories, 'gift-i-card'), number_format_i18n($total_categories)); ?></span>
+                <span class="displaying-num"><?php echo esc_html(sprintf(_n('%s item', '%s items', $total_categories, 'gift-i-card'), number_format_i18n($total_categories))); ?></span>
                 <span class="pagination-links">
                     <?php
-                    echo paginate_links(array(
+                    echo wp_kses_post(paginate_links(array(
                         'base' => add_query_arg(array('page' => $plugin_name . '-products', 'paged' => '%#%')),
                         'format' => '',
-                        'prev_text' => __('&laquo;', 'gift-i-card'),
-                        'next_text' => __('&raquo;', 'gift-i-card'),
+                        'prev_text' => esc_html__('&laquo;', 'gift-i-card'),
+                        'next_text' => esc_html__('&raquo;', 'gift-i-card'),
                         'total' => $total_pages,
                         'current' => $paged
-                    ));
+                    )));
                     ?>
                 </span>
             </div>

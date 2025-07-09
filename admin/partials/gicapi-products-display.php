@@ -58,7 +58,7 @@ if (!is_wp_error($categories)) {
 <div class="wrap gicapi-admin-page">
     <h1>
         <a href="<?php echo esc_url($parent_page_url); ?>"><?php echo esc_html(get_admin_page_title()); ?></a> &raquo;
-        <?php echo esc_html($category_name); ?> - <?php _e('Products', 'gift-i-card'); ?>
+        <?php echo esc_html($category_name); ?> - <?php esc_html_e('Products', 'gift-i-card'); ?>
     </h1>
 
     <div class="gicapi-toolbar">
@@ -68,10 +68,10 @@ if (!is_wp_error($categories)) {
     <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
             <tr>
-                <th scope="col" class="manage-column column-thumbnail"><?php _e('Image', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Variant Count', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-thumbnail"><?php esc_html_e('Image', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Variant Count', 'gift-i-card'); ?></th>
             </tr>
         </thead>
         <tbody id="the-list">
@@ -103,10 +103,10 @@ if (!is_wp_error($categories)) {
         </tbody>
         <tfoot>
             <tr>
-                <th scope="col" class="manage-column column-thumbnail"><?php _e('Image', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Variant Count', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-thumbnail"><?php esc_html_e('Image', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Variant Count', 'gift-i-card'); ?></th>
             </tr>
         </tfoot>
     </table>
@@ -116,17 +116,17 @@ if (!is_wp_error($categories)) {
                 <?php
                 /* translators: %s: number of items */
                 ?>
-                <span class="displaying-num"><?php printf(_n('%s item', '%s items', $total_products, 'gift-i-card'), number_format_i18n($total_products)); ?></span>
+                <span class="displaying-num"><?php echo esc_html(sprintf(_n('%s item', '%s items', $total_products, 'gift-i-card'), number_format_i18n($total_products))); ?></span>
                 <span class="pagination-links">
                     <?php
-                    echo paginate_links(array(
+                    echo wp_kses_post(paginate_links(array(
                         'base' => add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'paged' => '%#%')),
                         'format' => '',
-                        'prev_text' => __('&laquo;', 'gift-i-card'),
-                        'next_text' => __('&raquo;', 'gift-i-card'),
+                        'prev_text' => esc_html__('&laquo;', 'gift-i-card'),
+                        'next_text' => esc_html__('&raquo;', 'gift-i-card'),
                         'total' => $total_pages,
                         'current' => $paged
-                    ));
+                    )));
                     ?>
                 </span>
             </div>

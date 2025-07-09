@@ -61,7 +61,7 @@ if (empty($variants)) {
     <h1>
         <a href="<?php echo esc_url($categories_page_url); ?>"><?php echo esc_html(get_admin_page_title()); ?></a> &raquo;
         <a href="<?php echo esc_url($products_page_url); ?>"><?php echo esc_html($category_name); ?></a> &raquo;
-        <?php echo esc_html($product_name); ?> - <?php _e('Variants', 'gift-i-card'); ?>
+        <?php echo esc_html($product_name); ?> - <?php esc_html_e('Variants', 'gift-i-card'); ?>
     </h1>
 
     <div class="gicapi-toolbar">
@@ -71,12 +71,12 @@ if (empty($variants)) {
     <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
             <tr>
-                <th scope="col" class="manage-column column-title column-primary"><?php _e('Name', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('SKU', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Price', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Value', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Stock Status', 'gift-i-card'); ?></th>
-                <th scope="col" class="manage-column"><?php _e('Mapped WC Products', 'gift-i-card'); ?> <span class="mapped-count"></span></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Price', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Value', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Stock Status', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Mapped WC Products', 'gift-i-card'); ?> <span class="mapped-count"></span></th>
             </tr>
         </thead>
         <tbody id="the-list">
@@ -148,9 +148,9 @@ if (empty($variants)) {
                                 <?php
                                 /* translators: %d: number of products mapped */
                                 ?>
-                                <span class="mapped-count"><?php printf(_n('%d product mapped', '%d products mapped', $mapped_count, 'gift-i-card'), $mapped_count); ?></span>
+                                <span class="mapped-count"><?php echo esc_html(sprintf(_n('%d product mapped', '%d products mapped', $mapped_count, 'gift-i-card'), $mapped_count)); ?></span>
                                 <button type="button" class="button gicapi-add-mapping" data-variant-id="<?php echo esc_attr($variant_sku); ?>">
-                                    <?php _e('Add Mapping', 'gift-i-card'); ?>
+                                    <?php esc_html_e('Add Mapping', 'gift-i-card'); ?>
                                 </button>
                             </div>
                         </div>
@@ -165,20 +165,20 @@ if (empty($variants)) {
 <div id="gicapi-mapping-modal" class="gicapi-modal" style="display:none;">
     <div class="gicapi-modal-content">
         <div class="gicapi-modal-header">
-            <h2><?php _e('Map Gift-i-Card Variant to WooCommerce Product', 'gift-i-card'); ?></h2>
+            <h2><?php esc_html_e('Map Gift-i-Card Variant to WooCommerce Product', 'gift-i-card'); ?></h2>
             <span class="gicapi-modal-close">&times;</span>
         </div>
         <div class="gicapi-modal-body">
             <input type="hidden" id="modal-variant-id">
             <div class="gicapi-product-search-wrapper">
-                <select id="wc-product-search" class="wc-product-search" data-placeholder="<?php _e('Search for a product...', 'gift-i-card'); ?>" data-allow_clear="true">
+                <select id="wc-product-search" class="wc-product-search" data-placeholder="<?php esc_attr_e('Search for a product...', 'gift-i-card'); ?>" data-allow_clear="true">
                     <option></option>
                 </select>
             </div>
         </div>
         <div class="gicapi-modal-footer">
-            <button id="save-mapping" class="button button-primary"><?php _e('Add Mapping', 'gift-i-card'); ?></button>
-            <button id="close-modal" class="button button-secondary"><?php _e('Cancel', 'gift-i-card'); ?></button>
+            <button id="save-mapping" class="button button-primary"><?php esc_html_e('Add Mapping', 'gift-i-card'); ?></button>
+            <button id="close-modal" class="button button-secondary"><?php esc_html_e('Cancel', 'gift-i-card'); ?></button>
             <span class="spinner"></span>
         </div>
     </div>
@@ -363,7 +363,7 @@ if (empty($variants)) {
                     return {
                         q: params.term,
                         action: 'gicapi_search_products',
-                        nonce: '<?php echo wp_create_nonce('gicapi_search_products'); ?>'
+                        nonce: '<?php echo esc_js(wp_create_nonce('gicapi_search_products')); ?>'
                     };
                 },
                 processResults: function(data) {
@@ -374,7 +374,7 @@ if (empty($variants)) {
                 cache: true
             },
             minimumInputLength: 2,
-            placeholder: '<?php _e('Search for a product...', 'gift-i-card'); ?>',
+            placeholder: '<?php echo esc_js(__('Search for a product...', 'gift-i-card')); ?>',
             width: '100%'
         });
 
@@ -399,7 +399,7 @@ if (empty($variants)) {
             var productId = $('.wc-product-search').val();
 
             if (!productId) {
-                alert('<?php _e('Please select a product', 'gift-i-card'); ?>');
+                alert('<?php echo esc_js(__('Please select a product', 'gift-i-card')); ?>');
                 return;
             }
 
@@ -408,17 +408,17 @@ if (empty($variants)) {
 
             $.post(ajaxurl, {
                 action: 'gicapi_add_mapping',
-                nonce: '<?php echo wp_create_nonce('gicapi_add_mapping'); ?>',
+                nonce: '<?php echo esc_js(wp_create_nonce('gicapi_add_mapping')); ?>',
                 variant_id: variantId,
                 product_id: productId
             }, function(response) {
                 if (response.success) {
                     location.reload();
                 } else {
-                    alert(response.data || '<?php _e('Error adding mapping', 'gift-i-card'); ?>');
+                    alert(response.data || '<?php echo esc_js(__('Error adding mapping', 'gift-i-card')); ?>');
                 }
             }).fail(function() {
-                alert('<?php _e('Error adding mapping', 'gift-i-card'); ?>');
+                alert('<?php echo esc_js(__('Error adding mapping', 'gift-i-card')); ?>');
             }).always(function() {
                 $button.prop('disabled', false);
                 $('.spinner').hide();
@@ -427,7 +427,7 @@ if (empty($variants)) {
 
         // Remove mapping
         $('.gicapi-remove-mapping').on('click', function() {
-            if (!confirm('<?php _e('Are you sure you want to remove this mapping?', 'gift-i-card'); ?>')) {
+            if (!confirm('<?php echo esc_js(__('Are you sure you want to remove this mapping?', 'gift-i-card')); ?>')) {
                 return;
             }
 
@@ -439,17 +439,17 @@ if (empty($variants)) {
 
             $.post(ajaxurl, {
                 action: 'gicapi_remove_mapping',
-                nonce: '<?php echo wp_create_nonce('gicapi_remove_mapping'); ?>',
+                nonce: '<?php echo esc_js(wp_create_nonce('gicapi_remove_mapping')); ?>',
                 variant_id: variantId,
                 product_id: productId
             }, function(response) {
                 if (response.success) {
                     location.reload();
                 } else {
-                    alert(response.data || '<?php _e('Error removing mapping', 'gift-i-card'); ?>');
+                    alert(response.data || '<?php echo esc_js(__('Error removing mapping', 'gift-i-card')); ?>');
                 }
             }).fail(function() {
-                alert('<?php _e('Error removing mapping', 'gift-i-card'); ?>');
+                alert('<?php echo esc_js(__('Error removing mapping', 'gift-i-card')); ?>');
             }).always(function() {
                 $button.prop('disabled', false);
             });

@@ -5,13 +5,13 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-    <h1><?php _e('Gift-i-Card Settings', 'gift-i-card'); ?></h1>
+    <h1><?php esc_html_e('Gift-i-Card Settings', 'gift-i-card'); ?></h1>
 
     <h2 class="nav-tab-wrapper">
-        <a href="#connection" class="nav-tab nav-tab-active"><?php _e('Connection', 'gift-i-card'); ?></a>
-        <a href="#orders" class="nav-tab"><?php _e('Orders', 'gift-i-card'); ?></a>
-        <a href="#cron" class="nav-tab"><?php _e('Cron Jobs', 'gift-i-card'); ?></a>
-        <a href="#display" class="nav-tab"><?php _e('Display', 'gift-i-card'); ?></a>
+        <a href="#connection" class="nav-tab nav-tab-active"><?php esc_html_e('Connection', 'gift-i-card'); ?></a>
+        <a href="#orders" class="nav-tab"><?php esc_html_e('Orders', 'gift-i-card'); ?></a>
+        <a href="#cron" class="nav-tab"><?php esc_html_e('Cron Jobs', 'gift-i-card'); ?></a>
+        <a href="#display" class="nav-tab"><?php esc_html_e('Display', 'gift-i-card'); ?></a>
     </h2>
 
     <form method="post" action="options.php">

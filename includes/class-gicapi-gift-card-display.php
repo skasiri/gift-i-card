@@ -48,13 +48,13 @@ class GICAPI_Gift_Card_Display
 
         // Display gift card information for this item
         echo '<div class="gicapi-item-gift-card-info">';
-        echo '<h4>' . __('Gift Card Information', 'gift-i-card') . '</h4>';
+        echo '<h4>' . esc_html__('Gift Card Information', 'gift-i-card') . '</h4>';
 
         if (empty($item_gift_orders)) {
             // No gift card order created yet for this mapped item
             echo '<div class="gicapi-gift-card-details">';
-            echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-pending-create">' . __('Pending Order Creation', 'gift-i-card') . '</span></p>';
-            echo '<p><strong>' . __('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
+            echo '<p><strong>' . esc_html__('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-pending-create">' . esc_html__('Pending Order Creation', 'gift-i-card') . '</span></p>';
+            echo '<p><strong>' . esc_html__('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
 
             // Add manual order creation button
             $order_id = $order->get_id();
@@ -64,9 +64,9 @@ class GICAPI_Gift_Card_Display
                     $nonce = wp_create_nonce('gicapi_create_order_manually');
                     echo '<div class="gicapi-manual-order-actions">';
                     echo '<button type="button" class="button gicapi-create-order-manually" data-order-id="' . esc_attr($order_id) . '" data-item-id="' . esc_attr($item_id) . '" data-nonce="' . esc_attr($nonce) . '">';
-                    echo __('Create Order Manually', 'gift-i-card');
+                    echo esc_html__('Create Order Manually', 'gift-i-card');
                     echo '</button>';
-                    echo '<span class="gicapi-loading" style="display: none;">' . __('Creating order...', 'gift-i-card') . '</span>';
+                    echo '<span class="gicapi-loading" style="display: none;">' . esc_html__('Creating order...', 'gift-i-card') . '</span>';
                     echo '</div>';
                 }
             }
@@ -78,16 +78,16 @@ class GICAPI_Gift_Card_Display
                 $item_status = $gic_order['status'];
                 switch (strtolower($item_status)) {
                     case 'pending':
-                        $item_status = __('Pending', 'gift-i-card');
+                        $item_status = esc_html__('Pending', 'gift-i-card');
                         break;
                     case 'processing':
-                        $item_status = __('Processing', 'gift-i-card');
+                        $item_status = esc_html__('Processing', 'gift-i-card');
                         break;
                     case 'completed':
-                        $item_status = __('Completed', 'gift-i-card');
+                        $item_status = esc_html__('Completed', 'gift-i-card');
                         break;
                     case 'failed':
-                        $item_status = __('Failed', 'gift-i-card');
+                        $item_status = esc_html__('Failed', 'gift-i-card');
                         break;
                     default:
                         $item_status = $item_status;
@@ -97,13 +97,13 @@ class GICAPI_Gift_Card_Display
                 $currency = $gic_order['currency'];
                 switch (strtolower($currency)) {
                     case 'eur':
-                        $currency = __('€', 'gift-i-card');
+                        $currency = esc_html__('€', 'gift-i-card');
                         break;
                     case 'usd':
-                        $currency = __('$', 'gift-i-card');
+                        $currency = esc_html__('$', 'gift-i-card');
                         break;
                     case 'irt':
-                        $currency = __('IRT', 'gift-i-card');
+                        $currency = esc_html__('IRT', 'gift-i-card');
                         break;
                     default:
                         $currency = $currency;
@@ -117,10 +117,10 @@ class GICAPI_Gift_Card_Display
                 $price = number_format($price, $decimals, $decimal_separator, $thousand_separator);
 
                 echo '<div class="gicapi-gift-card-details">';
-                echo '<p><strong>' . __('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
-                echo '<p><strong>' . __('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($item_status) . '</span></p>';
-                echo '<p><strong>' . __('Price:', 'gift-i-card') . '</strong> ' . esc_html($price) . ' ' . esc_html($currency) . '</p>';
-                echo '<p><strong>' . __('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
+                echo '<p><strong>' . esc_html__('Gift-i-Card Order ID:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['order_id']) . '</p>';
+                echo '<p><strong>' . esc_html__('Status:', 'gift-i-card') . '</strong> <span class="gicapi-status gicapi-status-' . esc_attr($gic_order['status']) . '">' . esc_html($item_status) . '</span></p>';
+                echo '<p><strong>' . esc_html__('Price:', 'gift-i-card') . '</strong> ' . esc_html($price) . ' ' . esc_html($currency) . '</p>';
+                echo '<p><strong>' . esc_html__('Mapped Variant SKU:', 'gift-i-card') . '</strong> ' . esc_html($variant_sku) . '</p>';
 
                 // Add confirm order button for pending status
                 if (strtolower($gic_order['status']) === 'pending') {
@@ -131,9 +131,9 @@ class GICAPI_Gift_Card_Display
                             $nonce = wp_create_nonce('gicapi_confirm_order_manually');
                             echo '<div class="gicapi-manual-order-actions">';
                             echo '<button type="button" class="button gicapi-confirm-order-manually" data-order-id="' . esc_attr($order_id) . '" data-nonce="' . esc_attr($nonce) . '">';
-                            echo __('Confirm Order Manually', 'gift-i-card');
+                            echo esc_html__('Confirm Order Manually', 'gift-i-card');
                             echo '</button>';
-                            echo '<span class="gicapi-loading" style="display: none;">' . __('Confirming order...', 'gift-i-card') . '</span>';
+                            echo '<span class="gicapi-loading" style="display: none;">' . esc_html__('Confirming order...', 'gift-i-card') . '</span>';
                             echo '</div>';
                         }
                     }
@@ -141,18 +141,18 @@ class GICAPI_Gift_Card_Display
 
 
                 if (!empty($gic_order['expires_at'])) {
-                    echo '<p><strong>' . __('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';
+                    echo '<p><strong>' . esc_html__('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';
                 }
 
                 // Display redemption data if available
                 if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
                     // Dynamic columns logic
                     $columns = [
-                        'license_key' => __('License Key', 'gift-i-card'),
-                        'redeem_serial_number' => __('Serial Number', 'gift-i-card'),
-                        'redeem_card_code' => __('Card Code', 'gift-i-card'),
-                        'redeem_link' => __('Redeem Link', 'gift-i-card'),
-                        'expiration_date' => __('Expires At', 'gift-i-card'),
+                        'license_key' => esc_html__('License Key', 'gift-i-card'),
+                        'redeem_serial_number' => esc_html__('Serial Number', 'gift-i-card'),
+                        'redeem_card_code' => esc_html__('Card Code', 'gift-i-card'),
+                        'redeem_link' => esc_html__('Redeem Link', 'gift-i-card'),
+                        'expiration_date' => esc_html__('Expires At', 'gift-i-card'),
                     ];
                     $active_columns = [];
                     foreach ($columns as $key => $label) {
@@ -165,11 +165,11 @@ class GICAPI_Gift_Card_Display
                     }
                     if (!empty($active_columns)) {
                         echo '<div class="gicapi-redemption-details">';
-                        echo '<h5>' . __('Redemption Details', 'gift-i-card') . '</h5>';
+                        echo '<h5>' . esc_html__('Redemption Details', 'gift-i-card') . '</h5>';
                         echo '<table class="gicapi-redemption-table">';
                         echo '<thead><tr>';
                         foreach ($active_columns as $label) {
-                            echo '<th>' . $label . '</th>';
+                            echo '<th>' . esc_html($label) . '</th>';
                         }
                         echo '</tr></thead>';
                         echo '<tbody>';
@@ -186,7 +186,7 @@ class GICAPI_Gift_Card_Display
                                             . '</button>';
                                     }
                                 } elseif ($key === 'redeem_link' && !empty($redeem_item[$key])) {
-                                    echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
+                                    echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . esc_html__('Redeem', 'gift-i-card') . '</a>';
                                 } else {
                                     echo esc_html($redeem_item[$key] ?? '');
                                 }
@@ -206,9 +206,9 @@ class GICAPI_Gift_Card_Display
                     $nonce = wp_create_nonce('gicapi_update_status_manually');
                     echo '<div class="gicapi-manual-order-actions">';
                     echo '<button type="button" class="button gicapi-update-status-manually" data-order-id="' . esc_attr($order_id) . '" data-nonce="' . esc_attr($nonce) . '">';
-                    echo __('Update Status', 'gift-i-card');
+                    echo esc_html__('Update Status', 'gift-i-card');
                     echo '</button>';
-                    echo '<span class="gicapi-loading" style="display: none;">' . __('Updating status...', 'gift-i-card') . '</span>';
+                    echo '<span class="gicapi-loading" style="display: none;">' . esc_html__('Updating status...', 'gift-i-card') . '</span>';
                     echo '</div>';
                 }
 
@@ -246,11 +246,11 @@ class GICAPI_Gift_Card_Display
         }
 
         echo '<div class="gicapi-gift-card-summary">';
-        echo '<h2>' . __('Gift Card Information', 'gift-i-card') . '</h2>';
+        echo '<h2>' . esc_html__('Gift Card Information', 'gift-i-card') . '</h2>';
 
         // Add action buttons
         echo '<div class="gicapi-summary-actions">';
-        echo '<button class="gicapi-print-info button">' . __('Print Information', 'gift-i-card') . '</button>';
+        echo '<button class="gicapi-print-info button">' . esc_html__('Print Information', 'gift-i-card') . '</button>';
         echo '</div>';
 
         // Group gift card orders by item
@@ -279,11 +279,11 @@ class GICAPI_Gift_Card_Display
                 if (isset($gic_order['redeem_data']) && is_array($gic_order['redeem_data']) && !empty($gic_order['redeem_data'])) {
                     // Dynamic columns logic
                     $columns = [
-                        'license_key' => __('License Key', 'gift-i-card'),
-                        'redeem_serial_number' => __('Serial Number', 'gift-i-card'),
-                        'redeem_card_code' => __('Card Code', 'gift-i-card'),
-                        'redeem_link' => __('Redeem Link', 'gift-i-card'),
-                        'expiration_date' => __('Expires At', 'gift-i-card'),
+                        'license_key' => esc_html__('License Key', 'gift-i-card'),
+                        'redeem_serial_number' => esc_html__('Serial Number', 'gift-i-card'),
+                        'redeem_card_code' => esc_html__('Card Code', 'gift-i-card'),
+                        'redeem_link' => esc_html__('Redeem Link', 'gift-i-card'),
+                        'expiration_date' => esc_html__('Expires At', 'gift-i-card'),
                     ];
                     $active_columns = [];
                     foreach ($columns as $key => $label) {
@@ -296,11 +296,11 @@ class GICAPI_Gift_Card_Display
                     }
                     if (!empty($active_columns)) {
                         echo '<div class="gicapi-redemption-summary">';
-                        echo '<h4>' . __('Redemption Codes', 'gift-i-card') . '</h4>';
+                        echo '<h4>' . esc_html__('Redemption Codes', 'gift-i-card') . '</h4>';
                         echo '<table class="gicapi-summary-table">';
                         echo '<thead><tr>';
                         foreach ($active_columns as $label) {
-                            echo '<th>' . $label . '</th>';
+                            echo '<th>' . esc_html($label) . '</th>';
                         }
                         echo '</tr></thead>';
                         echo '<tbody>';
@@ -317,7 +317,7 @@ class GICAPI_Gift_Card_Display
                                             . '</button>';
                                     }
                                 } elseif ($key === 'redeem_link' && !empty($redeem_item[$key])) {
-                                    echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Click to Redeem', 'gift-i-card') . '</a>';
+                                    echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . esc_html__('Click to Redeem', 'gift-i-card') . '</a>';
                                 } else {
                                     echo esc_html($redeem_item[$key] ?? '');
                                 }
@@ -363,12 +363,12 @@ class GICAPI_Gift_Card_Display
 
         // Dynamic columns logic
         $columns = [
-            'variant' => __('Product', 'gift-i-card'),
-            'license_key' => __('License Key', 'gift-i-card'),
-            'redeem_serial_number' => __('Serial Number', 'gift-i-card'),
-            'redeem_card_code' => __('Card Code', 'gift-i-card'),
-            'redeem_link' => __('Redeem Link', 'gift-i-card'),
-            'expiration_date' => __('Expires At', 'gift-i-card'),
+            'variant' => esc_html__('Product', 'gift-i-card'),
+            'license_key' => esc_html__('License Key', 'gift-i-card'),
+            'redeem_serial_number' => esc_html__('Serial Number', 'gift-i-card'),
+            'redeem_card_code' => esc_html__('Card Code', 'gift-i-card'),
+            'redeem_link' => esc_html__('Redeem Link', 'gift-i-card'),
+            'expiration_date' => esc_html__('Expires At', 'gift-i-card'),
         ];
         $active_columns = [];
         foreach ($columns as $key => $label) {
@@ -388,12 +388,12 @@ class GICAPI_Gift_Card_Display
         }
 ?>
         <div class="gicapi-redeem-data">
-            <h2><?php _e('Gift Card Redemption Details', 'gift-i-card'); ?></h2>
+            <h2><?php esc_html_e('Gift Card Redemption Details', 'gift-i-card'); ?></h2>
             <table class="shop_table">
                 <thead>
                     <tr>
                         <?php foreach ($active_columns as $label): ?>
-                            <th><?php echo $label; ?></th>
+                            <th><?php echo esc_html($label); ?></th>
                         <?php endforeach; ?>
                     </tr>
                 </thead>
@@ -414,7 +414,7 @@ class GICAPI_Gift_Card_Display
                                                         . '</button>';
                                                 }
                                             } elseif ($key === 'redeem_link' && !empty($redeem_item[$key])) {
-                                                echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small">' . __('Redeem', 'gift-i-card') . '</a>';
+                                                echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small">' . esc_html__('Redeem', 'gift-i-card') . '</a>';
                                             } else {
                                                 echo esc_html($redeem_item[$key] ?? '');
                                             }
@@ -481,12 +481,12 @@ class GICAPI_Gift_Card_Display
 
         // Dynamic columns logic
         $columns = [
-            'variant' => __('Product', 'gift-i-card'),
-            'license_key' => __('License Key', 'gift-i-card'),
-            'redeem_serial_number' => __('Serial Number', 'gift-i-card'),
-            'redeem_card_code' => __('Card Code', 'gift-i-card'),
-            'redeem_link' => __('Redeem Link', 'gift-i-card'),
-            'expiration_date' => __('Expires At', 'gift-i-card'),
+            'variant' => esc_html__('Product', 'gift-i-card'),
+            'license_key' => esc_html__('License Key', 'gift-i-card'),
+            'redeem_serial_number' => esc_html__('Serial Number', 'gift-i-card'),
+            'redeem_card_code' => esc_html__('Card Code', 'gift-i-card'),
+            'redeem_link' => esc_html__('Redeem Link', 'gift-i-card'),
+            'expiration_date' => esc_html__('Expires At', 'gift-i-card'),
         ];
         $active_columns = [];
         foreach ($columns as $key => $label) {
@@ -507,14 +507,14 @@ class GICAPI_Gift_Card_Display
     ?>
         <div style="margin: 24px 0;">
             <h2 style="font-size: 18px; margin-bottom: 12px; color: #333; font-family: Arial, sans-serif;">
-                <?php _e('Gift Card Redemption Details', 'gift-i-card'); ?>
+                <?php esc_html_e('Gift Card Redemption Details', 'gift-i-card'); ?>
             </h2>
             <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; background: #fff;">
                 <thead>
                     <tr>
                         <?php foreach ($active_columns as $label): ?>
                             <th style="border: 1px solid #ddd; background: #f7f7f7; padding: 8px; color: #222; text-align: left;">
-                                <?php echo $label; ?>
+                                <?php echo esc_html($label); ?>
                             </th>
                         <?php endforeach; ?>
                     </tr>
@@ -528,7 +528,7 @@ class GICAPI_Gift_Card_Display
                                         <td style="border: 1px solid #ddd; padding: 8px; color: #333; background: #fafafa;">
                                             <?php
                                             if ($key === 'redeem_link' && !empty($redeem_item[$key])) {
-                                                echo '<a href="' . esc_url($redeem_item[$key]) . '" style="color: #21759b; text-decoration: underline;" target="_blank">' . __('Redeem', 'gift-i-card') . '</a>';
+                                                echo '<a href="' . esc_url($redeem_item[$key]) . '" style="color: #21759b; text-decoration: underline;" target="_blank">' . esc_html__('Redeem', 'gift-i-card') . '</a>';
                                             } else {
                                                 echo esc_html($redeem_item[$key] ?? '');
                                             }

@@ -30,9 +30,9 @@ echo "<h2>Cron Job Status</h2>\n";
 echo "<ul>\n";
 echo "<li><strong>Enabled:</strong> " . ($status['enabled'] ? 'Yes' : 'No') . "</li>\n";
 echo "<li><strong>Scheduled:</strong> " . ($status['is_scheduled'] ? 'Yes' : 'No') . "</li>\n";
-echo "<li><strong>Next Run:</strong> " . ($status['next_run'] ?: 'Not scheduled') . "</li>\n";
-echo "<li><strong>Interval:</strong> " . $status['interval'] . "</li>\n";
-echo "<li><strong>Hook:</strong> " . $status['hook'] . "</li>\n";
+echo "<li><strong>Next Run:</strong> " . esc_html($status['next_run'] ?: 'Not scheduled') . "</li>\n";
+echo "<li><strong>Interval:</strong> " . esc_html($status['interval']) . "</li>\n";
+echo "<li><strong>Hook:</strong> " . esc_html($status['hook']) . "</li>\n";
 echo "</ul>\n";
 
 // Check WordPress cron system
@@ -82,7 +82,7 @@ if (empty($order_ids)) {
             }
         }
     }
-    echo "<p>Found {$active_orders} orders with pending/processing Gift-i-Card orders.</p>\n";
+    echo "<p>Found " . esc_html($active_orders) . " orders with pending/processing Gift-i-Card orders.</p>\n";
 }
 
 // Action buttons
