@@ -177,7 +177,15 @@ class GICAPI_Gift_Card_Display
                             echo '<tr>';
                             foreach ($active_columns as $key => $label) {
                                 echo '<td>';
-                                if ($key === 'redeem_link' && !empty($redeem_item[$key])) {
+                                if (in_array($key, ['license_key', 'redeem_serial_number', 'redeem_card_code'])) {
+                                    $value = esc_html($redeem_item[$key] ?? '');
+                                    echo $value;
+                                    if (!empty($value)) {
+                                        echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
+                                            . '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none" style="display:inline;vertical-align:middle;"><rect x="6" y="6" width="9" height="12" rx="2" stroke="#888" stroke-width="1.5"/><rect x="3" y="2" width="9" height="12" rx="2" fill="#fff" stroke="#888" stroke-width="1.5"/></svg>'
+                                            . '</button>';
+                                    }
+                                } elseif ($key === 'redeem_link' && !empty($redeem_item[$key])) {
                                     echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
                                 } else {
                                     echo esc_html($redeem_item[$key] ?? '');
@@ -300,7 +308,15 @@ class GICAPI_Gift_Card_Display
                             echo '<tr>';
                             foreach ($active_columns as $key => $label) {
                                 echo '<td>';
-                                if ($key === 'redeem_link' && !empty($redeem_item[$key])) {
+                                if (in_array($key, ['license_key', 'redeem_serial_number', 'redeem_card_code'])) {
+                                    $value = esc_html($redeem_item[$key] ?? '');
+                                    echo $value;
+                                    if (!empty($value)) {
+                                        echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
+                                            . '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none" style="display:inline;vertical-align:middle;"><rect x="6" y="6" width="9" height="12" rx="2" stroke="#888" stroke-width="1.5"/><rect x="3" y="2" width="9" height="12" rx="2" fill="#fff" stroke="#888" stroke-width="1.5"/></svg>'
+                                            . '</button>';
+                                    }
+                                } elseif ($key === 'redeem_link' && !empty($redeem_item[$key])) {
                                     echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Click to Redeem', 'gift-i-card') . '</a>';
                                 } else {
                                     echo esc_html($redeem_item[$key] ?? '');
@@ -389,7 +405,15 @@ class GICAPI_Gift_Card_Display
                                     <?php foreach ($active_columns as $key => $label): ?>
                                         <td>
                                             <?php
-                                            if ($key === 'redeem_link' && !empty($redeem_item[$key])) {
+                                            if (in_array($key, ['license_key', 'redeem_serial_number', 'redeem_card_code'])) {
+                                                $value = esc_html($redeem_item[$key] ?? '');
+                                                echo $value;
+                                                if (!empty($value)) {
+                                                    echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
+                                                        . '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none" style="display:inline;vertical-align:middle;"><rect x="6" y="6" width="9" height="12" rx="2" stroke="#888" stroke-width="1.5"/><rect x="3" y="2" width="9" height="12" rx="2" fill="#fff" stroke="#888" stroke-width="1.5"/></svg>'
+                                                        . '</button>';
+                                                }
+                                            } elseif ($key === 'redeem_link' && !empty($redeem_item[$key])) {
                                                 echo '<a href="' . esc_url($redeem_item[$key]) . '" target="_blank" class="button button-small">' . __('Redeem', 'gift-i-card') . '</a>';
                                             } else {
                                                 echo esc_html($redeem_item[$key] ?? '');
@@ -404,6 +428,30 @@ class GICAPI_Gift_Card_Display
                 </tbody>
             </table>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.gicapi-copy-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var text = this.getAttribute('data-copy');
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(text);
+                        } else {
+                            var textarea = document.createElement('textarea');
+                            textarea.value = text;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textarea);
+                        }
+                        var old = this.innerHTML;
+                        this.innerHTML = '<span style="font-size:11px;">✔</span>';
+                        setTimeout(() => {
+                            this.innerHTML = old;
+                        }, 1200);
+                    });
+                });
+            });
+        </script>
 <?php
     }
 }
