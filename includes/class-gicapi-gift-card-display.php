@@ -34,7 +34,7 @@ class GICAPI_Gift_Card_Display
         }
 
         // Get gift card orders from order meta
-        $gicapi_orders = get_post_meta($order->get_id(), '_gicapi_orders', true);
+        $gicapi_orders = $order->get_meta('_gicapi_orders', true);
 
         // Find gift card orders for this specific item
         $item_gift_orders = array();
@@ -58,7 +58,7 @@ class GICAPI_Gift_Card_Display
 
             // Add manual order creation button
             $order_id = $order->get_id();
-            $failed_items = get_post_meta($order_id, '_gicapi_created_failed_items', true);
+            $failed_items = $order->get_meta('_gicapi_created_failed_items', true);
             if (!empty($failed_items)) {
                 if (in_array($item_id, $failed_items)) {
                     $nonce = wp_create_nonce('gicapi_create_order_manually');
@@ -125,7 +125,7 @@ class GICAPI_Gift_Card_Display
                 // Add confirm order button for pending status
                 if (strtolower($gic_order['status']) === 'pending') {
                     $order_id = $order->get_id();
-                    $failed_items = get_post_meta($order_id, '_gicapi_confirmed_failed_items', true);
+                    $failed_items = $order->get_meta('_gicapi_confirmed_failed_items', true);
                     if (!empty($failed_items)) {
                         if (in_array($item_id, $failed_items)) {
                             $nonce = wp_create_nonce('gicapi_confirm_order_manually');

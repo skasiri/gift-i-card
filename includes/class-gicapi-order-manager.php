@@ -50,7 +50,7 @@ class GICAPI_Order_Manager
             );
         }
 
-        $gicapi_orders = get_post_meta($wc_order_id, '_gicapi_orders', true);
+        $gicapi_orders = $order->get_meta('_gicapi_orders', true);
         if (empty($gicapi_orders) || !is_array($gicapi_orders)) {
             return array(
                 'success' => false,
@@ -102,9 +102,10 @@ class GICAPI_Order_Manager
 
         // Update the orders meta if any changes were made
         if ($orders_updated) {
-            update_post_meta($wc_order_id, '_gicapi_orders', $gicapi_orders);
-            update_post_meta($wc_order_id, 'last_update_source', $source);
-            update_post_meta($wc_order_id, 'last_update_time', current_time('mysql'));
+            $order->update_meta_data('_gicapi_orders', $gicapi_orders);
+            $order->update_meta_data('last_update_source', $source);
+            $order->update_meta_data('last_update_time', current_time('mysql'));
+            $order->save();
         }
 
         // Handle automatic order status changes

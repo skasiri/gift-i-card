@@ -90,7 +90,7 @@ class GICAPI_Public
 
         $gift_i_card_create_order_status = get_option('gicapi_gift_i_card_create_order_status', 'wc-pending');
         if ($this->normalize_status($new_status) == $this->normalize_status($gift_i_card_create_order_status)) {
-            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            $process_order = $order->get_meta('_gicapi_process_order', true);
             if ($process_order !== 'yes') {
                 $this->process_order($order);
             }
@@ -98,7 +98,7 @@ class GICAPI_Public
 
         $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
         if ($this->normalize_status($new_status) == $this->normalize_status($gift_i_card_confirm_order_status)) {
-            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            $process_order = $order->get_meta('_gicapi_process_order', true);
             if ($process_order === 'yes') {
                 $this->confirm_order($order_id);
             }
@@ -125,7 +125,7 @@ class GICAPI_Public
         $current_status = $order->get_status();
 
         if ($this->normalize_status($current_status) == $this->normalize_status($gift_i_card_create_order_status)) {
-            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            $process_order = $order->get_meta('_gicapi_process_order', true);
             if ($process_order !== 'yes') {
                 $this->process_order($order);
             }
@@ -133,7 +133,7 @@ class GICAPI_Public
 
         $gift_i_card_confirm_order_status = get_option('gicapi_gift_i_card_confirm_order_status', 'wc-processing');
         if ($this->normalize_status($current_status) == $this->normalize_status($gift_i_card_confirm_order_status)) {
-            $process_order = get_post_meta($order_id, '_gicapi_process_order', true);
+            $process_order = $order->get_meta('_gicapi_process_order', true);
             if ($process_order === 'yes') {
                 $this->confirm_order($order_id);
             }
@@ -143,7 +143,7 @@ class GICAPI_Public
     public function process_order($order)
     {
         // Process flag
-        update_post_meta($order->get_id(), '_gicapi_process_order', 'yes');
+        $order->update_meta_data('_gicapi_process_order', 'yes');
 
         $orders = array();
         $failed_items = array();
@@ -198,8 +198,9 @@ class GICAPI_Public
             );
         }
 
-        update_post_meta($order->get_id(), '_gicapi_orders', $orders);
-        update_post_meta($order->get_id(), '_gicapi_created_failed_items', $failed_items);
+        $order->update_meta_data('_gicapi_orders', $orders);
+        $order->update_meta_data('_gicapi_created_failed_items', $failed_items);
+        $order->save();
     }
 
     public function confirm_order($order_id)
@@ -209,7 +210,7 @@ class GICAPI_Public
             return;
         }
 
-        $orders = get_post_meta($order_id, '_gicapi_orders', true);
+        $orders = $order->get_meta('_gicapi_orders', true);
         if (empty($orders)) {
             return;
         }
@@ -236,8 +237,9 @@ class GICAPI_Public
             $orders[$key]['status'] = $response['status'];
         }
 
-        update_post_meta($order_id, '_gicapi_orders', $orders);
-        update_post_meta($order_id, '_gicapi_confirmed_failed_items', $failed_items);
+        $order->update_meta_data('_gicapi_orders', $orders);
+        $order->update_meta_data('_gicapi_confirmed_failed_items', $failed_items);
+        $order->save();
     }
 
     public function add_redeem_data_to_email($order, $sent_to_admin, $plain_text, $email)
