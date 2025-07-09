@@ -129,17 +129,6 @@ class GICAPI_Gift_Card_Display
                     echo '</div>';
                 }
 
-                // Add update status button for all statuses
-                if (in_array(strtolower($gic_order['status']), array('pending', 'processing', 'completed', 'failed'))) {
-                    $order_id = $order->get_id();
-                    $nonce = wp_create_nonce('gicapi_update_status_manually');
-                    echo '<div class="gicapi-manual-order-actions">';
-                    echo '<button type="button" class="button gicapi-update-status-manually" data-order-id="' . esc_attr($order_id) . '" data-nonce="' . esc_attr($nonce) . '">';
-                    echo __('Update Status', 'gift-i-card');
-                    echo '</button>';
-                    echo '<span class="gicapi-loading" style="display: none;">' . __('Updating status...', 'gift-i-card') . '</span>';
-                    echo '</div>';
-                }
 
                 if (!empty($gic_order['expires_at'])) {
                     echo '<p><strong>' . __('Expires At:', 'gift-i-card') . '</strong> ' . esc_html($gic_order['expires_at']) . '</p>';
@@ -172,6 +161,19 @@ class GICAPI_Gift_Card_Display
                     }
 
                     echo '</tbody></table>';
+                    echo '</div>';
+                }
+
+
+                // Add update status button for all statuses
+                if (in_array(strtolower($gic_order['status']), array('pending', 'processing', 'completed', 'failed'))) {
+                    $order_id = $order->get_id();
+                    $nonce = wp_create_nonce('gicapi_update_status_manually');
+                    echo '<div class="gicapi-manual-order-actions">';
+                    echo '<button type="button" class="button gicapi-update-status-manually" data-order-id="' . esc_attr($order_id) . '" data-nonce="' . esc_attr($nonce) . '">';
+                    echo __('Update Status', 'gift-i-card');
+                    echo '</button>';
+                    echo '<span class="gicapi-loading" style="display: none;">' . __('Updating status...', 'gift-i-card') . '</span>';
                     echo '</div>';
                 }
 
