@@ -11,7 +11,7 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-Gift-i-Card integrates WooCommerce with the Gifticard.pro service for international users.
+Gift-i-Card integrates WooCommerce with the Gifticard.ir service for international users.
 
 **Main Features and Operations:**
 - **Support for Simple and Variable WooCommerce Products:**
@@ -43,7 +43,7 @@ Gift-i-Card integrates WooCommerce with the Gifticard.pro service for internatio
 == Installation ==
 **Setup Requirements:**
 - To start using the plugin, you need to enter your `base_url`, `consumer_key`, and `consumer_secret` in the plugin settings.
-- For production, get your credentials from [gifticard.pro](https://gifticard.pro).
+- For production, get your credentials from [gifticard.ir](https://gifticard.ir).
 - You can also obtain a Sandbox token for testing and development.
 
 1. Upload the plugin files to the `/wp-content/plugins/gift-i-card` directory, or install the plugin through the WordPress plugins screen directly.
