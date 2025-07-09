@@ -134,3 +134,21 @@ function run_gicapi()
 
 // Initialize the plugin
 run_gicapi();
+
+// Make sure WordPress functions are available
+if (!function_exists('add_action')) {
+    exit;
+}
+
+function gicapi_enqueue_copy_script()
+{
+    wp_enqueue_script(
+        'gicapi-copy',
+        plugins_url('public/js/gicapi-copy.js', __FILE__),
+        array(),
+        filemtime(plugin_dir_path(__FILE__) . 'public/js/gicapi-copy.js'),
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'gicapi_enqueue_copy_script');
+add_action('admin_enqueue_scripts', 'gicapi_enqueue_copy_script');
