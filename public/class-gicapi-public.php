@@ -177,6 +177,7 @@ class GICAPI_Public
                 continue;
             }
 
+            // translators: %s: Gift-i-Card order ID
             $order->add_order_note(sprintf(
                 __('Gift-i-Card order created: %s', 'gift-i-card'),
                 $response['order_id']
@@ -226,6 +227,7 @@ class GICAPI_Public
                 continue;
             }
 
+            // translators: %s: Gift-i-Card order ID
             $order->add_order_note(sprintf(
                 __('Gift-i-Card order confirmed: %s', 'gift-i-card'),
                 $response['order_id']

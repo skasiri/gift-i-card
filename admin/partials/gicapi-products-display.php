@@ -113,14 +113,17 @@ if (!is_wp_error($categories)) {
     <?php if ($total_pages > 1) : ?>
         <div class="tablenav bottom">
             <div class="tablenav-pages">
+                <?php
+                /* translators: %s: number of items */
+                ?>
                 <span class="displaying-num"><?php printf(_n('%s item', '%s items', $total_products, 'gift-i-card'), number_format_i18n($total_products)); ?></span>
                 <span class="pagination-links">
                     <?php
                     echo paginate_links(array(
                         'base' => add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'paged' => '%#%')),
                         'format' => '',
-                        'prev_text' => __('&laquo;'),
-                        'next_text' => __('&raquo;'),
+                        'prev_text' => __('&laquo;', 'gift-i-card'),
+                        'next_text' => __('&raquo;', 'gift-i-card'),
                         'total' => $total_pages,
                         'current' => $paged
                     ));
