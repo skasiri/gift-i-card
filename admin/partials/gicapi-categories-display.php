@@ -6,11 +6,18 @@ if (!defined('ABSPATH')) {
 // Define plugin name for this file
 $plugin_name = 'gift-i-card';
 
+// Verify nonce if form is submitted
+if (isset($_GET['s']) || isset($_GET['paged'])) {
+    if (!wp_verify_nonce($_GET['gicapi_nonce'] ?? '', 'gicapi_search_categories')) {
+        wp_die(__('Security check failed.', 'gift-i-card'));
+    }
+}
+
 // Get search query
-$search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+$search = isset($_GET['s']) ? sanitize_text_field(wp_unslash($_GET['s'])) : '';
 
 // Get current page
-$paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+$paged = isset($_GET['paged']) ? absint(wp_unslash($_GET['paged'])) : 1;
 $per_page = 20;
 
 // Get categories from API
@@ -41,6 +48,7 @@ $categories = array_slice($categories, $offset, $per_page);
 
     <div class="gicapi-toolbar">
         <form method="get" class="search-form">
+            <?php wp_nonce_field('gicapi_search_categories', 'gicapi_nonce'); ?>
             <input type="hidden" name="page" value="<?php echo esc_attr($plugin_name . '-products'); ?>">
             <p class="search-box">
                 <label class="screen-reader-text" for="post-search-input"><?php esc_html_e('Search Categories:', 'gift-i-card'); ?></label>

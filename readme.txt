@@ -10,6 +10,8 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+Integrate WooCommerce with Gifticard.ir service for automatic gift card order placement, status tracking, and customer delivery.
+
 == Description ==
 Gift-i-Card integrates WooCommerce with the Gifticard.ir service for international users.
 

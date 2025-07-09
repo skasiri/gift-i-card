@@ -30,7 +30,7 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $search = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+        $search = isset($_GET['q']) ? sanitize_text_field(wp_unslash($_GET['q'])) : '';
 
         if (empty($search)) {
             wp_send_json(array());
@@ -115,8 +115,8 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $variant_id = isset($_POST['variant_id']) ? sanitize_text_field($_POST['variant_id']) : '';
-        $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
+        $variant_id = isset($_POST['variant_id']) ? sanitize_text_field(wp_unslash($_POST['variant_id'])) : '';
+        $product_id = isset($_POST['product_id']) ? intval(wp_unslash($_POST['product_id'])) : 0;
 
         if (empty($variant_id) || empty($product_id)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
@@ -147,14 +147,7 @@ class GICAPI_Ajax
             }
         }
 
-        // Log the mapping for debugging
-        error_log(sprintf(
-            'GICAPI Mapping added - Variant: %s, Product: %d, Variant Meta: %s, Product Meta: %s',
-            $variant_id,
-            $product_id,
-            print_r($mapped_product_ids, true),
-            print_r($mapped_variant_skus, true)
-        ));
+
 
         wp_send_json_success(__('Mapping added successfully', 'gift-i-card'));
     }
@@ -167,8 +160,8 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $variant_id = isset($_POST['variant_id']) ? sanitize_text_field($_POST['variant_id']) : '';
-        $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
+        $variant_id = isset($_POST['variant_id']) ? sanitize_text_field(wp_unslash($_POST['variant_id'])) : '';
+        $product_id = isset($_POST['product_id']) ? intval(wp_unslash($_POST['product_id'])) : 0;
 
         if (empty($variant_id) || empty($product_id)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
@@ -188,13 +181,7 @@ class GICAPI_Ajax
             }
         }
 
-        // Log the removal for debugging
-        error_log(sprintf(
-            'GICAPI Mapping removed - Variant: %s, Product: %d, Remaining Variant Meta: %s, Remaining Product Meta: %s',
-            $variant_id,
-            $product_id,
-            print_r($mapped_variant_skus, true)
-        ));
+
 
         wp_send_json_success(__('Mapping removed successfully', 'gift-i-card'));
     }

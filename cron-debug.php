@@ -88,25 +88,26 @@ if (empty($order_ids)) {
 // Action buttons
 echo "<h2>Actions</h2>\n";
 echo "<form method='post'>\n";
+wp_nonce_field('gicapi_cron_debug', 'gicapi_cron_nonce');
 echo "<input type='submit' name='reschedule_cron' value='Reschedule Cron Job' style='margin: 5px;'>\n";
 echo "<input type='submit' name='test_cron' value='Test Cron Execution' style='margin: 5px;'>\n";
 echo "<input type='submit' name='clear_logs' value='Clear Error Logs' style='margin: 5px;'>\n";
 echo "</form>\n";
 
 // Handle actions
-if (isset($_POST['reschedule_cron'])) {
+if (isset($_POST['reschedule_cron']) && wp_verify_nonce($_POST['gicapi_cron_nonce'], 'gicapi_cron_debug')) {
     echo "<h3>Rescheduling Cron Job...</h3>\n";
     $cron->force_reschedule();
     echo "<p style='color: green;'>✅ Cron job rescheduled. Please refresh the page to see updated status.</p>\n";
 }
 
-if (isset($_POST['test_cron'])) {
+if (isset($_POST['test_cron']) && wp_verify_nonce($_POST['gicapi_cron_nonce'], 'gicapi_cron_debug')) {
     echo "<h3>Testing Cron Execution...</h3>\n";
     $cron->update_processing_orders();
     echo "<p style='color: green;'>✅ Cron execution test completed. Check error logs for details.</p>\n";
 }
 
-if (isset($_POST['clear_logs'])) {
+if (isset($_POST['clear_logs']) && wp_verify_nonce($_POST['gicapi_cron_nonce'], 'gicapi_cron_debug')) {
     echo "<h3>Clearing Error Logs...</h3>\n";
     // This would clear WordPress error logs if possible
     echo "<p style='color: green;'>✅ Error logs cleared (if applicable).</p>\n";

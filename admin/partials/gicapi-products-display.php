@@ -12,11 +12,18 @@ if (!defined('ABSPATH')) {
 // Define plugin name for this file
 $plugin_name = 'gift-i-card';
 
-$category_sku = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
+// Verify nonce if form is submitted
+if (isset($_GET['category']) || isset($_GET['paged'])) {
+    if (!wp_verify_nonce($_GET['gicapi_nonce'] ?? '', 'gicapi_view_products')) {
+        wp_die(__('Security check failed.', 'gift-i-card'));
+    }
+}
+
+$category_sku = isset($_GET['category']) ? sanitize_text_field(wp_unslash($_GET['category'])) : '';
 $parent_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 
 // Get current page and items per page
-$paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+$paged = isset($_GET['paged']) ? absint(wp_unslash($_GET['paged'])) : 1;
 $per_page = 10;
 
 if (strpos($category_sku, 'GC-') !== 0) {
@@ -81,7 +88,8 @@ if (!is_wp_error($categories)) {
                 $product_sku = $product['sku'];
                 $product_image_url = isset($product['image_url']) ? $product['image_url'] : '';
                 $product_variant_count = isset($product['variant_count']) ? $product['variant_count'] : 0;
-                $variants_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'product' => $product_sku));
+                $nonce = wp_create_nonce('gicapi_view_products');
+                $variants_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'product' => $product_sku, 'gicapi_nonce' => $nonce));
             ?>
                 <tr>
                     <td class="column-thumbnail">
@@ -119,8 +127,9 @@ if (!is_wp_error($categories)) {
                 <span class="displaying-num"><?php echo esc_html(sprintf(_n('%s item', '%s items', $total_products, 'gift-i-card'), number_format_i18n($total_products))); ?></span>
                 <span class="pagination-links">
                     <?php
+                    $nonce = wp_create_nonce('gicapi_view_products');
                     echo wp_kses_post(paginate_links(array(
-                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'paged' => '%#%')),
+                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'paged' => '%#%', 'gicapi_nonce' => $nonce)),
                         'format' => '',
                         'prev_text' => esc_html__('&laquo;', 'gift-i-card'),
                         'next_text' => esc_html__('&raquo;', 'gift-i-card'),

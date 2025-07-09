@@ -92,19 +92,16 @@ class GICAPI_API
         ));
 
         if (is_wp_error($response)) {
-            error_log('GICAPI Error fetching new token: ' . $response->get_error_message());
             return false;
         }
 
         $response_code = wp_remote_retrieve_response_code($response);
         if ($response_code !== 200) {
-            error_log('GICAPI Error: Invalid response code ' . $response_code . ' when fetching new token');
             return false;
         }
 
         $headers = wp_remote_retrieve_headers($response);
         if (!isset($headers['Authorization'])) {
-            error_log('GICAPI Error: Authorization header not found in new token response');
             return false;
         }
 
@@ -159,18 +156,15 @@ class GICAPI_API
         $response = wp_remote_request($url, $args);
 
         if (is_wp_error($response)) {
-            error_log('GICAPI API: WP_Error: ' . $response->get_error_message());
             return false;
         }
 
         if (wp_remote_retrieve_response_code($response) !== 200) {
-            error_log('GICAPI API: Invalid response code: ' . wp_remote_retrieve_response_code($response));
             return false;
         }
 
         $response_body = wp_remote_retrieve_body($response);
         if (empty($response_body)) {
-            error_log('GICAPI API: Empty response body');
             return false;
         }
 
@@ -221,7 +215,6 @@ class GICAPI_API
     {
         // Validate order_id before making request
         if (empty($order_id)) {
-            error_log('GICAPI API: Empty order_id provided to confirm_order method');
             return false;
         }
 
@@ -234,7 +227,6 @@ class GICAPI_API
     {
         // Validate order_id before making request
         if (empty($order_id)) {
-            error_log('GICAPI API: Empty order_id provided to get_order method');
             return false;
         }
 

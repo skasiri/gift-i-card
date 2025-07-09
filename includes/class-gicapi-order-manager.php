@@ -213,16 +213,14 @@ class GICAPI_Order_Manager
         if ($all_completed && $auto_complete_orders === 'all-mapped') {
             try {
                 $order->update_status($complete_status, __('Order completed because all Gift-i-Card orders are completed', 'gift-i-card'));
-                error_log('GICAPI Order Manager: Order ' . $order->get_id() . ' status updated to completed');
             } catch (Exception $e) {
-                error_log('GICAPI Order Manager: Error updating order status: ' . $e->getMessage());
+                // Error updating order status
             }
         } elseif ($any_failed && $change_failed_status === 'all-mapped') {
             try {
                 $order->update_status($failed_status, __('Order failed because one or more Gift-i-Card orders are failed', 'gift-i-card'));
-                error_log('GICAPI Order Manager: Order ' . $order->get_id() . ' status updated to failed');
             } catch (Exception $e) {
-                error_log('GICAPI Order Manager: Error updating order status: ' . $e->getMessage());
+                // Error updating order status
             }
         }
     }
@@ -345,13 +343,7 @@ class GICAPI_Order_Manager
             usleep(300000); // 0.3 seconds
         }
 
-        // Log results
-        error_log(sprintf(
-            'GICAPI Order Manager: Updated %d orders, %d errors out of %d total pending/processing orders',
-            $updated_count,
-            $error_count,
-            count($active_orders)
-        ));
+
 
         return array(
             'success' => true,

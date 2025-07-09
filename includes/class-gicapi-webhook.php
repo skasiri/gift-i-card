@@ -13,7 +13,7 @@ class GICAPI_Webhook
         }
 
         // Verify request method
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
             wp_send_json_error(__('Only POST method is allowed', 'gift-i-card'), 405);
         }
 
@@ -45,8 +45,7 @@ class GICAPI_Webhook
             wp_send_json_error(__('Invalid order ID format', 'gift-i-card'), 400);
         }
 
-        // Log webhook data for debugging
-        error_log('GICAPI Webhook received: ' . json_encode($data));
+
 
         // Get order manager instance
         if (self::$order_manager === null) {
@@ -113,7 +112,8 @@ class GICAPI_Webhook
         $content_type = $request->get_header('Content-Type');
 
         // Log webhook access for security monitoring
-        error_log('GICAPI Webhook access from: ' . $_SERVER['REMOTE_ADDR'] . ' - User-Agent: ' . $user_agent);
+        $remote_addr = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : 'unknown';
+        error_log('GICAPI Webhook access from: ' . $remote_addr . ' - User-Agent: ' . $user_agent);
 
         // For now, allow all requests but log them
         // In production, you should implement proper authentication
