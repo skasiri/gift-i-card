@@ -88,7 +88,7 @@ if (!is_wp_error($categories)) {
                 $product_sku = $product['sku'];
                 $product_image_url = isset($product['image_url']) ? $product['image_url'] : '';
                 $product_variant_count = isset($product['variant_count']) ? $product['variant_count'] : 0;
-                $nonce = wp_create_nonce('gicapi_view_products');
+                $nonce = wp_create_nonce('gicapi_view_variants');
                 $variants_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'product' => $product_sku, 'gicapi_nonce' => $nonce));
             ?>
                 <tr>

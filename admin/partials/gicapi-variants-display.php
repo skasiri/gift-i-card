@@ -38,7 +38,7 @@ if (!is_wp_error($categories)) {
     }
 }
 
-$nonce = wp_create_nonce('gicapi_view_variants');
+$nonce = wp_create_nonce('gicapi_view_products');
 $products_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'gicapi_nonce' => $nonce));
 $categories_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 

@@ -75,7 +75,8 @@ $categories = array_slice($categories, $offset, $per_page);
                     $category_sku = $category['sku'];
                     $category_count = $category['count'];
                     $category_thumbnail = isset($category['thumbnail']) ? $category['thumbnail'] : '';
-                    $products_page_url = add_query_arg('category', $category_sku, admin_url('admin.php?page=' . $plugin_name . '-products'));
+                    $nonce = wp_create_nonce('gicapi_view_products');
+                    $products_page_url = add_query_arg(array('category' => $category_sku, 'gicapi_nonce' => $nonce), admin_url('admin.php?page=' . $plugin_name . '-products'));
             ?>
                     <tr>
                         <td class="column-thumbnail">
@@ -114,8 +115,9 @@ $categories = array_slice($categories, $offset, $per_page);
                 </span>
                 <span class="pagination-links">
                     <?php
+                    $nonce = wp_create_nonce('gicapi_search_categories');
                     echo wp_kses_post(paginate_links(array(
-                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'paged' => '%#%')),
+                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'paged' => '%#%', 'gicapi_nonce' => $nonce)),
                         'format' => '',
                         'prev_text' => esc_html__('&laquo;', 'gift-i-card'),
                         'next_text' => esc_html__('&raquo;', 'gift-i-card'),
