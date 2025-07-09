@@ -68,7 +68,7 @@ This plugin is licensed under the GPLv2 or later. See the LICENSE file for detai
 
 ### لینک‌ها
 
-- [گیفتی کارت ](https://gifticard.ir)
+- [گیفتی کارت](https://gifticard.ir)
 
 ### مجوز
 
