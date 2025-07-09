@@ -153,8 +153,8 @@ class GICAPI_Order_Manager
     private function add_status_change_note($order, $gic_order_id, $old_status, $new_status, $source)
     {
         $source_text = $source === 'webhook' ? 'via webhook' : 'via ' . $source;
-        // translators: %1$s: Gift-i-Card order ID, %2$s: old status, %3$s: new status, %4$s: source
         $order->add_order_note(sprintf(
+            /* translators: %1$s: Gift-i-Card order ID, %2$s: old status, %3$s: new status, %4$s: source */
             __('Gift-i-Card order %1$s status updated from %2$s to %3$s %4$s', 'gift-i-card'),
             $gic_order_id,
             $old_status,
