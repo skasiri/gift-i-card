@@ -108,8 +108,8 @@ if (class_exists('WooCommerce')) {
             <td>
                 <select name="gicapi_auto_complete_orders" id="gicapi_auto_complete_orders">
                     <option value="none" <?php selected($auto_complete_orders, 'none'); ?>><?php _e('None', 'gift-i-card'); ?></option>
-                    <option value="all" <?php selected($auto_complete_orders, 'all-mapped'); ?>><?php _e('Orders with all items mapped', 'gift-i-card'); ?></option>
-                    <option value="mapped" <?php selected($auto_complete_orders, 'any-mapped'); ?>><?php _e('Orders with mapped items', 'gift-i-card'); ?></option>
+                    <option value="all-mapped" <?php selected($auto_complete_orders, 'all-mapped'); ?>><?php _e('Orders with all items mapped', 'gift-i-card'); ?></option>
+                    <option value="any-mapped" <?php selected($auto_complete_orders, 'any-mapped'); ?>><?php _e('Orders with mapped items', 'gift-i-card'); ?></option>
                 </select>
                 <p class="description"><?php _e('Change Order Status After Successfully Processing', 'gift-i-card'); ?></p>
             </td>
@@ -150,8 +150,8 @@ if (class_exists('WooCommerce')) {
             <td>
                 <select name="gicapi_change_failed_status" id="gicapi_change_failed_status">
                     <option value="none" <?php selected($change_failed_status, 'none'); ?>><?php _e('None', 'gift-i-card'); ?></option>
-                    <option value="all" <?php selected($change_failed_status, 'all-mapped'); ?>><?php _e('Orders with all items mapped', 'gift-i-card'); ?></option>
-                    <option value="mapped" <?php selected($change_failed_status, 'any-mapped'); ?>><?php _e('Orders with mapped items', 'gift-i-card'); ?></option>
+                    <option value="all-mapped" <?php selected($change_failed_status, 'all-mapped'); ?>><?php _e('Orders with all items mapped', 'gift-i-card'); ?></option>
+                    <option value="any-mapped" <?php selected($change_failed_status, 'any-mapped'); ?>><?php _e('Orders with mapped items', 'gift-i-card'); ?></option>
                 </select>
                 <p class="description"><?php _e('Change Order Status When Failed', 'gift-i-card'); ?></p>
             </td>
