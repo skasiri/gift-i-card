@@ -107,10 +107,11 @@ $categories = array_slice($categories, $offset, $per_page);
     <?php if ($total_pages > 1) : ?>
         <div class="tablenav bottom">
             <div class="tablenav-pages">
-                <?php
-                /* translators: %s: number of categories displayed */
-                ?>
-                <span class="displaying-num"><?php echo esc_html(sprintf(_n('%s item', '%s items', $total_categories, 'gift-i-card'), number_format_i18n($total_categories))); ?></span>
+                <span class="displaying-num"><?php
+                                                /* translators: %s: number of categories displayed */
+                                                echo esc_html(sprintf(_n('%s item', '%s items', $total_categories, 'gift-i-card'), number_format_i18n($total_categories)));
+                                                ?>
+                </span>
                 <span class="pagination-links">
                     <?php
                     echo wp_kses_post(paginate_links(array(

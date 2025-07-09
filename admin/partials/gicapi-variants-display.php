@@ -153,10 +153,11 @@ if (empty($variants)) {
                                 <?php endif; ?>
                             </div>
                             <div class="gicapi-mapped-products-footer">
-                                <?php
-                                /* translators: %d: number of products mapped */
-                                ?>
-                                <span class="mapped-count"><?php echo esc_html(sprintf(_n('%d product mapped', '%d products mapped', $mapped_count, 'gift-i-card'), $mapped_count)); ?></span>
+                                <span class="mapped-count"><?php
+                                                            /* translators: %d: number of products mapped */
+                                                            echo esc_html(sprintf(_n('%d product mapped', '%d products mapped', $mapped_count, 'gift-i-card'), $mapped_count));
+                                                            ?>
+                                </span>
                                 <button type="button" class="button gicapi-add-mapping" data-variant-id="<?php echo esc_attr($variant_sku); ?>">
                                     <?php esc_html_e('Add Mapping', 'gift-i-card'); ?>
                                 </button>
