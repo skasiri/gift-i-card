@@ -226,7 +226,6 @@ class GICAPI_Gift_Card_Display
         // Add action buttons
         echo '<div class="gicapi-summary-actions">';
         echo '<button class="gicapi-print-info button">' . __('Print Information', 'gift-i-card') . '</button>';
-        echo '<button class="gicapi-export-csv button">' . __('Export to CSV', 'gift-i-card') . '</button>';
         echo '</div>';
 
         // Group gift card orders by item
@@ -275,7 +274,7 @@ class GICAPI_Gift_Card_Display
                         echo '<td>' . esc_html($redeem_item['redeem_card_code'] ?? '') . '</td>';
                         echo '<td>';
                         if (!empty($redeem_item['redeem_link'])) {
-                            echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Redeem', 'gift-i-card') . '</a>';
+                            echo '<a href="' . esc_url($redeem_item['redeem_link']) . '" target="_blank" class="button button-small gicapi-redeem-link">' . __('Click to Redeem', 'gift-i-card') . '</a>';
                         }
                         echo '</td>';
                         echo '</tr>';
