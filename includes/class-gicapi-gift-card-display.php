@@ -178,10 +178,10 @@ class GICAPI_Gift_Card_Display
                             foreach ($active_columns as $key => $label) {
                                 echo '<td>';
                                 if (in_array($key, ['license_key', 'redeem_serial_number', 'redeem_card_code'])) {
-                                    $value = esc_html($redeem_item[$key] ?? '');
-                                    echo $value;
-                                    if (!empty($value)) {
-                                        echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
+                                    $raw_value = $redeem_item[$key] ?? '';
+                                    echo esc_html($raw_value);
+                                    if (!empty($raw_value)) {
+                                        echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($raw_value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
                                             . '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none" style="display:inline;vertical-align:middle;"><rect x="6" y="6" width="9" height="12" rx="2" stroke="#888" stroke-width="1.5"/><rect x="3" y="2" width="9" height="12" rx="2" fill="#fff" stroke="#888" stroke-width="1.5"/></svg>'
                                             . '</button>';
                                     }
@@ -309,10 +309,10 @@ class GICAPI_Gift_Card_Display
                             foreach ($active_columns as $key => $label) {
                                 echo '<td>';
                                 if (in_array($key, ['license_key', 'redeem_serial_number', 'redeem_card_code'])) {
-                                    $value = esc_html($redeem_item[$key] ?? '');
-                                    echo $value;
-                                    if (!empty($value)) {
-                                        echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
+                                    $raw_value = $redeem_item[$key] ?? '';
+                                    echo esc_html($raw_value);
+                                    if (!empty($raw_value)) {
+                                        echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($raw_value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
                                             . '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none" style="display:inline;vertical-align:middle;"><rect x="6" y="6" width="9" height="12" rx="2" stroke="#888" stroke-width="1.5"/><rect x="3" y="2" width="9" height="12" rx="2" fill="#fff" stroke="#888" stroke-width="1.5"/></svg>'
                                             . '</button>';
                                     }
@@ -406,10 +406,10 @@ class GICAPI_Gift_Card_Display
                                         <td>
                                             <?php
                                             if (in_array($key, ['license_key', 'redeem_serial_number', 'redeem_card_code'])) {
-                                                $value = esc_html($redeem_item[$key] ?? '');
-                                                echo $value;
-                                                if (!empty($value)) {
-                                                    echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
+                                                $raw_value = $redeem_item[$key] ?? '';
+                                                echo esc_html($raw_value);
+                                                if (!empty($raw_value)) {
+                                                    echo ' <button type="button" class="gicapi-copy-btn" data-copy="' . esc_attr($raw_value) . '" style="background:transparent;border:none;padding:0;margin:0 0 0 4px;vertical-align:middle;cursor:pointer;" title="کپی">'
                                                         . '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none" style="display:inline;vertical-align:middle;"><rect x="6" y="6" width="9" height="12" rx="2" stroke="#888" stroke-width="1.5"/><rect x="3" y="2" width="9" height="12" rx="2" fill="#fff" stroke="#888" stroke-width="1.5"/></svg>'
                                                         . '</button>';
                                                 }
