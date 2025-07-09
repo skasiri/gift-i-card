@@ -3,9 +3,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$add_to_email = get_option('gicapi_add_to_email', 'yes');
-$add_to_order_details = get_option('gicapi_add_to_order_details', 'yes');
-$add_to_thank_you = get_option('gicapi_add_to_thank_you', 'yes');
+$add_to_email = get_option('gicapi_add_to_email', 'no');
+$add_to_order_details = get_option('gicapi_add_to_order_details', 'no');
+$add_to_thank_you = get_option('gicapi_add_to_thank_you', 'no');
 ?>
 
 <div id="display" class="tab-content" style="display: none;">

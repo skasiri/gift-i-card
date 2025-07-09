@@ -43,7 +43,7 @@ class GICAPI_Public
         add_action('woocommerce_thankyou', array($this, 'add_redeem_data_to_thank_you'));
 
         add_action('woocommerce_before_order_itemmeta', array($this->gift_card_display, 'display_gift_card_info_for_item'), 10, 3);
-        add_action('woocommerce_order_details_after_order_table', array($this->gift_card_display, 'display_gift_card_summary'));
+        // add_action('woocommerce_order_details_after_order_table', array($this->gift_card_display, 'display_gift_card_summary'));
     }
 
     public function enqueue_styles()
@@ -241,7 +241,7 @@ class GICAPI_Public
 
     public function add_redeem_data_to_email($order, $sent_to_admin, $plain_text, $email)
     {
-        if (get_option('gicapi_add_to_email', 'yes') !== 'yes') {
+        if (get_option('gicapi_add_to_email', 'no') !== 'yes') {
             return;
         }
 
@@ -250,16 +250,16 @@ class GICAPI_Public
 
     public function add_redeem_data_to_order_details($order)
     {
-        if (get_option('gicapi_add_to_order_details', 'yes') !== 'yes') {
+        if (get_option('gicapi_add_to_order_details', 'no') !== 'yes') {
             return;
         }
 
-        $this->gift_card_display->display_redeem_data($order);
+        $this->gift_card_display->display_gift_card_summary($order);
     }
 
     public function add_redeem_data_to_thank_you($order_id)
     {
-        if (get_option('gicapi_add_to_thank_you', 'yes') !== 'yes') {
+        if (get_option('gicapi_add_to_thank_you', 'no') !== 'yes') {
             return;
         }
 
