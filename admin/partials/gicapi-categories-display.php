@@ -9,7 +9,7 @@ $plugin_name = 'gift-i-card';
 // Verify nonce if form is submitted
 if (isset($_GET['s']) || isset($_GET['paged'])) {
     if (!wp_verify_nonce($_GET['gicapi_nonce'] ?? '', 'gicapi_search_categories')) {
-        wp_die(__('Security check failed.', 'gift-i-card'));
+        wp_die(esc_html__('Security check failed.', 'gift-i-card'));
     }
 }
 
