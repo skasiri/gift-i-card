@@ -122,7 +122,7 @@ if (!is_wp_error($categories)) {
         <div class="tablenav bottom">
             <div class="tablenav-pages">
                 <?php
-                /* translators: %s: number of items */
+                /* translators: %s: number of products displayed */
                 ?>
                 <span class="displaying-num"><?php echo esc_html(sprintf(_n('%s item', '%s items', $total_products, 'gift-i-card'), number_format_i18n($total_products))); ?></span>
                 <span class="pagination-links">
