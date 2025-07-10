@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,7 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
   - If all mapped items are successfully fulfilled, the WooCommerce order status is automatically set to “completed.”
   - If any mapped item fails, the order status can be set to “failed” (configurable).
   - Status updates are handled both by scheduled checks (cron) and real-time webhook notifications from Gift-i-Card.
+  - The plugin can automatically set WooCommerce order status to "cancelled" when required (auto-cancellation).
 - **Display of Purchased Gift Cards:**
   - The purchased gift card codes and related information (serial, card code, redeem link, expiration date, etc.) are displayed to the customer:
     - In the order confirmation email
@@ -41,6 +42,9 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
 - **Admin Sync and Management:**
   - Admins can sync categories, products, and variants from the Gift-i-Card API to WordPress for easier mapping and management.
   - There are tools for bulk deletion of plugin data and for manual order management.
+
+**Compatibility:**
+- Fully compatible with both HPOS (High-Performance Order Storage) and the legacy WooCommerce order storage system
 
 == Installation ==
 **Setup Requirements:**

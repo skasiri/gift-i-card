@@ -8,6 +8,8 @@ Gift-i-Card is a WordPress plugin that integrates WooCommerce with the Gifticard
 - Map WooCommerce products to Gift-i-Card variants
 - Automatic order placement in Gift-i-Card system and retrieval of purchased codes
 - Automatic WooCommerce order status update based on Gift-i-Card fulfillment
+- Cancel WooCommerce order status automatically when required
+- Fully compatible with both HPOS (High-Performance Order Storage) and the legacy WooCommerce order storage system
 - Display purchased gift card codes in order emails, order details, and thank you page
 - View connection status and real-time Gift-i-Card wallet balance in the admin dashboard
 - Admin tools for syncing categories/products/variants and managing plugin data
@@ -48,6 +50,8 @@ This plugin is licensed under the GPLv2 or later. See the LICENSE file for detai
 - مپ کردن محصولات ووکامرس به واریانت‌های گیفتی کارت
 - ثبت سفارش خودکار در سامانه گیفتی کارت و دریافت کدهای خریداری‌شده
 - تغییر وضعیت خودکار سفارش ووکامرس بر اساس نتیجه سفارش گیفتی کارت
+- امکان لغو خودکار سفارش ووکامرس (تغییر وضعیت به لغو شده)
+- سازگار با HPOS (سیستم جدید ذخیره سفارش ووکامرس) و سیستم قدیمی سفارش‌ها
 - نمایش کدهای گیفت کارت خریداری‌شده در ایمیل سفارش، جزئیات سفارش و صفحه تشکر از پرداخت
 - مشاهده وضعیت اتصال و موجودی لحظه‌ای کیف پول گیفتی کارت در پیشخوان مدیریت
 - ابزارهای مدیریتی برای همگام‌سازی دسته‌بندی‌ها، محصولات و واریانت‌ها و مدیریت داده‌های افزونه
