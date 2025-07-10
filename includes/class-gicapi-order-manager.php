@@ -180,62 +180,77 @@ class GICAPI_Order_Manager
         $change_cancelled_status = get_option('gicapi_change_cancelled_status', 'none');
         $cancelled_status = get_option('gicapi_cancelled_status', 'wc-cancelled');
 
-        // Check if all mapped items are completed
-        $all_completed = true;
-        $any_failed = false;
-        $mapped_count = 0;
-        $completed_count = 0;
-        $failed_count = 0;
-        $any_cancelled = false;
-        $cancelled_count = 0;
-        $all_mapped = false;
-
-        foreach ($gicapi_orders as $gic_order) {
-            if (!empty($gic_order['order_id'])) {
-                $mapped_count++;
-                if ($gic_order['status'] === 'completed') {
-                    $completed_count++;
-                } elseif ($gic_order['status'] === 'failed') {
-                    $failed_count++;
-                    $any_failed = true;
-                } elseif ($gic_order['status'] === 'cancelled') {
-                    $cancelled_count++;
-                    $any_cancelled = true;
-                } else {
-                    $all_completed = false;
-                }
+        // Prepare for all-mapped logic: get all order items and check mapping
+        $order_items = $order->get_items();
+        $total_items = count($order_items);
+        $gicapi_order = \GICAPI_Order::get_instance();
+        $mapped_item_ids = [];
+        foreach ($order_items as $item_id => $item) {
+            $product_id = $item->get_product_id();
+            $variation_id = $item->get_variation_id();
+            $variant_sku = $gicapi_order->get_mapped_variant_sku($product_id, $variation_id);
+            if ($variant_sku) {
+                $mapped_item_ids[] = $item_id;
             }
         }
+        $all_items_mapped = (count($mapped_item_ids) === $total_items && $total_items > 0);
 
-        if ($mapped_count === 0) {
-            return; // No mapped items
+        // Build a map of item_id => status for mapped items
+        $item_statuses = [];
+        foreach ($gicapi_orders as $gic_order) {
+            if (!empty($gic_order['order_id']) && isset($gic_order['item_id']) && in_array($gic_order['item_id'], $mapped_item_ids)) {
+                $item_statuses[$gic_order['item_id']] = $gic_order['status'];
+            }
         }
-
-        // Check if all mapped items are completed
-        if ($completed_count === $mapped_count) {
-            $all_completed = true;
-        } else {
-            $all_completed = false;
-        }
+        $mapped_count = count($item_statuses);
+        $all_completed = ($mapped_count > 0 && count(array_filter($item_statuses, function ($s) {
+            return $s === 'completed';
+        })) === $mapped_count);
+        $all_cancelled = ($mapped_count > 0 && count(array_filter($item_statuses, function ($s) {
+            return $s === 'cancelled';
+        })) === $mapped_count);
+        $any_failed = in_array('failed', $item_statuses, true);
+        $all_failed = ($mapped_count > 0 && count(array_filter($item_statuses, function ($s) {
+            return $s === 'failed';
+        })) === $mapped_count);
+        $has_other_status_completed = (array_diff($item_statuses, ['completed']) !== []);
+        $has_other_status_cancelled = (array_diff($item_statuses, ['cancelled']) !== []);
 
         // Apply automatic status changes based on settings
-        if ($all_completed && $auto_complete_orders === 'all-mapped') {
+        // --- COMPLETED ---
+        if ($auto_complete_orders === 'all-mapped' && $all_items_mapped && $all_completed) {
             try {
-                $order->update_status($complete_status, __('Order completed because all Gift-i-Card orders are completed', 'gift-i-card'));
+                $order->update_status($complete_status, __('Order completed because all mapped Gift-i-Card items are completed', 'gift-i-card'));
             } catch (Exception $e) {
-                // Error updating order status
             }
-        } elseif ($any_failed && $change_failed_status === 'all-mapped') {
+        } elseif ($auto_complete_orders === 'any-mapped' && $all_completed && !$has_other_status_completed) {
             try {
-                $order->update_status($failed_status, __('Order failed because one or more Gift-i-Card orders are failed', 'gift-i-card'));
+                $order->update_status($complete_status, __('Order completed because all mapped Gift-i-Card items are completed (any-mapped)', 'gift-i-card'));
             } catch (Exception $e) {
-                // Error updating order status
             }
-        } elseif ($any_cancelled && $change_cancelled_status === 'all-mapped') {
+        }
+        // --- FAILED ---
+        if ($change_failed_status === 'all-mapped' && $all_items_mapped && $all_failed) {
             try {
-                $order->update_status($cancelled_status, __('Order cancelled because one or more Gift-i-Card orders are cancelled', 'gift-i-card'));
+                $order->update_status($failed_status, __('Order failed because all mapped Gift-i-Card items are failed', 'gift-i-card'));
             } catch (Exception $e) {
-                // Error updating order status
+            }
+        } elseif ($change_failed_status === 'any-mapped' && $any_failed) {
+            try {
+                $order->update_status($failed_status, __('Order failed because at least one mapped Gift-i-Card item is failed (any-mapped)', 'gift-i-card'));
+            } catch (Exception $e) {
+            }
+        }
+        // --- CANCELLED ---
+        if ($change_cancelled_status === 'all-mapped' && $all_items_mapped && $all_cancelled) {
+            try {
+                $order->update_status($cancelled_status, __('Order cancelled because all mapped Gift-i-Card items are cancelled', 'gift-i-card'));
+            } catch (Exception $e) {
+            }
+        } elseif ($change_cancelled_status === 'any-mapped' && $all_cancelled && !$has_other_status_cancelled) {
+            try {
+                $order->update_status($cancelled_status, __('Order cancelled because all mapped Gift-i-Card items are cancelled (any-mapped)', 'gift-i-card'));
+            } catch (Exception $e) {
             }
         }
     }
