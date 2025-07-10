@@ -232,3 +232,9 @@
     color: #212529;
     border: 1px solid #e0a800;
 }
+
+.gicapi-status-cancelled {
+    background: #828a92;
+    color: #ffffff;
+    border: 1px solid #828a92;
+}

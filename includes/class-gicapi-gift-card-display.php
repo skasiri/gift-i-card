@@ -89,6 +89,9 @@ class GICAPI_Gift_Card_Display
                     case 'failed':
                         $item_status = esc_html__('Failed', 'gift-i-card');
                         break;
+                    case 'cancelled':
+                        $item_status = esc_html__('Cancelled', 'gift-i-card');
+                        break;
                     default:
                         $item_status = $item_status;
                         break;
@@ -201,7 +204,7 @@ class GICAPI_Gift_Card_Display
 
 
                 // Add update status button for all statuses
-                if (in_array(strtolower($gic_order['status']), array('pending', 'processing', 'completed', 'failed'))) {
+                if (in_array(strtolower($gic_order['status']), array('pending', 'processing', 'completed', 'failed', 'cancelled'))) {
                     $order_id = $order->get_id();
                     $nonce = wp_create_nonce('gicapi_update_status_manually');
                     echo '<div class="gicapi-manual-order-actions">';
