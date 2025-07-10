@@ -197,11 +197,13 @@ class GICAPI_API
         ));
     }
 
-    public function buy_product($sku, $quantity)
+    public function buy_product($sku, $quantity, $webhook_url = null)
     {
-        $webhook_url = '';
-        if (is_ssl()) {
-            $webhook_url = rest_url('gicapi/v1/webhook');
+        if ($webhook_url === null) {
+            $webhook_url = '';
+            if (is_ssl()) {
+                $webhook_url = rest_url('gicapi/v1/webhook');
+            }
         }
 
         return $this->make_request('/giftcard/buy', 'POST', array(

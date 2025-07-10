@@ -4,7 +4,7 @@ class GICAPI_Webhook
 {
     private static $order_manager = null;
 
-    public static function handle_webhook()
+    public static function handle_webhook($request)
     {
         // Check if WordPress functions are available
         if (!function_exists('wp_send_json_error') || !function_exists('__')) {
@@ -45,7 +45,11 @@ class GICAPI_Webhook
             wp_send_json_error(__('Invalid order ID format', 'gift-i-card'), 400);
         }
 
-
+        // دریافت مقدار secret از پارامترهای ریکوئست
+        $secret = $request->get_param('secret');
+        if (empty($secret)) {
+            wp_send_json_error(__('Webhook secret is missing', 'gift-i-card'), 400);
+        }
 
         // Get order manager instance
         if (self::$order_manager === null) {
@@ -57,6 +61,19 @@ class GICAPI_Webhook
 
         if (empty($wc_orders)) {
             wp_send_json_error(__('No WooCommerce orders found for this Gift-i-Card order', 'gift-i-card'), 404);
+        }
+
+        // بررسی secret برای هر سفارش پیدا شده
+        $valid_secret = false;
+        foreach ($wc_orders as $wc_order_id) {
+            $order = wc_get_order($wc_order_id);
+            if ($order && $order->get_meta('_gicapi_webhook_secret', true) === $secret) {
+                $valid_secret = true;
+                break;
+            }
+        }
+        if (!$valid_secret) {
+            wp_send_json_error(__('Invalid webhook secret', 'gift-i-card'), 403);
         }
 
         $updated_orders = array();
@@ -83,11 +100,16 @@ class GICAPI_Webhook
 
     public static function register_webhook_endpoint()
     {
-        register_rest_route('gicapi/v1', '/webhook', array(
+        register_rest_route('gicapi/v1', '/webhook/(?P<secret>[a-zA-Z0-9]+)', array(
             'methods' => 'POST',
             'callback' => array('GICAPI_Webhook', 'handle_webhook'),
             'permission_callback' => array('GICAPI_Webhook', 'check_webhook_permission'),
             'args' => array(
+                'secret' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'sanitize_callback' => 'sanitize_text_field',
+                ),
                 'order_id' => array(
                     'required' => true,
                     'type' => 'string',

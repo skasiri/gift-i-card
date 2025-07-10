@@ -145,6 +145,10 @@ class GICAPI_Public
         // Process flag
         $order->update_meta_data('_gicapi_process_order', 'yes');
 
+        // Generate a random secret for webhook
+        $webhook_secret = bin2hex(random_bytes(12));
+        $order->update_meta_data('_gicapi_webhook_secret', $webhook_secret);
+
         $orders = array();
         $failed_items = array();
         foreach ($order->get_items() as $item) {
@@ -157,8 +161,13 @@ class GICAPI_Public
                 continue;
             }
 
+            // ساخت آدرس وب‌هوک با مقدار رندوم
+            $webhook_url = '';
+            if (is_ssl()) {
+                $webhook_url = rest_url('gicapi/v1/webhook/' . $webhook_secret);
+            }
 
-            $response = $this->api->buy_product($variant_sku, $item->get_quantity());
+            $response = $this->api->buy_product($variant_sku, $item->get_quantity(), $webhook_url);
 
             if (!$response) {
                 $order->add_order_note(
