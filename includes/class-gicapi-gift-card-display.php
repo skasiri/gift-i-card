@@ -227,7 +227,7 @@ class GICAPI_Gift_Card_Display
     public function display_gift_card_summary($order)
     {
         // Get gift card orders from order meta
-        $gicapi_orders = get_post_meta($order->get_id(), '_gicapi_orders', true);
+        $gicapi_orders = $order->get_meta('_gicapi_orders', true);
         if (empty($gicapi_orders) || !is_array($gicapi_orders)) {
             return;
         }
@@ -344,7 +344,7 @@ class GICAPI_Gift_Card_Display
      */
     public function display_redeem_data($order)
     {
-        $gicapi_orders = get_post_meta($order->get_id(), '_gicapi_orders', true);
+        $gicapi_orders = $order->get_meta('_gicapi_orders', true);
         if (empty($gicapi_orders) || !is_array($gicapi_orders)) {
             return;
         }
@@ -462,7 +462,7 @@ class GICAPI_Gift_Card_Display
      */
     public function display_redeem_data_email($order)
     {
-        $gicapi_orders = get_post_meta($order->get_id(), '_gicapi_orders', true);
+        $gicapi_orders = $order->get_meta('_gicapi_orders', true);
         if (empty($gicapi_orders) || !is_array($gicapi_orders)) {
             return;
         }
