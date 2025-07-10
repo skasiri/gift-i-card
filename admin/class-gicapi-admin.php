@@ -239,6 +239,14 @@ class GICAPI_Admin
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field'
         ));
+        register_setting('gicapi_settings', 'gicapi_change_cancelled_status', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_cancelled_status', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
     }
 
     public function sanitize_base_url($url)

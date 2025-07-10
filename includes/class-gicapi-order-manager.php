@@ -177,6 +177,8 @@ class GICAPI_Order_Manager
 
         $complete_status = get_option('gicapi_complete_status', 'wc-completed');
         $failed_status = get_option('gicapi_failed_status', 'wc-failed');
+        $change_cancelled_status = get_option('gicapi_change_cancelled_status', 'none');
+        $cancelled_status = get_option('gicapi_cancelled_status', 'wc-cancelled');
 
         // Check if all mapped items are completed
         $all_completed = true;
@@ -184,6 +186,9 @@ class GICAPI_Order_Manager
         $mapped_count = 0;
         $completed_count = 0;
         $failed_count = 0;
+        $any_cancelled = false;
+        $cancelled_count = 0;
+        $all_mapped = false;
 
         foreach ($gicapi_orders as $gic_order) {
             if (!empty($gic_order['order_id'])) {
@@ -193,6 +198,9 @@ class GICAPI_Order_Manager
                 } elseif ($gic_order['status'] === 'failed') {
                     $failed_count++;
                     $any_failed = true;
+                } elseif ($gic_order['status'] === 'cancelled') {
+                    $cancelled_count++;
+                    $any_cancelled = true;
                 } else {
                     $all_completed = false;
                 }
@@ -220,6 +228,12 @@ class GICAPI_Order_Manager
         } elseif ($any_failed && $change_failed_status === 'all-mapped') {
             try {
                 $order->update_status($failed_status, __('Order failed because one or more Gift-i-Card orders are failed', 'gift-i-card'));
+            } catch (Exception $e) {
+                // Error updating order status
+            }
+        } elseif ($any_cancelled && $change_cancelled_status === 'all-mapped') {
+            try {
+                $order->update_status($cancelled_status, __('Order cancelled because one or more Gift-i-Card orders are cancelled', 'gift-i-card'));
             } catch (Exception $e) {
                 // Error updating order status
             }

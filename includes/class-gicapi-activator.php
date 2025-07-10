@@ -24,6 +24,8 @@ class GICAPI_Activator
         add_option('gicapi_auto_complete_orders', 'none');
         add_option('gicapi_change_failed_status', 'none');
         add_option('gicapi_failed_status', 'wc-failed');
+        add_option('gicapi_change_cancelled_status', 'none');
+        add_option('gicapi_cancelled_status', 'wc-cancelled');
         add_option('gicapi_hook_priority', 10);
         add_option('gicapi_add_to_email', 'no');
         add_option('gicapi_add_to_order_details', 'no');

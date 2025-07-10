@@ -172,5 +172,47 @@ if (class_exists('WooCommerce')) {
                 <p class="description"><?php esc_html_e('Status to set when failed orders', 'gift-i-card'); ?></p>
             </td>
         </tr>
+
+        <tr>
+            <td colspan="2">
+                <hr>
+            </td>
+        </tr>
+
+        <tr>
+            <th colspan="2">
+                <h3><?php esc_html_e('🚫 Cancelled Orders', 'gift-i-card'); ?></h3>
+            </th>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="gicapi_change_cancelled_status"><?php esc_html_e('Change Order Status', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <select name="gicapi_change_cancelled_status" id="gicapi_change_cancelled_status">
+                    <option value="none" <?php selected(get_option('gicapi_change_cancelled_status', 'none'), 'none'); ?>><?php esc_html_e('None', 'gift-i-card'); ?></option>
+                    <option value="all-mapped" <?php selected(get_option('gicapi_change_cancelled_status', 'none'), 'all-mapped'); ?>><?php esc_html_e('Orders with all items mapped', 'gift-i-card'); ?></option>
+                    <option value="any-mapped" <?php selected(get_option('gicapi_change_cancelled_status', 'none'), 'any-mapped'); ?>><?php esc_html_e('Orders with mapped items', 'gift-i-card'); ?></option>
+                </select>
+                <p class="description"><?php esc_html_e('Change Order Status When Cancelled', 'gift-i-card'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="gicapi_cancelled_status"><?php esc_html_e('Change to Status', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <select name="gicapi_cancelled_status" id="gicapi_cancelled_status">
+                    <?php foreach ($wc_order_statuses as $status_key => $status_label) : ?>
+                        <option value="<?php echo esc_attr($status_key); ?>" <?php selected(get_option('gicapi_cancelled_status', 'wc-cancelled'), $status_key); ?>>
+                            <?php echo esc_html($status_label); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <p class="description"><?php esc_html_e('Status to set when cancelled orders', 'gift-i-card'); ?></p>
+            </td>
+        </tr>
     </table>
 </div>
