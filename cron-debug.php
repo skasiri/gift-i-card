@@ -57,12 +57,29 @@ if ($api && $api->is_configured()) {
 // Check for pending orders
 echo "<h2>Pending Orders</h2>\n";
 global $wpdb;
-$order_ids = $wpdb->get_col($wpdb->prepare("
-    SELECT DISTINCT post_id 
-    FROM {$wpdb->postmeta} 
-    WHERE meta_key = %s 
-    AND meta_value != ''
-", '_gicapi_orders'));
+
+// Check if HPOS is enabled
+if (
+    class_exists('\Automattic\WooCommerce\Utilities\OrderUtil') &&
+    \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()
+) {
+
+    // Use HPOS tables
+    $order_ids = $wpdb->get_col($wpdb->prepare("
+        SELECT DISTINCT order_id 
+        FROM {$wpdb->prefix}wc_orders_meta 
+        WHERE meta_key = %s 
+        AND meta_value != ''
+    ", '_gicapi_orders'));
+} else {
+    // Use legacy post tables
+    $order_ids = $wpdb->get_col($wpdb->prepare("
+        SELECT DISTINCT post_id 
+        FROM {$wpdb->postmeta} 
+        WHERE meta_key = %s 
+        AND meta_value != ''
+    ", '_gicapi_orders'));
+}
 
 if (empty($order_ids)) {
     echo "<p>No orders with Gift-i-Card data found.</p>\n";
@@ -72,7 +89,7 @@ if (empty($order_ids)) {
         $order = wc_get_order($order_id);
         if (!$order) continue;
 
-        $gicapi_orders = get_post_meta($order_id, '_gicapi_orders', true);
+        $gicapi_orders = $order->get_meta('_gicapi_orders', true);
         if (empty($gicapi_orders) || !is_array($gicapi_orders)) continue;
 
         foreach ($gicapi_orders as $gic_order) {

@@ -292,13 +292,28 @@ class GICAPI_Order_Manager
     {
         global $wpdb;
 
-        // Get orders that have this specific Gift-i-Card order ID
-        $order_ids = $wpdb->get_col($wpdb->prepare("
-            SELECT DISTINCT post_id 
-            FROM {$wpdb->postmeta} 
-            WHERE meta_key = %s 
-            AND meta_value LIKE %s
-        ", '_gicapi_orders', '%' . $wpdb->esc_like($gic_order_id) . '%'));
+        // Check if HPOS is enabled
+        if (
+            class_exists('\Automattic\WooCommerce\Utilities\OrderUtil') &&
+            \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()
+        ) {
+
+            // Use HPOS tables
+            $order_ids = $wpdb->get_col($wpdb->prepare("
+                SELECT DISTINCT order_id 
+                FROM {$wpdb->prefix}wc_orders_meta 
+                WHERE meta_key = %s 
+                AND meta_value LIKE %s
+            ", '_gicapi_orders', '%' . $wpdb->esc_like($gic_order_id) . '%'));
+        } else {
+            // Use legacy post tables
+            $order_ids = $wpdb->get_col($wpdb->prepare("
+                SELECT DISTINCT post_id 
+                FROM {$wpdb->postmeta} 
+                WHERE meta_key = %s 
+                AND meta_value LIKE %s
+            ", '_gicapi_orders', '%' . $wpdb->esc_like($gic_order_id) . '%'));
+        }
 
         return $order_ids;
     }
