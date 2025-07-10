@@ -42,7 +42,7 @@ class GICAPI_Public
         add_action('woocommerce_order_details_after_order_table', array($this, 'add_redeem_data_to_order_details'));
         add_action('woocommerce_thankyou', array($this, 'add_redeem_data_to_thank_you'));
 
-        add_action('woocommerce_before_order_itemmeta', array($this->gift_card_display, 'display_gift_card_info_for_item'), 10, 3);
+        add_action('woocommerce_before_order_itemmeta', array($this->gift_card_display, 'display_gift_card_info_for_item_admin'), 10, 3);
     }
 
     public function enqueue_styles()

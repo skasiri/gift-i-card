@@ -16,7 +16,7 @@ class GICAPI_Gift_Card_Display
      * @param WC_Order_Item $item The order item object
      * @param WC_Product $product The product object
      */
-    public function display_gift_card_info_for_item($item_id, $item, $product)
+    public function display_gift_card_info_for_item_admin($item_id, $item, $product)
     {
         // Get the order from the item
         $order = $item->get_order();
