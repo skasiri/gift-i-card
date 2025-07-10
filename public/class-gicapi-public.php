@@ -223,7 +223,6 @@ class GICAPI_Public
                 $order->add_order_note(
                     __('Failed to confirm Gift-i-Card order', 'gift-i-card'),
                 );
-                $orders[$key]['status'] = 'failed';
                 $failed_items[] = $order_data['item_id'];
                 continue;
             }
