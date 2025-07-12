@@ -102,6 +102,17 @@ if (empty($variants)) {
                     'post_status' => 'publish',
                     'posts_per_page' => -1,
                     'meta_query' => array(
+                        'relation' => 'AND',
+                        array(
+                            'key' => '_gicapi_mapped_category_skus',
+                            'value' => $category_sku,
+                            'compare' => 'LIKE'
+                        ),
+                        array(
+                            'key' => '_gicapi_mapped_product_skus',
+                            'value' => $product_sku,
+                            'compare' => 'LIKE'
+                        ),
                         array(
                             'key' => '_gicapi_mapped_variant_skus',
                             'value' => $variant_sku,
@@ -145,7 +156,7 @@ if (empty($variants)) {
                                             <a href="<?php echo esc_url(get_edit_post_link($product->get_id())); ?>" target="_blank">
                                                 <?php echo esc_html($product->get_name()); ?> (<?php echo esc_html($product->get_sku()); ?>)
                                             </a>
-                                            <span class="gicapi-remove-mapping" data-variant-id="<?php echo esc_attr($variant_sku); ?>" data-product-id="<?php echo esc_attr($product->get_id()); ?>">
+                                            <span class="gicapi-remove-mapping" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-product-id="<?php echo esc_attr($product->get_id()); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>">
                                                 <span class="dashicons dashicons-no-alt"></span>
                                             </span>
                                         </div>
@@ -158,7 +169,7 @@ if (empty($variants)) {
                                                             echo esc_html(sprintf(_n('%d product mapped', '%d products mapped', $mapped_count, 'gift-i-card'), $mapped_count));
                                                             ?>
                                 </span>
-                                <button type="button" class="button gicapi-add-mapping" data-variant-id="<?php echo esc_attr($variant_sku); ?>">
+                                <button type="button" class="button gicapi-add-mapping" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>">
                                     <?php esc_html_e('Add Mapping', 'gift-i-card'); ?>
                                 </button>
                             </div>
@@ -372,7 +383,9 @@ if (empty($variants)) {
                     return {
                         q: params.term,
                         action: 'gicapi_search_products',
-                        nonce: '<?php echo esc_js(wp_create_nonce('gicapi_search_products')); ?>'
+                        nonce: '<?php echo esc_js(wp_create_nonce('gicapi_search_products')); ?>',
+                        category_sku: '<?php echo esc_js($category_sku); ?>',
+                        product_sku: '<?php echo esc_js($product_sku); ?>'
                     };
                 },
                 processResults: function(data) {
@@ -389,8 +402,10 @@ if (empty($variants)) {
 
         // Open modal for adding mapping
         $('.gicapi-add-mapping').on('click', function() {
-            var variantId = $(this).data('variant-id');
-            $('#modal-variant-id').val(variantId);
+            var variantSku = $(this).data('variant-sku');
+            var categorySku = $(this).data('category-sku');
+            var productSku = $(this).data('product-sku');
+            $('#modal-variant-id').val(variantSku);
             $('#gicapi-mapping-modal').show();
             $('.wc-product-search').val(null).trigger('change');
         });
@@ -404,8 +419,10 @@ if (empty($variants)) {
         // Save mapping
         $('#save-mapping').on('click', function() {
             var $button = $(this);
-            var variantId = $('#modal-variant-id').val();
+            var variantSku = $('#modal-variant-id').val();
             var productId = $('.wc-product-search').val();
+            var categorySku = '<?php echo esc_js($category_sku); ?>';
+            var productSku = '<?php echo esc_js($product_sku); ?>';
 
             if (!productId) {
                 alert('<?php echo esc_js(__('Please select a product', 'gift-i-card')); ?>');
@@ -418,8 +435,10 @@ if (empty($variants)) {
             $.post(ajaxurl, {
                 action: 'gicapi_add_mapping',
                 nonce: '<?php echo esc_js(wp_create_nonce('gicapi_add_mapping')); ?>',
-                variant_id: variantId,
-                product_id: productId
+                variant_sku: variantSku,
+                product_id: productId,
+                category_sku: categorySku,
+                product_sku: productSku
             }, function(response) {
                 if (response.success) {
                     location.reload();
@@ -441,16 +460,20 @@ if (empty($variants)) {
             }
 
             var $button = $(this);
-            var variantId = $button.data('variant-id');
+            var variantSku = $button.data('variant-sku');
             var productId = $button.data('product-id');
+            var categorySku = $button.data('category-sku');
+            var productSku = $button.data('product-sku');
 
             $button.prop('disabled', true);
 
             $.post(ajaxurl, {
                 action: 'gicapi_remove_mapping',
                 nonce: '<?php echo esc_js(wp_create_nonce('gicapi_remove_mapping')); ?>',
-                variant_id: variantId,
-                product_id: productId
+                variant_sku: variantSku,
+                product_id: productId,
+                category_sku: categorySku,
+                product_sku: productSku
             }, function(response) {
                 if (response.success) {
                     location.reload();

@@ -115,39 +115,57 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $variant_id = isset($_POST['variant_id']) ? sanitize_text_field(wp_unslash($_POST['variant_id'])) : '';
+        $variant_sku = isset($_POST['variant_sku']) ? sanitize_text_field(wp_unslash($_POST['variant_sku'])) : '';
         $product_id = isset($_POST['product_id']) ? intval(wp_unslash($_POST['product_id'])) : 0;
+        $category_sku = isset($_POST['category_sku']) ? sanitize_text_field(wp_unslash($_POST['category_sku'])) : '';
+        $product_sku = isset($_POST['product_sku']) ? sanitize_text_field(wp_unslash($_POST['product_sku'])) : '';
 
-        if (empty($variant_id) || empty($product_id)) {
+        if (empty($variant_sku) || empty($product_id) || empty($category_sku) || empty($product_sku)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
         }
 
-        // Get current mappings for variant
-        $mapped_product_ids = get_post_meta($variant_id, '_gicapi_mapped_wc_product_ids', true);
-        $mapped_product_ids = is_array($mapped_product_ids) ? $mapped_product_ids : array();
-
-        // Check if product is already mapped
-        if (in_array($product_id, $mapped_product_ids)) {
-            wp_send_json_error(__('This product is already mapped to this variant', 'gift-i-card'));
-        }
-
-        // Get current mappings for product
+        // Get current mappings for the product
+        $mapped_category_skus = get_post_meta($product_id, '_gicapi_mapped_category_skus', true);
+        $mapped_product_skus = get_post_meta($product_id, '_gicapi_mapped_product_skus', true);
         $mapped_variant_skus = get_post_meta($product_id, '_gicapi_mapped_variant_skus', true);
+
+        // Ensure arrays
+        $mapped_category_skus = is_array($mapped_category_skus) ? $mapped_category_skus : array();
+        $mapped_product_skus = is_array($mapped_product_skus) ? $mapped_product_skus : array();
         $mapped_variant_skus = is_array($mapped_variant_skus) ? $mapped_variant_skus : array();
 
-        // Add variant SKU to product mappings
-        if (!in_array($variant_id, $mapped_variant_skus)) {
-            $mapped_variant_skus[] = $variant_id;
-            $update_product = update_post_meta($product_id, '_gicapi_mapped_variant_skus', $mapped_variant_skus);
-
-            if (!$update_product) {
-                // If product update fails, rollback variant update
-                delete_post_meta($variant_id, '_gicapi_mapped_wc_product_ids');
-                wp_send_json_error(__('Error saving product mapping', 'gift-i-card'));
+        // Check if this specific mapping already exists
+        $mapping_exists = false;
+        for ($i = 0; $i < count($mapped_variant_skus); $i++) {
+            if (isset($mapped_category_skus[$i]) && isset($mapped_product_skus[$i]) && isset($mapped_variant_skus[$i])) {
+                if (
+                    $mapped_category_skus[$i] === $category_sku &&
+                    $mapped_product_skus[$i] === $product_sku &&
+                    $mapped_variant_skus[$i] === $variant_sku
+                ) {
+                    $mapping_exists = true;
+                    break;
+                }
             }
         }
 
+        if ($mapping_exists) {
+            wp_send_json_error(__('This mapping already exists', 'gift-i-card'));
+        }
 
+        // Add new mapping
+        $mapped_category_skus[] = $category_sku;
+        $mapped_product_skus[] = $product_sku;
+        $mapped_variant_skus[] = $variant_sku;
+
+        // Update all three meta fields
+        $update_category = update_post_meta($product_id, '_gicapi_mapped_category_skus', $mapped_category_skus);
+        $update_product = update_post_meta($product_id, '_gicapi_mapped_product_skus', $mapped_product_skus);
+        $update_variant = update_post_meta($product_id, '_gicapi_mapped_variant_skus', $mapped_variant_skus);
+
+        if (!$update_category || !$update_product || !$update_variant) {
+            wp_send_json_error(__('Error saving mapping', 'gift-i-card'));
+        }
 
         wp_send_json_success(__('Mapping added successfully', 'gift-i-card'));
     }
@@ -160,28 +178,61 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $variant_id = isset($_POST['variant_id']) ? sanitize_text_field(wp_unslash($_POST['variant_id'])) : '';
+        $variant_sku = isset($_POST['variant_sku']) ? sanitize_text_field(wp_unslash($_POST['variant_sku'])) : '';
         $product_id = isset($_POST['product_id']) ? intval(wp_unslash($_POST['product_id'])) : 0;
+        $category_sku = isset($_POST['category_sku']) ? sanitize_text_field(wp_unslash($_POST['category_sku'])) : '';
+        $product_sku = isset($_POST['product_sku']) ? sanitize_text_field(wp_unslash($_POST['product_sku'])) : '';
 
-        if (empty($variant_id) || empty($product_id)) {
+        if (empty($variant_sku) || empty($product_id) || empty($category_sku) || empty($product_sku)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
         }
 
-        // Remove from product mappings
+        // Get current mappings for the product
+        $mapped_category_skus = get_post_meta($product_id, '_gicapi_mapped_category_skus', true);
+        $mapped_product_skus = get_post_meta($product_id, '_gicapi_mapped_product_skus', true);
         $mapped_variant_skus = get_post_meta($product_id, '_gicapi_mapped_variant_skus', true);
+
+        // Ensure arrays
+        $mapped_category_skus = is_array($mapped_category_skus) ? $mapped_category_skus : array();
+        $mapped_product_skus = is_array($mapped_product_skus) ? $mapped_product_skus : array();
         $mapped_variant_skus = is_array($mapped_variant_skus) ? $mapped_variant_skus : array();
 
-        $key = array_search($variant_id, $mapped_variant_skus);
-        if ($key !== false) {
-            unset($mapped_variant_skus[$key]);
-            $update_product = update_post_meta($product_id, '_gicapi_mapped_variant_skus', array_values($mapped_variant_skus));
-
-            if (!$update_product) {
-                wp_send_json_error(__('Error removing product mapping', 'gift-i-card'));
+        // Find and remove the specific mapping
+        $mapping_found = false;
+        for ($i = 0; $i < count($mapped_variant_skus); $i++) {
+            if (isset($mapped_category_skus[$i]) && isset($mapped_product_skus[$i]) && isset($mapped_variant_skus[$i])) {
+                if (
+                    $mapped_category_skus[$i] === $category_sku &&
+                    $mapped_product_skus[$i] === $product_sku &&
+                    $mapped_variant_skus[$i] === $variant_sku
+                ) {
+                    // Remove this mapping
+                    unset($mapped_category_skus[$i]);
+                    unset($mapped_product_skus[$i]);
+                    unset($mapped_variant_skus[$i]);
+                    $mapping_found = true;
+                    break;
+                }
             }
         }
 
+        if (!$mapping_found) {
+            wp_send_json_error(__('Mapping not found', 'gift-i-card'));
+        }
 
+        // Reindex arrays
+        $mapped_category_skus = array_values($mapped_category_skus);
+        $mapped_product_skus = array_values($mapped_product_skus);
+        $mapped_variant_skus = array_values($mapped_variant_skus);
+
+        // Update all three meta fields
+        $update_category = update_post_meta($product_id, '_gicapi_mapped_category_skus', $mapped_category_skus);
+        $update_product = update_post_meta($product_id, '_gicapi_mapped_product_skus', $mapped_product_skus);
+        $update_variant = update_post_meta($product_id, '_gicapi_mapped_variant_skus', $mapped_variant_skus);
+
+        if (!$update_category || !$update_product || !$update_variant) {
+            wp_send_json_error(__('Error removing mapping', 'gift-i-card'));
+        }
 
         wp_send_json_success(__('Mapping removed successfully', 'gift-i-card'));
     }
