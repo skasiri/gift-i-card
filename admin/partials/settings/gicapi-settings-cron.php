@@ -68,7 +68,7 @@ foreach ($cron_intervals as $interval => $schedule) {
                     <?php endforeach; ?>
                 </select>
                 <p class="description">
-                    <?php esc_html_e('How often the system should sync product statuses. Recommended: Every 5 minutes for regular updates.', 'gift-i-card'); ?>
+                    <?php esc_html_e('How often should the system synchronize product status? Recommended: 2-3 times a day.', 'gift-i-card'); ?>
                 </p>
             </td>
         </tr>
@@ -263,7 +263,7 @@ foreach ($cron_intervals as $interval => $schedule) {
                 <div class="gicapi-cron-info">
                     <h4><?php esc_html_e('🔄 Product Synchronization Cron Job', 'gift-i-card'); ?></h4>
                     <ol>
-                        <li><?php esc_html_e('The product sync cron job runs automatically at the specified interval (recommended: every 5 minutes).', 'gift-i-card'); ?></li>
+                        <li><?php esc_html_e('The product synchronization cron job runs automatically at the specified interval (recommended: 2-3 times a day).', 'gift-i-card'); ?></li>
                         <li><?php esc_html_e('It finds all WooCommerce products that are mapped to Gift-i-Card variants.', 'gift-i-card'); ?></li>
                         <li><?php esc_html_e('For each mapped product, it calls the Gift-i-Card API to get the latest stock status.', 'gift-i-card'); ?></li>
                         <li><?php esc_html_e('It updates the WooCommerce product stock status based on the Gift-i-Card status and your configured mapping rules.', 'gift-i-card'); ?></li>
