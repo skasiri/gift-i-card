@@ -13,6 +13,7 @@ $products_sync_interval = get_option('gicapi_products_sync_interval', 'twicedail
 
 // Get cron status
 $cron_status = array();
+$product_sync_cron_status = array();
 if (class_exists('GICAPI_Cron')) {
     $cron = GICAPI_Cron::get_instance();
 
@@ -20,6 +21,7 @@ if (class_exists('GICAPI_Cron')) {
     $cron->check_and_repair_cron();
 
     $cron_status = $cron->get_cron_status();
+    $product_sync_cron_status = $cron->get_product_sync_cron_status();
 }
 
 // Get available cron intervals
@@ -163,19 +165,26 @@ foreach ($cron_intervals as $interval => $schedule) {
                 <?php esc_html_e('Product Sync Status', 'gift-i-card'); ?>
             </th>
             <td>
-                <?php if (!empty($cron_status)): ?>
+                <?php if (!empty($product_sync_cron_status)): ?>
                     <div class="gicapi-cron-status">
                         <p>
                             <strong><?php esc_html_e('Enabled:', 'gift-i-card'); ?></strong>
-                            <span class="<?php echo esc_attr($products_sync_enabled === 'yes' ? 'status-enabled' : 'status-disabled'); ?>">
-                                <?php echo esc_html($products_sync_enabled === 'yes' ? __('Yes', 'gift-i-card') : __('No', 'gift-i-card')); ?>
+                            <span class="<?php echo esc_attr($product_sync_cron_status['enabled'] ? 'status-enabled' : 'status-disabled'); ?>">
+                                <?php echo esc_html($product_sync_cron_status['enabled'] ? __('Yes', 'gift-i-card') : __('No', 'gift-i-card')); ?>
                             </span>
                         </p>
 
-                        <?php if ($products_sync_enabled === 'yes'): ?>
+                        <?php if ($product_sync_cron_status['enabled'] && $product_sync_cron_status['next_run']): ?>
+                            <p>
+                                <strong><?php esc_html_e('Next Execution:', 'gift-i-card'); ?></strong>
+                                <?php echo esc_html($product_sync_cron_status['next_run']); ?>
+                            </p>
+                        <?php endif; ?>
+
+                        <?php if ($product_sync_cron_status['enabled']): ?>
                             <p>
                                 <strong><?php esc_html_e('Interval:', 'gift-i-card'); ?></strong>
-                                <?php echo esc_html($available_intervals[$products_sync_interval] ?? $products_sync_interval); ?>
+                                <?php echo esc_html($available_intervals[$product_sync_cron_status['interval']] ?? $product_sync_cron_status['interval']); ?>
                             </p>
                         <?php endif; ?>
                     </div>

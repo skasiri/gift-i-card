@@ -354,6 +354,24 @@ class GICAPI_Cron
     }
 
     /**
+     * Get product sync cron status information
+     */
+    public function get_product_sync_cron_status()
+    {
+        $next_scheduled = wp_next_scheduled($this->product_sync_cron_hook);
+        $is_enabled = get_option('gicapi_products_sync_enabled', 'no') === 'yes';
+        $configured_interval = get_option('gicapi_products_sync_interval', $this->product_sync_cron_interval);
+
+        return array(
+            'enabled' => $is_enabled,
+            'next_run' => $next_scheduled ? gmdate('Y-m-d H:i:s', $next_scheduled) : null,
+            'interval' => $configured_interval,
+            'hook' => $this->product_sync_cron_hook,
+            'is_scheduled' => $next_scheduled !== false
+        );
+    }
+
+    /**
      * Force reschedule the cron job (for debugging)
      */
     public function force_reschedule()
