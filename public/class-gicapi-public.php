@@ -265,6 +265,11 @@ class GICAPI_Public
             return;
         }
 
+        // Check if we're on the thank you page and if thank you display is enabled
+        if (is_wc_endpoint_url('order-received') && get_option('gicapi_add_to_thank_you', 'no') === 'yes') {
+            return;
+        }
+
         $this->gift_card_display->display_gift_card_summary($order);
     }
 
