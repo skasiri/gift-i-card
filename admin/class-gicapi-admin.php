@@ -247,6 +247,41 @@ class GICAPI_Admin
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field'
         ));
+
+        // Products synchronization settings
+        register_setting('gicapi_settings', 'gicapi_products_sync_enabled', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_sync_interval', array(
+            'type' => 'integer',
+            'default' => 300,
+            'sanitize_callback' => array($this, 'sanitize_sync_interval')
+        ));
+        register_setting('gicapi_settings', 'gicapi_instant_status', array(
+            'type' => 'string',
+            'default' => 'no_change',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_manual_status', array(
+            'type' => 'string',
+            'default' => 'no_change',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_outofstock_status', array(
+            'type' => 'string',
+            'default' => 'no_change',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_deleted_status', array(
+            'type' => 'string',
+            'default' => 'no_change',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_auto_sync_enabled', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
     }
 
     public function sanitize_base_url($url)
@@ -259,6 +294,12 @@ class GICAPI_Admin
     {
         $priority = intval($priority);
         return max(1, min(100, $priority)); // Ensure priority is between 1 and 100
+    }
+
+    public function sanitize_sync_interval($interval)
+    {
+        $interval = intval($interval);
+        return max(30, min(1440, $interval)); // Ensure interval is between 30 and 1440 minutes
     }
 
     public function display_plugin_setup_page()

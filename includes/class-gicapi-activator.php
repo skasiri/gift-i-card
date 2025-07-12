@@ -34,6 +34,15 @@ class GICAPI_Activator
         // Cron job settings
         add_option('gicapi_enable_cron_updates', 'yes');
         add_option('gicapi_cron_interval', 'gicapi_five_minutes');
+
+        // Products synchronization settings
+        add_option('gicapi_products_sync_enabled', 'no');
+        add_option('gicapi_sync_interval', 300);
+        add_option('gicapi_instant_status', 'no_change');
+        add_option('gicapi_manual_status', 'no_change');
+        add_option('gicapi_outofstock_status', 'no_change');
+        add_option('gicapi_deleted_status', 'no_change');
+        add_option('gicapi_auto_sync_enabled', 'no');
     }
 
     private static function schedule_cron_job()
