@@ -270,7 +270,7 @@ class GICAPI_Public
             return;
         }
 
-        $this->gift_card_display->display_gift_card_summary($order);
+        $this->gift_card_display->display_light_summary($order);
     }
 
     public function add_redeem_data_to_thank_you($order_id)
@@ -284,6 +284,6 @@ class GICAPI_Public
             return;
         }
 
-        $this->gift_card_display->display_redeem_data($order);
+        $this->gift_card_display->display_redeem_data_simple($order);
     }
 }
