@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-07-10 18:26+0330\n"
-"PO-Revision-Date: 2025-07-10 18:26+0330\n"
+"POT-Creation-Date: 2025-07-12 04:41+0330\n"
+"PO-Revision-Date: 2025-07-12 04:53+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -112,50 +112,61 @@ msgid "Search Categories"
 msgstr "جستجوی دسته بندی"
 
 #: admin/partials/gicapi-categories-display.php:64
+#: admin/partials/gicapi-categories-display.php:130
 msgid "Thumbnail"
 msgstr "تصویر"
 
 #: admin/partials/gicapi-categories-display.php:65
+#: admin/partials/gicapi-categories-display.php:131
 #: admin/partials/gicapi-products-display.php:79
-#: admin/partials/gicapi-products-display.php:115
+#: admin/partials/gicapi-products-display.php:143
 #: admin/partials/gicapi-variants-display.php:82
 msgid "Name"
 msgstr "نام"
 
 #: admin/partials/gicapi-categories-display.php:66
+#: admin/partials/gicapi-categories-display.php:132
 #: admin/partials/gicapi-products-display.php:80
-#: admin/partials/gicapi-products-display.php:116
+#: admin/partials/gicapi-products-display.php:144
 #: admin/partials/gicapi-variants-display.php:83
 msgid "SKU"
 msgstr "شناسه SKU"
 
 #: admin/partials/gicapi-categories-display.php:67
+#: admin/partials/gicapi-categories-display.php:133
 msgid "Product Count"
 msgstr "تعداد محصول"
 
-#: admin/partials/gicapi-categories-display.php:102
+#: admin/partials/gicapi-categories-display.php:68
+#: admin/partials/gicapi-categories-display.php:134
+#: admin/partials/gicapi-products-display.php:82
+#: admin/partials/gicapi-products-display.php:146
+msgid "Mapped Products"
+msgstr "محصولات مرتبط"
+
+#: admin/partials/gicapi-categories-display.php:124
 msgid "No categories found."
 msgstr "دسته بندی یافت نشد."
 
 #. translators: %s: number of categories displayed
 #. translators: %s: number of products displayed
-#: admin/partials/gicapi-categories-display.php:113
-#: admin/partials/gicapi-products-display.php:126
+#: admin/partials/gicapi-categories-display.php:144
+#: admin/partials/gicapi-products-display.php:155
 #, php-format
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s آیتم"
 msgstr[1] "%s آیتم"
 
-#: admin/partials/gicapi-categories-display.php:122
-#: admin/partials/gicapi-products-display.php:135
+#: admin/partials/gicapi-categories-display.php:153
+#: admin/partials/gicapi-products-display.php:164
 msgid "&laquo;"
-msgstr ""
+msgstr "&laquo;"
 
-#: admin/partials/gicapi-categories-display.php:123
-#: admin/partials/gicapi-products-display.php:136
+#: admin/partials/gicapi-categories-display.php:154
+#: admin/partials/gicapi-products-display.php:165
 msgid "&raquo;"
-msgstr ""
+msgstr "&raquo;"
 
 #: admin/partials/gicapi-products-display.php:30
 msgid "Category is not valid."
@@ -179,12 +190,12 @@ msgid "Products"
 msgstr "محصولات"
 
 #: admin/partials/gicapi-products-display.php:78
-#: admin/partials/gicapi-products-display.php:114
+#: admin/partials/gicapi-products-display.php:142
 msgid "Image"
 msgstr "تصویر"
 
 #: admin/partials/gicapi-products-display.php:81
-#: admin/partials/gicapi-products-display.php:117
+#: admin/partials/gicapi-products-display.php:145
 msgid "Variant Count"
 msgstr "تعداد واریانت"
 
@@ -221,48 +232,49 @@ msgid "Mapped WC Products"
 msgstr "محصولات مرتبط ووکامرس"
 
 #. translators: %d: number of products mapped
-#: admin/partials/gicapi-variants-display.php:158
+#: admin/partials/gicapi-variants-display.php:169
 #, php-format
 msgid "%d product mapped"
 msgid_plural "%d products mapped"
 msgstr[0] "%d محصول در ارتباط"
 msgstr[1] "%d محصول در ارتباط"
 
-#: admin/partials/gicapi-variants-display.php:162
-#: admin/partials/gicapi-variants-display.php:189
+#: admin/partials/gicapi-variants-display.php:173
+#: admin/partials/gicapi-variants-display.php:200
 msgid "Add Mapping"
 msgstr "افزودن  ارتباط"
 
-#: admin/partials/gicapi-variants-display.php:177
+#: admin/partials/gicapi-variants-display.php:188
 msgid "Map Gift-i-Card Variant to WooCommerce Product"
 msgstr "برقراری ارتباط بین محصول ووکامرس و واریانت گیفتی کارت"
 
-#: admin/partials/gicapi-variants-display.php:183
-#: admin/partials/gicapi-variants-display.php:386
+#: admin/partials/gicapi-variants-display.php:194
+#: admin/partials/gicapi-variants-display.php:399
 msgid "Search for a product..."
 msgstr "جستجوی محصول..."
 
-#: admin/partials/gicapi-variants-display.php:190
+#: admin/partials/gicapi-variants-display.php:201
 msgid "Cancel"
 msgstr "انصراف"
 
-#: admin/partials/gicapi-variants-display.php:411
+#: admin/partials/gicapi-variants-display.php:428
 msgid "Please select a product"
 msgstr "محصولی را انتخاب کنید"
 
-#: admin/partials/gicapi-variants-display.php:427
-#: admin/partials/gicapi-variants-display.php:430
+#: admin/partials/gicapi-variants-display.php:446
+#: admin/partials/gicapi-variants-display.php:449
 msgid "Error adding mapping"
 msgstr "خطا در ایجاد ارتباط"
 
-#: admin/partials/gicapi-variants-display.php:439
-msgid "Are you sure you want to remove this mapping?"
-msgstr ""
-
 #: admin/partials/gicapi-variants-display.php:458
-#: admin/partials/gicapi-variants-display.php:461
+msgid "Are you sure you want to remove this mapping?"
+msgstr "آیا از حذف ارتباط محصول اطمینان دارید؟"
+
+#: admin/partials/gicapi-variants-display.php:481
+#: admin/partials/gicapi-variants-display.php:484
+#: includes/class-gicapi-ajax.php:234
 msgid "Error removing mapping"
-msgstr ""
+msgstr "خطا در حذف ارتباط"
 
 #: admin/partials/settings/gicapi-settings-connection.php:15
 msgid "Base URL"
@@ -330,6 +342,8 @@ msgid ""
 "How often the system should check for order updates. Recommended: Every 5 "
 "minutes for fastest updates."
 msgstr ""
+"چند وقت یکبار سیستم وضعیت سفارشات را چک کند. پیشنهاد: هر 5 دقیقه برای بهره "
+"بری بالاتر"
 
 #: admin/partials/settings/gicapi-settings-cron.php:72
 msgid "🕒 Cron Job Status"
@@ -377,6 +391,8 @@ msgid ""
 "Click this button to manually trigger an update of all pending and processing "
 "orders. This is useful for testing or immediate updates."
 msgstr ""
+"برای به‌روزرسانی دستی تمام سفارش‌های در حال انتظار و در حال پردازش، روی این "
+"دکمه کلیک کنید. این گزینه برای آزمایش یا به‌روزرسانی‌های فوری مفید است."
 
 #: admin/partials/settings/gicapi-settings-cron.php:125
 msgid "Troubleshooting"
@@ -390,7 +406,7 @@ msgstr "زمانبندی مجدد کرون جاب"
 #: admin/partials/settings/gicapi-settings-cron.php:132
 #: admin/partials/settings/gicapi-settings-cron.php:292
 msgid "Check & Repair Cron Job"
-msgstr "بررسی . تعمیر کرون جاب"
+msgstr "بررسی و تعمیر کرون جاب"
 
 #: admin/partials/settings/gicapi-settings-cron.php:135
 msgid ""
@@ -398,6 +414,9 @@ msgid ""
 "\"Reschedule\" will clear and recreate the cron job. \"Check & Repair\" will "
 "automatically detect and fix issues."
 msgstr ""
+"اگر کرون جاب در حال اجرا نیست، برای عیب‌یابی روی این دکمه‌ها کلیک کنید. "
+"«زمان‌بندی مجدد» کرون جاب را پاک کرده و دوباره ایجاد می‌کند. «بررسی و تعمیر» به "
+"طور خودکار مشکلات را شناسایی و برطرف می‌کند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:149
 msgid "📋 How It Works"
@@ -408,33 +427,44 @@ msgid ""
 "The cron job runs automatically at the specified interval (recommended: every "
 "5 minutes)."
 msgstr ""
+"کرون جاب به طور خودکار در فاصله زمانی مشخص شده اجرا می‌شود (توصیه می‌شود: هر ۵ "
+"دقیقه)."
 
 #: admin/partials/settings/gicapi-settings-cron.php:158
 msgid ""
 "It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
 "or \"processing\" status."
 msgstr ""
+"این افزونه تمام سفارشات ووکامرس که دارای گیفت کارت هستند و در وضعیت \"در "
+"انتظار\" یا \"در حال پردازش\" قرار دارند را پیدا می‌کند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:159
 msgid ""
 "For each active order, it calls the Gift-i-Card API to get the latest status."
 msgstr ""
+"برای هر سفارش فعال، API مربوط به Gift-i-Card را فراخوانی می‌کند تا آخرین وضعیت "
+"را دریافت کند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:160
 msgid "If the status has changed, it updates the order and adds a note."
 msgstr ""
+"اگر وضعیت تغییر کرده باشد، سفارش را به‌روزرسانی کرده و یادداشتی اضافه می‌کند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:161
 msgid ""
 "If all Gift-i-Card orders in a WooCommerce order are completed, it can "
 "automatically complete the WooCommerce order (if enabled)."
 msgstr ""
+"اگر تمام سفارش‌های Gift-i-Card در یک سفارش WooCommerce تکمیل شوند، می‌تواند به "
+"طور خودکار سفارش WooCommerce را تکمیل کند (در صورت فعال بودن)."
 
 #: admin/partials/settings/gicapi-settings-cron.php:162
 msgid ""
 "If any Gift-i-Card orders fail, it can automatically change the WooCommerce "
 "order status (if enabled)."
 msgstr ""
+"اگر هر یک از سفارش‌های Gift-i-Card با شکست مواجه شود، می‌تواند به طور خودکار "
+"وضعیت سفارش WooCommerce را تغییر دهد (در صورت فعال بودن)."
 
 #: admin/partials/settings/gicapi-settings-cron.php:167
 msgid "Note:"
@@ -446,6 +476,9 @@ msgid ""
 "a real cron job, make sure to disable WordPress cron and set up a real cron "
 "job to call wp-cron.php."
 msgstr ""
+"این ویژگی نیاز به عملکرد صحیح کرون وردپرس دارد. اگر از کرون جاب وب سرور "
+"استفاده می‌کنید، حتماً کرون وردپرس را غیرفعال کنید و یک کرون جاب لایو برای "
+"فراخوانی wp-cron.php تنظیم کنید."
 
 #: admin/partials/settings/gicapi-settings-cron.php:203
 msgid "Updating..."
@@ -611,8 +644,8 @@ msgid "Status to set when cancelled orders"
 msgstr "سفارش لغو شده به این وضعیت تغییر میکند"
 
 #: includes/class-gicapi-ajax.php:30 includes/class-gicapi-ajax.php:115
-#: includes/class-gicapi-ajax.php:160 includes/class-gicapi-ajax.php:194
-#: includes/class-gicapi-ajax.php:252 includes/class-gicapi-ajax.php:304
+#: includes/class-gicapi-ajax.php:178 includes/class-gicapi-ajax.php:245
+#: includes/class-gicapi-ajax.php:303 includes/class-gicapi-ajax.php:355
 #: includes/class-gicapi-cron.php:151 includes/class-gicapi-cron.php:170
 #: includes/class-gicapi-cron.php:189 includes/class-gicapi-cron.php:328
 msgid "Permission denied"
@@ -650,87 +683,87 @@ msgstr "محصول خارجی"
 msgid "Product"
 msgstr "محصول"
 
-#: includes/class-gicapi-ajax.php:122 includes/class-gicapi-ajax.php:167
-#: includes/class-gicapi-ajax.php:201 includes/class-gicapi-ajax.php:258
-#: includes/class-gicapi-ajax.php:310
+#: includes/class-gicapi-ajax.php:124 includes/class-gicapi-ajax.php:187
+#: includes/class-gicapi-ajax.php:252 includes/class-gicapi-ajax.php:309
+#: includes/class-gicapi-ajax.php:361
 msgid "Invalid parameters"
 msgstr "پارامترهای نامعتبر"
 
-#: includes/class-gicapi-ajax.php:131
-msgid "This product is already mapped to this variant"
-msgstr "این محصول از قبل به این واریانت مپ شده است"
+#: includes/class-gicapi-ajax.php:153
+msgid "This mapping already exists"
+msgstr "ارتباط محصولات از قبل وجود دارد"
 
-#: includes/class-gicapi-ajax.php:146
-msgid "Error saving product mapping"
-msgstr "خطا در ذخیره ارتباط محصول"
+#: includes/class-gicapi-ajax.php:167
+msgid "Error saving mapping"
+msgstr "خطا در ذخیره سازی ارتباط محصول"
 
-#: includes/class-gicapi-ajax.php:152
+#: includes/class-gicapi-ajax.php:170
 msgid "Mapping added successfully"
 msgstr "با موفقیت مپ  شد"
 
-#: includes/class-gicapi-ajax.php:180
-msgid "Error removing product mapping"
-msgstr "حذف در حذف ارتباط محصول"
+#: includes/class-gicapi-ajax.php:220
+msgid "Mapping not found"
+msgstr "ارتباط محصول یافت نشد"
 
-#: includes/class-gicapi-ajax.php:186
+#: includes/class-gicapi-ajax.php:237
 msgid "Mapping removed successfully"
 msgstr "ارتباط حذف شد"
 
-#: includes/class-gicapi-ajax.php:206 includes/class-gicapi-ajax.php:263
-#: includes/class-gicapi-ajax.php:315
+#: includes/class-gicapi-ajax.php:257 includes/class-gicapi-ajax.php:314
+#: includes/class-gicapi-ajax.php:366
 msgid "Order not found"
 msgstr "سفارش یافت نشد"
 
-#: includes/class-gicapi-ajax.php:211
+#: includes/class-gicapi-ajax.php:262
 msgid "Order item not found"
 msgstr "آیتم سفارش یافت نشد"
 
-#: includes/class-gicapi-ajax.php:217 includes/class-gicapi-ajax.php:269
+#: includes/class-gicapi-ajax.php:268 includes/class-gicapi-ajax.php:320
 msgid "GICAPI Public class not available"
 msgstr "کلاس GICAPI Public در دسترس نیست"
 
-#: includes/class-gicapi-ajax.php:222 includes/class-gicapi-ajax.php:274
+#: includes/class-gicapi-ajax.php:273 includes/class-gicapi-ajax.php:325
 msgid "GICAPI API not available"
 msgstr "کلاس GICAPI API در دسترس نیست"
 
-#: includes/class-gicapi-ajax.php:228 includes/class-gicapi-ajax.php:280
-#: includes/class-gicapi-ajax.php:327
+#: includes/class-gicapi-ajax.php:279 includes/class-gicapi-ajax.php:331
+#: includes/class-gicapi-ajax.php:378
 msgid "Order processing is disabled"
 msgstr "پردازش سفارشات غیرفعال است"
 
-#: includes/class-gicapi-ajax.php:241
+#: includes/class-gicapi-ajax.php:292
 msgid "Order created successfully"
 msgstr "سفارش با موفقیت ایجاد شد"
 
-#: includes/class-gicapi-ajax.php:243
+#: includes/class-gicapi-ajax.php:294
 msgid "Failed to create order: "
 msgstr "خطا در ایجاد سفارش گیفتی کارت: "
 
-#: includes/class-gicapi-ajax.php:286 includes/class-gicapi-ajax.php:333
+#: includes/class-gicapi-ajax.php:337 includes/class-gicapi-ajax.php:384
 msgid "Order has not been processed yet"
 msgstr "سفارش هنوز ایجاد نشده است"
 
-#: includes/class-gicapi-ajax.php:293
+#: includes/class-gicapi-ajax.php:344
 msgid "Order confirmed successfully"
 msgstr "سفارش با موفقیت تایید شد"
 
-#: includes/class-gicapi-ajax.php:295
+#: includes/class-gicapi-ajax.php:346
 msgid "Failed to confirm order: "
 msgstr "خطا در تایید سفارش گیفتی کارت: "
 
-#: includes/class-gicapi-ajax.php:321
+#: includes/class-gicapi-ajax.php:372
 msgid "GICAPI Order class not available"
 msgstr "کلاس GICAPI Order در دسترس نیست"
 
-#: includes/class-gicapi-ajax.php:341
+#: includes/class-gicapi-ajax.php:392
 msgid "Order status updated successfully"
 msgstr "سفارش با موفقیت بروزرسانی شد"
 
-#: includes/class-gicapi-ajax.php:343
+#: includes/class-gicapi-ajax.php:394
 msgid "No updates were made to the order status"
 msgstr "تغییری در وضعیت سفارش انجام نشده است"
 
-#: includes/class-gicapi-ajax.php:346
+#: includes/class-gicapi-ajax.php:397
 msgid "Failed to update order status: "
 msgstr "خطا در بروزرسانی وضعیت سفارش گیفتی کارت: "
 
@@ -905,66 +938,51 @@ msgstr "اطلاعات ردیم گیفت کارت"
 
 #. translators: %1$s: Gift-i-Card order ID, %2$s: old status, %3$s: new status, %4$s: source
 #: includes/class-gicapi-order-manager.php:159
-#, fuzzy, php-format
-#| msgid "Gift-i-Card order %s status updated from %s to %s"
+#, php-format
 msgid "Gift-i-Card order %1$s status updated from %2$s to %3$s %4$s"
-msgstr "وضعیت سفارش %s گیفتی کارت از %s به %s تغییر یافت"
+msgstr "وضعیت سفارش %1$s گیفتی کارت از %2$s به %3$s %4$s تغییر یافت"
 
 #: includes/class-gicapi-order-manager.php:223
-#, fuzzy
-#| msgid "Order completed because all mapped items are completed"
 msgid "Order completed because all mapped Gift-i-Card items are completed"
-msgstr "سفارش به دلیل تکمیل همه آیتم ها تکمیل شد"
+msgstr "سفارش به دلیل تکمیل همه آیتم های گیفتی کارت تکمیل شد"
 
 #: includes/class-gicapi-order-manager.php:228
-#, fuzzy
-#| msgid "Order completed because all mapped items are completed"
 msgid ""
 "Order completed because all mapped Gift-i-Card items are completed (any-"
 "mapped)"
-msgstr "سفارش به دلیل تکمیل همه آیتم ها تکمیل شد"
+msgstr "سفارش به دلیل تکمیل همه آیتم ها های گیفتی کارت تکمیل شد (any-mapped)"
 
 #: includes/class-gicapi-order-manager.php:235
-#, fuzzy
-#| msgid "Order failed because one or more mapped items are failed"
 msgid "Order failed because all mapped Gift-i-Card items are failed"
-msgstr "سفارش به دلیل ناموفق بودن یک یا چند آیتم ناموفق شد"
+msgstr "سفارش به دلیل ناموفق بودن یک یا چند آیتم گیفتی کارت ناموفق شد"
 
 #: includes/class-gicapi-order-manager.php:240
-#, fuzzy
-#| msgid "Order failed because one or more mapped items are failed"
 msgid ""
 "Order failed because at least one mapped Gift-i-Card item is failed (any-"
 "mapped)"
-msgstr "سفارش به دلیل ناموفق بودن یک یا چند آیتم ناموفق شد"
+msgstr "سفارش به دلیل ناموفق بودن یک یا چند آیتم ناموفق شد  (any-mapped)"
 
 #: includes/class-gicapi-order-manager.php:247
-#, fuzzy
-#| msgid "Order completed because all mapped items are completed"
 msgid "Order cancelled because all mapped Gift-i-Card items are cancelled"
-msgstr "سفارش به دلیل تکمیل همه آیتم ها تکمیل شد"
+msgstr "سفارش به دلیل لغو همه آیتم های گیفتی کارت لغو شد"
 
 #: includes/class-gicapi-order-manager.php:252
-#, fuzzy
-#| msgid "Order completed because all mapped items are completed"
 msgid ""
 "Order cancelled because all mapped Gift-i-Card items are cancelled (any-"
 "mapped)"
-msgstr "سفارش به دلیل تکمیل همه آیتم ها تکمیل شد"
+msgstr "سفارش به دلیل لغو همه آیتم های گیفتی کارت لغو شد"
 
 #: includes/class-gicapi-webhook.php:17
 msgid "Only POST method is allowed"
-msgstr ""
+msgstr "فقط متد POST قبول است"
 
 #: includes/class-gicapi-webhook.php:23
 msgid "Empty request body"
-msgstr ""
+msgstr "بدنه درخواست خالی"
 
 #: includes/class-gicapi-webhook.php:28
-#, fuzzy
-#| msgid "Invalid data"
 msgid "Invalid JSON format"
-msgstr "داده نامعتبر"
+msgstr "فرمت JSON نامعتبر"
 
 #: includes/class-gicapi-webhook.php:32
 msgid "Invalid data"
@@ -975,27 +993,20 @@ msgid "Order ID is required"
 msgstr "شماره سفارش الزامی است"
 
 #: includes/class-gicapi-webhook.php:45
-#, fuzzy
-#| msgid "Invalid data"
 msgid "Invalid order ID format"
-msgstr "داده نامعتبر"
+msgstr "فرمت شناسه سفارش نامعتبر"
 
 #: includes/class-gicapi-webhook.php:51
 msgid "Webhook secret is missing"
-msgstr ""
+msgstr "رمز وب هوک یافت نشد"
 
 #: includes/class-gicapi-webhook.php:63
-#, fuzzy
-#| msgid ""
-#| "Change WooCommerce order status to completed (after completing Gift-i-Card "
-#| "order)"
 msgid "No WooCommerce orders found for this Gift-i-Card order"
-msgstr ""
-"تغییر وضعیت سفارشات ووکامرس به تکمیل شده (بعد از تکمیل سفارش گیفتی کارت)"
+msgstr "سفارش ووکامرس مرتبط با این سفارش گیفتی کارت یافت نشد"
 
 #: includes/class-gicapi-webhook.php:76
 msgid "Invalid webhook secret"
-msgstr ""
+msgstr "رمز وب هوک نامعتبر"
 
 #: includes/class-gicapi-webhook.php:93
 msgid "Webhook processed successfully"
@@ -1031,7 +1042,7 @@ msgstr "گیفتی کارت"
 
 #. Plugin URI of the plugin/theme
 msgid "http://github.com/skasiri/gift-i-card"
-msgstr ""
+msgstr "http://github.com/skasiri/gift-i-card"
 
 #. Description of the plugin/theme
 msgid "A plugin to integrate WooCommerce with a gift card service"
@@ -1044,6 +1055,15 @@ msgstr "سعید کثیری"
 #. Author URI of the plugin/theme
 msgid "https://gifticard.ir"
 msgstr "https://gifticard.ir"
+
+#~ msgid "This product is already mapped to this variant"
+#~ msgstr "این محصول از قبل به این واریانت مپ شده است"
+
+#~ msgid "Error saving product mapping"
+#~ msgstr "خطا در ذخیره ارتباط محصول"
+
+#~ msgid "Error removing product mapping"
+#~ msgstr "حذف در حذف ارتباط محصول"
 
 #~ msgid "Data Management"
 #~ msgstr "مدیریت داده"
