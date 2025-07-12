@@ -65,6 +65,7 @@ $categories = array_slice($categories, $offset, $per_page);
                 <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Product Count', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Mapped Products', 'gift-i-card'); ?></th>
             </tr>
         </thead>
         <tbody id="the-list">
@@ -75,6 +76,26 @@ $categories = array_slice($categories, $offset, $per_page);
                     $category_sku = $category['sku'];
                     $category_count = $category['count'];
                     $category_thumbnail = isset($category['thumbnail']) ? $category['thumbnail'] : '';
+
+                    // Count mapped products for this category
+                    $mapped_products_count = 0;
+                    $args = array(
+                        'post_type' => array('product', 'product_variation'),
+                        'post_status' => 'publish',
+                        'posts_per_page' => -1,
+                        'meta_query' => array(
+                            array(
+                                'key' => '_gicapi_mapped_category_skus',
+                                'value' => $category_sku,
+                                'compare' => 'LIKE'
+                            )
+                        ),
+                        'fields' => 'ids'
+                    );
+                    $query = new WP_Query($args);
+                    $mapped_products_count = $query->found_posts;
+                    wp_reset_postdata();
+
                     $nonce = wp_create_nonce('gicapi_view_products');
                     $products_page_url = add_query_arg(array('category' => $category_sku, 'gicapi_nonce' => $nonce), admin_url('admin.php?page=' . $plugin_name . '-products'));
             ?>
@@ -93,6 +114,7 @@ $categories = array_slice($categories, $offset, $per_page);
                         </td>
                         <td class="column-sku"><?php echo esc_html($category_sku); ?></td>
                         <td class="column-count"><?php echo esc_html($category_count); ?></td>
+                        <td class="column-mapped-products"><?php echo esc_html($mapped_products_count); ?></td>
                     </tr>
                 <?php
                 endforeach;
@@ -103,6 +125,15 @@ $categories = array_slice($categories, $offset, $per_page);
                 </tr>
             <?php endif; ?>
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col" class="manage-column column-thumbnail"><?php esc_html_e('Thumbnail', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Product Count', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Mapped Products', 'gift-i-card'); ?></th>
+            </tr>
+        </tfoot>
     </table>
 
     <?php if ($total_pages > 1) : ?>

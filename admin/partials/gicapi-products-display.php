@@ -79,6 +79,7 @@ if (!is_wp_error($categories)) {
                 <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Variant Count', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Mapped Products', 'gift-i-card'); ?></th>
             </tr>
         </thead>
         <tbody id="the-list">
@@ -88,6 +89,32 @@ if (!is_wp_error($categories)) {
                 $product_sku = $product['sku'];
                 $product_image_url = isset($product['image_url']) ? $product['image_url'] : '';
                 $product_variant_count = isset($product['variant_count']) ? $product['variant_count'] : 0;
+
+                // Count mapped products for this product
+                $mapped_products_count = 0;
+                $args = array(
+                    'post_type' => array('product', 'product_variation'),
+                    'post_status' => 'publish',
+                    'posts_per_page' => -1,
+                    'meta_query' => array(
+                        'relation' => 'AND',
+                        array(
+                            'key' => '_gicapi_mapped_category_skus',
+                            'value' => $category_sku,
+                            'compare' => 'LIKE'
+                        ),
+                        array(
+                            'key' => '_gicapi_mapped_product_skus',
+                            'value' => $product_sku,
+                            'compare' => 'LIKE'
+                        )
+                    ),
+                    'fields' => 'ids'
+                );
+                $query = new WP_Query($args);
+                $mapped_products_count = $query->found_posts;
+                wp_reset_postdata();
+
                 $nonce = wp_create_nonce('gicapi_view_variants');
                 $variants_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'product' => $product_sku, 'gicapi_nonce' => $nonce));
             ?>
@@ -106,6 +133,7 @@ if (!is_wp_error($categories)) {
                     </td>
                     <td class="column-sku"><?php echo esc_html($product_sku); ?></td>
                     <td class="column-variant-count"><?php echo esc_html($product_variant_count); ?></td>
+                    <td class="column-mapped-products"><?php echo esc_html($mapped_products_count); ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -115,6 +143,7 @@ if (!is_wp_error($categories)) {
                 <th scope="col" class="manage-column column-title column-primary"><?php esc_html_e('Name', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Variant Count', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Mapped Products', 'gift-i-card'); ?></th>
             </tr>
         </tfoot>
     </table>
