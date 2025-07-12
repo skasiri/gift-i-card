@@ -21,6 +21,9 @@ class GICAPI_Loader
         require_once GICAPI_PLUGIN_DIR . 'public/class-gicapi-public.php';
         require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-api.php';
         require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-jwt.php';
+        require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-order.php';
+        require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-order-manager.php';
+        require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-product-sync.php';
     }
 
     private function define_admin_hooks()
@@ -34,7 +37,7 @@ class GICAPI_Loader
 
     private function define_public_hooks()
     {
-        $plugin_public = new GICAPI_Public();
+        $plugin_public = new GICAPI_Public('gift-i-card', '1.0.0');
 
         $this->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');

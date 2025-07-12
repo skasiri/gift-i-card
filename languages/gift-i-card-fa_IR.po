@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-07-12 19:34+0330\n"
-"PO-Revision-Date: 2025-07-12 19:39+0330\n"
+"POT-Creation-Date: 2025-07-12 22:08+0330\n"
+"PO-Revision-Date: 2025-07-12 22:08+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -755,12 +755,8 @@ msgid "Auto Sync on Product Load"
 msgstr "همگام سازی در هنگام لود محصول"
 
 #: admin/partials/settings/gicapi-settings-product.php:119
-msgid ""
-"Automatically sync product status when product page is loaded. This may slow "
-"down the product page loading slightly."
-msgstr ""
-"همگام‌سازی خودکار وضعیت محصول هنگام بارگذاری صفحه محصول. این ممکن است بارگذاری "
-"صفحه محصول را کمی کُند کند."
+msgid "Automatically sync product status when product page is loaded."
+msgstr "همگام‌سازی خودکار وضعیت محصول هنگام بارگذاری صفحه محصول."
 
 #: includes/class-gicapi-ajax.php:30 includes/class-gicapi-ajax.php:115
 #: includes/class-gicapi-ajax.php:178 includes/class-gicapi-ajax.php:245

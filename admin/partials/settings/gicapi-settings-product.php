@@ -116,7 +116,7 @@ $auto_sync_enabled = get_option('gicapi_auto_sync_enabled', 'no');
             </th>
             <td>
                 <input type="checkbox" id="gicapi_auto_sync_enabled" name="gicapi_auto_sync_enabled" value="yes" <?php checked($auto_sync_enabled, 'yes'); ?> />
-                <p class="description"><?php esc_html_e('Automatically sync product status when product page is loaded. This may slow down the product page loading slightly.', 'gift-i-card'); ?></p>
+                <p class="description"><?php esc_html_e('Automatically sync product status when product page is loaded.', 'gift-i-card'); ?></p>
             </td>
         </tr>
     </table>
