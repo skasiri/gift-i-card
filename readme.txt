@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,13 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
   - Map each WooCommerce product or variation to a specific Gift-i-Card variant using the admin panel.
   - Mapping is managed via AJAX and stored in product meta fields, allowing you to sell exact gift card types from your WooCommerce catalog.
   - The mapping interface supports searching WooCommerce products and linking them to Gift-i-Card variants.
+- **Product Status Synchronization:**
+  - Automatically synchronize Gift-i-Card product availability status with WooCommerce stock status.
+  - Configurable status mapping for different Gift-i-Card delivery types (Instant, Manual, Out of Stock, Deleted/Not Available).
+  - Scheduled synchronization via WordPress cron jobs (recommended: 2-3 times daily).
+  - Manual synchronization option for immediate updates.
+  - Real-time status display showing next execution time and current sync status.
+  - Automatic stock status updates based on Gift-i-Card inventory changes.
 - **Automatic Gift Card Order Placement:**
   - When a customer places an order containing mapped products, the plugin automatically sends a purchase request to the Gift-i-Card API for each mapped item.
   - The plugin handles the API response, stores the Gift-i-Card order details (including codes) in the WooCommerce order meta, and adds order notes for tracking.
