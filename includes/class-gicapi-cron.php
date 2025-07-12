@@ -19,6 +19,8 @@ class GICAPI_Cron
     private $order_manager;
     private $cron_hook = 'gicapi_update_processing_orders';
     private $cron_interval = 'gicapi_five_minutes';
+    private $product_sync_cron_hook = 'gicapi_sync_products';
+    private $product_sync_cron_interval = 'twicedaily';
 
 
     public static function get_instance()
@@ -44,6 +46,9 @@ class GICAPI_Cron
         // Register cron hook
         add_action($this->cron_hook, array($this->order_manager, 'update_processing_orders'));
 
+        // Register product sync cron hook
+        add_action($this->product_sync_cron_hook, array($this, 'sync_products_cron'));
+
         // Activation/deactivation hooks
         add_action('gicapi_activate', array($this, 'schedule_cron'));
         add_action('gicapi_deactivate', array($this, 'unschedule_cron'));
@@ -62,6 +67,10 @@ class GICAPI_Cron
 
         // Reschedule cron when enable setting changes
         add_action('update_option_gicapi_enable_cron_updates', array($this, 'reschedule_cron_on_enable_change'), 10, 3);
+
+        // Reschedule product sync cron when settings change
+        add_action('update_option_gicapi_products_sync_enabled', array($this, 'reschedule_product_sync_cron_on_enable_change'), 10, 3);
+        add_action('update_option_gicapi_products_sync_interval', array($this, 'reschedule_product_sync_cron_on_interval_change'), 10, 3);
 
         // Debug tools
         add_action('wp_ajax_gicapi_check_repair_cron', array($this, 'ajax_check_repair_cron'));
@@ -99,6 +108,9 @@ class GICAPI_Cron
         if (!wp_next_scheduled($this->cron_hook)) {
             wp_schedule_event(time(), $configured_interval, $this->cron_hook);
         }
+
+        // Also schedule product sync cron
+        $this->schedule_product_sync_cron();
     }
 
     /**
@@ -111,6 +123,9 @@ class GICAPI_Cron
             wp_unschedule_event($timestamp, $this->cron_hook);
         }
         wp_clear_scheduled_hook($this->cron_hook);
+
+        // Also unschedule product sync cron
+        $this->unschedule_product_sync_cron();
     }
 
     /**
@@ -135,6 +150,84 @@ class GICAPI_Cron
                 $this->unschedule_cron();
             }
         }
+    }
+
+    /**
+     * Schedule the product sync cron job
+     */
+    public function schedule_product_sync_cron()
+    {
+        // Clear any existing product sync cron job first
+        $this->unschedule_product_sync_cron();
+
+        // Get the configured interval
+        $configured_interval = get_option('gicapi_products_sync_interval', $this->product_sync_cron_interval);
+
+        // Check if product sync cron is enabled
+        if (get_option('gicapi_products_sync_enabled', 'no') !== 'yes') {
+            return;
+        }
+
+        // Schedule the product sync cron job
+        if (!wp_next_scheduled($this->product_sync_cron_hook)) {
+            wp_schedule_event(time(), $configured_interval, $this->product_sync_cron_hook);
+        }
+    }
+
+    /**
+     * Unschedule the product sync cron job
+     */
+    public function unschedule_product_sync_cron()
+    {
+        $timestamp = wp_next_scheduled($this->product_sync_cron_hook);
+        if ($timestamp) {
+            wp_unschedule_event($timestamp, $this->product_sync_cron_hook);
+        }
+        wp_clear_scheduled_hook($this->product_sync_cron_hook);
+    }
+
+    /**
+     * Reschedule product sync cron when enable setting changes
+     */
+    public function reschedule_product_sync_cron_on_enable_change($old_value, $new_value, $option)
+    {
+        if ($old_value !== $new_value) {
+            if ($new_value === 'yes') {
+                $this->schedule_product_sync_cron();
+            } else {
+                $this->unschedule_product_sync_cron();
+            }
+        }
+    }
+
+    /**
+     * Reschedule product sync cron when interval changes
+     */
+    public function reschedule_product_sync_cron_on_interval_change($old_value, $new_value, $option)
+    {
+        if ($old_value !== $new_value) {
+            $this->schedule_product_sync_cron();
+        }
+    }
+
+    /**
+     * Product sync cron job handler
+     */
+    public function sync_products_cron()
+    {
+        // Check if product sync is enabled
+        if (get_option('gicapi_products_sync_enabled', 'no') !== 'yes') {
+            return;
+        }
+
+        // Get the product sync class instance
+        $product_sync = GICAPI_Product_Sync::get_instance();
+        if (!$product_sync) {
+            return;
+        }
+
+        // Run the product sync
+        $product_sync->sync_all_products();
     }
 
 

@@ -37,7 +37,7 @@ class GICAPI_Activator
 
         // Products synchronization settings
         add_option('gicapi_products_sync_enabled', 'no');
-        add_option('gicapi_sync_interval', 300);
+        add_option('gicapi_products_sync_interval', 'twicedaily');
         add_option('gicapi_instant_status', 'no_change');
         add_option('gicapi_manual_status', 'no_change');
         add_option('gicapi_outofstock_status', 'no_change');

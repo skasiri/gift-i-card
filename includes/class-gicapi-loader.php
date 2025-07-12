@@ -24,6 +24,7 @@ class GICAPI_Loader
         require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-order.php';
         require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-order-manager.php';
         require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-product-sync.php';
+        require_once GICAPI_PLUGIN_DIR . 'includes/class-gicapi-ajax.php';
     }
 
     private function define_admin_hooks()

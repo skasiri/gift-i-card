@@ -253,10 +253,9 @@ class GICAPI_Admin
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field'
         ));
-        register_setting('gicapi_settings', 'gicapi_sync_interval', array(
-            'type' => 'integer',
-            'default' => 300,
-            'sanitize_callback' => array($this, 'sanitize_sync_interval')
+        register_setting('gicapi_settings', 'gicapi_products_sync_interval', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
         ));
         register_setting('gicapi_settings', 'gicapi_instant_status', array(
             'type' => 'string',

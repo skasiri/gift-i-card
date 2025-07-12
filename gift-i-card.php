@@ -94,6 +94,9 @@ if (!class_exists('GICAPI')) {
 
             // Initialize cron job
             GICAPI_Cron::get_instance();
+
+            // Initialize AJAX handler
+            GICAPI_Ajax::get_instance();
         }
 
         private function define_public_hooks()

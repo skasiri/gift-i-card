@@ -20,6 +20,7 @@ class GICAPI_Ajax
         add_action('wp_ajax_gicapi_create_order_manually', array($this, 'create_order_manually'));
         add_action('wp_ajax_gicapi_confirm_order_manually', array($this, 'confirm_order_manually'));
         add_action('wp_ajax_gicapi_update_status_manually', array($this, 'update_status_manually'));
+        add_action('wp_ajax_gicapi_manual_sync_products', array($this, 'manual_sync_products'));
     }
 
     public function search_products()
@@ -397,7 +398,58 @@ class GICAPI_Ajax
             wp_send_json_error(__('Failed to update order status: ', 'gift-i-card') . $e->getMessage());
         }
     }
-}
 
-// Initialize the AJAX handler
-GICAPI_Ajax::get_instance();
+    public function manual_sync_products()
+    {
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[GICAPI Manual Sync] Function called');
+        }
+
+        check_ajax_referer('gicapi_manual_sync_products', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        // Get the product sync class instance
+        $product_sync = GICAPI_Product_Sync::get_instance();
+        if (!$product_sync) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[GICAPI Manual Sync] Product Sync class not available');
+            }
+            wp_send_json_error(__('GICAPI Product Sync class not available', 'gift-i-card'));
+        }
+
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[GICAPI Manual Sync] Product Sync class found');
+        }
+
+        try {
+            // Call the sync_all_products method
+            $result = $product_sync->sync_all_products();
+
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[GICAPI Manual Sync] Sync result: ' . print_r($result, true));
+            }
+
+            if (isset($result['success']) && $result['success']) {
+                $message = sprintf(
+                    __('Product sync completed successfully. Total: %d, Successful: %d, Failed: %d', 'gift-i-card'),
+                    $result['total_products'],
+                    $result['successful_syncs'],
+                    $result['failed_syncs']
+                );
+                wp_send_json_success($message);
+            } else {
+                $error_message = isset($result['error']) ? $result['error'] : __('Unknown error occurred during sync', 'gift-i-card');
+                wp_send_json_error($error_message);
+            }
+        } catch (Exception $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[GICAPI Manual Sync] Exception: ' . $e->getMessage());
+            }
+            wp_send_json_error(__('Failed to sync products: ', 'gift-i-card') . $e->getMessage());
+        }
+    }
+}
