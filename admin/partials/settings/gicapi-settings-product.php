@@ -15,7 +15,7 @@ $auto_sync_enabled = get_option('gicapi_auto_sync_enabled', 'no');
 
 <div id="products" class="tab-content" style="display: none;">
     <h3><?php esc_html_e('Products Synchronization Settings', 'gift-i-card'); ?></h3>
-    <p><?php esc_html_e('Configure how gift card product statuses should be synchronized with WooCommerce stock status.', 'gift-i-card'); ?></p>
+    <p><?php esc_html_e('Configure how Gift-i-Card product statuses should be synchronized with WooCommerce stock status.', 'gift-i-card'); ?></p>
 
     <table class="form-table">
         <tr>
@@ -24,7 +24,7 @@ $auto_sync_enabled = get_option('gicapi_auto_sync_enabled', 'no');
             </th>
             <td>
                 <input type="checkbox" id="gicapi_products_sync_enabled" name="gicapi_products_sync_enabled" value="yes" <?php checked($products_sync_enabled, 'yes'); ?> />
-                <p class="description"><?php esc_html_e('Enable automatic synchronization of gift card product statuses with WooCommerce', 'gift-i-card'); ?></p>
+                <p class="description"><?php esc_html_e('Enable automatic synchronization of Gift-i-Card product statuses with WooCommerce', 'gift-i-card'); ?></p>
             </td>
         </tr>
 
@@ -39,8 +39,8 @@ $auto_sync_enabled = get_option('gicapi_auto_sync_enabled', 'no');
         </tr>
     </table>
 
-    <h4><?php esc_html_e('Gift Card Status Mapping', 'gift-i-card'); ?></h4>
-    <p><?php esc_html_e('Configure how each gift card delivery status should affect WooCommerce stock status:', 'gift-i-card'); ?></p>
+    <h4><?php esc_html_e('Gift-i-Card Status Mapping', 'gift-i-card'); ?></h4>
+    <p><?php esc_html_e('Configure how each Gift-i-Card delivery status should affect WooCommerce stock status:', 'gift-i-card'); ?></p>
 
     <table class="form-table">
         <!-- Instant Delivery Status -->

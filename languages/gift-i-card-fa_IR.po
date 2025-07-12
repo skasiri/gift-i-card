@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-07-12 04:41+0330\n"
-"PO-Revision-Date: 2025-07-12 04:53+0330\n"
+"POT-Creation-Date: 2025-07-12 19:34+0330\n"
+"PO-Revision-Date: 2025-07-12 19:39+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -45,11 +45,11 @@ msgstr "موجودی"
 msgid "Disconnected"
 msgstr "قطع"
 
-#: admin/class-gicapi-admin.php:443 admin/class-gicapi-admin.php:465
+#: admin/class-gicapi-admin.php:484 admin/class-gicapi-admin.php:506
 msgid "You do not have permission to perform this action."
 msgstr "دسترسی لازم برای این کار را ندارید."
 
-#: admin/class-gicapi-admin.php:452
+#: admin/class-gicapi-admin.php:493
 msgid ""
 "Token refreshed successfully. Please refresh the page or save the settings to "
 "see the new connection status."
@@ -57,15 +57,15 @@ msgstr ""
 "توکن با موفقیت نوسازی شد. لطفاً صفحه را به‌روزرسانی کنید تا وضعیت اتصال جدید را "
 "مشاهده کنید."
 
-#: admin/class-gicapi-admin.php:454
+#: admin/class-gicapi-admin.php:495
 msgid "Error refreshing token. Please check the API settings and try again."
 msgstr "خطا در نوسازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید."
 
-#: admin/class-gicapi-admin.php:473
+#: admin/class-gicapi-admin.php:514
 msgid "Invalid product or variant ID."
 msgstr "شناسه محصول یا واریانت نامعتبر است."
 
-#: admin/class-gicapi-admin.php:478
+#: admin/class-gicapi-admin.php:519
 msgid "Variant mapped successfully."
 msgstr "واریانت با موفقیت مرتبط شد."
 
@@ -82,10 +82,15 @@ msgid "Orders"
 msgstr "سفارشات"
 
 #: admin/partials/gicapi-admin-display.php:13
+#: admin/partials/gicapi-products-display.php:68
+msgid "Products"
+msgstr "محصولات"
+
+#: admin/partials/gicapi-admin-display.php:14
 msgid "Cron Jobs"
 msgstr "کرون جاب"
 
-#: admin/partials/gicapi-admin-display.php:14
+#: admin/partials/gicapi-admin-display.php:15
 msgid "Display"
 msgstr "نمایش"
 
@@ -184,10 +189,6 @@ msgstr "هیچ محصولی برای این دسته بندی یافت نشد."
 #: admin/partials/gicapi-variants-display.php:30
 msgid "Unknown Category"
 msgstr "دسته بندی ناشناخته"
-
-#: admin/partials/gicapi-products-display.php:68
-msgid "Products"
-msgstr "محصولات"
 
 #: admin/partials/gicapi-products-display.php:78
 #: admin/partials/gicapi-products-display.php:142
@@ -330,8 +331,7 @@ msgid ""
 msgstr ""
 "اگر فروشگاه شما از دامنه واقعی و HTTPS استفاده میکند، سفارشات بطور خودکار "
 "بوسیله وب هوک بروزرسانی میشوند و نیاز به فعالسازی این گزینه ندارید. کرون جاب "
-"ها برای محیط تست/توسعه و یا در جایی که وب هوک های در دسترس نیستند توصیه "
-"میشوند."
+"ها برای محیط تست/توسعه و یا در جایی که وب هوک های در دسترس نیستند توصیه میشوند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:48
 msgid "Update Interval"
@@ -342,8 +342,8 @@ msgid ""
 "How often the system should check for order updates. Recommended: Every 5 "
 "minutes for fastest updates."
 msgstr ""
-"چند وقت یکبار سیستم وضعیت سفارشات را چک کند. پیشنهاد: هر 5 دقیقه برای بهره "
-"بری بالاتر"
+"چند وقت یکبار سیستم وضعیت سفارشات را چک کند. پیشنهاد: هر 5 دقیقه برای بهره بری "
+"بالاتر"
 
 #: admin/partials/settings/gicapi-settings-cron.php:72
 msgid "🕒 Cron Job Status"
@@ -391,8 +391,8 @@ msgid ""
 "Click this button to manually trigger an update of all pending and processing "
 "orders. This is useful for testing or immediate updates."
 msgstr ""
-"برای به‌روزرسانی دستی تمام سفارش‌های در حال انتظار و در حال پردازش، روی این "
-"دکمه کلیک کنید. این گزینه برای آزمایش یا به‌روزرسانی‌های فوری مفید است."
+"برای به‌روزرسانی دستی تمام سفارش‌های در حال انتظار و در حال پردازش، روی این دکمه "
+"کلیک کنید. این گزینه برای آزمایش یا به‌روزرسانی‌های فوری مفید است."
 
 #: admin/partials/settings/gicapi-settings-cron.php:125
 msgid "Troubleshooting"
@@ -432,11 +432,11 @@ msgstr ""
 
 #: admin/partials/settings/gicapi-settings-cron.php:158
 msgid ""
-"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
-"or \"processing\" status."
+"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" or "
+"\"processing\" status."
 msgstr ""
-"این افزونه تمام سفارشات ووکامرس که دارای گیفت کارت هستند و در وضعیت \"در "
-"انتظار\" یا \"در حال پردازش\" قرار دارند را پیدا می‌کند."
+"این افزونه تمام سفارشات ووکامرس که دارای گیفت کارت هستند و در وضعیت \"در انتظار"
+"\" یا \"در حال پردازش\" قرار دارند را پیدا می‌کند."
 
 #: admin/partials/settings/gicapi-settings-cron.php:159
 msgid ""
@@ -472,9 +472,9 @@ msgstr "یادداشت:"
 
 #: admin/partials/settings/gicapi-settings-cron.php:168
 msgid ""
-"This feature requires WordPress cron to be working properly. If you're using "
-"a real cron job, make sure to disable WordPress cron and set up a real cron "
-"job to call wp-cron.php."
+"This feature requires WordPress cron to be working properly. If you're using a "
+"real cron job, make sure to disable WordPress cron and set up a real cron job "
+"to call wp-cron.php."
 msgstr ""
 "این ویژگی نیاز به عملکرد صحیح کرون وردپرس دارد. اگر از کرون جاب وب سرور "
 "استفاده می‌کنید، حتماً کرون وردپرس را غیرفعال کنید و یک کرون جاب لایو برای "
@@ -563,8 +563,8 @@ msgstr "تایید سفارش در وضعیت"
 #: admin/partials/settings/gicapi-settings-orders.php:78
 msgid ""
 "Status to set when confirming Gift-i-Card order. This status will be used to "
-"confirm the order in the Gift-i-Card system. After this status, the order "
-"will be processed."
+"confirm the order in the Gift-i-Card system. After this status, the order will "
+"be processed."
 msgstr ""
 "وضعیتی که سفارش گیفتی کارت تایید شود. این وضعیت برای تایید سفارش در سیستم "
 "گیفتی کارت استفاده میشود. بعد از این وضعیت سفارش پردازش میشود."
@@ -642,6 +642,125 @@ msgstr "تغییر وضعیت سفارش زمانیکه لغو یا منقضی �
 #: admin/partials/settings/gicapi-settings-orders.php:214
 msgid "Status to set when cancelled orders"
 msgstr "سفارش لغو شده به این وضعیت تغییر میکند"
+
+#: admin/partials/settings/gicapi-settings-product.php:17
+msgid "Products Synchronization Settings"
+msgstr "تنظیمات همگام سازی محصولات"
+
+#: admin/partials/settings/gicapi-settings-product.php:18
+msgid ""
+"Configure how Gift-i-Card product statuses should be synchronized with "
+"WooCommerce stock status."
+msgstr ""
+"نحوه همگام‌سازی وضعیت محصولات گیفتی کارت با وضعیت موجودی ووکامرس را پیکربندی "
+"کنید."
+
+#: admin/partials/settings/gicapi-settings-product.php:23
+msgid "Enable Products Synchronization"
+msgstr "همگام سازی محصولات"
+
+#: admin/partials/settings/gicapi-settings-product.php:27
+msgid ""
+"Enable automatic synchronization of Gift-i-Card product statuses with "
+"WooCommerce"
+msgstr "فعال کردن همگام‌سازی خودکار وضعیت محصولات گیفتی کارت با ووکامرس"
+
+#: admin/partials/settings/gicapi-settings-product.php:33
+msgid "Sync Interval (minutes)"
+msgstr "فاصله همگام‌سازی (دقیقه)"
+
+#: admin/partials/settings/gicapi-settings-product.php:37
+msgid "How often to check for product status updates (minimum 30 minutes)"
+msgstr ""
+"هر چند وقت یکبار باید به‌روزرسانی‌های وضعیت محصول را بررسی کنید (حداقل ۳۰ دقیقه)"
+
+#: admin/partials/settings/gicapi-settings-product.php:42
+msgid "Gift-i-Card Status Mapping"
+msgstr "ارتباط وضعیت تحویل گیفتی کارت"
+
+#: admin/partials/settings/gicapi-settings-product.php:43
+msgid ""
+"Configure how each Gift-i-Card delivery status should affect WooCommerce stock "
+"status:"
+msgstr ""
+"پیکربندی کنید که چگونه هر وضعیت تحویل Gift-i-Card باید بر وضعیت موجودی "
+"WooCommerce تأثیر بگذارد:"
+
+#: admin/partials/settings/gicapi-settings-product.php:49
+msgid "Instant Delivery"
+msgstr "تحویل آنی"
+
+#: admin/partials/settings/gicapi-settings-product.php:53
+#: admin/partials/settings/gicapi-settings-product.php:69
+#: admin/partials/settings/gicapi-settings-product.php:85
+#: admin/partials/settings/gicapi-settings-product.php:101
+msgid "No Change"
+msgstr "بدون تغییر"
+
+#: admin/partials/settings/gicapi-settings-product.php:54
+#: admin/partials/settings/gicapi-settings-product.php:70
+#: admin/partials/settings/gicapi-settings-product.php:86
+#: admin/partials/settings/gicapi-settings-product.php:102
+msgid "Change to In Stock"
+msgstr "تغییر به موجود"
+
+#: admin/partials/settings/gicapi-settings-product.php:55
+#: admin/partials/settings/gicapi-settings-product.php:71
+#: admin/partials/settings/gicapi-settings-product.php:87
+#: admin/partials/settings/gicapi-settings-product.php:103
+msgid "Change to On Back Order"
+msgstr "تغییر به پیس خرید"
+
+#: admin/partials/settings/gicapi-settings-product.php:56
+#: admin/partials/settings/gicapi-settings-product.php:72
+#: admin/partials/settings/gicapi-settings-product.php:88
+#: admin/partials/settings/gicapi-settings-product.php:104
+msgid "Change to Out of Stock"
+msgstr "تغییر به ناموجود"
+
+#: admin/partials/settings/gicapi-settings-product.php:58
+msgid "Action when gift card has instant/automatic delivery"
+msgstr "اقدام زمانی که گیفت کارت تحویل فوری/خودکار دارد"
+
+#: admin/partials/settings/gicapi-settings-product.php:65
+msgid "Manual Delivery"
+msgstr "تحویل دستی"
+
+#: admin/partials/settings/gicapi-settings-product.php:74
+msgid "Action when gift card requires operator intervention"
+msgstr "اقدام زمانی که گیفت کارت نیاز به اقدام اپراتور گیفتی کارت دارد"
+
+#: admin/partials/settings/gicapi-settings-product.php:81
+msgid "Out of Stock"
+msgstr "ناموجود"
+
+#: admin/partials/settings/gicapi-settings-product.php:90
+msgid "Action when gift card is out of stock"
+msgstr "اقدام زمانی که گیفت کارت ناموجود است"
+
+#: admin/partials/settings/gicapi-settings-product.php:97
+msgid "Deleted/Not Available"
+msgstr "حذف شده / در دسترس نبودن"
+
+#: admin/partials/settings/gicapi-settings-product.php:106
+msgid "Action when gift card is deleted or not available"
+msgstr "اقداام زمانی که گیفت کارت حذف شده یا در دسترس نیست"
+
+#: admin/partials/settings/gicapi-settings-product.php:111
+msgid "Advanced Settings"
+msgstr "تنظیمات پیشرفته"
+
+#: admin/partials/settings/gicapi-settings-product.php:115
+msgid "Auto Sync on Product Load"
+msgstr "همگام سازی در هنگام لود محصول"
+
+#: admin/partials/settings/gicapi-settings-product.php:119
+msgid ""
+"Automatically sync product status when product page is loaded. This may slow "
+"down the product page loading slightly."
+msgstr ""
+"همگام‌سازی خودکار وضعیت محصول هنگام بارگذاری صفحه محصول. این ممکن است بارگذاری "
+"صفحه محصول را کمی کُند کند."
 
 #: includes/class-gicapi-ajax.php:30 includes/class-gicapi-ajax.php:115
 #: includes/class-gicapi-ajax.php:178 includes/class-gicapi-ajax.php:245
@@ -948,8 +1067,7 @@ msgstr "سفارش به دلیل تکمیل همه آیتم های گیفتی ک
 
 #: includes/class-gicapi-order-manager.php:228
 msgid ""
-"Order completed because all mapped Gift-i-Card items are completed (any-"
-"mapped)"
+"Order completed because all mapped Gift-i-Card items are completed (any-mapped)"
 msgstr "سفارش به دلیل تکمیل همه آیتم ها های گیفتی کارت تکمیل شد (any-mapped)"
 
 #: includes/class-gicapi-order-manager.php:235
@@ -968,8 +1086,7 @@ msgstr "سفارش به دلیل لغو همه آیتم های گیفتی کار
 
 #: includes/class-gicapi-order-manager.php:252
 msgid ""
-"Order cancelled because all mapped Gift-i-Card items are cancelled (any-"
-"mapped)"
+"Order cancelled because all mapped Gift-i-Card items are cancelled (any-mapped)"
 msgstr "سفارش به دلیل لغو همه آیتم های گیفتی کارت لغو شد"
 
 #: includes/class-gicapi-webhook.php:17
