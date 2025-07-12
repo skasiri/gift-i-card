@@ -115,15 +115,8 @@ class GICAPI_API
 
     private function make_request($endpoint, $method = 'GET', $body = array())
     {
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI API] Making request to: ' . $endpoint . ' with method: ' . $method);
-        }
-
         $token = $this->get_token();
         if (!$token) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI API] No token available');
-            }
             return false;
         }
 
@@ -160,38 +153,20 @@ class GICAPI_API
             }
         }
 
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI API] Request URL: ' . $url);
-        }
-
         $response = wp_remote_request($url, $args);
 
         if (is_wp_error($response)) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI API] Request failed: ' . $response->get_error_message());
-            }
             return false;
         }
 
         $response_code = wp_remote_retrieve_response_code($response);
         if ($response_code !== 200) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI API] Response code: ' . $response_code);
-                error_log('[GICAPI API] Response body: ' . wp_remote_retrieve_body($response));
-            }
             return false;
         }
 
         $response_body = wp_remote_retrieve_body($response);
         if (empty($response_body)) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI API] Empty response body');
-            }
             return false;
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI API] Response body: ' . $response_body);
         }
 
         return json_decode(wp_remote_retrieve_body($response), true);
