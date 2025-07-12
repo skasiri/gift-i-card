@@ -1,79 +1,81 @@
 # Gift-i-Card
 
-Gift-i-Card is a WordPress plugin that integrates WooCommerce with the Gifticard service, enabling you to sell and deliver gift cards directly from your WooCommerce store.
+Gift-i-Card integrates WooCommerce with the Gifticard.ir service for international users, enabling automatic gift card order placement, status tracking, and customer delivery.
+
+**Other Languages:** [فارسی (Persian)](README-fa.md)
 
 ## Features
 
-- Support for both simple and variable WooCommerce products (including variations)
-- Map WooCommerce products to Gift-i-Card variants
-- Automatic order placement in Gift-i-Card system and retrieval of purchased codes
-- Automatic WooCommerce order status update based on Gift-i-Card fulfillment
-- Cancel WooCommerce order status automatically when required
+### Support for Simple and Variable WooCommerce Products
+
+- The plugin fully supports mapping both simple and variable WooCommerce products (including product variations) to Gift-i-Card variants.
+
+### Connection Status & Real-Time Wallet Balance
+
+- Admins can view the current connection status to the Gift-i-Card API and see the real-time balance of their Gift-i-Card wallet directly from the plugin dashboard.
+
+### Product Mapping
+
+- Map each WooCommerce product or variation to a specific Gift-i-Card variant using the admin panel.
+- Mapping is managed via AJAX and stored in product meta fields, allowing you to sell exact gift card types from your WooCommerce catalog.
+- The mapping interface supports searching WooCommerce products and linking them to Gift-i-Card variants.
+
+### Product Status Synchronization
+
+- Automatically synchronize Gift-i-Card product availability status with WooCommerce stock status.
+- Configurable status mapping for different Gift-i-Card delivery types (Instant, Manual, Out of Stock, Deleted/Not Available).
+- Scheduled synchronization via WordPress cron jobs (recommended: 2-3 times daily).
+- Manual synchronization option for immediate updates.
+- Real-time status display showing next execution time and current sync status.
+- Automatic stock status updates based on Gift-i-Card inventory changes.
+
+### Automatic Gift Card Order Placement
+
+- When a customer places an order containing mapped products, the plugin automatically sends a purchase request to the Gift-i-Card API for each mapped item.
+- The plugin handles the API response, stores the Gift-i-Card order details (including codes) in the WooCommerce order meta, and adds order notes for tracking.
+
+### Order Status Automation
+
+- The plugin monitors the status of Gift-i-Card orders (via API and webhook).
+- If all mapped items are successfully fulfilled, the WooCommerce order status is automatically set to "completed."
+- If any mapped item fails, the order status can be set to "failed" (configurable).
+- Status updates are handled both by scheduled checks (cron) and real-time webhook notifications from Gift-i-Card.
+- The plugin can automatically set WooCommerce order status to "cancelled" when required (auto-cancellation).
+
+### Display of Purchased Gift Cards
+
+- The purchased gift card codes and related information (serial, card code, redeem link, expiration date, etc.) are displayed to the customer:
+  - In the order confirmation email
+  - On the order details page in the user account
+  - On the "Thank You" page after payment
+- The display is dynamic and only shown for items mapped to Gift-i-Card variants.
+
+### Admin Sync and Management
+
+- Admins can sync categories, products, and variants from the Gift-i-Card API to WordPress for easier mapping and management.
+- There are tools for bulk deletion of plugin data and for manual order management.
+
+### Compatibility
+
 - Fully compatible with both HPOS (High-Performance Order Storage) and the legacy WooCommerce order storage system
-- Display purchased gift card codes in order emails, order details, and thank you page
-- View connection status and real-time Gift-i-Card wallet balance in the admin dashboard
-- Admin tools for syncing categories/products/variants and managing plugin data
-- Supports both production and sandbox environments
 
 ## Setup Requirements
 
-- You need a `base_url`, `consumer_key`, and `consumer_secret` to use the plugin.
-- For production, get your credentials from [gifticard.pro](https://gifticard.pro).
-- For sandbox/testing, you can obtain a sandbox token.
+- To start using the plugin, you need to enter your `base_url`, `consumer_key`, and `consumer_secret` in the plugin settings.
+- For production, get your credentials from [gifticard.ir](https://gifticard.ir).
+- You can also obtain a Sandbox token for testing and development.
 
 ## Installation
 
-1. Upload the plugin files to `/wp-content/plugins/gift-i-card` or install via the WordPress admin panel.
-2. Activate the plugin from the 'Plugins' menu in WordPress.
-3. Go to the Gift-i-Card settings and enter your API credentials.
+1. Upload the plugin files to the `/wp-content/plugins/gift-i-card` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Use the Gift-i-Card menu to configure the plugin.
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 ## Links
 
-- [Gifticard](https://gifticard.pro)
+- [Gifticard](https://gifticard.ir)
 
 ## License
 
 This plugin is licensed under the GPLv2 or later. See the LICENSE file for details.
-
----
-
-## فارسی
-
-### معرفی افزونه
-
-افزونه «گیفتی کارت» فروشگاه ووکامرس شما را به سرویس گیفتیکارت متصل می‌کند و امکان فروش و تحویل آنی انواع گیفت کارت را به مشتریان فراهم می‌سازد.
-
-### امکانات
-
-- پشتیبانی کامل از محصولات ساده و متغیر ووکامرس (و واریانت‌ها)
-- مپ کردن محصولات ووکامرس به واریانت‌های گیفتی کارت
-- ثبت سفارش خودکار در سامانه گیفتی کارت و دریافت کدهای خریداری‌شده
-- تغییر وضعیت خودکار سفارش ووکامرس بر اساس نتیجه سفارش گیفتی کارت
-- امکان لغو خودکار سفارش ووکامرس (تغییر وضعیت به لغو شده)
-- سازگار با HPOS (سیستم جدید ذخیره سفارش ووکامرس) و سیستم قدیمی سفارش‌ها
-- نمایش کدهای گیفت کارت خریداری‌شده در ایمیل سفارش، جزئیات سفارش و صفحه تشکر از پرداخت
-- مشاهده وضعیت اتصال و موجودی لحظه‌ای کیف پول گیفتی کارت در پیشخوان مدیریت
-- ابزارهای مدیریتی برای همگام‌سازی دسته‌بندی‌ها، محصولات و واریانت‌ها و مدیریت داده‌های افزونه
-- پشتیبانی از محیط اصلی (Production) و آزمایشی (Sandbox)
-
-### پیش‌نیازهای راه‌اندازی
-
-- برای استفاده از افزونه باید `base_url`، `consumer_key` و `consumer_secret` را در تنظیمات وارد کنید.
-- برای محیط اصلی، اطلاعات را از [gifticard.ir](https://gifticard.ir) دریافت کنید.
-- برای تست و توسعه، می‌توانید توکن محیط آزمایشی (Sandbox) دریافت کنید.
-
-### نصب
-
-1. فایل‌های افزونه را در مسیر `/wp-content/plugins/gift-i-card` آپلود کنید یا از طریق پیشخوان وردپرس نصب نمایید.
-2. افزونه را از منوی «افزونه‌ها» فعال کنید.
-3. به تنظیمات گیفتی کارت رفته و اطلاعات API را وارد کنید.
-4. محصولات ووکامرس خود را به واریانت‌های گیفتی کارت مپ کنید.
-
-### لینک‌ها
-
-- [گیفتی کارت](https://gifticard.ir)
-
-### مجوز
-
-این افزونه تحت مجوز GPLv2 یا بالاتر منتشر شده است. (فایل LICENSE را ببینید)
