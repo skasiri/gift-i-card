@@ -176,7 +176,7 @@ foreach ($cron_intervals as $interval => $schedule) {
 
                         <?php if ($product_sync_cron_status['enabled'] && $product_sync_cron_status['next_run']): ?>
                             <p>
-                                <strong><?php esc_html_e('Next Execution:', 'gift-i-card'); ?></strong>
+                                <strong><?php esc_html_e('Next Run:', 'gift-i-card'); ?></strong>
                                 <?php echo esc_html($product_sync_cron_status['next_run']); ?>
                             </p>
                         <?php endif; ?>
