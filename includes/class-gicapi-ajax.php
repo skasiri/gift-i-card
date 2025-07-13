@@ -434,8 +434,8 @@ class GICAPI_Ajax
             }
 
             if (isset($result['success']) && $result['success']) {
-                /* translators: 1: Total number of products, 2: Number of successful syncs, 3: Number of failed syncs */
                 $message = sprintf(
+                    /* translators: 1: Total number of products, 2: Number of successful syncs, 3: Number of failed syncs */
                     __('Product sync completed successfully. Total: %1$d, Successful: %2$d, Failed: %3$d', 'gift-i-card'),
                     $result['total_products'],
                     $result['successful_syncs'],
