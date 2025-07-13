@@ -443,6 +443,7 @@ class GICAPI_Ajax
                 );
                 wp_send_json_success($message);
             } else {
+                /* translators: Error message when product sync fails with unknown error */
                 $error_message = isset($result['error']) ? $result['error'] : __('Unknown error occurred during sync', 'gift-i-card');
                 wp_send_json_error($error_message);
             }
