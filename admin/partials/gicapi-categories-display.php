@@ -6,16 +6,6 @@ if (!defined('ABSPATH')) {
 // Define plugin name for this file
 $plugin_name = 'gift-i-card';
 
-// Verify nonce if form is submitted
-if (isset($_GET['s']) || isset($_GET['paged'])) {
-    if (!wp_verify_nonce($_GET['gicapi_nonce'] ?? '', 'gicapi_search_categories')) {
-        wp_die(esc_html__('Security check failed.', 'gift-i-card'));
-    }
-}
-
-// Get search query
-$search = isset($_GET['s']) ? sanitize_text_field(wp_unslash($_GET['s'])) : '';
-
 // Get current page
 $paged = isset($_GET['paged']) ? absint(wp_unslash($_GET['paged'])) : 1;
 $per_page = 20;
@@ -29,13 +19,6 @@ if (!$categories) {
     return;
 }
 
-// Filter categories if search is active
-if ($search) {
-    $categories = array_filter($categories, function ($category) use ($search) {
-        return stripos($category['name'], $search) !== false;
-    });
-}
-
 // Calculate pagination
 $total_categories = count($categories);
 $total_pages = ceil($total_categories / $per_page);
@@ -45,18 +28,6 @@ $categories = array_slice($categories, $offset, $per_page);
 
 <div class="wrap gicapi-admin-page">
     <h1><?php echo esc_html(get_admin_page_title()); ?> - <?php esc_html_e('Categories', 'gift-i-card'); ?></h1>
-
-    <div class="gicapi-toolbar">
-        <form method="get" class="search-form">
-            <?php wp_nonce_field('gicapi_search_categories', 'gicapi_nonce'); ?>
-            <input type="hidden" name="page" value="<?php echo esc_attr($plugin_name . '-products'); ?>">
-            <p class="search-box">
-                <label class="screen-reader-text" for="post-search-input"><?php esc_html_e('Search Categories:', 'gift-i-card'); ?></label>
-                <input type="search" id="post-search-input" name="s" value="<?php echo esc_attr($search); ?>">
-                <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e('Search Categories', 'gift-i-card'); ?>">
-            </p>
-        </form>
-    </div>
 
     <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
@@ -96,8 +67,7 @@ $categories = array_slice($categories, $offset, $per_page);
                     $mapped_products_count = $query->found_posts;
                     wp_reset_postdata();
 
-                    $nonce = wp_create_nonce('gicapi_view_products');
-                    $products_page_url = add_query_arg(array('category' => $category_sku, 'gicapi_nonce' => $nonce), admin_url('admin.php?page=' . $plugin_name . '-products'));
+                    $products_page_url = add_query_arg(array('category' => $category_sku), admin_url('admin.php?page=' . $plugin_name . '-products'));
             ?>
                     <tr>
                         <td class="column-thumbnail">
@@ -121,7 +91,7 @@ $categories = array_slice($categories, $offset, $per_page);
             else :
                 ?>
                 <tr>
-                    <td colspan="4"><?php esc_html_e('No categories found.', 'gift-i-card'); ?></td>
+                    <td colspan="5"><?php esc_html_e('No categories found.', 'gift-i-card'); ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -146,9 +116,8 @@ $categories = array_slice($categories, $offset, $per_page);
                 </span>
                 <span class="pagination-links">
                     <?php
-                    $nonce = wp_create_nonce('gicapi_search_categories');
                     echo wp_kses_post(paginate_links(array(
-                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'paged' => '%#%', 'gicapi_nonce' => $nonce)),
+                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'paged' => '%#%')),
                         'format' => '',
                         'prev_text' => esc_html__('&laquo;', 'gift-i-card'),
                         'next_text' => esc_html__('&raquo;', 'gift-i-card'),

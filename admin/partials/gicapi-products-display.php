@@ -12,13 +12,6 @@ if (!defined('ABSPATH')) {
 // Define plugin name for this file
 $plugin_name = 'gift-i-card';
 
-// Verify nonce if form is submitted
-if (isset($_GET['category']) || isset($_GET['paged'])) {
-    if (!wp_verify_nonce($_GET['gicapi_nonce'] ?? '', 'gicapi_view_products')) {
-        wp_die(esc_html__('Security check failed.', 'gift-i-card'));
-    }
-}
-
 $category_sku = isset($_GET['category']) ? sanitize_text_field(wp_unslash($_GET['category'])) : '';
 $parent_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 
@@ -68,10 +61,6 @@ if (!is_wp_error($categories)) {
         <?php echo esc_html($category_name); ?> - <?php esc_html_e('Products', 'gift-i-card'); ?>
     </h1>
 
-    <div class="gicapi-toolbar">
-        <!-- Add search form here later -->
-    </div>
-
     <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
             <tr>
@@ -115,8 +104,7 @@ if (!is_wp_error($categories)) {
                 $mapped_products_count = $query->found_posts;
                 wp_reset_postdata();
 
-                $nonce = wp_create_nonce('gicapi_view_variants');
-                $variants_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'product' => $product_sku, 'gicapi_nonce' => $nonce));
+                $variants_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'product' => $product_sku));
             ?>
                 <tr>
                     <td class="column-thumbnail">
@@ -157,9 +145,8 @@ if (!is_wp_error($categories)) {
                 </span>
                 <span class="pagination-links">
                     <?php
-                    $nonce = wp_create_nonce('gicapi_view_products');
                     echo wp_kses_post(paginate_links(array(
-                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'paged' => '%#%', 'gicapi_nonce' => $nonce)),
+                        'base' => add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'paged' => '%#%')),
                         'format' => '',
                         'prev_text' => esc_html__('&laquo;', 'gift-i-card'),
                         'next_text' => esc_html__('&raquo;', 'gift-i-card'),

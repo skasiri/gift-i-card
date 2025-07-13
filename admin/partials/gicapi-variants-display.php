@@ -12,13 +12,6 @@ if (!defined('ABSPATH')) {
 // Define plugin name for this file
 $plugin_name = 'gift-i-card';
 
-// Verify nonce if form is submitted
-if (isset($_GET['category']) || isset($_GET['product'])) {
-    if (!wp_verify_nonce($_GET['gicapi_nonce'] ?? '', 'gicapi_view_variants')) {
-        wp_die(esc_html__('Security check failed.', 'gift-i-card'));
-    }
-}
-
 $category_sku = isset($_GET['category']) ? sanitize_text_field(wp_unslash($_GET['category'])) : '';
 $product_sku = isset($_GET['product']) ? sanitize_text_field(wp_unslash($_GET['product'])) : '';
 
@@ -38,8 +31,7 @@ if (!is_wp_error($categories)) {
     }
 }
 
-$nonce = wp_create_nonce('gicapi_view_products');
-$products_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku, 'gicapi_nonce' => $nonce));
+$products_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku));
 $categories_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 
 // Get variants from API
@@ -71,10 +63,6 @@ if (empty($variants)) {
         <a href="<?php echo esc_url($products_page_url); ?>"><?php echo esc_html($category_name); ?></a> &raquo;
         <?php echo esc_html($product_name); ?> - <?php esc_html_e('Variants', 'gift-i-card'); ?>
     </h1>
-
-    <div class="gicapi-toolbar">
-        <!-- Add search form here later -->
-    </div>
 
     <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
