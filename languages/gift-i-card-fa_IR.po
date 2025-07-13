@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-07-13 02:04+0330\n"
-"PO-Revision-Date: 2025-07-13 02:05+0330\n"
+"POT-Creation-Date: 2025-07-13 03:51+0330\n"
+"PO-Revision-Date: 2025-07-13 03:52+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -982,17 +982,19 @@ msgstr "خطا در بروزرسانی وضعیت سفارش گیفتی کارت
 msgid "GICAPI Product Sync class not available"
 msgstr "کلاس GICAPI Product در دسترس نیست"
 
-#: includes/class-gicapi-ajax.php:438
+#: includes/class-gicapi-ajax.php:439
 #, php-format
 msgid ""
-"Product sync completed successfully. Total: %d, Successful: %d, Failed: %d"
-msgstr "همگام‌سازی محصول با موفقیت انجام شد. مجموع: %d، موفق: %d، ناموفق: %d"
+"Product sync completed successfully. Total: %1$d, Successful: %2$d, Failed: "
+"%3$d"
+msgstr ""
+"همگام‌سازی محصول با موفقیت انجام شد. مجموع: %1$d، موفق: %2$d، ناموفق: %3$d"
 
-#: includes/class-gicapi-ajax.php:445
+#: includes/class-gicapi-ajax.php:446
 msgid "Unknown error occurred during sync"
 msgstr "در هنگام همگام سازی خطای ناشناخته رخ داد."
 
-#: includes/class-gicapi-ajax.php:452
+#: includes/class-gicapi-ajax.php:453
 msgid "Failed to sync products: "
 msgstr "خطا همگام سازی محصولات: "
 
