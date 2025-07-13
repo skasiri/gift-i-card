@@ -32,7 +32,7 @@ class GICAPI_Activator
         add_option('gicapi_add_to_thank_you', 'no');
 
         // Cron job settings
-        add_option('gicapi_enable_cron_updates', 'yes');
+        add_option('gicapi_enable_cron_updates', 'no');
         add_option('gicapi_cron_interval', 'gicapi_five_minutes');
 
         // Products synchronization settings

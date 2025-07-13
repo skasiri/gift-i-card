@@ -100,7 +100,7 @@ class GICAPI_Cron
         $configured_interval = get_option('gicapi_cron_interval', $this->cron_interval);
 
         // Check if cron is enabled
-        if (get_option('gicapi_enable_cron_updates', 'yes') !== 'yes') {
+        if (get_option('gicapi_enable_cron_updates', 'no') !== 'yes') {
             return;
         }
 
@@ -286,7 +286,7 @@ class GICAPI_Cron
         $logs = array();
 
         // Check if cron is enabled
-        if (get_option('gicapi_enable_cron_updates', 'yes') !== 'yes') {
+        if (get_option('gicapi_enable_cron_updates', 'no') !== 'yes') {
             $logs[] = 'Cron job is disabled in settings';
             wp_send_json_success(array('logs' => $logs));
             return;
@@ -341,7 +341,7 @@ class GICAPI_Cron
     public function get_cron_status()
     {
         $next_scheduled = wp_next_scheduled($this->cron_hook);
-        $is_enabled = get_option('gicapi_enable_cron_updates', 'yes') === 'yes';
+        $is_enabled = get_option('gicapi_enable_cron_updates', 'no') === 'yes';
         $configured_interval = get_option('gicapi_cron_interval', $this->cron_interval);
 
         return array(
@@ -385,7 +385,7 @@ class GICAPI_Cron
     public function check_and_repair_cron()
     {
         $configured_interval = get_option('gicapi_cron_interval', $this->cron_interval);
-        $is_enabled = get_option('gicapi_enable_cron_updates', 'yes') === 'yes';
+        $is_enabled = get_option('gicapi_enable_cron_updates', 'no') === 'yes';
         $next_scheduled = wp_next_scheduled($this->cron_hook);
 
         // If cron is disabled, unschedule it

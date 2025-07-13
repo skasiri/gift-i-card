@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Cron job settings
-$enable_cron_updates = get_option('gicapi_enable_cron_updates', 'yes');
+$enable_cron_updates = get_option('gicapi_enable_cron_updates', 'no');
 $cron_interval = get_option('gicapi_cron_interval', 'gicapi_five_minutes');
 
 // Product sync settings
