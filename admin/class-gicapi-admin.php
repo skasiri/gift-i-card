@@ -90,6 +90,8 @@ class GICAPI_Admin
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gicapi_admin_nonce'),
             'force_refresh_token_nonce' => wp_create_nonce('gicapi_force_refresh_token_action'),
+            'map_variant_nonce' => wp_create_nonce('gicapi_map_variant'),
+            'view_products_nonce' => wp_create_nonce('gicapi_view_products'),
             'text_refreshing_token' => __('Refreshing token...', 'gift-i-card'),
             'text_error_unknown' => __('An unknown error occurred.', 'gift-i-card'),
             'text_error_server_communication' => __('Error communicating with server: ', 'gift-i-card')
@@ -133,7 +135,14 @@ class GICAPI_Admin
     {
         // Only show on plugin pages
         $screen = get_current_screen();
-        $current_page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+
+        // Safely get the page parameter for display purposes
+        $current_page = '';
+        if (isset($_GET['page'])) {
+            // For display purposes, we can safely use the page parameter
+            // as it's only used to determine if we're on a plugin page
+            $current_page = sanitize_text_field(wp_unslash($_GET['page']));
+        }
 
         // Check if we're on a plugin page
         $is_plugin_page = false;
@@ -301,6 +310,17 @@ class GICAPI_Admin
         return max(30, min(1440, $interval)); // Ensure interval is between 30 and 1440 minutes
     }
 
+    /**
+     * Generate nonce for admin page access
+     *
+     * @param string $action The action name for the nonce
+     * @return string The nonce value
+     */
+    public function get_admin_nonce($action)
+    {
+        return wp_create_nonce($action);
+    }
+
     public function display_plugin_setup_page()
     {
         // Determine connection status to pass to the view
@@ -316,6 +336,7 @@ class GICAPI_Admin
 
     public function display_plugin_products_page()
     {
+        // Get parameters safely - nonce verification is handled in the partial files
         $category_sku = isset($_GET['category']) ? sanitize_text_field(wp_unslash($_GET['category'])) : '';
         $product_sku = isset($_GET['product']) ? sanitize_text_field(wp_unslash($_GET['product'])) : '';
 
@@ -499,7 +520,11 @@ class GICAPI_Admin
 
     public function ajax_map_variant()
     {
-        check_ajax_referer('gicapi_map_variant', 'nonce');
+        // Verify nonce for security
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'gicapi_map_variant')) {
+            wp_send_json_error(__('Security check failed. Please try again.', 'gift-i-card'));
+            return;
+        }
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(__('You do not have permission to perform this action.', 'gift-i-card'));

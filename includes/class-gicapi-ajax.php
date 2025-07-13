@@ -70,7 +70,7 @@ class GICAPI_Ajax
                         case 'variation':
                             $parent_product = wc_get_product($product->get_parent_id());
                             if ($parent_product) {
-                                // translators: %s: parent product name
+                                /* translators: %s: parent product name */
                                 $type_label = sprintf(__('Variation of: %s', 'gift-i-card'), $parent_product->get_name());
                             } else {
                                 $type_label = __('Product Variation', 'gift-i-card');
