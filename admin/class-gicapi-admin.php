@@ -161,7 +161,7 @@ class GICAPI_Admin
         $api = new GICAPI_API();
         $response = $api->get_balance();
         // echo 'response: ' . json_encode($response);
-        $is_connected = ($response && isset($response['balance']) && $response['balance']);
+        $is_connected = ($response && isset($response['currency']) && $response['currency']);
 
         if ($is_connected) {
             $balance = number_format($response['balance'], 0, '.', ',');
