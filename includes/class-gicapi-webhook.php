@@ -135,7 +135,6 @@ class GICAPI_Webhook
 
         // Log webhook access for security monitoring
         $remote_addr = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : 'unknown';
-        error_log('GICAPI Webhook access from: ' . $remote_addr . ' - User-Agent: ' . $user_agent);
 
         // For now, allow all requests but log them
         // In production, you should implement proper authentication

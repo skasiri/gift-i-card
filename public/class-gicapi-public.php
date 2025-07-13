@@ -296,16 +296,8 @@ class GICAPI_Public
      */
     public function auto_sync_product_status()
     {
-        // Debug logging
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Auto Sync] Function called');
-        }
-
         // Simple check for auto sync enabled
         if (get_option('gicapi_auto_sync_enabled', 'no') !== 'yes') {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Auto Sync] Auto sync disabled');
-            }
             return;
         }
 
@@ -323,21 +315,11 @@ class GICAPI_Public
         }
 
         if (!$product_id) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Auto Sync] No product ID found');
-            }
             return;
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Auto Sync] Product ID: ' . $product_id);
         }
 
         // Only proceed if we have the required classes
         if (!class_exists('GICAPI_Order') || !class_exists('GICAPI_Product_Sync')) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Auto Sync] Required classes not found');
-            }
             return;
         }
 
@@ -346,78 +328,36 @@ class GICAPI_Public
             $product_sync = GICAPI_Product_Sync::get_instance();
 
             if (!$gicapi_order || !$product_sync) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Auto Sync] Failed to get instances');
-                }
                 return;
             }
 
             // Get product object to check type
             $product_obj = wc_get_product($product_id);
             if (!$product_obj) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Auto Sync] No product object found');
-                }
                 return;
             }
 
             $product_type = $product_obj->get_type();
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Auto Sync] Product type: ' . $product_type);
-            }
 
             // Handle variable products
             if ($product_obj->is_type('variable')) {
                 $children = $product_obj->get_children();
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Auto Sync] Variable product with ' . count($children) . ' variations');
-                }
 
                 foreach ($children as $variation_id) {
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Auto Sync] Checking variation: ' . $variation_id);
-                    }
-
                     $variant_sku = $gicapi_order->get_mapped_variant_sku($product_id, $variation_id);
                     if ($variant_sku) {
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Auto Sync] Found mapping for variation ' . $variation_id . ': ' . $variant_sku);
-                        }
                         $result = $product_sync->sync_single_product($product_id, $variation_id);
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Auto Sync] Sync result for variation ' . $variation_id . ': ' . ($result ? 'SUCCESS' : 'FAILED'));
-                        }
-                    } else {
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Auto Sync] No mapping found for variation: ' . $variation_id);
-                        }
                     }
                 }
             } else {
                 // Handle simple products
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Auto Sync] Simple product');
-                }
-
                 $variant_sku = $gicapi_order->get_mapped_variant_sku($product_id, 0);
                 if ($variant_sku) {
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Auto Sync] Found mapping for product ' . $product_id . ': ' . $variant_sku);
-                    }
                     $result = $product_sync->sync_single_product($product_id);
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Auto Sync] Sync result for product ' . $product_id . ': ' . ($result ? 'SUCCESS' : 'FAILED'));
-                    }
-                } else {
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Auto Sync] No mapping found for product: ' . $product_id);
-                    }
                 }
             }
         } catch (Exception $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Auto Sync] Exception: ' . $e->getMessage());
-            }
+            // Exception handling without logging
         }
     }
 }

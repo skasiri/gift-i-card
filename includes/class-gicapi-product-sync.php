@@ -41,19 +41,11 @@ class GICAPI_Product_Sync
      */
     public function sync_product_status($product_id, $variation_id = 0, $gic_status = null, $api_result = null)
     {
-        // Debug logging
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Sync Status] Starting sync for product ' . $product_id . ' variation ' . $variation_id);
-        }
-
         // Determine which product to sync (variation or main product)
         $sync_product_id = $variation_id > 0 ? $variation_id : $product_id;
         $product = wc_get_product($sync_product_id);
 
         if (!$product) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Sync Status] Product not found: ' . $sync_product_id);
-            }
             return array(
                 'success' => false,
                 'error' => 'WooCommerce product not found',
@@ -63,24 +55,14 @@ class GICAPI_Product_Sync
 
         // Get Gift-i-Card status if not provided
         if ($gic_status === null) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Sync Status] Getting GIC status for product ' . $product_id . ' variation ' . $variation_id);
-            }
             $gic_status = $this->get_gic_product_status($product_id, $variation_id, $api_result);
             if ($gic_status === false) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Sync Status] Failed to get GIC status for product ' . $product_id);
-                }
                 return array(
                     'success' => false,
                     'error' => 'Failed to get Gift-i-Card product status',
                     'product_id' => $sync_product_id
                 );
             }
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Sync Status] GIC status for product ' . $product_id . ': ' . $gic_status);
         }
 
         // Get status mapping from settings
@@ -105,15 +87,8 @@ class GICAPI_Product_Sync
      */
     private function get_gic_product_status($product_id, $variation_id = 0, $api_result = null)
     {
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Get Status] Getting status for product ' . $product_id . ' variation ' . $variation_id);
-        }
-
         $product = wc_get_product($product_id);
         if (!$product) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Get Status] Product not found: ' . $product_id);
-            }
             return false;
         }
 
@@ -122,61 +97,30 @@ class GICAPI_Product_Sync
         $variant_sku = $gicapi_order->get_mapped_variant_sku($product_id, $variation_id);
 
         if (!$variant_sku) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Get Status] No mapped SKU found for product ' . $product_id . ' variation ' . $variation_id);
-            }
             return false;
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Get Status] Found mapped SKU: ' . $variant_sku);
         }
 
         // Get product status from Gift-i-Card API
         // For variants, we need to get the parent product SKU first
         $parent_sku = $this->get_parent_sku_from_variant_sku($variant_sku, $product_id, $variation_id);
         if (!$parent_sku) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Get Status] Failed to get parent SKU for variant SKU: ' . $variant_sku);
-            }
             return false;
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Get Status] Parent SKU: ' . $parent_sku);
         }
 
         // Use cached API result if provided, otherwise make API call
         if ($api_result !== null) {
             $api_response = $api_result;
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Get Status] Using cached API result for parent SKU: ' . $parent_sku);
-            }
         } else {
             $api_response = $this->api->get_variants($parent_sku);
             if (!$api_response) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Get Status] API call failed for parent SKU: ' . $parent_sku);
-                }
                 return false;
-            }
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Get Status] API response received for parent SKU: ' . $parent_sku);
             }
         }
 
         // Find the specific variant in the response
         $variant_status = $this->find_variant_status_in_response($api_response, $variant_sku);
         if ($variant_status === false) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Get Status] Variant SKU not found in API response: ' . $variant_sku . ' (parent SKU: ' . $parent_sku . ')');
-                error_log('[GICAPI Get Status] This variant may not be available in the API or may be mapped to a different parent SKU');
-            }
             return false;
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Get Status] Found variant status: ' . $variant_status . ' for SKU: ' . $variant_sku);
         }
 
         return $variant_status;
@@ -192,36 +136,19 @@ class GICAPI_Product_Sync
      */
     private function get_parent_sku_from_variant_sku($variant_sku, $product_id, $variation_id = 0)
     {
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Parent SKU] Getting parent SKU for variant SKU: ' . $variant_sku . ' product: ' . $product_id . ' variation: ' . $variation_id);
-        }
-
         // Get the product object
         $product = wc_get_product($product_id);
         if (!$product) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Parent SKU] Product not found: ' . $product_id);
-            }
             return false;
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Parent SKU] Product type: ' . $product->get_type());
         }
 
         // If this is a simple product, use the variant SKU as-is
         if ($product->is_type('simple')) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Parent SKU] Simple product, using variant SKU as parent: ' . $variant_sku);
-            }
             return $variant_sku;
         }
 
         // If this is a variable product, we need to get the parent product SKU
         if ($product->is_type('variable')) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Parent SKU] Variable product, searching for parent SKU');
-            }
 
             // For variable products, we need to find the parent product SKU
             // Get all mapped products that have this variant SKU
@@ -240,33 +167,18 @@ class GICAPI_Product_Sync
 
             $query = new WP_Query($args);
             if ($query->have_posts()) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Parent SKU] Found ' . $query->post_count . ' products with variant SKU: ' . $variant_sku);
-                }
-
                 while ($query->have_posts()) {
                     $query->the_post();
                     $mapped_product_id = get_the_ID();
                     $mapped_product = wc_get_product($mapped_product_id);
 
                     if ($mapped_product) {
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Parent SKU] Checking mapped product: ' . $mapped_product_id);
-                        }
-
                         // Get the parent product SKU from the mapping
                         $mapped_category_skus = get_post_meta($mapped_product_id, '_gicapi_mapped_category_skus', true);
                         $mapped_product_skus = get_post_meta($mapped_product_id, '_gicapi_mapped_product_skus', true);
 
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Parent SKU] Mapped product SKUs: ' . print_r($mapped_product_skus, true));
-                        }
-
                         if (is_array($mapped_product_skus) && !empty($mapped_product_skus)) {
                             $parent_sku = reset($mapped_product_skus);
-                            if (defined('WP_DEBUG') && WP_DEBUG) {
-                                error_log('[GICAPI Parent SKU] Found parent SKU: ' . $parent_sku);
-                            }
                             wp_reset_postdata();
                             return $parent_sku;
                         }
@@ -279,9 +191,6 @@ class GICAPI_Product_Sync
                                 $child_skus = get_post_meta($child_id, '_gicapi_mapped_product_skus', true);
                                 if (is_array($child_skus) && !empty($child_skus)) {
                                     $parent_sku = reset($child_skus);
-                                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                                        error_log('[GICAPI Parent SKU] Found parent SKU from child variation: ' . $parent_sku . ' (variation: ' . $child_id . ')');
-                                    }
                                     wp_reset_postdata();
                                     return $parent_sku;
                                 }
@@ -289,10 +198,6 @@ class GICAPI_Product_Sync
                         }
 
                         // If no parent SKU found in mapped product or its variations, try fallback logic
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Parent SKU] No parent SKU found in mapped product or its variations, trying fallback logic');
-                        }
-
                         // Try to extract parent SKU from variant SKU pattern (e.g., GC-1038020 -> GC-101328)
                         // This assumes the variant SKU follows a pattern where parent SKU can be derived
                         if (preg_match('/^GC-10(\d+)/', $variant_sku, $matches)) {
@@ -301,10 +206,6 @@ class GICAPI_Product_Sync
                             // For GC-101359, we want GC-101328, so we need to extract the base product number
                             $base_product_number = substr($product_number, 0, -3);
                             $extracted_parent_sku = 'GC-10' . $base_product_number . '328';
-
-                            if (defined('WP_DEBUG') && WP_DEBUG) {
-                                error_log('[GICAPI Parent SKU] Extracted potential parent SKU: ' . $extracted_parent_sku);
-                            }
 
                             // Verify this parent SKU exists in our mappings
                             $verify_args = array(
@@ -322,9 +223,6 @@ class GICAPI_Product_Sync
 
                             $verify_query = new WP_Query($verify_args);
                             if ($verify_query->have_posts()) {
-                                if (defined('WP_DEBUG') && WP_DEBUG) {
-                                    error_log('[GICAPI Parent SKU] Verified extracted parent SKU exists: ' . $extracted_parent_sku);
-                                }
                                 wp_reset_postdata();
                                 return $extracted_parent_sku;
                             }
@@ -333,25 +231,15 @@ class GICAPI_Product_Sync
                     }
                 }
             } else {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Parent SKU] No products found with variant SKU: ' . $variant_sku);
-                }
+                wp_reset_postdata();
             }
             wp_reset_postdata();
         }
 
         // If this is a variation, get the parent product
         if ($product->is_type('variation')) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Parent SKU] Variation product, getting parent');
-            }
-
             $parent_id = $product->get_parent_id();
             if ($parent_id) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Parent SKU] Parent ID: ' . $parent_id);
-                }
-
                 // For variations, we need to find the parent product SKU
                 // Get all mapped products that have this variant SKU
                 $args = array(
@@ -369,45 +257,26 @@ class GICAPI_Product_Sync
 
                 $query = new WP_Query($args);
                 if ($query->have_posts()) {
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Parent SKU] Found ' . $query->post_count . ' products with variant SKU: ' . $variant_sku);
-                    }
-
                     while ($query->have_posts()) {
                         $query->the_post();
                         $mapped_product_id = get_the_ID();
                         $mapped_product = wc_get_product($mapped_product_id);
 
                         if ($mapped_product) {
-                            if (defined('WP_DEBUG') && WP_DEBUG) {
-                                error_log('[GICAPI Parent SKU] Checking mapped product: ' . $mapped_product_id);
-                            }
-
                             // For variations, we need to get the parent product SKU from the actual parent product's mapping
                             // The mapped product is a variation, so we need to get the parent SKU from the actual parent product
                             $actual_parent_id = $product_id; // This is the actual product we're syncing
                             if ($actual_parent_id) {
                                 $actual_parent_product_skus = get_post_meta($actual_parent_id, '_gicapi_mapped_product_skus', true);
 
-                                if (defined('WP_DEBUG') && WP_DEBUG) {
-                                    error_log('[GICAPI Parent SKU] Actual parent product SKUs: ' . print_r($actual_parent_product_skus, true));
-                                }
-
                                 if (is_array($actual_parent_product_skus) && !empty($actual_parent_product_skus)) {
                                     $parent_sku = reset($actual_parent_product_skus);
-                                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                                        error_log('[GICAPI Parent SKU] Found parent SKU from actual parent: ' . $parent_sku);
-                                    }
                                     wp_reset_postdata();
                                     return $parent_sku;
                                 }
 
                                 // If the actual parent doesn't have mapped product SKUs, try to find any parent product that has this variant SKU
                                 // This handles cases where the parent product mapping is missing
-                                if (defined('WP_DEBUG') && WP_DEBUG) {
-                                    error_log('[GICAPI Parent SKU] Actual parent has no mapped SKUs, searching for any parent with this variant');
-                                }
-
                                 // Search for any product that has this variant SKU and has mapped product SKUs
                                 $search_args = array(
                                     'post_type' => array('product', 'product_variation'),
@@ -436,9 +305,6 @@ class GICAPI_Product_Sync
 
                                         if (is_array($found_product_skus) && !empty($found_product_skus)) {
                                             $parent_sku = reset($found_product_skus);
-                                            if (defined('WP_DEBUG') && WP_DEBUG) {
-                                                error_log('[GICAPI Parent SKU] Found parent SKU from search: ' . $parent_sku . ' (product: ' . $found_product_id . ')');
-                                            }
                                             wp_reset_postdata();
                                             return $parent_sku;
                                         }
@@ -448,10 +314,6 @@ class GICAPI_Product_Sync
 
                                 // If still no parent SKU found, try to extract parent SKU from the variant SKU itself
                                 // This is a fallback for cases where the mapping is incomplete
-                                if (defined('WP_DEBUG') && WP_DEBUG) {
-                                    error_log('[GICAPI Parent SKU] No parent SKU found in mappings, trying to extract from variant SKU: ' . $variant_sku);
-                                }
-
                                 // Try to extract parent SKU from variant SKU pattern (e.g., GC-1038020 -> GC-101328)
                                 // This assumes the variant SKU follows a pattern where parent SKU can be derived
                                 if (preg_match('/^GC-10(\d+)/', $variant_sku, $matches)) {
@@ -460,10 +322,6 @@ class GICAPI_Product_Sync
                                     // For GC-101359, we want GC-101328, so we need to extract the base product number
                                     $base_product_number = substr($product_number, 0, -3);
                                     $extracted_parent_sku = 'GC-10' . $base_product_number . '328';
-
-                                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                                        error_log('[GICAPI Parent SKU] Extracted potential parent SKU: ' . $extracted_parent_sku);
-                                    }
 
                                     // Verify this parent SKU exists in our mappings
                                     $verify_args = array(
@@ -481,9 +339,6 @@ class GICAPI_Product_Sync
 
                                     $verify_query = new WP_Query($verify_args);
                                     if ($verify_query->have_posts()) {
-                                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                                            error_log('[GICAPI Parent SKU] Verified extracted parent SKU exists: ' . $extracted_parent_sku);
-                                        }
                                         wp_reset_postdata();
                                         return $extracted_parent_sku;
                                     }
@@ -493,20 +348,12 @@ class GICAPI_Product_Sync
                         }
                     }
                 } else {
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Parent SKU] No products found with variant SKU: ' . $variant_sku);
-                    }
+                    wp_reset_postdata();
                 }
                 wp_reset_postdata();
             } else {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Parent SKU] No parent ID found for variation');
-                }
+                wp_reset_postdata();
             }
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Parent SKU] No parent SKU found, returning false');
         }
 
         return false;
@@ -521,26 +368,11 @@ class GICAPI_Product_Sync
      */
     private function find_variant_status_in_response($api_response, $variant_sku)
     {
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Find Variant] Looking for variant SKU: ' . $variant_sku);
-            error_log('[GICAPI Find Variant] API response type: ' . gettype($api_response));
-            error_log('[GICAPI Find Variant] API response structure: ' . print_r($api_response, true));
-        }
-
         // Check if response is an array of variants (direct array)
         if (is_array($api_response) && !empty($api_response)) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Find Variant] Checking direct array response with ' . count($api_response) . ' items');
-            }
             foreach ($api_response as $index => $variant) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Find Variant] Checking variant ' . $index . ': ' . print_r($variant, true));
-                }
                 if (isset($variant['sku']) && $variant['sku'] === $variant_sku) {
                     $status = isset($variant['stock_status']) ? $variant['stock_status'] : false;
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Find Variant] Found variant in direct array, status: ' . $status);
-                    }
                     return $status;
                 }
             }
@@ -548,18 +380,9 @@ class GICAPI_Product_Sync
 
         // If response has variants array, search for the specific variant
         if (isset($api_response['variants']) && is_array($api_response['variants'])) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Find Variant] Checking variants array with ' . count($api_response['variants']) . ' items');
-            }
             foreach ($api_response['variants'] as $index => $variant) {
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log('[GICAPI Find Variant] Checking variant ' . $index . ': ' . print_r($variant, true));
-                }
                 if (isset($variant['sku']) && $variant['sku'] === $variant_sku) {
                     $status = isset($variant['stock_status']) ? $variant['stock_status'] : false;
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Find Variant] Found variant in variants array, status: ' . $status);
-                    }
                     return $status;
                 }
             }
@@ -567,15 +390,9 @@ class GICAPI_Product_Sync
 
         // If response has a single status field (for simple products)
         if (isset($api_response['status'])) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Find Variant] Found single status field: ' . $api_response['status']);
-            }
             return $api_response['status'];
         }
 
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Find Variant] Variant SKU not found in API response: ' . $variant_sku);
-        }
         return false;
     }
 
@@ -703,17 +520,6 @@ class GICAPI_Product_Sync
             $product->update_meta_data('_gicapi_last_sync', $log_data);
             $product->save();
         }
-
-        // Log to WordPress debug log if enabled
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log(sprintf(
-                '[GICAPI Product Sync] Product %d: %s -> %s (%s)',
-                $product_id,
-                $gic_status,
-                $target_status,
-                $success ? 'SUCCESS' : 'FAILED'
-            ));
-        }
     }
 
     /**
@@ -776,17 +582,8 @@ class GICAPI_Product_Sync
         // 2. For each unique SKU, call get_variants only once and cache the result
         $api = GICAPI_API::get_instance();
         $sku_api_results = array();
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Cache] Unique SKUs to fetch: ' . print_r($unique_skus, true));
-        }
         foreach ($unique_skus as $sku) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Cache] Fetching API data for SKU: ' . $sku);
-            }
             $sku_api_results[$sku] = $api->get_variants($sku);
-        }
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Cache] Cached API results for SKUs: ' . print_r(array_keys($sku_api_results), true));
         }
 
         $results = array(
@@ -815,17 +612,11 @@ class GICAPI_Product_Sync
                     if ($variant_sku) {
                         // Use cached API result for this SKU
                         $api_result = isset($sku_api_results[$variant_sku]) ? $sku_api_results[$variant_sku] : null;
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Cache] Using cached API result for variant SKU: ' . $variant_sku . ' (cached: ' . ($api_result !== null ? 'YES' : 'NO') . ')');
-                        }
                         $result = $this->sync_single_product_with_api_result($product_id, $variation_id, $api_result);
                         if ($result === 'success') {
                             $results['successful_syncs']++;
                         } elseif ($result === 'missing_variant') {
                             // Don't count missing variants as failures - they're just not available in the API
-                            if (defined('WP_DEBUG') && WP_DEBUG) {
-                                error_log('[GICAPI Sync] Variant not available in API - skipping: ' . $variation_id);
-                            }
                         } else {
                             $results['failed_syncs']++;
                             $results['errors'][] = array(
@@ -846,9 +637,6 @@ class GICAPI_Product_Sync
                         $results['successful_syncs']++;
                     } elseif ($result === 'missing_variant') {
                         // Don't count missing variants as failures - they're just not available in the API
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log('[GICAPI Sync] Product not available in API - skipping: ' . $product_id);
-                        }
                     } else {
                         $results['failed_syncs']++;
                         $results['errors'][] = array(
@@ -868,18 +656,11 @@ class GICAPI_Product_Sync
     // New helper to sync a single product using a cached API result
     public function sync_single_product_with_api_result($product_id, $variation_id = 0, $api_result = null)
     {
-        // Debug logging
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Sync Single] Starting sync for product ' . $product_id . ' variation ' . $variation_id . ' (with cached API result)');
-        }
         // Use the cached API result if provided, otherwise fallback to normal logic
         if ($api_result !== null) {
             $result = $this->sync_product_status($product_id, $variation_id, null, $api_result);
         } else {
             $result = $this->sync_product_status($product_id, $variation_id);
-        }
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Sync Single] Sync result for product ' . $product_id . ': ' . ($result['success'] ? 'SUCCESS' : 'FAILED - ' . $result['error']));
         }
 
         // Check if the failure is due to missing variant in API
@@ -929,16 +710,7 @@ class GICAPI_Product_Sync
      */
     public function sync_single_product($product_id, $variation_id = 0)
     {
-        // Debug logging
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Sync Single] Starting sync for product ' . $product_id . ' variation ' . $variation_id);
-        }
-
         $result = $this->sync_product_status($product_id, $variation_id);
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Sync Single] Sync result for product ' . $product_id . ': ' . ($result['success'] ? 'SUCCESS' : 'FAILED - ' . $result['error']));
-        }
 
         return $result['success'];
     }
@@ -984,10 +756,7 @@ class GICAPI_Product_Sync
         // Merge and deduplicate
         $all_mapped_products = array_unique(array_merge($new_mapped_products, $old_mapped_products));
 
-        // Debug logging to see what products are found
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Get All Mapped] Found products: ' . print_r($all_mapped_products, true));
-        }
+
 
         // Filter out invalid product IDs and separate products from variations
         $valid_products = array();
@@ -1009,22 +778,13 @@ class GICAPI_Product_Sync
                 }
 
                 if (!$has_valid_mapping) {
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Get All Mapped] Skipping product ' . $product_id . ' - no valid mapped SKUs');
-                    }
                     continue;
                 }
 
                 if ($product->is_type('variation')) {
                     $variations[] = (int) $product_id;
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Get All Mapped] Found variation: ' . $product_id . ' (parent: ' . $product->get_parent_id() . ')');
-                    }
                 } else {
                     $valid_products[] = (int) $product_id;
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Get All Mapped] Found product: ' . $product_id . ' (type: ' . $product->get_type() . ')');
-                    }
                 }
             }
         }
@@ -1038,19 +798,12 @@ class GICAPI_Product_Sync
                 $parent_id = $variation->get_parent_id();
                 if ($parent_id && !in_array($parent_id, $parent_ids)) {
                     $parent_ids[] = $parent_id;
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log('[GICAPI Get All Mapped] Added parent for variation: ' . $variation_id . ' -> parent: ' . $parent_id);
-                    }
                 }
             }
         }
 
         // Merge products and parent IDs, removing duplicates
         $final_products = array_unique(array_merge($valid_products, $parent_ids));
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Get All Mapped] Final products to sync: ' . print_r($final_products, true));
-        }
 
         return $final_products;
     }

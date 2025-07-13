@@ -402,8 +402,7 @@ class GICAPI_Admin
         wp_reset_postdata();
 
         if (!is_array($api_items)) {
-            // error_log("GICAPI Sync: API items was not an array for post type {$post_type}.");
-            $api_items = []; // Ensure it's an array to prevent errors
+            // Ensure it's an array to prevent errors
         }
 
         foreach ($api_items as $api_item) {
@@ -413,7 +412,6 @@ class GICAPI_Admin
             $sku_value = isset($meta_input_base[$sku_meta_key]) ? trim($meta_input_base[$sku_meta_key]) : null;
 
             if (!$sku_value) { // Skip if SKU is not present or empty after trim
-                // error_log("GICAPI Sync: SKU missing or empty for an API item. Post Type: {$post_type}. Item: " . print_r($api_item, true));
                 continue;
             }
             $processed_skus[] = $sku_value;
@@ -446,8 +444,6 @@ class GICAPI_Admin
                         add_post_meta($new_post_id, $key, wp_slash($value), true);
                     }
                     delete_post_meta($new_post_id, '_gicapi_is_deleted');
-                } else {
-                    // error_log("GICAPI Sync: Error inserting post. Post Type: {$post_type}. SKU: {$sku_value}. Error: " . $new_post_id->get_error_message());
                 }
             }
         }

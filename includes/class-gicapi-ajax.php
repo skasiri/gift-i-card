@@ -401,11 +401,6 @@ class GICAPI_Ajax
 
     public function manual_sync_products()
     {
-        // Debug logging
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Manual Sync] Function called');
-        }
-
         check_ajax_referer('gicapi_manual_sync_products', 'nonce');
 
         if (!current_user_can('manage_woocommerce')) {
@@ -415,23 +410,12 @@ class GICAPI_Ajax
         // Get the product sync class instance
         $product_sync = GICAPI_Product_Sync::get_instance();
         if (!$product_sync) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Manual Sync] Product Sync class not available');
-            }
             wp_send_json_error(__('GICAPI Product Sync class not available', 'gift-i-card'));
-        }
-
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[GICAPI Manual Sync] Product Sync class found');
         }
 
         try {
             // Call the sync_all_products method
             $result = $product_sync->sync_all_products();
-
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Manual Sync] Sync result: ' . print_r($result, true));
-            }
 
             if (isset($result['success']) && $result['success']) {
                 $message = sprintf(
@@ -448,9 +432,6 @@ class GICAPI_Ajax
                 wp_send_json_error($error_message);
             }
         } catch (Exception $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[GICAPI Manual Sync] Exception: ' . $e->getMessage());
-            }
             wp_send_json_error(__('Failed to sync products: ', 'gift-i-card') . $e->getMessage());
         }
     }
