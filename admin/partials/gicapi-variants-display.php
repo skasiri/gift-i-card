@@ -141,7 +141,7 @@ if (empty($variants)) {
                                 ?>
                                     <?php foreach ($mapped_products as $product) : ?>
                                         <div class="gicapi-mapped-product-item">
-                                            <a href="<?php echo esc_url(get_edit_post_link($product->get_id())); ?>" target="_blank">
+                                            <a href="<?php echo esc_url(get_permalink($product->get_id())); ?>" target="_blank">
                                                 <?php echo esc_html($product->get_name()); ?> (<?php echo esc_html($product->get_sku()); ?>)
                                             </a>
                                             <span class="gicapi-remove-mapping" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-product-id="<?php echo esc_attr($product->get_id()); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>">
