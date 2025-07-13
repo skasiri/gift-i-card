@@ -37,6 +37,7 @@ $categories = array_slice($categories, $offset, $per_page);
                 <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Product Count', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Mapped Products', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Mapped Variants', 'gift-i-card'); ?></th>
             </tr>
         </thead>
         <tbody id="the-list">
@@ -48,9 +49,9 @@ $categories = array_slice($categories, $offset, $per_page);
                     $category_count = $category['count'];
                     $category_thumbnail = isset($category['thumbnail']) ? $category['thumbnail'] : '';
 
-                    // Count mapped products for this category
+                    // Count mapped products for this category (unique product_sku identifiers)
                     $mapped_products_count = 0;
-                    $args = array(
+                    $args_products = array(
                         'post_type' => array('product', 'product_variation'),
                         'post_status' => 'publish',
                         'posts_per_page' => -1,
@@ -60,11 +61,61 @@ $categories = array_slice($categories, $offset, $per_page);
                                 'value' => $category_sku,
                                 'compare' => 'LIKE'
                             )
+                        )
+                    );
+                    $query_products = new WP_Query($args_products);
+                    $unique_product_skus = array();
+
+                    if ($query_products->have_posts()) {
+                        while ($query_products->have_posts()) {
+                            $query_products->the_post();
+                            $product_skus = get_post_meta(get_the_ID(), '_gicapi_mapped_product_skus', true);
+
+                            // Handle both array and string formats
+                            if (is_array($product_skus)) {
+                                foreach ($product_skus as $sku) {
+                                    if (!empty($sku)) {
+                                        $unique_product_skus[] = $sku;
+                                    }
+                                }
+                            } elseif (is_string($product_skus) && !empty($product_skus)) {
+                                // Handle comma-separated string format
+                                $skus = explode(',', $product_skus);
+                                foreach ($skus as $sku) {
+                                    $sku = trim($sku);
+                                    if (!empty($sku)) {
+                                        $unique_product_skus[] = $sku;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    wp_reset_postdata();
+
+                    $mapped_products_count = count(array_unique($unique_product_skus));
+
+                    // Count mapped variants for this category (all variations and products with variant mappings)
+                    $mapped_variants_count = 0;
+                    $args_variants = array(
+                        'post_type' => array('product', 'product_variation'),
+                        'post_status' => 'publish',
+                        'posts_per_page' => -1,
+                        'meta_query' => array(
+                            'relation' => 'AND',
+                            array(
+                                'key' => '_gicapi_mapped_category_skus',
+                                'value' => $category_sku,
+                                'compare' => 'LIKE'
+                            ),
+                            array(
+                                'key' => '_gicapi_mapped_variant_skus',
+                                'compare' => 'EXISTS'
+                            )
                         ),
                         'fields' => 'ids'
                     );
-                    $query = new WP_Query($args);
-                    $mapped_products_count = $query->found_posts;
+                    $query_variants = new WP_Query($args_variants);
+                    $mapped_variants_count = $query_variants->found_posts;
                     wp_reset_postdata();
 
                     $products_page_url = add_query_arg(array('category' => $category_sku), admin_url('admin.php?page=' . $plugin_name . '-products'));
@@ -85,13 +136,14 @@ $categories = array_slice($categories, $offset, $per_page);
                         <td class="column-sku"><?php echo esc_html($category_sku); ?></td>
                         <td class="column-count"><?php echo esc_html($category_count); ?></td>
                         <td class="column-mapped-products"><?php echo esc_html($mapped_products_count); ?></td>
+                        <td class="column-mapped-variants"><?php echo esc_html($mapped_variants_count); ?></td>
                     </tr>
                 <?php
                 endforeach;
             else :
                 ?>
                 <tr>
-                    <td colspan="5"><?php esc_html_e('No categories found.', 'gift-i-card'); ?></td>
+                    <td colspan="6"><?php esc_html_e('No categories found.', 'gift-i-card'); ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -102,6 +154,7 @@ $categories = array_slice($categories, $offset, $per_page);
                 <th scope="col" class="manage-column"><?php esc_html_e('SKU', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Product Count', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Mapped Products', 'gift-i-card'); ?></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Mapped Variants', 'gift-i-card'); ?></th>
             </tr>
         </tfoot>
     </table>
