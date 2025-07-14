@@ -234,8 +234,12 @@ msgstr "منتجات مرتبطة ووكامرس"
 #, php-format
 msgid "%d product mapped"
 msgid_plural "%d products mapped"
-msgstr[0] "%d منتج داخل الاتصال"
-msgstr[1] "%d منتج داخل الاتصال"
+msgstr[0] "لا يوجد منتجات مرتبطة"
+msgstr[1] "منتج واحد مرتبط"
+msgstr[2] "منتجان مرتبطان"
+msgstr[3] "%d منتجات مرتبطة"
+msgstr[4] "%d منتجاً مرتبطاً"
+msgstr[5] "%d منتج مرتبط"
 
 #: admin/partials/gicapi-variants-display.php:161
 #: admin/partials/gicapi-variants-display.php:188
