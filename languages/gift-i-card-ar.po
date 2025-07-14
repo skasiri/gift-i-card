@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-07-14 21:45+0330\n"
-"PO-Revision-Date: 2025-07-14 21:45+0330\n"
+"POT-Creation-Date: 2025-07-14 22:21+0330\n"
+"PO-Revision-Date: 2025-07-14 22:21+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar_SA\n"
@@ -11,7 +11,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=6; plural=n==0?0:n==1?1:n==2?2:n%100>=3&&n%100<=10?3:n%100>=11&&n%100<=99?4:5;\n"
+"Plural-Forms: nplurals=6; plural=n==0?0:n==1?1:n==2?2:n%100>=3&&n%100<=10?3:n"
+"%100>=11&&n%100<=99?4:5;\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: gift-i-card.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -53,11 +54,14 @@ msgstr "ليس لديك إذن لتنفيذ هذا الإجراء."
 msgid ""
 "Token refreshed successfully. Please refresh the page or save the settings to "
 "see the new connection status."
-msgstr "تم تحديث الرمز بنجاح. يرجى تحديث الصفحة أو حفظ الإعدادات لرؤية حالة الاتصال الجديدة."
+msgstr ""
+"تم تحديث الرمز بنجاح. يرجى تحديث الصفحة أو حفظ الإعدادات لرؤية حالة الاتصال "
+"الجديدة."
 
 #: admin/class-gicapi-admin.php:511
 msgid "Error refreshing token. Please check the API settings and try again."
-msgstr "حدث خطأ أثناء تحديث الرمز. يرجى التحقق من إعدادات API والمحاولة مرة أخرى."
+msgstr ""
+"حدث خطأ أثناء تحديث الرمز. يرجى التحقق من إعدادات API والمحاولة مرة أخرى."
 
 #: admin/class-gicapi-admin.php:521
 msgid "Security check failed. Please try again."
@@ -330,10 +334,12 @@ msgstr "تفعيل مهمة مجدولة للتزامن حالة المنتجا�
 
 #: admin/partials/settings/gicapi-settings-cron.php:53
 msgid ""
-"Automatically sync product statuses from Gift-i-Card to WooCommerce at regular "
-"intervals. This ensures your product stock statuses are always up to date."
+"Automatically sync product statuses from Gift-i-Card to WooCommerce at "
+"regular intervals. This ensures your product stock statuses are always up to "
+"date."
 msgstr ""
-"تزامن خودك لحالة المنتجات من Gift-i-Card بووكامرس في فواصل زمنية منتظمة. هذا يضمن أن حالة المخزون لمنتجاتك دائماً حديثة."
+"تزامن خودك لحالة المنتجات من Gift-i-Card بووكامرس في فواصل زمنية منتظمة. هذا "
+"يضمن أن حالة المخزون لمنتجاتك دائماً حديثة."
 
 #: admin/partials/settings/gicapi-settings-cron.php:60
 msgid "Product Sync Interval"
@@ -341,8 +347,8 @@ msgstr "فاصل التزامن"
 
 #: admin/partials/settings/gicapi-settings-cron.php:71
 msgid ""
-"How often should the system synchronize product status? Recommended: 2-3 times "
-"a day."
+"How often should the system synchronize product status? Recommended: 2-3 "
+"times a day."
 msgstr ""
 "كيف يجب أن يتزامن جهازك حالة المنتجات؟ الموصى به: مرتين أو ثلاث مرات في اليوم."
 
@@ -360,7 +366,8 @@ msgid ""
 "Click this button to manually trigger synchronization of all mapped products. "
 "This is useful for testing or immediate updates."
 msgstr ""
-"للبدء في تزامن ديناميكي كل المنتجات غير المرتبطة، اضغط على هذا الزر. هذا مفيد للاختبار أو التحديثات الفورية."
+"للبدء في تزامن ديناميكي كل المنتجات غير المرتبطة، اضغط على هذا الزر. هذا مفيد "
+"للاختبار أو التحديثات الفورية."
 
 #: admin/partials/settings/gicapi-settings-cron.php:99
 #: admin/partials/settings/gicapi-settings-cron.php:273
@@ -382,7 +389,9 @@ msgid ""
 "Cron jobs are only recommended for development/testing environments or when "
 "webhooks are not available."
 msgstr ""
-"إذا كان متجر WooCommerce يعمل على دامنة حقيقية مع HTTPS، يتم تحديث الطلبات تلقائياً عبر وب هوك ولا تحتاج إلى تفعيل المهام المجدولة. المهام المجدولة موصى بها فقط للبيئات التطويرية أو عندما لا يكون هناك وب هوك."
+"إذا كان متجر WooCommerce يعمل على دامنة حقيقية مع HTTPS، يتم تحديث الطلبات "
+"تلقائياً عبر وب هوك ولا تحتاج إلى تفعيل المهام المجدولة. المهام المجدولة موصى "
+"بها فقط للبيئات التطويرية أو عندما لا يكون هناك وب هوك."
 
 #: admin/partials/settings/gicapi-settings-cron.php:120
 msgid "Update Interval"
@@ -393,7 +402,8 @@ msgid ""
 "How often the system should check for order updates. Recommended: Every 5 "
 "minutes for fastest updates."
 msgstr ""
-"كيف يجب أن يتحقق جهازك من تحديثات الطلبات؟ الموصى به: كل 5 دقائق لأفضل تحديثات."
+"كيف يجب أن يتحقق جهازك من تحديثات الطلبات؟ الموصى به: كل 5 دقائق لأفضل "
+"تحديثات."
 
 #: admin/partials/settings/gicapi-settings-cron.php:138
 msgid "Manual Update"
@@ -409,7 +419,8 @@ msgid ""
 "Click this button to manually trigger an update of all pending and processing "
 "orders. This is useful for testing or immediate updates."
 msgstr ""
-"للبدء في تحديث ديناميكي كل الطلبات المعلقة والمعالجة، اضغط على هذا الزر. هذا مفيد للاختبار أو التحديثات الفورية."
+"للبدء في تحديث ديناميكي كل الطلبات المعلقة والمعالجة، اضغط على هذا الزر. هذا "
+"مفيد للاختبار أو التحديثات الفورية."
 
 #: admin/partials/settings/gicapi-settings-cron.php:159
 msgid "🕒 Cron Job Status"
@@ -476,8 +487,9 @@ msgid ""
 "\"Reschedule\" will clear and recreate the cron job. \"Check & Repair\" will "
 "automatically detect and fix issues."
 msgstr ""
-"إذا لم يكن المهمة المجدولة في التشغيل، اضغط على هذه الأزرار للتشخيص. "
-"\"إعادة زمنة المهمة\" ستمسح وإعادة إنشاء المهمة المجدولة. \"التحقق من إصلاح\" ستكتشف وتصلح المشاكل تلقائياً."
+"إذا لم يكن المهمة المجدولة في التشغيل، اضغط على هذه الأزرار للتشخيص. \"إعادة "
+"زمنة المهمة\" ستمسح وإعادة إنشاء المهمة المجدولة. \"التحقق من إصلاح\" ستكتشف "
+"وتصلح المشاكل تلقائياً."
 
 #: admin/partials/settings/gicapi-settings-cron.php:257
 msgid "📋 How It Works"
@@ -488,7 +500,8 @@ msgid ""
 "The product synchronization cron job runs automatically at the specified "
 "interval (recommended: 2-3 times a day)."
 msgstr ""
-"مهمة مجدولة للتزامن المنتجات تعمل تلقائياً في الفاصل الزمني المحدد (الموصى به: 2-3 مرات في اليوم)."
+"مهمة مجدولة للتزامن المنتجات تعمل تلقائياً في الفاصل الزمني المحدد (الموصى به: "
+"2-3 مرات في اليوم)."
 
 #: admin/partials/settings/gicapi-settings-cron.php:267
 msgid ""
@@ -501,19 +514,21 @@ msgid ""
 "For each mapped product, it calls the Gift-i-Card API to get the latest stock "
 "status."
 msgstr ""
-"بالنسبة لكل منتج مرتبط، يقوم API الخاص بـ Gift-i-Card باستدعاء للحصول على آخر حالة مخزون."
+"بالنسبة لكل منتج مرتبط، يقوم API الخاص بـ Gift-i-Card باستدعاء للحصول على آخر "
+"حالة مخزون."
 
 #: admin/partials/settings/gicapi-settings-cron.php:269
 msgid ""
 "It updates the WooCommerce product stock status based on the Gift-i-Card "
 "status and your configured mapping rules."
 msgstr ""
-"تحديث حالة مخزون منتج وووكامرس بناءً على حالة Gift-i-Card وقوانين الترتيب المكونة."
+"تحديث حالة مخزون منتج وووكامرس بناءً على حالة Gift-i-Card وقوانين الترتيب "
+"المكونة."
 
 #: admin/partials/settings/gicapi-settings-cron.php:270
 msgid ""
-"This ensures your product availability is always synchronized with Gift-i-Card "
-"inventory."
+"This ensures your product availability is always synchronized with Gift-i-"
+"Card inventory."
 msgstr ""
 "هذا يضمن أن متوفرة المنتجات الخاصة بك دائماً متزامنة مع مخزون Gift-i-Card."
 
@@ -522,20 +537,23 @@ msgid ""
 "The order update cron job runs automatically at the specified interval "
 "(recommended: every 5 minutes)."
 msgstr ""
-"مهمة مجدولة لتحديث الطلب تعمل تلقائياً في الفاصل الزمني المحدد (الموصى به: كل 5 دقائق)."
+"مهمة مجدولة لتحديث الطلب تعمل تلقائياً في الفاصل الزمني المحدد (الموصى به: كل "
+"5 دقائق)."
 
 #: admin/partials/settings/gicapi-settings-cron.php:276
 msgid ""
-"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" or "
-"\"processing\" status."
+"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
+"or \"processing\" status."
 msgstr ""
-"تجد هذا الإضافة جميع طلبات وووكامرس التي تحتوي طلبات Gift-i-Card وفي حالة \"في انتظار\" أو \"في المعالجة\"."
+"تجد هذا الإضافة جميع طلبات وووكامرس التي تحتوي طلبات Gift-i-Card وفي حالة "
+"\"في انتظار\" أو \"في المعالجة\"."
 
 #: admin/partials/settings/gicapi-settings-cron.php:277
 msgid ""
 "For each active order, it calls the Gift-i-Card API to get the latest status."
 msgstr ""
-"بالنسبة لكل طلب فعال، يقوم API الخاص بـ Gift-i-Card باستدعاء للحصول على آخر حالة."
+"بالنسبة لكل طلب فعال، يقوم API الخاص بـ Gift-i-Card باستدعاء للحصول على آخر "
+"حالة."
 
 #: admin/partials/settings/gicapi-settings-cron.php:278
 msgid "If the status has changed, it updates the order and adds a note."
@@ -546,14 +564,16 @@ msgid ""
 "If all Gift-i-Card orders in a WooCommerce order are completed, it can "
 "automatically complete the WooCommerce order (if enabled)."
 msgstr ""
-"إذا تم إكمال جميع طلبات Gift-i-Card في طلب WooCommerce، يمكن أن يكمل الطلب تلقائياً (إذا كان مفعلاً)."
+"إذا تم إكمال جميع طلبات Gift-i-Card في طلب WooCommerce، يمكن أن يكمل الطلب "
+"تلقائياً (إذا كان مفعلاً)."
 
 #: admin/partials/settings/gicapi-settings-cron.php:280
 msgid ""
 "If any Gift-i-Card orders fail, it can automatically change the WooCommerce "
 "order status (if enabled)."
 msgstr ""
-"إذا فشل أي من طلبات Gift-i-Card، يمكن أن يغير الطلب الأوروبي الأوروبي تلقائياً (إذا كان مفعلاً)."
+"إذا فشل أي من طلبات Gift-i-Card، يمكن أن يغير الطلب الأوروبي الأوروبي تلقائياً "
+"(إذا كان مفعلاً)."
 
 #: admin/partials/settings/gicapi-settings-cron.php:285
 msgid "Note:"
@@ -565,7 +585,8 @@ msgid ""
 "a real cron job, make sure to disable WordPress cron and set up a real cron "
 "job to call wp-cron.php."
 msgstr ""
-"هذه الميزات تتطلب أن يعمل cron WordPress بشكل صحيح. إذا كنت تستخدم كرون حقيقي، تأكد من إلغاء cron WordPress وإعداد كرون حقيقي لاستدعاء wp-cron.php."
+"هذه الميزات تتطلب أن يعمل cron WordPress بشكل صحيح. إذا كنت تستخدم كرون "
+"حقيقي، تأكد من إلغاء cron WordPress وإعداد كرون حقيقي لاستدعاء wp-cron.php."
 
 #: admin/partials/settings/gicapi-settings-cron.php:321
 msgid "Updating..."
@@ -648,7 +669,8 @@ msgid ""
 "Status to set when creating Gift-i-Card pending order. This status will be "
 "used to create the order in the Gift-i-Card system."
 msgstr ""
-"الحالة التي سيتم إنشاؤها عند إنشاء طلب Gift-i-Card في النظام. هذه الحالة ستستخدم لإنشاء الطلب في سيستم Gift-i-Card."
+"الحالة التي سيتم إنشاؤها عند إنشاء طلب Gift-i-Card في النظام. هذه الحالة "
+"ستستخدم لإنشاء الطلب في سيستم Gift-i-Card."
 
 #: admin/partials/settings/gicapi-settings-orders.php:68
 msgid "Confirm Gift-i-Card Order at Status"
@@ -657,10 +679,11 @@ msgstr "تأكيد طلب في حالة"
 #: admin/partials/settings/gicapi-settings-orders.php:78
 msgid ""
 "Status to set when confirming Gift-i-Card order. This status will be used to "
-"confirm the order in the Gift-i-Card system. After this status, the order will "
-"be processed."
+"confirm the order in the Gift-i-Card system. After this status, the order "
+"will be processed."
 msgstr ""
-"الحالة التي سيتم تأكيدها عند تأكيد طلب Gift-i-Card. هذه الحالة ستستخدم لتأكيد الطلب في سيستم Gift-i-Card. بعد هذه الحالة، سيتم معالجة الطلب."
+"الحالة التي سيتم تأكيدها عند تأكيد طلب Gift-i-Card. هذه الحالة ستستخدم لتأكيد "
+"الطلب في سيستم Gift-i-Card. بعد هذه الحالة، سيتم معالجة الطلب."
 
 #: admin/partials/settings/gicapi-settings-orders.php:84
 msgid "Hook Priority"
@@ -744,8 +767,7 @@ msgstr "إعدادات ترتيب حالة المنتجات"
 msgid ""
 "Configure how Gift-i-Card product statuses should be synchronized with "
 "WooCommerce stock status."
-msgstr ""
-"تكوين كيفية تزامن حالة المنتجات في Gift-i-Card مع حالة مخزون وووكامرس."
+msgstr "تكوين كيفية تزامن حالة المنتجات في Gift-i-Card مع حالة مخزون وووكامرس."
 
 #: admin/partials/settings/gicapi-settings-product.php:18
 msgid "Gift-i-Card Status Mapping"
@@ -753,10 +775,9 @@ msgstr "ترتيب حالة التسليم في Gift-i-Card"
 
 #: admin/partials/settings/gicapi-settings-product.php:19
 msgid ""
-"Configure how each Gift-i-Card delivery status should affect WooCommerce stock "
-"status:"
-msgstr ""
-"تكوين كيفية تأثير كل حالة تسليم Gift-i-Card على حالة مخزون WooCommerce:"
+"Configure how each Gift-i-Card delivery status should affect WooCommerce "
+"stock status:"
+msgstr "تكوين كيفية تأثير كل حالة تسليم Gift-i-Card على حالة مخزون WooCommerce:"
 
 #: admin/partials/settings/gicapi-settings-product.php:25
 msgid "Instant Delivery"
@@ -800,7 +821,8 @@ msgstr "التسليم اليدوي"
 
 #: admin/partials/settings/gicapi-settings-product.php:50
 msgid "Action when gift card requires operator intervention"
-msgstr "العملية الزمنية عندما تتطلب البطاقة الهدية تدخل من طرف المشغل Gift-i-Card"
+msgstr ""
+"العملية الزمنية عندما تتطلب البطاقة الهدية تدخل من طرف المشغل Gift-i-Card"
 
 #: admin/partials/settings/gicapi-settings-product.php:57
 msgid "Out of Stock"
@@ -965,8 +987,7 @@ msgstr "فئة GICAPI Product غير متوفرة"
 msgid ""
 "Product sync completed successfully. Total: %1$d, Successful: %2$d, Failed: "
 "%3$d"
-msgstr ""
-"تم التزامن المنتج بنجاح. الكلي: %1$d، ناجح: %2$d، ناجح: %3$d"
+msgstr "تم التزامن المنتج بنجاح. الكلي: %1$d، ناجح: %2$d، ناجح: %3$d"
 
 #. translators: Error message when product sync fails with unknown error
 #: includes/class-gicapi-ajax.php:431
@@ -1157,7 +1178,9 @@ msgid "Order completed because all mapped Gift-i-Card items are completed"
 msgstr "تم اكتمال الطلب لأن جميع عناصر بطاقة الهدايا اكتملت"
 
 #: includes/class-gicapi-order-manager.php:228
-msgid "Order completed because all mapped Gift-i-Card items are completed (any-mapped)"
+msgid ""
+"Order completed because all mapped Gift-i-Card items are completed (any-"
+"mapped)"
 msgstr "تم اكتمال الطلب لأن جميع عناصر بطاقة الهدايا اكتملت (أي عنصر)"
 
 #: includes/class-gicapi-order-manager.php:235
@@ -1165,7 +1188,9 @@ msgid "Order failed because all mapped Gift-i-Card items are failed"
 msgstr "فشل الطلب لأن عنصرًا أو أكثر من عناصر بطاقة الهدايا فشل"
 
 #: includes/class-gicapi-order-manager.php:240
-msgid "Order failed because at least one mapped Gift-i-Card item is failed (any-mapped)"
+msgid ""
+"Order failed because at least one mapped Gift-i-Card item is failed (any-"
+"mapped)"
 msgstr "فشل الطلب لأن عنصرًا أو أكثر من العناصر فشل (أي عنصر)"
 
 #: includes/class-gicapi-order-manager.php:247
@@ -1173,7 +1198,9 @@ msgid "Order cancelled because all mapped Gift-i-Card items are cancelled"
 msgstr "تم إلغاء الطلب لأن جميع عناصر بطاقة الهدايا أُلغيت"
 
 #: includes/class-gicapi-order-manager.php:252
-msgid "Order cancelled because all mapped Gift-i-Card items are cancelled (any-mapped)"
+msgid ""
+"Order cancelled because all mapped Gift-i-Card items are cancelled (any-"
+"mapped)"
 msgstr "تم إلغاء الطلب لأن جميع عناصر بطاقة الهدايا أُلغيت (أي عنصر)"
 
 #: includes/class-gicapi-webhook.php:17
@@ -1224,7 +1251,9 @@ msgstr "حدث خطأ أثناء إنشاء طلب بطاقة الهدايا"
 msgid "Gift-i-Card API returned empty order_id"
 msgstr "لم يتم استلام رقم الطلب من بطاقة الهدايا"
 
+#. translators: %s: Gift-i-Card order ID
 #: public/class-gicapi-public.php:194
+#, php-format
 msgid "Gift-i-Card order created: %s"
 msgstr "تم إنشاء طلب بطاقة الهدايا: %s"
 
@@ -1232,7 +1261,9 @@ msgstr "تم إنشاء طلب بطاقة الهدايا: %s"
 msgid "Failed to confirm Gift-i-Card order"
 msgstr "حدث خطأ أثناء تأكيد طلب بطاقة الهدايا"
 
+#. translators: %s: Gift-i-Card order ID
 #: public/class-gicapi-public.php:244
+#, php-format
 msgid "Gift-i-Card order confirmed: %s"
 msgstr "تم تأكيد طلب بطاقة الهدايا: %s"
 
