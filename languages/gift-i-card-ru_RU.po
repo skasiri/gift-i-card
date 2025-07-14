@@ -1,0 +1,1307 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gift-i-Card\n"
+"POT-Creation-Date: 2025-07-14 20:42+0330\n"
+"PO-Revision-Date: 2025-07-14 20:42+0330\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: gift-i-card.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-gicapi-admin.php:95
+msgid "Refreshing token..."
+msgstr "Обновление токена..."
+
+#: admin/class-gicapi-admin.php:96
+msgid "An unknown error occurred."
+msgstr "Произошла неизвестная ошибка."
+
+#: admin/class-gicapi-admin.php:97
+msgid "Error communicating with server: "
+msgstr "Ошибка при связи с сервером: "
+
+#: admin/class-gicapi-admin.php:170
+msgid "Connected"
+msgstr "Подключено"
+
+#: admin/class-gicapi-admin.php:170
+msgid "Balance"
+msgstr "Баланс"
+
+#: admin/class-gicapi-admin.php:174
+msgid "Disconnected"
+msgstr "Отключено"
+
+#: admin/class-gicapi-admin.php:500 admin/class-gicapi-admin.php:526
+msgid "You do not have permission to perform this action."
+msgstr "У вас нет прав для выполнения этого действия."
+
+#: admin/class-gicapi-admin.php:509
+msgid ""
+"Token refreshed successfully. Please refresh the page or save the settings "
+"to see the new connection status."
+msgstr ""
+"Токен успешно обновлен. Пожалуйста, обновите страницу или сохраните "
+"настройки, чтобы увидеть новый статус подключения."
+
+#: admin/class-gicapi-admin.php:511
+msgid "Error refreshing token. Please check the API settings and try again."
+msgstr ""
+"Ошибка обновления токена. Пожалуйста, проверьте настройки API и попробуйте "
+"снова."
+
+#: admin/class-gicapi-admin.php:521
+msgid "Security check failed. Please try again."
+msgstr "Проверка безопасности не пройдена. Пожалуйста, попробуйте снова."
+
+#: admin/class-gicapi-admin.php:534
+msgid "Invalid product or variant ID."
+msgstr "Неверный идентификатор продукта или варианта."
+
+#: admin/class-gicapi-admin.php:539
+msgid "Variant mapped successfully."
+msgstr "Вариант успешно связан."
+
+#: admin/partials/gicapi-admin-display.php:8
+msgid "Gift-i-Card Settings"
+msgstr "Настройки Gift-i-Card"
+
+#: admin/partials/gicapi-admin-display.php:11
+msgid "Connection"
+msgstr "Подключение"
+
+#: admin/partials/gicapi-admin-display.php:12
+msgid "Orders"
+msgstr "Заказы"
+
+#: admin/partials/gicapi-admin-display.php:13
+#: admin/partials/gicapi-products-display.php:61
+msgid "Products"
+msgstr "Товары"
+
+#: admin/partials/gicapi-admin-display.php:14
+msgid "Cron Jobs"
+msgstr "Крон-задачи"
+
+#: admin/partials/gicapi-admin-display.php:15
+msgid "Display"
+msgstr "Отображение"
+
+#: admin/partials/gicapi-categories-display.php:18
+msgid "Error fetching categories from API"
+msgstr "Ошибка получения категорий из API"
+
+#: admin/partials/gicapi-categories-display.php:30
+msgid "Categories"
+msgstr "Категории"
+
+#: admin/partials/gicapi-categories-display.php:35
+#: admin/partials/gicapi-categories-display.php:152
+msgid "Thumbnail"
+msgstr "Изображение"
+
+#: admin/partials/gicapi-categories-display.php:36
+#: admin/partials/gicapi-categories-display.php:153
+#: admin/partials/gicapi-products-display.php:68
+#: admin/partials/gicapi-products-display.php:131
+#: admin/partials/gicapi-variants-display.php:70
+msgid "Name"
+msgstr "Название"
+
+#: admin/partials/gicapi-categories-display.php:37
+#: admin/partials/gicapi-categories-display.php:154
+#: admin/partials/gicapi-products-display.php:69
+#: admin/partials/gicapi-products-display.php:132
+#: admin/partials/gicapi-variants-display.php:71
+msgid "SKU"
+msgstr "Артикул"
+
+#: admin/partials/gicapi-categories-display.php:38
+#: admin/partials/gicapi-categories-display.php:155
+msgid "Product Count"
+msgstr "Количество товаров"
+
+#: admin/partials/gicapi-categories-display.php:39
+#: admin/partials/gicapi-categories-display.php:156
+#: admin/partials/gicapi-products-display.php:71
+#: admin/partials/gicapi-products-display.php:134
+msgid "Mapped Products"
+msgstr "Связанные товары"
+
+#: admin/partials/gicapi-categories-display.php:40
+#: admin/partials/gicapi-categories-display.php:157
+msgid "Mapped Variants"
+msgstr "Связанные варианты"
+
+#: admin/partials/gicapi-categories-display.php:146
+msgid "No categories found."
+msgstr "Категории не найдены."
+
+#. translators: %s: number of categories displayed
+#. translators: %s: number of products displayed
+#: admin/partials/gicapi-categories-display.php:167
+#: admin/partials/gicapi-products-display.php:143
+#, php-format
+msgid "%s item"
+msgid_plural "%s items"
+msgstr[0] "%s предмет"
+msgstr[1] "%s предмета"
+msgstr[2] "%s предметов"
+
+#: admin/partials/gicapi-categories-display.php:175
+#: admin/partials/gicapi-products-display.php:151
+msgid "&laquo;"
+msgstr "&laquo;"
+
+#: admin/partials/gicapi-categories-display.php:176
+#: admin/partials/gicapi-products-display.php:152
+msgid "&raquo;"
+msgstr "&raquo;"
+
+#: admin/partials/gicapi-products-display.php:23
+msgid "Category is not valid."
+msgstr "Категория недействительна."
+
+#: admin/partials/gicapi-products-display.php:32
+msgid "Error fetching products from API"
+msgstr "Ошибка получения товаров из API"
+
+#: admin/partials/gicapi-products-display.php:41
+msgid "No products found for this category."
+msgstr "Для этой категории товары не найдены."
+
+#: admin/partials/gicapi-products-display.php:47
+#: admin/partials/gicapi-variants-display.php:23
+msgid "Unknown Category"
+msgstr "Неизвестная категория"
+
+#: admin/partials/gicapi-products-display.php:67
+#: admin/partials/gicapi-products-display.php:130
+msgid "Image"
+msgstr "Изображение"
+
+#: admin/partials/gicapi-products-display.php:70
+#: admin/partials/gicapi-products-display.php:133
+msgid "Variant Count"
+msgstr "Количество вариантов"
+
+#: admin/partials/gicapi-variants-display.php:40
+msgid "Unknown Product"
+msgstr "Неизвестный товар"
+
+#: admin/partials/gicapi-variants-display.php:48
+msgid "Error fetching variants from API"
+msgstr "Ошибка получения вариантов из API"
+
+#: admin/partials/gicapi-variants-display.php:54
+msgid "No variants found for this product."
+msgstr "Для этого продукта не найдено вариантов."
+
+#: admin/partials/gicapi-variants-display.php:64
+msgid "Variants"
+msgstr "Варианты"
+
+#: admin/partials/gicapi-variants-display.php:72
+msgid "Price"
+msgstr "Цена"
+
+#: admin/partials/gicapi-variants-display.php:73
+msgid "Value"
+msgstr "Значение"
+
+#: admin/partials/gicapi-variants-display.php:74
+msgid "Stock Status"
+msgstr "Статус наличия"
+
+#: admin/partials/gicapi-variants-display.php:75
+msgid "Mapped WC Products"
+msgstr "Связанные товары WooCommerce"
+
+#. translators: %d: number of products mapped
+#: admin/partials/gicapi-variants-display.php:157
+#, php-format
+msgid "%d product mapped"
+msgid_plural "%d products mapped"
+msgstr[0] "%d товар связан"
+msgstr[1] "%d товара связано"
+msgstr[2] "%d товаров связано"
+
+#: admin/partials/gicapi-variants-display.php:161
+#: admin/partials/gicapi-variants-display.php:188
+msgid "Add Mapping"
+msgstr "Добавить связь"
+
+#: admin/partials/gicapi-variants-display.php:176
+msgid "Map Gift-i-Card Variant to WooCommerce Product"
+msgstr "Связать вариант Gift-i-Card с товаром WooCommerce"
+
+#: admin/partials/gicapi-variants-display.php:182
+#: admin/partials/gicapi-variants-display.php:387
+msgid "Search for a product..."
+msgstr "Поиск товара..."
+
+#: admin/partials/gicapi-variants-display.php:189
+msgid "Cancel"
+msgstr "Отмена"
+
+#: admin/partials/gicapi-variants-display.php:416
+msgid "Please select a product"
+msgstr "Пожалуйста, выберите товар"
+
+#: admin/partials/gicapi-variants-display.php:434
+#: admin/partials/gicapi-variants-display.php:437
+msgid "Error adding mapping"
+msgstr "Ошибка при добавлении связи"
+
+#: admin/partials/gicapi-variants-display.php:446
+msgid "Are you sure you want to remove this mapping?"
+msgstr "Вы уверены, что хотите удалить эту связь?"
+
+#: admin/partials/gicapi-variants-display.php:469
+#: admin/partials/gicapi-variants-display.php:472
+#: includes/class-gicapi-ajax.php:235
+msgid "Error removing mapping"
+msgstr "Ошибка при удалении связи"
+
+#: admin/partials/settings/gicapi-settings-connection.php:15
+msgid "Base URL"
+msgstr "Базовый URL"
+
+#: admin/partials/settings/gicapi-settings-connection.php:19
+msgid "The base URL of the gift-i-card service API"
+msgstr "Базовый URL API сервиса Gift-i-Card"
+
+#: admin/partials/settings/gicapi-settings-connection.php:25
+msgid "Consumer Key"
+msgstr "Ключ клиента"
+
+#: admin/partials/settings/gicapi-settings-connection.php:29
+msgid "The consumer key for API authentication"
+msgstr "Ключ клиента для аутентификации API"
+
+#: admin/partials/settings/gicapi-settings-connection.php:35
+msgid "Consumer Secret"
+msgstr "Секрет клиента"
+
+#: admin/partials/settings/gicapi-settings-connection.php:39
+msgid "The consumer secret for API authentication"
+msgstr "Секрет клиента для аутентификации API"
+
+#: admin/partials/settings/gicapi-settings-connection.php:47
+msgid "Refresh Token"
+msgstr "Обновить токен"
+
+#: admin/partials/settings/gicapi-settings-connection.php:50
+msgid "Get New Token"
+msgstr "Получить новый токен"
+
+#: admin/partials/settings/gicapi-settings-connection.php:52
+msgid ""
+"Click this button to discard the current token and get a new one from the "
+"API."
+msgstr ""
+"Нажмите эту кнопку, чтобы сбросить текущий токен и получить новый из API."
+
+#: admin/partials/settings/gicapi-settings-cron.php:39
+#: admin/partials/settings/gicapi-settings-cron.php:264
+msgid "🔄 Product Synchronization Cron Job"
+msgstr "🔄 Крон-задача синхронизации товаров"
+
+#: admin/partials/settings/gicapi-settings-cron.php:45
+msgid "Product Sync Cron Job"
+msgstr "Крон-задача синхронизации товаров"
+
+#: admin/partials/settings/gicapi-settings-cron.php:50
+msgid "Enable Cron Job for Product Status Synchronization"
+msgstr "Включить крон-задачу для синхронизации статуса товаров"
+
+#: admin/partials/settings/gicapi-settings-cron.php:53
+msgid ""
+"Automatically sync product statuses from Gift-i-Card to WooCommerce at "
+"regular intervals. This ensures your product stock statuses are always up to "
+"date."
+msgstr ""
+"Автоматически синхронизировать статусы товаров из Gift-i-Card с WooCommerce "
+"через регулярные интервалы. Это гарантирует, что статусы наличия ваших "
+"товаров всегда актуальны."
+
+#: admin/partials/settings/gicapi-settings-cron.php:60
+msgid "Product Sync Interval"
+msgstr "Интервал синхронизации товаров"
+
+#: admin/partials/settings/gicapi-settings-cron.php:71
+msgid ""
+"How often should the system synchronize product status? Recommended: 2-3 "
+"times a day."
+msgstr ""
+"Как часто система должна синхронизировать статусы товаров? Рекомендуется: "
+"2-3 раза в день."
+
+#: admin/partials/settings/gicapi-settings-cron.php:78
+msgid "Manual Product Sync"
+msgstr "Ручная синхронизация товаров"
+
+#: admin/partials/settings/gicapi-settings-cron.php:82
+#: admin/partials/settings/gicapi-settings-cron.php:372
+msgid "Sync All Products Now"
+msgstr "Синхронизировать все товары сейчас"
+
+#: admin/partials/settings/gicapi-settings-cron.php:85
+msgid ""
+"Click this button to manually trigger synchronization of all mapped "
+"products. This is useful for testing or immediate updates."
+msgstr ""
+"Нажмите эту кнопку, чтобы вручную запустить синхронизацию всех связанных "
+"товаров. Это полезно для тестирования или немедленного обновления."
+
+#: admin/partials/settings/gicapi-settings-cron.php:99
+#: admin/partials/settings/gicapi-settings-cron.php:273
+msgid "📦 Order Updating Cron Job"
+msgstr "📦 Крон-задача обновления заказов"
+
+#: admin/partials/settings/gicapi-settings-cron.php:105
+msgid "Order Updating through Cron Job"
+msgstr "Обновление заказов через крон-задачу"
+
+#: admin/partials/settings/gicapi-settings-cron.php:110
+msgid "Enable Cron Job for Order Updating (not recommended)"
+msgstr "Включить крон-задачу для обновления заказов (не рекомендуется)"
+
+#: admin/partials/settings/gicapi-settings-cron.php:113
+msgid ""
+"If your WooCommerce store is running on a real domain with HTTPS, orders are "
+"automatically updated via webhooks and you do not need to enable cron jobs. "
+"Cron jobs are only recommended for development/testing environments or when "
+"webhooks are not available."
+msgstr ""
+"Если ваш магазин WooCommerce работает на реальном домене с HTTPS, заказы "
+"автоматически обновляются через вебхуки, и вам не нужно включать крон-"
+"задачи. Крон-задачи рекомендуются только для разработки/тестирования или "
+"если вебхуки недоступны."
+
+#: admin/partials/settings/gicapi-settings-cron.php:120
+msgid "Update Interval"
+msgstr "Интервал обновления"
+
+#: admin/partials/settings/gicapi-settings-cron.php:131
+msgid ""
+"How often the system should check for order updates. Recommended: Every 5 "
+"minutes for fastest updates."
+msgstr ""
+"Как часто система должна проверять обновления заказов. Рекомендуется: каждые "
+"5 минут для самой быстрой актуализации."
+
+#: admin/partials/settings/gicapi-settings-cron.php:138
+msgid "Manual Update"
+msgstr "Ручное обновление"
+
+#: admin/partials/settings/gicapi-settings-cron.php:142
+#: admin/partials/settings/gicapi-settings-cron.php:342
+msgid "Update Pending/Processing Orders Now"
+msgstr "Обновить заказы в ожидании / в обработке"
+
+#: admin/partials/settings/gicapi-settings-cron.php:145
+msgid ""
+"Click this button to manually trigger an update of all pending and "
+"processing orders. This is useful for testing or immediate updates."
+msgstr ""
+"Нажмите эту кнопку, чтобы вручную запустить обновление всех ожидающих и "
+"обрабатываемых заказов. Это полезно для тестирования или немедленного "
+"обновления."
+
+#: admin/partials/settings/gicapi-settings-cron.php:159
+msgid "🕒 Cron Job Status"
+msgstr "🕒 Статус крон-задачи"
+
+#: admin/partials/settings/gicapi-settings-cron.php:165
+msgid "Product Sync Status"
+msgstr "Статус синхронизации товаров"
+
+#: admin/partials/settings/gicapi-settings-cron.php:171
+#: admin/partials/settings/gicapi-settings-cron.php:205
+msgid "Enabled:"
+msgstr "Включено:"
+
+#: admin/partials/settings/gicapi-settings-cron.php:173
+#: admin/partials/settings/gicapi-settings-cron.php:207
+msgid "Yes"
+msgstr "Да"
+
+#: admin/partials/settings/gicapi-settings-cron.php:173
+#: admin/partials/settings/gicapi-settings-cron.php:207
+msgid "No"
+msgstr "Нет"
+
+#: admin/partials/settings/gicapi-settings-cron.php:179
+#: admin/partials/settings/gicapi-settings-cron.php:213
+msgid "Next Run:"
+msgstr "Следующий запуск:"
+
+#: admin/partials/settings/gicapi-settings-cron.php:186
+#: admin/partials/settings/gicapi-settings-cron.php:219
+msgid "Interval:"
+msgstr "Интервал:"
+
+#: admin/partials/settings/gicapi-settings-cron.php:192
+msgid "Product sync status information not available."
+msgstr "Информация о статусе синхронизации товаров недоступна."
+
+#: admin/partials/settings/gicapi-settings-cron.php:199
+msgid "Order Update Status"
+msgstr "Статус обновления заказа"
+
+#: admin/partials/settings/gicapi-settings-cron.php:224
+msgid "Order update status information not available."
+msgstr "Информация о статусе обновления заказа недоступна."
+
+#: admin/partials/settings/gicapi-settings-cron.php:231
+msgid "Troubleshooting"
+msgstr "Устранение неполадок"
+
+#: admin/partials/settings/gicapi-settings-cron.php:235
+#: admin/partials/settings/gicapi-settings-cron.php:406
+msgid "Reschedule Cron Job"
+msgstr "Перенести крон-задачу"
+
+#: admin/partials/settings/gicapi-settings-cron.php:238
+#: admin/partials/settings/gicapi-settings-cron.php:440
+msgid "Check & Repair Cron Job"
+msgstr "Проверить и исправить крон-задачу"
+
+#: admin/partials/settings/gicapi-settings-cron.php:241
+msgid ""
+"If the cron job is not running, click these buttons to troubleshoot. "
+"\"Reschedule\" will clear and recreate the cron job. \"Check & Repair\" will "
+"automatically detect and fix issues."
+msgstr ""
+"Если крон-задача не запущена, нажмите эти кнопки для устранения неполадок. "
+"\"Перенести\" очистит и пересоздаст крон-задачу. \"Проверить и исправить\" "
+"автоматически обнаружит и устранит проблемы."
+
+#: admin/partials/settings/gicapi-settings-cron.php:257
+msgid "📋 How It Works"
+msgstr "📋 Как это работает"
+
+#: admin/partials/settings/gicapi-settings-cron.php:266
+msgid ""
+"The product synchronization cron job runs automatically at the specified "
+"interval (recommended: 2-3 times a day)."
+msgstr ""
+"Крон-задача синхронизации товаров выполняется автоматически в указанном "
+"интервале (рекомендуется: 2-3 раза в день)."
+
+#: admin/partials/settings/gicapi-settings-cron.php:267
+msgid ""
+"It finds all WooCommerce products that are mapped to Gift-i-Card variants."
+msgstr ""
+"Это находит все товары WooCommerce, которые связаны с вариантами Gift-i-Card."
+
+#: admin/partials/settings/gicapi-settings-cron.php:268
+msgid ""
+"For each mapped product, it calls the Gift-i-Card API to get the latest "
+"stock status."
+msgstr ""
+"Для каждого связанного товара API Gift-i-Card вызывается для получения "
+"последнего статуса наличия."
+
+#: admin/partials/settings/gicapi-settings-cron.php:269
+msgid ""
+"It updates the WooCommerce product stock status based on the Gift-i-Card "
+"status and your configured mapping rules."
+msgstr ""
+"Это обновляет статус наличия товара WooCommerce на основе статуса Gift-i-"
+"Card и настроенных правил связывания."
+
+#: admin/partials/settings/gicapi-settings-cron.php:270
+msgid ""
+"This ensures your product availability is always synchronized with Gift-i-"
+"Card inventory."
+msgstr ""
+"Это гарантирует, что наличие ваших товаров всегда синхронизировано с "
+"наличием Gift-i-Card."
+
+#: admin/partials/settings/gicapi-settings-cron.php:275
+msgid ""
+"The order update cron job runs automatically at the specified interval "
+"(recommended: every 5 minutes)."
+msgstr ""
+"Крон-задача обновления заказов выполняется автоматически в указанном "
+"интервале (рекомендуется: каждые 5 минут)."
+
+#: admin/partials/settings/gicapi-settings-cron.php:276
+msgid ""
+"It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
+"or \"processing\" status."
+msgstr ""
+"Это находит все заказы WooCommerce, которые имеют заказы Gift-i-Card в "
+"статусе \"в ожидании\" или \"в обработке\"."
+
+#: admin/partials/settings/gicapi-settings-cron.php:277
+msgid ""
+"For each active order, it calls the Gift-i-Card API to get the latest status."
+msgstr ""
+"Для каждого активного заказа API Gift-i-Card вызывается для получения "
+"последнего статуса."
+
+#: admin/partials/settings/gicapi-settings-cron.php:278
+msgid "If the status has changed, it updates the order and adds a note."
+msgstr "Если статус изменился, заказ обновляется и добавляется заметка."
+
+#: admin/partials/settings/gicapi-settings-cron.php:279
+msgid ""
+"If all Gift-i-Card orders in a WooCommerce order are completed, it can "
+"automatically complete the WooCommerce order (if enabled)."
+msgstr ""
+"Если все заказы Gift-i-Card в заказе WooCommerce завершены, заказ "
+"WooCommerce может быть автоматически завершен (если включено)."
+
+#: admin/partials/settings/gicapi-settings-cron.php:280
+msgid ""
+"If any Gift-i-Card orders fail, it can automatically change the WooCommerce "
+"order status (if enabled)."
+msgstr ""
+"Если какие-либо заказы Gift-i-Card завершены с ошибкой, статус заказа "
+"WooCommerce может быть автоматически изменен (если включено)."
+
+#: admin/partials/settings/gicapi-settings-cron.php:285
+msgid "Note:"
+msgstr "Примечание:"
+
+#: admin/partials/settings/gicapi-settings-cron.php:286
+msgid ""
+"These features require WordPress cron to be working properly. If you're "
+"using a real cron job, make sure to disable WordPress cron and set up a real "
+"cron job to call wp-cron.php."
+msgstr ""
+"Эти функции требуют, чтобы WordPress cron работал корректно. Если вы "
+"используете реальную крон-задачу, убедитесь, что отключен WordPress cron и "
+"настроен реальный крон для вызова wp-cron.php."
+
+#: admin/partials/settings/gicapi-settings-cron.php:321
+msgid "Updating..."
+msgstr "Обновление..."
+
+#: admin/partials/settings/gicapi-settings-cron.php:339
+msgid "An error occurred while updating orders."
+msgstr "Произошла ошибка при обновлении заказов."
+
+#: admin/partials/settings/gicapi-settings-cron.php:351
+msgid "Syncing..."
+msgstr "Синхронизация..."
+
+#: admin/partials/settings/gicapi-settings-cron.php:369
+msgid "An error occurred while syncing products."
+msgstr "Произошла ошибка при синхронизации товаров."
+
+#: admin/partials/settings/gicapi-settings-cron.php:381
+msgid "Rescheduling..."
+msgstr "Перепланирование..."
+
+#: admin/partials/settings/gicapi-settings-cron.php:403
+msgid "An error occurred while rescheduling cron job."
+msgstr "Произошла ошибка при перепланировании крон-задачи."
+
+#: admin/partials/settings/gicapi-settings-cron.php:415
+msgid "Checking..."
+msgstr "Проверка..."
+
+#: admin/partials/settings/gicapi-settings-cron.php:437
+msgid "An error occurred while checking cron job."
+msgstr "Произошла ошибка при проверке крон-задачи."
+
+#: admin/partials/settings/gicapi-settings-display.php:15
+msgid "Add to Email"
+msgstr "Добавить в email"
+
+#: admin/partials/settings/gicapi-settings-display.php:20
+msgid "Add redeem data to order emails"
+msgstr "Добавить данные для возврата в email заказа"
+
+#: admin/partials/settings/gicapi-settings-display.php:27
+msgid "Add to Order Details"
+msgstr "Добавить в детали заказа"
+
+#: admin/partials/settings/gicapi-settings-display.php:32
+msgid "Add redeem data to order details page"
+msgstr "Добавить данные для возврата на страницу деталей заказа"
+
+#: admin/partials/settings/gicapi-settings-display.php:39
+msgid "Add to Thank You"
+msgstr "Добавить в страницу благодарности"
+
+#: admin/partials/settings/gicapi-settings-display.php:44
+msgid "Add redeem data to thank you page"
+msgstr "Добавить данные для возврата на страницу после оплаты"
+
+#: admin/partials/settings/gicapi-settings-orders.php:27
+msgid "Enable Order Processing"
+msgstr "Включить обработку заказов"
+
+#: admin/partials/settings/gicapi-settings-orders.php:32
+msgid "Enable order processing functionality"
+msgstr "Включить функционал обработки заказов"
+
+#: admin/partials/settings/gicapi-settings-orders.php:34
+msgid "By disabling this, orders will not be processed automatically."
+msgstr "Отключив это, заказы не будут обрабатываться автоматически."
+
+#: admin/partials/settings/gicapi-settings-orders.php:46
+msgid "🔄 Gift-i-Card Order Processing"
+msgstr "🔄 Обработка заказов Gift-i-Card"
+
+#: admin/partials/settings/gicapi-settings-orders.php:52
+msgid "Create Order at Status"
+msgstr "Создать заказ в статусе"
+
+#: admin/partials/settings/gicapi-settings-orders.php:62
+msgid ""
+"Status to set when creating Gift-i-Card pending order. This status will be "
+"used to create the order in the Gift-i-Card system."
+msgstr ""
+"Статус, который будет установлен при создании заказа Gift-i-Card в ожидании. "
+"Этот статус будет использоваться для создания заказа в системе Gift-i-Card."
+
+#: admin/partials/settings/gicapi-settings-orders.php:68
+msgid "Confirm Gift-i-Card Order at Status"
+msgstr "Подтвердить заказ Gift-i-Card в статусе"
+
+#: admin/partials/settings/gicapi-settings-orders.php:78
+msgid ""
+"Status to set when confirming Gift-i-Card order. This status will be used to "
+"confirm the order in the Gift-i-Card system. After this status, the order "
+"will be processed."
+msgstr ""
+"Статус, который будет установлен при подтверждении заказа Gift-i-Card. Этот "
+"статус будет использоваться для подтверждения заказа в системе Gift-i-Card. "
+"После этого статуса заказ будет обработан."
+
+#: admin/partials/settings/gicapi-settings-orders.php:84
+msgid "Hook Priority"
+msgstr "Приоритет хука"
+
+#: admin/partials/settings/gicapi-settings-orders.php:88
+msgid "Priority for hook execution (default: 10)"
+msgstr "Приоритет выполнения хука (по умолчанию: 10)"
+
+#: admin/partials/settings/gicapi-settings-orders.php:100
+msgid "✅ Successfully Processed Orders"
+msgstr "✅ Заказы успешно обработаны"
+
+#: admin/partials/settings/gicapi-settings-orders.php:106
+#: admin/partials/settings/gicapi-settings-orders.php:148
+#: admin/partials/settings/gicapi-settings-orders.php:190
+msgid "Change Order Status"
+msgstr "Изменить статус заказа"
+
+#: admin/partials/settings/gicapi-settings-orders.php:110
+#: admin/partials/settings/gicapi-settings-orders.php:152
+#: admin/partials/settings/gicapi-settings-orders.php:194
+msgid "None"
+msgstr "Нет"
+
+#: admin/partials/settings/gicapi-settings-orders.php:111
+#: admin/partials/settings/gicapi-settings-orders.php:153
+#: admin/partials/settings/gicapi-settings-orders.php:195
+msgid "Orders with all items mapped"
+msgstr "Заказы со всеми связанными элементами"
+
+#: admin/partials/settings/gicapi-settings-orders.php:112
+#: admin/partials/settings/gicapi-settings-orders.php:154
+#: admin/partials/settings/gicapi-settings-orders.php:196
+msgid "Orders with mapped items"
+msgstr "Заказы с связанными элементами"
+
+#: admin/partials/settings/gicapi-settings-orders.php:114
+msgid "Change Order Status After Successfully Processing"
+msgstr "Изменить статус заказа после успешной обработки"
+
+#: admin/partials/settings/gicapi-settings-orders.php:120
+#: admin/partials/settings/gicapi-settings-orders.php:162
+#: admin/partials/settings/gicapi-settings-orders.php:204
+msgid "Change to Status"
+msgstr "Изменить на статус"
+
+#: admin/partials/settings/gicapi-settings-orders.php:130
+msgid "Status to set when successfully processed orders"
+msgstr "Статус, который будет установлен при успешно обработанных заказах"
+
+#: admin/partials/settings/gicapi-settings-orders.php:142
+msgid "❌ Failed Orders"
+msgstr "❌ Заказы с ошибкой"
+
+#: admin/partials/settings/gicapi-settings-orders.php:156
+msgid "Change Order Status When Failed"
+msgstr "Изменить статус заказа, если он с ошибкой"
+
+#: admin/partials/settings/gicapi-settings-orders.php:172
+msgid "Status to set when failed orders"
+msgstr "Статус, который будет установлен при заказах с ошибкой"
+
+#: admin/partials/settings/gicapi-settings-orders.php:184
+msgid "🚫 Cancelled Orders"
+msgstr "🚫 Отмененные заказы"
+
+#: admin/partials/settings/gicapi-settings-orders.php:198
+msgid "Change Order Status When Cancelled"
+msgstr "Изменить статус заказа, если он отменен или истек срок"
+
+#: admin/partials/settings/gicapi-settings-orders.php:214
+msgid "Status to set when cancelled orders"
+msgstr "Статус, который будет установлен при отмененных заказах"
+
+#: admin/partials/settings/gicapi-settings-product.php:15
+msgid "Product Status Mapping Settings"
+msgstr "Настройки синхронизации статуса товаров"
+
+#: admin/partials/settings/gicapi-settings-product.php:16
+msgid ""
+"Configure how Gift-i-Card product statuses should be synchronized with "
+"WooCommerce stock status."
+msgstr ""
+"Настройте, как статусы товаров Gift-i-Card должны синхронизироваться со "
+"статусом наличия WooCommerce."
+
+#: admin/partials/settings/gicapi-settings-product.php:18
+msgid "Gift-i-Card Status Mapping"
+msgstr "Связь статуса доставки Gift-i-Card"
+
+#: admin/partials/settings/gicapi-settings-product.php:19
+msgid ""
+"Configure how each Gift-i-Card delivery status should affect WooCommerce "
+"stock status:"
+msgstr ""
+"Настройте, как каждый статус доставки Gift-i-Card должен влиять на статус "
+"наличия WooCommerce:"
+
+#: admin/partials/settings/gicapi-settings-product.php:25
+msgid "Instant Delivery"
+msgstr "Мгновенная доставка"
+
+#: admin/partials/settings/gicapi-settings-product.php:29
+#: admin/partials/settings/gicapi-settings-product.php:45
+#: admin/partials/settings/gicapi-settings-product.php:61
+#: admin/partials/settings/gicapi-settings-product.php:77
+msgid "No Change"
+msgstr "Без изменений"
+
+#: admin/partials/settings/gicapi-settings-product.php:30
+#: admin/partials/settings/gicapi-settings-product.php:46
+#: admin/partials/settings/gicapi-settings-product.php:62
+#: admin/partials/settings/gicapi-settings-product.php:78
+msgid "Change to In Stock"
+msgstr "Изменить на наличие"
+
+#: admin/partials/settings/gicapi-settings-product.php:31
+#: admin/partials/settings/gicapi-settings-product.php:47
+#: admin/partials/settings/gicapi-settings-product.php:63
+#: admin/partials/settings/gicapi-settings-product.php:79
+msgid "Change to On Back Order"
+msgstr "Изменить на заказ назад"
+
+#: admin/partials/settings/gicapi-settings-product.php:32
+#: admin/partials/settings/gicapi-settings-product.php:48
+#: admin/partials/settings/gicapi-settings-product.php:64
+#: admin/partials/settings/gicapi-settings-product.php:80
+msgid "Change to Out of Stock"
+msgstr "Изменить на отсутствие"
+
+#: admin/partials/settings/gicapi-settings-product.php:34
+msgid "Action when gift card has instant/automatic delivery"
+msgstr "Действие при мгновенной/автоматической доставке карты подарка"
+
+#: admin/partials/settings/gicapi-settings-product.php:41
+msgid "Manual Delivery"
+msgstr "Ручная доставка"
+
+#: admin/partials/settings/gicapi-settings-product.php:50
+msgid "Action when gift card requires operator intervention"
+msgstr ""
+"Действие при необходимости оперативного вмешательства оператора Gift-i-Card"
+
+#: admin/partials/settings/gicapi-settings-product.php:57
+msgid "Out of Stock"
+msgstr "Отсутствие"
+
+#: admin/partials/settings/gicapi-settings-product.php:66
+msgid "Action when gift card is out of stock"
+msgstr "Действие при отсутствии карты подарка"
+
+#: admin/partials/settings/gicapi-settings-product.php:73
+msgid "Deleted/Not Available"
+msgstr "Удален/Недоступен"
+
+#: admin/partials/settings/gicapi-settings-product.php:82
+msgid "Action when gift card is deleted or not available"
+msgstr "Действие при удалении или недоступности карты подарка"
+
+#: admin/partials/settings/gicapi-settings-product.php:87
+msgid "Advanced Settings"
+msgstr "Расширенные настройки"
+
+#: admin/partials/settings/gicapi-settings-product.php:91
+msgid "Auto Sync on Product Load"
+msgstr "Автоматическая синхронизация при загрузке товара"
+
+#: admin/partials/settings/gicapi-settings-product.php:95
+msgid "Automatically sync product status when product page is loaded."
+msgstr ""
+"Автоматически синхронизировать статус товара при загрузке страницы товара."
+
+#: includes/class-gicapi-ajax.php:31 includes/class-gicapi-ajax.php:116
+#: includes/class-gicapi-ajax.php:179 includes/class-gicapi-ajax.php:246
+#: includes/class-gicapi-ajax.php:304 includes/class-gicapi-ajax.php:356
+#: includes/class-gicapi-ajax.php:407 includes/class-gicapi-cron.php:244
+#: includes/class-gicapi-cron.php:263 includes/class-gicapi-cron.php:282
+#: includes/class-gicapi-cron.php:439
+msgid "Permission denied"
+msgstr "Доступ отклонен"
+
+#: includes/class-gicapi-ajax.php:65
+msgid "Simple Product"
+msgstr "Простой товар"
+
+#: includes/class-gicapi-ajax.php:68
+msgid "Variable Product"
+msgstr "Переменный товар"
+
+#. translators: %s: parent product name
+#: includes/class-gicapi-ajax.php:74
+#, php-format
+msgid "Variation of: %s"
+msgstr "Вариант: %s"
+
+#: includes/class-gicapi-ajax.php:76
+msgid "Product Variation"
+msgstr "Вариант товара"
+
+#: includes/class-gicapi-ajax.php:80
+msgid "Grouped Product"
+msgstr "Группированные товары"
+
+#: includes/class-gicapi-ajax.php:83
+msgid "External Product"
+msgstr "Внешний товар"
+
+#: includes/class-gicapi-ajax.php:86
+#: includes/class-gicapi-gift-card-display.php:369
+#: includes/class-gicapi-gift-card-display.php:487
+msgid "Product"
+msgstr "Товар"
+
+#: includes/class-gicapi-ajax.php:125 includes/class-gicapi-ajax.php:188
+#: includes/class-gicapi-ajax.php:253 includes/class-gicapi-ajax.php:310
+#: includes/class-gicapi-ajax.php:362
+msgid "Invalid parameters"
+msgstr "Неверные параметры"
+
+#: includes/class-gicapi-ajax.php:154
+msgid "This mapping already exists"
+msgstr "Эта связь уже существует"
+
+#: includes/class-gicapi-ajax.php:168
+msgid "Error saving mapping"
+msgstr "Ошибка сохранения связи"
+
+#: includes/class-gicapi-ajax.php:171
+msgid "Mapping added successfully"
+msgstr "Связь добавлена успешно"
+
+#: includes/class-gicapi-ajax.php:221
+msgid "Mapping not found"
+msgstr "Связь не найдена"
+
+#: includes/class-gicapi-ajax.php:238
+msgid "Mapping removed successfully"
+msgstr "Связь удалена"
+
+#: includes/class-gicapi-ajax.php:258 includes/class-gicapi-ajax.php:315
+#: includes/class-gicapi-ajax.php:367
+msgid "Order not found"
+msgstr "Заказ не найден"
+
+#: includes/class-gicapi-ajax.php:263
+msgid "Order item not found"
+msgstr "Элемент заказа не найден"
+
+#: includes/class-gicapi-ajax.php:269 includes/class-gicapi-ajax.php:321
+msgid "GICAPI Public class not available"
+msgstr "Класс GICAPI Public недоступен"
+
+#: includes/class-gicapi-ajax.php:274 includes/class-gicapi-ajax.php:326
+msgid "GICAPI API not available"
+msgstr "Класс GICAPI API недоступен"
+
+#: includes/class-gicapi-ajax.php:280 includes/class-gicapi-ajax.php:332
+#: includes/class-gicapi-ajax.php:379
+msgid "Order processing is disabled"
+msgstr "Обработка заказов отключена"
+
+#: includes/class-gicapi-ajax.php:293
+msgid "Order created successfully"
+msgstr "Заказ создан успешно"
+
+#: includes/class-gicapi-ajax.php:295
+msgid "Failed to create order: "
+msgstr "Не удалось создать заказ: "
+
+#: includes/class-gicapi-ajax.php:338 includes/class-gicapi-ajax.php:385
+msgid "Order has not been processed yet"
+msgstr "Заказ еще не обработан"
+
+#: includes/class-gicapi-ajax.php:345
+msgid "Order confirmed successfully"
+msgstr "Заказ подтвержден успешно"
+
+#: includes/class-gicapi-ajax.php:347
+msgid "Failed to confirm order: "
+msgstr "Не удалось подтвердить заказ: "
+
+#: includes/class-gicapi-ajax.php:373
+msgid "GICAPI Order class not available"
+msgstr "Класс GICAPI Order недоступен"
+
+#: includes/class-gicapi-ajax.php:393
+msgid "Order status updated successfully"
+msgstr "Статус заказа обновлен успешно"
+
+#: includes/class-gicapi-ajax.php:395
+msgid "No updates were made to the order status"
+msgstr "Статус заказа не был изменен"
+
+#: includes/class-gicapi-ajax.php:398
+msgid "Failed to update order status: "
+msgstr "Не удалось обновить статус заказа: "
+
+#: includes/class-gicapi-ajax.php:413
+msgid "GICAPI Product Sync class not available"
+msgstr "Класс GICAPI Product недоступен"
+
+#. translators: 1: Total number of products, 2: Number of successful syncs, 3: Number of failed syncs
+#: includes/class-gicapi-ajax.php:423
+#, php-format
+msgid ""
+"Product sync completed successfully. Total: %1$d, Successful: %2$d, Failed: "
+"%3$d"
+msgstr ""
+"Синхронизация товаров завершена успешно. Всего: %1$d, Успешно: %2$d, С "
+"ошибкой: %3$d"
+
+#. translators: Error message when product sync fails with unknown error
+#: includes/class-gicapi-ajax.php:431
+msgid "Unknown error occurred during sync"
+msgstr "В процессе синхронизации произошла неизвестная ошибка"
+
+#: includes/class-gicapi-ajax.php:435
+msgid "Failed to sync products: "
+msgstr "Не удалось синхронизировать товары: "
+
+#: includes/class-gicapi-cron.php:86
+msgid "Every 5 minutes"
+msgstr "Каждые 5 минут"
+
+#: includes/class-gicapi-cron.php:250
+msgid "Manual order update completed"
+msgstr "Ручное обновление заказа завершено"
+
+#: includes/class-gicapi-cron.php:269
+msgid "Cron job rescheduled successfully"
+msgstr "Крон-задача перенесена успешно"
+
+#: includes/class-gicapi-cron.php:446
+msgid "Cron job checked and repaired successfully"
+msgstr "Крон-задача проверена и исправлена успешно"
+
+#: includes/class-gicapi-cron.php:448
+msgid "Cron job check and repair failed"
+msgstr "Ошибка при проверке и исправлении крон-задачи"
+
+#: includes/class-gicapi-gift-card-display.php:51
+#: includes/class-gicapi-gift-card-display.php:252
+msgid "Gift Card Information"
+msgstr "Информация о карте подарка"
+
+#: includes/class-gicapi-gift-card-display.php:56
+#: includes/class-gicapi-gift-card-display.php:124
+msgid "Status:"
+msgstr "Статус:"
+
+#: includes/class-gicapi-gift-card-display.php:56
+msgid "Pending Order Creation"
+msgstr "В ожидании создания заказа"
+
+#: includes/class-gicapi-gift-card-display.php:57
+#: includes/class-gicapi-gift-card-display.php:126
+msgid "Mapped Variant SKU:"
+msgstr "Артикул связанного варианта:"
+
+#: includes/class-gicapi-gift-card-display.php:67
+msgid "Create Order Manually"
+msgstr "Создать заказ вручную"
+
+#: includes/class-gicapi-gift-card-display.php:69
+msgid "Creating order..."
+msgstr "Создание заказа..."
+
+#: includes/class-gicapi-gift-card-display.php:81
+msgid "Pending"
+msgstr "В ожидании"
+
+#: includes/class-gicapi-gift-card-display.php:84
+msgid "Processing"
+msgstr "В обработке"
+
+#: includes/class-gicapi-gift-card-display.php:87
+msgid "Completed"
+msgstr "Завершено"
+
+#: includes/class-gicapi-gift-card-display.php:90
+msgid "Failed"
+msgstr "Неудачно"
+
+#: includes/class-gicapi-gift-card-display.php:93
+msgid "Cancelled"
+msgstr "Отменено"
+
+#: includes/class-gicapi-gift-card-display.php:103
+msgid "€"
+msgstr "€"
+
+#: includes/class-gicapi-gift-card-display.php:106
+msgid "$"
+msgstr "$"
+
+#: includes/class-gicapi-gift-card-display.php:109
+msgid "IRT"
+msgstr "IRT"
+
+#: includes/class-gicapi-gift-card-display.php:123
+msgid "Gift-i-Card Order ID:"
+msgstr "Номер заказа Gift-i-Card:"
+
+#: includes/class-gicapi-gift-card-display.php:125
+msgid "Price:"
+msgstr "Цена:"
+
+#: includes/class-gicapi-gift-card-display.php:137
+msgid "Confirm Order Manually"
+msgstr "Подтвердить заказ вручную"
+
+#: includes/class-gicapi-gift-card-display.php:139
+msgid "Confirming order..."
+msgstr "Подтверждение заказа..."
+
+#: includes/class-gicapi-gift-card-display.php:147
+msgid "Expires At:"
+msgstr "Истекает:"
+
+#: includes/class-gicapi-gift-card-display.php:154
+#: includes/class-gicapi-gift-card-display.php:285
+#: includes/class-gicapi-gift-card-display.php:370
+#: includes/class-gicapi-gift-card-display.php:488
+msgid "License Key"
+msgstr "Ключ лицензии"
+
+#: includes/class-gicapi-gift-card-display.php:155
+#: includes/class-gicapi-gift-card-display.php:286
+#: includes/class-gicapi-gift-card-display.php:371
+#: includes/class-gicapi-gift-card-display.php:489
+msgid "Serial Number"
+msgstr "Серийный номер"
+
+#: includes/class-gicapi-gift-card-display.php:156
+#: includes/class-gicapi-gift-card-display.php:287
+#: includes/class-gicapi-gift-card-display.php:372
+#: includes/class-gicapi-gift-card-display.php:490
+msgid "Card Code"
+msgstr "Код карты"
+
+#: includes/class-gicapi-gift-card-display.php:157
+#: includes/class-gicapi-gift-card-display.php:288
+#: includes/class-gicapi-gift-card-display.php:373
+#: includes/class-gicapi-gift-card-display.php:491
+msgid "Redeem Link"
+msgstr "Ссылка на возврат"
+
+#: includes/class-gicapi-gift-card-display.php:158
+#: includes/class-gicapi-gift-card-display.php:289
+#: includes/class-gicapi-gift-card-display.php:374
+#: includes/class-gicapi-gift-card-display.php:492
+msgid "Expires At"
+msgstr "Истекает"
+
+#: includes/class-gicapi-gift-card-display.php:171
+msgid "Redemption Details"
+msgstr "Детали возврата"
+
+#: includes/class-gicapi-gift-card-display.php:192
+#: includes/class-gicapi-gift-card-display.php:420
+#: includes/class-gicapi-gift-card-display.php:534
+msgid "Redeem"
+msgstr "Возврат"
+
+#: includes/class-gicapi-gift-card-display.php:212
+msgid "Update Status"
+msgstr "Обновить статус"
+
+#: includes/class-gicapi-gift-card-display.php:214
+msgid "Updating status..."
+msgstr "Обновление статуса..."
+
+#: includes/class-gicapi-gift-card-display.php:256
+msgid "Print Information"
+msgstr "Печать информации"
+
+#: includes/class-gicapi-gift-card-display.php:302
+msgid "Redemption Codes"
+msgstr "Коды возврата"
+
+#: includes/class-gicapi-gift-card-display.php:323
+msgid "Click to Redeem"
+msgstr "Нажмите для возврата"
+
+#: includes/class-gicapi-gift-card-display.php:394
+#: includes/class-gicapi-gift-card-display.php:513
+msgid "Gift Card Redemption Details"
+msgstr "Детали возврата карты подарка"
+
+#. translators: %1$s: Gift-i-Card order ID, %2$s: old status, %3$s: new status, %4$s: source
+#: includes/class-gicapi-order-manager.php:159
+#, php-format
+msgid "Gift-i-Card order %1$s status updated from %2$s to %3$s %4$s"
+msgstr "Статус заказа %1$s Gift-i-Card изменен с %2$s на %3$s %4$s"
+
+#: includes/class-gicapi-order-manager.php:223
+msgid "Order completed because all mapped Gift-i-Card items are completed"
+msgstr "Заказ завершен, так как все элементы Gift-i-Card в заказе завершены"
+
+#: includes/class-gicapi-order-manager.php:228
+msgid ""
+"Order completed because all mapped Gift-i-Card items are completed (any-"
+"mapped)"
+msgstr ""
+"Заказ завершен, так как все элементы Gift-i-Card в заказе завершены (any-"
+"mapped)"
+
+#: includes/class-gicapi-order-manager.php:235
+msgid "Order failed because all mapped Gift-i-Card items are failed"
+msgstr ""
+"Заказ не удался, так как один или несколько элементов Gift-i-Card в заказе "
+"не удался"
+
+#: includes/class-gicapi-order-manager.php:240
+msgid ""
+"Order failed because at least one mapped Gift-i-Card item is failed (any-"
+"mapped)"
+msgstr ""
+"Заказ не удался, так как один или несколько элементов Gift-i-Card в заказе "
+"не удался (any-mapped)"
+
+#: includes/class-gicapi-order-manager.php:247
+msgid "Order cancelled because all mapped Gift-i-Card items are cancelled"
+msgstr "Заказ отменен, так как все элементы Gift-i-Card в заказе отменены"
+
+#: includes/class-gicapi-order-manager.php:252
+msgid ""
+"Order cancelled because all mapped Gift-i-Card items are cancelled (any-"
+"mapped)"
+msgstr ""
+"Заказ отменен, так как все элементы Gift-i-Card в заказе отменены (any-"
+"mapped)"
+
+#: includes/class-gicapi-webhook.php:17
+msgid "Only POST method is allowed"
+msgstr "Разрешен только метод POST"
+
+#: includes/class-gicapi-webhook.php:23
+msgid "Empty request body"
+msgstr "Тело запроса пустое"
+
+#: includes/class-gicapi-webhook.php:28
+msgid "Invalid JSON format"
+msgstr "Неверный формат JSON"
+
+#: includes/class-gicapi-webhook.php:32
+msgid "Invalid data"
+msgstr "Неверные данные"
+
+#: includes/class-gicapi-webhook.php:36
+msgid "Order ID is required"
+msgstr "Номер заказа обязателен"
+
+#: includes/class-gicapi-webhook.php:45
+msgid "Invalid order ID format"
+msgstr "Неверный формат номера заказа"
+
+#: includes/class-gicapi-webhook.php:51
+msgid "Webhook secret is missing"
+msgstr "Секрет вебхука отсутствует"
+
+#: includes/class-gicapi-webhook.php:63
+msgid "No WooCommerce orders found for this Gift-i-Card order"
+msgstr "Заказ WooCommerce, связанный с этим заказом Gift-i-Card, не найден"
+
+#: includes/class-gicapi-webhook.php:76
+msgid "Invalid webhook secret"
+msgstr "Неверный секрет вебхука"
+
+#: includes/class-gicapi-webhook.php:93
+msgid "Webhook processed successfully"
+msgstr "Вебхук обработан успешно"
+
+#: public/class-gicapi-public.php:177
+msgid "Failed to create Gift-i-Card order"
+msgstr "Не удалось создать заказ Gift-i-Card"
+
+#: public/class-gicapi-public.php:186
+msgid "Gift-i-Card API returned empty order_id"
+msgstr "Номер заказа Gift-i-Card не получен"
+
+#. translators: %s: Gift-i-Card order ID
+#: public/class-gicapi-public.php:194
+#, php-format
+msgid "Gift-i-Card order created: %s"
+msgstr "Заказ Gift-i-Card создан: %s"
+
+#: public/class-gicapi-public.php:236
+msgid "Failed to confirm Gift-i-Card order"
+msgstr "Не удалось подтвердить заказ Gift-i-Card"
+
+#. translators: %s: Gift-i-Card order ID
+#: public/class-gicapi-public.php:244
+#, php-format
+msgid "Gift-i-Card order confirmed: %s"
+msgstr "Заказ Gift-i-Card подтвержден: %s"
+
+#. Plugin Name of the plugin/theme
+msgid "Gift-i-Card"
+msgstr "Gift-i-Card"
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/skasiri/gift-i-card"
+msgstr "http://github.com/skasiri/gift-i-card"
+
+#. Description of the plugin/theme
+msgid "A plugin to integrate WooCommerce with a gift card service"
+msgstr "Плагин для интеграции WooCommerce с сервисом карт подарков"
+
+#. Author of the plugin/theme
+msgid "Saeid Kasiri"
+msgstr "Saeid Kasiri"
+
+#. Author URI of the plugin/theme
+msgid "https://gifticard.ir"
+msgstr "https://gifticard.ir"
