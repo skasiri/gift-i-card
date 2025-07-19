@@ -180,7 +180,7 @@ class GICAPI_Ajax
         }
 
         $variant_sku = isset($_POST['variant_sku']) ? sanitize_text_field(wp_unslash($_POST['variant_sku'])) : '';
-        $product_id = isset($_POST['product_id']) ? intval(wp_unslash($_POST['product_id'])) : 0;
+        $product_id = isset($_POST['product_id']) ? absint(wp_unslash($_POST['product_id'])) : 0;
         $category_sku = isset($_POST['category_sku']) ? sanitize_text_field(wp_unslash($_POST['category_sku'])) : '';
         $product_sku = isset($_POST['product_sku']) ? sanitize_text_field(wp_unslash($_POST['product_sku'])) : '';
 
@@ -246,8 +246,8 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
-        $item_id = isset($_POST['item_id']) ? intval($_POST['item_id']) : 0;
+        $order_id = isset($_POST['order_id']) ? absint(wp_unslash($_POST['order_id'])) : 0;
+        $item_id = isset($_POST['item_id']) ? absint(wp_unslash($_POST['item_id'])) : 0;
 
         if (empty($order_id) || empty($item_id)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
@@ -304,7 +304,7 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
+        $order_id = isset($_POST['order_id']) ? absint(wp_unslash($_POST['order_id'])) : 0;
 
         if (empty($order_id)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
@@ -356,7 +356,7 @@ class GICAPI_Ajax
             wp_send_json_error(__('Permission denied', 'gift-i-card'));
         }
 
-        $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
+        $order_id = isset($_POST['order_id']) ? absint(wp_unslash($_POST['order_id'])) : 0;
 
         if (empty($order_id)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));

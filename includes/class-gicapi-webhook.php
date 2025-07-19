@@ -23,7 +23,9 @@ class GICAPI_Webhook
             wp_send_json_error(__('Empty request body', 'gift-i-card'), 400);
         }
 
-        $data = json_decode($input, true);
+        // Sanitize the input before JSON decode
+        $sanitized_input = sanitize_textarea_field($input);
+        $data = json_decode($sanitized_input, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             wp_send_json_error(__('Invalid JSON format', 'gift-i-card'), 400);
         }

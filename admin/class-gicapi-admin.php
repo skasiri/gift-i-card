@@ -591,7 +591,7 @@ class GICAPI_Admin
     public function ajax_map_variant()
     {
         // Verify nonce for security
-        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'gicapi_map_variant')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'gicapi_map_variant')) {
             wp_send_json_error(__('Security check failed. Please try again.', 'gift-i-card'));
             return;
         }
