@@ -41,7 +41,7 @@ class GICAPI_Order
 
         // Fallback to old system for backward compatibility
         if (empty($mapped_variant_skus)) {
-            $variant_sku = get_post_meta($mapping_product_id, '_gic_variant_sku', true);
+            $variant_sku = get_post_meta($mapping_product_id, '_gicapi_variant_sku', true);
             if ($variant_sku) {
                 $mapped_variant_skus = array($variant_sku);
             }

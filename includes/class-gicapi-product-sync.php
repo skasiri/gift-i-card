@@ -749,7 +749,7 @@ class GICAPI_Product_Sync
                 AND pm.meta_value != 'null'
                 AND p.post_status = 'publish'
                 AND p.post_type IN ('product', 'product_variation')",
-                '_gic_variant_sku'
+                '_gicapi_variant_sku'
             )
         );
 
@@ -767,7 +767,7 @@ class GICAPI_Product_Sync
             if ($product) {
                 // Verify that the product actually has valid mapped SKUs
                 $mapped_skus = get_post_meta($product_id, '_gicapi_mapped_variant_skus', true);
-                $old_mapped_sku = get_post_meta($product_id, '_gic_variant_sku', true);
+                $old_mapped_sku = get_post_meta($product_id, '_gicapi_variant_sku', true);
 
                 // Check if product has valid mapped SKUs
                 $has_valid_mapping = false;
