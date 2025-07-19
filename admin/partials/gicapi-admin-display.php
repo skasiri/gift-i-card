@@ -27,37 +27,3 @@ if (!defined('ABSPATH')) {
         <?php submit_button(); ?>
     </form>
 </div>
-
-<script type="text/javascript">
-    jQuery(document).ready(function($) {
-        // Tab functionality
-        $('.nav-tab').on('click', function(e) {
-            e.preventDefault();
-
-            // Remove active class from all tabs
-            $('.nav-tab').removeClass('nav-tab-active');
-
-            // Add active class to clicked tab
-            $(this).addClass('nav-tab-active');
-
-            // Hide all tab content
-            $('.tab-content').hide();
-
-            // Show the selected tab content
-            $($(this).attr('href')).show();
-        });
-
-        // Show first tab by default
-        $('.nav-tab:first').trigger('click');
-    });
-</script>
-
-<style>
-    .tab-content {
-        margin-top: 20px;
-    }
-
-    .nav-tab-wrapper {
-        margin-bottom: 20px;
-    }
-</style>

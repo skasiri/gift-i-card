@@ -26,118 +26,7 @@ jQuery(document).ready(function ($) {
         $('#gicapi-dialog-overlay').hide();
     });
 
-    // Sync Categories
-    $('#gicapi-sync-categories').on('click', function (e) {
-        e.preventDefault();
 
-        var $button = $(this);
-        $button.prop('disabled', true);
-
-        $.ajax({
-            url: gicapi_admin.ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'gicapi_sync_categories',
-                _ajax_nonce: gicapi_admin.nonce
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('دسته‌بندی‌ها با موفقیت به‌روزرسانی شدند');
-                    location.reload();
-                } else {
-                    alert('خطا در به‌روزرسانی دسته‌بندی‌ها: ' + response.data.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.status === 403) {
-                    alert('دسترسی غیرمجاز. لطفا دوباره وارد شوید.');
-                } else {
-                    alert('خطا در ارتباط با سرور: ' + error);
-                }
-            },
-            complete: function () {
-                $button.prop('disabled', false);
-            }
-        });
-    });
-
-    // Sync Products
-    $('#gicapi-sync-products').on('click', function (e) {
-        e.preventDefault();
-
-        var $button = $(this);
-        $button.prop('disabled', true);
-
-        $.ajax({
-            url: gicapi_admin.ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'gicapi_sync_products',
-                _ajax_nonce: gicapi_admin.nonce
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('محصولات با موفقیت به‌روزرسانی شدند');
-                    location.reload();
-                } else {
-                    alert('خطا در به‌روزرسانی محصولات: ' + response.data.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.status === 403) {
-                    alert('دسترسی غیرمجاز. لطفا دوباره وارد شوید.');
-                } else {
-                    alert('خطا در ارتباط با سرور: ' + error);
-                }
-            },
-            complete: function () {
-                $button.prop('disabled', false);
-            }
-        });
-    });
-
-    // Map Product Submit
-    $('#gicapi-map-submit').on('click', function (e) {
-        e.preventDefault();
-
-        var $button = $(this);
-        var $form = $('#gicapi-map-form');
-        var $dialog = $('#gicapi-map-dialog');
-        var $overlay = $('#gicapi-dialog-overlay');
-
-        $button.prop('disabled', true);
-
-        $.ajax({
-            url: gicapi_admin.ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'gicapi_map_product',
-                _ajax_nonce: gicapi_admin.nonce,
-                product_id: $form.find('input[name="product_id"]').val(),
-                woocommerce_product: $form.find('select[name="woocommerce_product"]').val()
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('محصول با موفقیت مرتبط شد');
-                    location.reload();
-                } else {
-                    alert('خطا در مرتبط کردن محصول: ' + response.data.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.status === 403) {
-                    alert('دسترسی غیرمجاز. لطفا دوباره وارد شوید.');
-                } else {
-                    alert('خطا در ارتباط با سرور: ' + error);
-                }
-            },
-            complete: function () {
-                $button.prop('disabled', false);
-                $dialog.hide();
-                $overlay.hide();
-            }
-        });
-    });
 
     // Force Refresh Token Button
     $('#gicapi-force-refresh-token-button').on('click', function () {
@@ -179,4 +68,275 @@ jQuery(document).ready(function ($) {
 
 
 
+});
+
+// Tab functionality
+jQuery(document).ready(function ($) {
+    $('.nav-tab').on('click', function (e) {
+        e.preventDefault();
+
+        // Remove active class from all tabs
+        $('.nav-tab').removeClass('nav-tab-active');
+
+        // Add active class to clicked tab
+        $(this).addClass('nav-tab-active');
+
+        // Hide all tab content
+        $('.tab-content').hide();
+
+        // Show the selected tab content
+        $($(this).attr('href')).show();
+    });
+
+    // Show first tab by default
+    $('.nav-tab:first').trigger('click');
+});
+
+// Variants display functionality
+jQuery(document).ready(function ($) {
+    // Initialize select2 for product search
+    $('.wc-product-search').select2({
+        dropdownParent: $('#gicapi-mapping-modal'),
+        ajax: {
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term,
+                    action: 'gicapi_search_products',
+                    nonce: gicapi_admin_params.search_products_nonce,
+                    category_sku: $('#gicapi-mapping-modal').data('category-sku'),
+                    product_sku: $('#gicapi-mapping-modal').data('product-sku')
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 2,
+        placeholder: gicapi_admin_params.text_search_product || 'Search for a product...',
+        width: '100%'
+    });
+
+    // Open modal for adding mapping
+    $('.gicapi-add-mapping').on('click', function () {
+        var variantSku = $(this).data('variant-sku');
+        var categorySku = $(this).data('category-sku');
+        var productSku = $(this).data('product-sku');
+        $('#modal-variant-id').val(variantSku);
+        $('#gicapi-mapping-modal').data('category-sku', categorySku).data('product-sku', productSku).show();
+        $('.wc-product-search').val(null).trigger('change');
+    });
+
+    // Close modal
+    $('.gicapi-modal-close, #close-modal').on('click', function () {
+        $('#gicapi-mapping-modal').hide();
+        $('.wc-product-search').val(null).trigger('change');
+    });
+
+    // Save mapping
+    $('#save-mapping').on('click', function () {
+        var $button = $(this);
+        var variantSku = $('#modal-variant-id').val();
+        var productId = $('.wc-product-search').val();
+        var categorySku = $('#gicapi-mapping-modal').data('category-sku');
+        var productSku = $('#gicapi-mapping-modal').data('product-sku');
+
+        if (!productId) {
+            alert(gicapi_admin_params.text_select_product || 'Please select a product');
+            return;
+        }
+
+        $button.prop('disabled', true);
+        $('.spinner').show();
+
+        $.post(ajaxurl, {
+            action: 'gicapi_add_mapping',
+            nonce: gicapi_admin_params.add_mapping_nonce,
+            variant_sku: variantSku,
+            product_id: productId,
+            category_sku: categorySku,
+            product_sku: productSku
+        }, function (response) {
+            if (response.success) {
+                location.reload();
+            } else {
+                alert(response.data || (gicapi_admin_params.text_error_mapping || 'Error adding mapping'));
+            }
+        }).fail(function () {
+            alert(gicapi_admin_params.text_error_mapping || 'Error adding mapping');
+        }).always(function () {
+            $button.prop('disabled', false);
+            $('.spinner').hide();
+        });
+    });
+
+    // Remove mapping
+    $('.gicapi-remove-mapping').on('click', function () {
+        if (!confirm(gicapi_admin_params.text_confirm_remove || 'Are you sure you want to remove this mapping?')) {
+            return;
+        }
+
+        var $button = $(this);
+        var variantSku = $button.data('variant-sku');
+        var productId = $button.data('product-id');
+        var categorySku = $button.data('category-sku');
+        var productSku = $button.data('product-sku');
+
+        $button.prop('disabled', true);
+
+        $.post(ajaxurl, {
+            action: 'gicapi_remove_mapping',
+            nonce: gicapi_admin_params.remove_mapping_nonce,
+            variant_sku: variantSku,
+            product_id: productId,
+            category_sku: categorySku,
+            product_sku: productSku
+        }, function (response) {
+            if (response.success) {
+                location.reload();
+            } else {
+                alert(response.data || (gicapi_admin_params.text_error_removing || 'Error removing mapping'));
+            }
+        }).fail(function () {
+            alert(gicapi_admin_params.text_error_removing || 'Error removing mapping');
+        }).always(function () {
+            $button.prop('disabled', false);
+        });
+    });
+});
+
+// Cron settings functionality
+jQuery(document).ready(function ($) {
+    $('#gicapi-manual-update').on('click', function () {
+        var button = $(this);
+        var resultDiv = $('#gicapi-manual-update-result');
+
+        button.prop('disabled', true).text(gicapi_admin_params.text_updating || 'Updating...');
+        resultDiv.html('');
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_manual_update_orders',
+                nonce: gicapi_admin_params.manual_update_orders_nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    resultDiv.html('<div class="notice notice-success"><p>' + response.data + '</p></div>');
+                } else {
+                    resultDiv.html('<div class="notice notice-error"><p>' + response.data + '</p></div>');
+                }
+            },
+            error: function () {
+                resultDiv.html('<div class="notice notice-error"><p>' + (gicapi_admin_params.text_error_updating || 'An error occurred while updating orders.') + '</p></div>');
+            },
+            complete: function () {
+                button.prop('disabled', false).text(gicapi_admin_params.text_update_orders || 'Update Pending/Processing Orders Now');
+            }
+        });
+    });
+
+    $('#gicapi-manual-product-sync').on('click', function () {
+        var button = $(this);
+        var resultDiv = $('#gicapi-manual-product-sync-result');
+
+        button.prop('disabled', true).text(gicapi_admin_params.text_syncing || 'Syncing...');
+        resultDiv.html('');
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_manual_sync_products',
+                nonce: gicapi_admin_params.manual_sync_products_nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    resultDiv.html('<div class="notice notice-success"><p>' + response.data + '</p></div>');
+                } else {
+                    resultDiv.html('<div class="notice notice-error"><p>' + response.data + '</p></div>');
+                }
+            },
+            error: function () {
+                resultDiv.html('<div class="notice notice-error"><p>' + (gicapi_admin_params.text_error_syncing || 'An error occurred while syncing products.') + '</p></div>');
+            },
+            complete: function () {
+                button.prop('disabled', false).text(gicapi_admin_params.text_sync_products || 'Sync All Products Now');
+            }
+        });
+    });
+
+    $('#gicapi-reschedule-cron').on('click', function () {
+        var button = $(this);
+        var resultDiv = $('#gicapi-debug-result');
+
+        button.prop('disabled', true).text(gicapi_admin_params.text_rescheduling || 'Rescheduling...');
+        resultDiv.html('');
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_reschedule_cron',
+                nonce: gicapi_admin_params.reschedule_cron_nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    resultDiv.html('<div class="notice notice-success"><p>' + response.data + '</p></div>');
+                    // Reload page after 2 seconds to show updated status
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    resultDiv.html('<div class="notice notice-error"><p>' + response.data + '</p></div>');
+                }
+            },
+            error: function () {
+                resultDiv.html('<div class="notice notice-error"><p>' + (gicapi_admin_params.text_error_rescheduling || 'An error occurred while rescheduling cron job.') + '</p></div>');
+            },
+            complete: function () {
+                button.prop('disabled', false).text(gicapi_admin_params.text_reschedule_cron || 'Reschedule Cron Job');
+            }
+        });
+    });
+
+    $('#gicapi-check-repair-cron').on('click', function () {
+        var button = $(this);
+        var resultDiv = $('#gicapi-debug-result');
+
+        button.prop('disabled', true).text(gicapi_admin_params.text_checking || 'Checking...');
+        resultDiv.html('');
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'gicapi_check_repair_cron',
+                nonce: gicapi_admin_params.check_repair_cron_nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    resultDiv.html('<div class="notice notice-success"><p>' + response.data + '</p></div>');
+                    // Reload page after 2 seconds to show updated status
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    resultDiv.html('<div class="notice notice-error"><p>' + response.data + '</p></div>');
+                }
+            },
+            error: function () {
+                resultDiv.html('<div class="notice notice-error"><p>' + (gicapi_admin_params.text_error_checking || 'An error occurred while checking cron job.') + '</p></div>');
+            },
+            complete: function () {
+                button.prop('disabled', false).text(gicapi_admin_params.text_check_repair_cron || 'Check & Repair Cron Job');
+            }
+        });
+    });
 }); 

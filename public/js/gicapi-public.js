@@ -268,6 +268,28 @@ jQuery(document).ready(function ($) {
         document.body.removeChild(link);
     });
 
-
+    // Copy functionality for gift card data
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.gicapi-copy-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var text = this.getAttribute('data-copy');
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text);
+                } else {
+                    var textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }
+                var old = this.innerHTML;
+                this.innerHTML = '<span style="font-size:11px;">✔</span>';
+                setTimeout(() => {
+                    this.innerHTML = old;
+                }, 1200);
+            });
+        });
+    });
 
 }); 
