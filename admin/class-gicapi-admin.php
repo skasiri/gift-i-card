@@ -119,6 +119,22 @@ class GICAPI_Admin
         );
         wp_enqueue_script('gicapi-select2');
 
+        // Register and enqueue public JS for admin area (for gift card buttons)
+        wp_register_script(
+            'gicapi-public-admin',
+            plugin_dir_url(dirname(__FILE__)) . 'public/js/gicapi-public.js',
+            array('jquery'),
+            $this->version,
+            false
+        );
+        wp_enqueue_script('gicapi-public-admin');
+
+        // Localize public script for AJAX
+        wp_localize_script('gicapi-public-admin', 'gicapi_ajax', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('gicapi_create_order_manually')
+        ));
+
         // Prepare parameters for JavaScript, including nonces and localized text
         $script_params = array(
             'ajaxurl' => admin_url('admin-ajax.php'),

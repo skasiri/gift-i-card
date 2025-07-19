@@ -15,15 +15,13 @@ jQuery(document).ready(function ($) {
         var itemId = $button.data('item-id');
         var nonce = $button.data('nonce');
 
-        console.log('Order ID:', orderId, 'Item ID:', itemId, 'Nonce:', nonce); // Debug log
-
         // Show loading state
         $button.prop('disabled', true);
         $loading.show();
 
         // Make AJAX request
         $.ajax({
-            url: ajaxurl,
+            url: (typeof gicapi_ajax !== 'undefined' && gicapi_ajax.ajaxurl) ? gicapi_ajax.ajaxurl : ajaxurl,
             type: 'POST',
             data: {
                 action: 'gicapi_create_order_manually',
@@ -72,15 +70,13 @@ jQuery(document).ready(function ($) {
         var orderId = $button.data('order-id');
         var nonce = $button.data('nonce');
 
-        console.log('Confirm Order ID:', orderId, 'Nonce:', nonce); // Debug log
-
         // Show loading state
         $button.prop('disabled', true);
         $loading.show();
 
         // Make AJAX request
         $.ajax({
-            url: ajaxurl,
+            url: (typeof gicapi_ajax !== 'undefined' && gicapi_ajax.ajaxurl) ? gicapi_ajax.ajaxurl : ajaxurl,
             type: 'POST',
             data: {
                 action: 'gicapi_confirm_order_manually',
@@ -128,15 +124,13 @@ jQuery(document).ready(function ($) {
         var orderId = $button.data('order-id');
         var nonce = $button.data('nonce');
 
-        console.log('Update Status Order ID:', orderId, 'Nonce:', nonce); // Debug log
-
         // Show loading state
         $button.prop('disabled', true);
         $loading.show();
 
         // Make AJAX request
         $.ajax({
-            url: ajaxurl,
+            url: (typeof gicapi_ajax !== 'undefined' && gicapi_ajax.ajaxurl) ? gicapi_ajax.ajaxurl : ajaxurl,
             type: 'POST',
             data: {
                 action: 'gicapi_update_status_manually',
