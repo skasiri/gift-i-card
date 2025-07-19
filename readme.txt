@@ -1,5 +1,5 @@
 === Gift-i-Card ===
-Contributors: saeidkasiri
+Contributors: saeidksr
 Tags: woocommerce, gift card, gifticard
 Requires at least: 5.0
 Tested up to: 6.8
