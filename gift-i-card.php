@@ -119,27 +119,27 @@ if (!class_exists('GICAPI')) {
     }
 }
 
-function activate_gicapi()
+function gicapi_activate()
 {
     GICAPI_Activator::activate();
 }
 
-function deactivate_gicapi()
+function gicapi_deactivate()
 {
     GICAPI_Deactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_gicapi');
-register_deactivation_hook(__FILE__, 'deactivate_gicapi');
+register_activation_hook(__FILE__, 'gicapi_activate');
+register_deactivation_hook(__FILE__, 'gicapi_deactivate');
 
-function run_gicapi()
+function gicapi_run()
 {
     $plugin = GICAPI::get_instance();
     $plugin->run();
 }
 
 // Initialize the plugin
-run_gicapi();
+gicapi_run();
 
 // Make sure WordPress functions are available
 if (!function_exists('add_action')) {
