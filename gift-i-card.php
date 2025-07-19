@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 }
 
 if (!defined('GICAPI_VERSION')) {
-    define('GICAPI_VERSION', '1.0.0');
+    define('GICAPI_VERSION', '1.1.4');
 }
 
 if (!defined('GICAPI_PLUGIN_DIR')) {
@@ -103,11 +103,7 @@ if (!class_exists('GICAPI')) {
         {
             $plugin_public = new GICAPI_Public($this->plugin_name, $this->version);
 
-            // Always enqueue styles and scripts for admin pages
-            add_action('admin_enqueue_scripts', array($plugin_public, 'enqueue_styles'));
-            add_action('admin_enqueue_scripts', array($plugin_public, 'enqueue_scripts'));
-
-            // Also enqueue for frontend if order processing is enabled
+            // Enqueue public styles and scripts only when needed
             $enable_order_processing = get_option('gicapi_enable', 'no');
             if ($enable_order_processing === 'yes') {
                 add_action('wp_enqueue_scripts', array($plugin_public, 'enqueue_styles'));
@@ -152,16 +148,22 @@ if (!function_exists('add_action')) {
     exit;
 }
 
+// Enqueue copy script with proper WordPress functions
 function gicapi_enqueue_copy_script()
 {
-    wp_enqueue_script(
-        'gicapi-copy',
-        plugins_url('public/js/gicapi-copy.js', __FILE__),
-        array(),
-        filemtime(plugin_dir_path(__FILE__) . 'public/js/gicapi-copy.js'),
-        true
-    );
+    $copy_script_path = GICAPI_PLUGIN_DIR . 'public/js/gicapi-copy.js';
+
+    if (file_exists($copy_script_path)) {
+        wp_enqueue_script(
+            'gicapi-copy',
+            GICAPI_PLUGIN_URL . 'public/js/gicapi-copy.js',
+            array('jquery'),
+            filemtime($copy_script_path),
+            true
+        );
+    }
 }
+
 add_action('wp_enqueue_scripts', 'gicapi_enqueue_copy_script');
 add_action('admin_enqueue_scripts', 'gicapi_enqueue_copy_script');
 

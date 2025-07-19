@@ -71,8 +71,25 @@ class GICAPI_Admin
      */
     public function enqueue_styles()
     {
-        wp_enqueue_style('gicapi-admin', plugin_dir_url(__FILE__) . 'css/gicapi-admin.css', array(), $this->version, 'all');
-        wp_enqueue_style('select2', plugin_dir_url(__FILE__) . 'css/select2.min.css', array(), '4.1.0');
+        // Register and enqueue admin CSS
+        wp_register_style(
+            'gicapi-admin',
+            plugin_dir_url(__FILE__) . 'css/gicapi-admin.css',
+            array(),
+            $this->version,
+            'all'
+        );
+        wp_enqueue_style('gicapi-admin');
+
+        // Register and enqueue Select2 CSS
+        wp_register_style(
+            'gicapi-select2',
+            plugin_dir_url(__FILE__) . 'css/select2.min.css',
+            array(),
+            '4.1.0',
+            'all'
+        );
+        wp_enqueue_style('gicapi-select2');
     }
 
     /**
@@ -82,8 +99,25 @@ class GICAPI_Admin
      */
     public function enqueue_scripts()
     {
-        wp_enqueue_script('gicapi-admin', plugin_dir_url(__FILE__) . 'js/gicapi-admin.js', array('jquery'), $this->version, false);
-        wp_enqueue_script('select2', plugin_dir_url(__FILE__) . 'js/select2.min.js', array('jquery'), '4.1.0', true);
+        // Register and enqueue admin JS
+        wp_register_script(
+            'gicapi-admin',
+            plugin_dir_url(__FILE__) . 'js/gicapi-admin.js',
+            array('jquery'),
+            $this->version,
+            false
+        );
+        wp_enqueue_script('gicapi-admin');
+
+        // Register and enqueue Select2 JS
+        wp_register_script(
+            'gicapi-select2',
+            plugin_dir_url(__FILE__) . 'js/select2.min.js',
+            array('jquery'),
+            '4.1.0',
+            true
+        );
+        wp_enqueue_script('gicapi-select2');
 
         // Prepare parameters for JavaScript, including nonces and localized text
         $script_params = array(
