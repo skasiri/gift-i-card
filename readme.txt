@@ -65,9 +65,25 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.1.5 =
+* Added support for new languages (Arabic, Spanish, Russian, Persian)
+* Improved internationalization and localization
+* Enhanced user experience with better language support
+
+= 1.1.4 =
+* Fixed critical security vulnerabilities
+* Enhanced data validation and sanitization
+* Improved API request security measures
+
 = 1.0.0 =
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.5 =
+This version adds comprehensive multi-language support including Arabic, Spanish, Russian, and Persian translations, improving the plugin's global accessibility.
+
+= 1.1.4 =
+This version addresses critical security vulnerabilities and enhances overall plugin security with improved data validation and API security measures.
+
 = 1.0.0 =
 First public release. 
