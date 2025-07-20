@@ -10,10 +10,10 @@ Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Integrate WooCommerce with Gifticard.ir service for automatic gift card order placement, status tracking, and customer delivery.
+Seamlessly integrate WooCommerce with Gift-i-Card service to automate gift card ordering, real-time status tracking, and instant customer delivery.
 
 == Description ==
-Gift-i-Card integrates WooCommerce with the Gifticard.ir service for international users.
+Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enabling global gift card sales and automated fulfillment.
 
 **Main Features and Operations:**
 - **Support for Simple and Variable WooCommerce Products:**
@@ -56,7 +56,7 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
 == Installation ==
 **Setup Requirements:**
 - To start using the plugin, you need to enter your `base_url`, `consumer_key`, and `consumer_secret` in the plugin settings.
-- For production, get your credentials from [gifticard.ir](https://gifticard.ir).
+- For production, get your credentials from [gifticard.pro](https://gifticard.pro) (international users) or [gifticard.ir](https://gifticard.ir) (Iranian users).
 - You can also obtain a Sandbox token for testing and development.
 
 1. Upload the plugin files to the `/wp-content/plugins/gift-i-card` directory, or install the plugin through the WordPress plugins screen directly.
