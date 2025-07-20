@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,11 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.1.6 =
+* Various bug fixes and performance improvements
+* Enhanced error handling and logging
+* Improved plugin stability and reliability
+
 = 1.1.5 =
 * Added support for new languages (Arabic, Spanish, Russian, Persian)
 * Improved internationalization and localization
@@ -79,6 +84,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.6 =
+This version includes various bug fixes and performance improvements, enhancing overall plugin stability and reliability.
+
 = 1.1.5 =
 This version adds comprehensive multi-language support including Arabic, Spanish, Russian, and Persian translations, improving the plugin's global accessibility.
 

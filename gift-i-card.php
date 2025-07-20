@@ -4,7 +4,7 @@
  * Plugin Name: Gift-i-Card
  * Plugin URI: http://github.com/skasiri/gift-i-card
  * Description: A plugin to integrate WooCommerce with a gift card service
- * Version: 1.1.5
+ * Version: 1.1.6
  * Author: Saeid Kasiri
  * Author URI: https://gifticard.ir
  * License: GPLv2 or later
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 }
 
 if (!defined('GICAPI_VERSION')) {
-    define('GICAPI_VERSION', '1.1.4');
+    define('GICAPI_VERSION', '1.1.6');
 }
 
 if (!defined('GICAPI_PLUGIN_DIR')) {
