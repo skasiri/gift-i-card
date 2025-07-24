@@ -65,6 +65,12 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.1.9 =
+* Fixed jQuery tooltip functionality error in public JavaScript
+* Added proper jQuery UI dependencies for tooltip support
+* Enhanced JavaScript error handling for better user experience
+* Improved CSS loading with jQuery UI styles
+
 = 1.1.6 =
 * Various bug fixes and performance improvements
 * Enhanced error handling and logging
@@ -84,6 +90,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.9 =
+This version fixes the jQuery tooltip error and improves JavaScript functionality by adding proper jQuery UI dependencies and enhanced error handling.
+
 = 1.1.6 =
 This version includes various bug fixes and performance improvements, enhancing overall plugin stability and reliability.
 
