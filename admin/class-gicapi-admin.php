@@ -71,6 +71,11 @@ class GICAPI_Admin
      */
     public function enqueue_styles()
     {
+        // Only load styles on plugin pages
+        if (!$this->is_plugin_page()) {
+            return;
+        }
+
         // Register and enqueue admin CSS
         wp_register_style(
             'gicapi-admin',
@@ -99,6 +104,11 @@ class GICAPI_Admin
      */
     public function enqueue_scripts()
     {
+        // Only load scripts on plugin pages
+        if (!$this->is_plugin_page()) {
+            return;
+        }
+
         // Register and enqueue admin JS
         wp_register_script(
             'gicapi-admin',
@@ -393,6 +403,31 @@ class GICAPI_Admin
     public function get_admin_nonce($action)
     {
         return wp_create_nonce($action);
+    }
+
+    /**
+     * Check if current admin page is a plugin page
+     *
+     * @return bool True if current page is a plugin page
+     */
+    private function is_plugin_page()
+    {
+        $screen = get_current_screen();
+
+        // Check if we're on a plugin page by screen ID
+        if ($screen && strpos($screen->id, 'gift-i-card') !== false) {
+            return true;
+        }
+
+        // Check if we're on a plugin page by page parameter
+        if (isset($_GET['page'])) {
+            $current_page = sanitize_text_field(wp_unslash($_GET['page']));
+            if (strpos($current_page, 'gift-i-card') !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function display_plugin_setup_page()

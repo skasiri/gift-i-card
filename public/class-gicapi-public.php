@@ -54,7 +54,7 @@ class GICAPI_Public
         wp_register_style(
             $this->plugin_name,
             plugin_dir_url(__FILE__) . 'css/gicapi-public.css',
-            array(),
+            array('wp-jquery-ui-dialog'),
             $this->version,
             'all'
         );
@@ -67,7 +67,7 @@ class GICAPI_Public
         wp_register_script(
             $this->plugin_name,
             plugin_dir_url(__FILE__) . 'js/gicapi-public.js',
-            array('jquery'),
+            array('jquery', 'jquery-ui-core', 'jquery-ui-tooltip'),
             $this->version,
             false
         );

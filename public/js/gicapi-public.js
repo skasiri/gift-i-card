@@ -211,9 +211,11 @@ jQuery(document).ready(function ($) {
     });
 
     // Initialize tooltips for better UX
-    $('[data-tooltip]').tooltip({
-        position: { my: 'left+5 center', at: 'right center' }
-    });
+    if ($.fn.tooltip) {
+        $('[data-tooltip]').tooltip({
+            position: { my: 'left+5 center', at: 'right center' }
+        });
+    }
 
     // Auto-refresh redemption data (if needed)
     function refreshRedemptionData() {
