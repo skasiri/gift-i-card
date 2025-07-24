@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0
-Stable tag: 1.1.9
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,7 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
-= 1.1.9 =
+= 1.2.0 =
 * Fixed jQuery tooltip functionality error in public JavaScript
 * Added proper jQuery UI dependencies for tooltip support
 * Enhanced JavaScript error handling for better user experience
@@ -90,7 +90,7 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Initial release
 
 == Upgrade Notice ==
-= 1.1.9 =
+= 1.2.0 =
 This version fixes the jQuery tooltip error and improves JavaScript functionality by adding proper jQuery UI dependencies and enhanced error handling.
 
 = 1.1.6 =
