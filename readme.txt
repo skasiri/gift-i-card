@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,13 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.2.1 =
+* Separated admin order styles and scripts from public assets for better performance
+* Created dedicated CSS and JS files for order admin functionality (gicapi-order-admin.css, gicapi-order-admin.js)
+* Improved asset loading efficiency by loading order-specific styles only on WooCommerce order edit pages
+* Enhanced code organization and maintainability
+* Fixed potential conflicts between public and admin assets
+
 = 1.2.0 =
 * Fixed jQuery tooltip functionality error in public JavaScript
 * Added proper jQuery UI dependencies for tooltip support
@@ -81,15 +88,10 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Improved internationalization and localization
 * Enhanced user experience with better language support
 
-= 1.1.4 =
-* Fixed critical security vulnerabilities
-* Enhanced data validation and sanitization
-* Improved API request security measures
-
-= 1.0.0 =
-* Initial release
-
 == Upgrade Notice ==
+= 1.2.1 =
+This version improves performance and code organization by separating admin order styles and scripts from public assets, ensuring better resource management and faster page loading.
+
 = 1.2.0 =
 This version fixes the jQuery tooltip error and improves JavaScript functionality by adding proper jQuery UI dependencies and enhanced error handling.
 
@@ -98,9 +100,3 @@ This version includes various bug fixes and performance improvements, enhancing 
 
 = 1.1.5 =
 This version adds comprehensive multi-language support including Arabic, Spanish, Russian, and Persian translations, improving the plugin's global accessibility.
-
-= 1.1.4 =
-This version addresses critical security vulnerabilities and enhances overall plugin security with improved data validation and API security measures.
-
-= 1.0.0 =
-First public release. 

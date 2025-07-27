@@ -59,6 +59,7 @@ class GICAPI_Admin
         add_action('admin_init', array($this, 'register_settings'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_styles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_order_admin_assets'));
         add_action('admin_notices', array($this, 'display_connection_status'));
         add_action('wp_ajax_gicapi_force_refresh_token', array($this, 'ajax_force_refresh_token'));
         add_action('wp_ajax_gicapi_map_variant', array($this, 'ajax_map_variant'));
@@ -646,5 +647,23 @@ class GICAPI_Admin
 
         update_post_meta($gic_variant_id, '_gicapi_mapped_wc_product_id', $wc_product_id);
         wp_send_json_success(__('Variant mapped successfully.', 'gift-i-card'));
+    }
+
+    public function enqueue_order_admin_assets($hook)
+    {
+        global $pagenow;
+        // فقط در صفحه ویرایش سفارش ووکامرس
+        if ($pagenow === 'post.php' && isset($_GET['post'])) {
+            $post_id = intval($_GET['post']);
+            if (get_post_type($post_id) === 'shop_order') {
+                wp_enqueue_style('gicapi-order-admin', plugin_dir_url(__FILE__) . 'css/gicapi-order-admin.css', [], $this->version);
+                wp_enqueue_script('gicapi-order-admin', plugin_dir_url(__FILE__) . 'js/gicapi-order-admin.js', ['jquery'], $this->version, true);
+                // پارامتر ajaxurl و nonce را برای اسکریپت ارسال کن
+                wp_localize_script('gicapi-order-admin', 'gicapi_ajax', [
+                    'ajaxurl' => admin_url('admin-ajax.php'),
+                    'nonce' => wp_create_nonce('gicapi_create_order_manually')
+                ]);
+            }
+        }
     }
 }
