@@ -289,11 +289,17 @@ class GICAPI_Ajax
         try {
             // Call the process_order method directly (same as handle_order_creation)
             $gicapi_public->process_order($order);
-
-            wp_send_json_success(__('Order created successfully', 'gift-i-card'));
         } catch (Exception $e) {
             wp_send_json_error(__('Failed to create order: ', 'gift-i-card') . $e->getMessage());
         }
+
+        try {
+            $gicapi_public->confirm_order($order_id);
+        } catch (Exception $e) {
+            wp_send_json_error(__('Failed to confirm order: ', 'gift-i-card') . $e->getMessage());
+        }
+
+        wp_send_json_success(__('Order created successfully', 'gift-i-card'));
     }
 
     public function confirm_order_manually()

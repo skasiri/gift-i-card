@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.2.2 =
+* Fixed issue with order not being processed when manually created by admin
+
 = 1.2.1 =
 * Separated admin order styles and scripts from public assets for better performance
 * Created dedicated CSS and JS files for order admin functionality (gicapi-order-admin.css, gicapi-order-admin.js)
@@ -89,6 +92,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Enhanced user experience with better language support
 
 == Upgrade Notice ==
+= 1.2.2 =
+This version fixes an important issue where orders manually created by administrators were not being processed correctly, ensuring proper order handling for all order creation methods.
+
 = 1.2.1 =
 This version improves performance and code organization by separating admin order styles and scripts from public assets, ensuring better resource management and faster page loading.
 
