@@ -523,9 +523,10 @@ class GICAPI_Product_Sync
     }
 
     /**
-     * Sync all products that have Gift-i-Card mappings
-     * 
-     * @return array Result array with sync statistics
+     * Sync all products that have Gift-i-Card mappings using batch processing
+     * This method initiates the batch process and returns progress info
+     *
+     * @return array Result array with sync statistics and progress info
      */
     public function sync_all_products()
     {
@@ -537,6 +538,41 @@ class GICAPI_Product_Sync
             );
         }
 
+        // Get batch size from settings (default 10)
+        $batch_size = (int) get_option('gicapi_sync_batch_size', 10);
+        if ($batch_size < 1) {
+            $batch_size = 10;
+        }
+
+        // Reset batch progress if it's a fresh start
+        if (!$this->get_batch_progress()) {
+            $this->reset_batch_progress();
+        }
+
+        // Process one batch
+        $batch_result = $this->sync_products_batch($batch_size);
+
+        // Check if batch processing is complete
+        $progress = $this->get_batch_progress();
+        $is_complete = $progress['processed'] >= $progress['total'];
+
+        return array(
+            'success' => true,
+            'batch_result' => $batch_result,
+            'progress' => $progress,
+            'is_complete' => $is_complete,
+            'batch_size' => $batch_size
+        );
+    }
+
+    /**
+     * Sync products in batches for better performance
+     *
+     * @param int $batch_size Number of products to process in this batch
+     * @return array Result array with batch sync statistics
+     */
+    public function sync_products_batch($batch_size = 10)
+    {
         if (!class_exists('GICAPI_Order')) {
             return array(
                 'success' => false,
@@ -552,11 +588,39 @@ class GICAPI_Product_Sync
             );
         }
 
-        $mapped_products = $this->get_all_mapped_products();
+        // Get current progress
+        $progress = $this->get_batch_progress();
+        if (!$progress) {
+            // Initialize progress
+            $this->reset_batch_progress();
+            $progress = $this->get_batch_progress();
+        }
 
-        // 1. Collect all unique SKUs from _gicapi_mapped_product_skus meta
+        // Get mapped products
+        $mapped_products = $this->get_all_mapped_products();
+        $total_products = count($mapped_products);
+
+        // Update total count
+        $progress['total'] = $total_products;
+        $this->update_batch_progress($progress);
+
+        // If all products are processed, return complete
+        if ($progress['processed'] >= $total_products) {
+            return array(
+                'success' => true,
+                'message' => 'All products already processed',
+                'processed' => $progress['processed'],
+                'total' => $total_products
+            );
+        }
+
+        // Get batch of products to process
+        $remaining_products = array_slice($mapped_products, $progress['processed'], $batch_size);
+        $products_to_process = count($remaining_products);
+
+        // Collect SKUs for this batch
         $all_skus = array();
-        foreach ($mapped_products as $product_id) {
+        foreach ($remaining_products as $product_id) {
             $skus = get_post_meta($product_id, '_gicapi_mapped_product_skus', true);
             if (is_array($skus)) {
                 $all_skus = array_merge($all_skus, $skus);
@@ -579,7 +643,7 @@ class GICAPI_Product_Sync
         }
         $unique_skus = array_unique($all_skus);
 
-        // 2. For each unique SKU, call get_variants only once and cache the result
+        // Get API results for SKUs in this batch
         $api = GICAPI_API::get_instance();
         $sku_api_results = array();
         foreach ($unique_skus as $sku) {
@@ -587,13 +651,14 @@ class GICAPI_Product_Sync
         }
 
         $results = array(
-            'total_products' => count($mapped_products),
             'successful_syncs' => 0,
             'failed_syncs' => 0,
-            'errors' => array()
+            'errors' => array(),
+            'processed_in_batch' => 0
         );
 
-        foreach ($mapped_products as $product_id) {
+        // Process products in this batch
+        foreach ($remaining_products as $product_id) {
             $product_obj = wc_get_product($product_id);
             if (!$product_obj) {
                 $results['failed_syncs']++;
@@ -601,6 +666,7 @@ class GICAPI_Product_Sync
                     'product_id' => $product_id,
                     'error' => 'Product object not found'
                 );
+                $progress['processed']++;
                 continue;
             }
 
@@ -610,13 +676,12 @@ class GICAPI_Product_Sync
                 foreach ($children as $variation_id) {
                     $variant_sku = $gicapi_order->get_mapped_variant_sku($product_id, $variation_id);
                     if ($variant_sku) {
-                        // Use cached API result for this SKU
                         $api_result = isset($sku_api_results[$variant_sku]) ? $sku_api_results[$variant_sku] : null;
                         $result = $this->sync_single_product_with_api_result($product_id, $variation_id, $api_result);
                         if ($result === 'success') {
                             $results['successful_syncs']++;
                         } elseif ($result === 'missing_variant') {
-                            // Don't count missing variants as failures - they're just not available in the API
+                            // Don't count missing variants as failures
                         } else {
                             $results['failed_syncs']++;
                             $results['errors'][] = array(
@@ -636,7 +701,7 @@ class GICAPI_Product_Sync
                     if ($result === 'success') {
                         $results['successful_syncs']++;
                     } elseif ($result === 'missing_variant') {
-                        // Don't count missing variants as failures - they're just not available in the API
+                        // Don't count missing variants as failures
                     } else {
                         $results['failed_syncs']++;
                         $results['errors'][] = array(
@@ -646,11 +711,101 @@ class GICAPI_Product_Sync
                     }
                 }
             }
+
+            $progress['processed']++;
+            $results['processed_in_batch']++;
         }
 
-        // Add success field to the results
+        // Update progress
+        $progress['last_batch_time'] = current_time('mysql');
+        $this->update_batch_progress($progress);
+
         $results['success'] = true;
+        $results['progress'] = $progress;
+
         return $results;
+    }
+
+    /**
+     * Reset batch progress tracking
+     */
+    private function reset_batch_progress()
+    {
+        $progress = array(
+            'processed' => 0,
+            'total' => 0,
+            'last_batch_time' => null,
+            'start_time' => current_time('mysql')
+        );
+        update_option('gicapi_batch_sync_progress', $progress);
+    }
+
+    /**
+     * Get current batch progress
+     *
+     * @return array|false Progress data or false if not set
+     */
+    private function get_batch_progress()
+    {
+        $progress = get_option('gicapi_batch_sync_progress', false);
+        return $progress;
+    }
+
+    /**
+     * Update batch progress
+     *
+     * @param array $progress Progress data to save
+     */
+    private function update_batch_progress($progress)
+    {
+        update_option('gicapi_batch_sync_progress', $progress);
+    }
+
+    /**
+     * Check if batch processing is complete
+     *
+     * @return bool True if all products are processed
+     */
+    public function is_batch_processing_complete()
+    {
+        $progress = $this->get_batch_progress();
+        if (!$progress) {
+            return false;
+        }
+        return $progress['processed'] >= $progress['total'];
+    }
+
+    /**
+     * Get batch processing status for display
+     *
+     * @return array Status information
+     */
+    public function get_batch_processing_status()
+    {
+        $progress = $this->get_batch_progress();
+
+        if (!$progress) {
+            return array(
+                'is_active' => false,
+                'message' => __('No batch processing in progress', 'gift-i-card')
+            );
+        }
+
+        $percentage = $progress['total'] > 0 ? round(($progress['processed'] / $progress['total']) * 100, 1) : 0;
+        $is_complete = $progress['processed'] >= $progress['total'];
+
+        return array(
+            'is_active' => true,
+            'is_complete' => $is_complete,
+            'processed' => $progress['processed'],
+            'total' => $progress['total'],
+            'percentage' => $percentage,
+            'start_time' => $progress['start_time'],
+            'last_batch_time' => $progress['last_batch_time'],
+            'message' => $is_complete ?
+                __('Batch processing completed', 'gift-i-card') :
+                sprintf(__('Processing batch: %d of %d products (%s%%)', 'gift-i-card'), $progress['processed'], $progress['total'], $percentage)
+        );
     }
 
     // New helper to sync a single product using a cached API result

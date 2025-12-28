@@ -14,6 +14,7 @@ $products_sync_interval = get_option('gicapi_products_sync_interval', 'twicedail
 // Get cron status
 $cron_status = array();
 $product_sync_cron_status = array();
+$batch_processing_status = array();
 if (class_exists('GICAPI_Cron')) {
     $cron = GICAPI_Cron::get_instance();
 
@@ -22,6 +23,12 @@ if (class_exists('GICAPI_Cron')) {
 
     $cron_status = $cron->get_cron_status();
     $product_sync_cron_status = $cron->get_product_sync_cron_status();
+
+    // Get batch processing status
+    if (class_exists('GICAPI_Product_Sync')) {
+        $product_sync = GICAPI_Product_Sync::get_instance();
+        $batch_processing_status = $product_sync->get_batch_processing_status();
+    }
 }
 
 // Get available cron intervals
@@ -186,6 +193,19 @@ foreach ($cron_intervals as $interval => $schedule) {
                                 <strong><?php esc_html_e('Interval:', 'gift-i-card'); ?></strong>
                                 <?php echo esc_html($available_intervals[$product_sync_cron_status['interval']] ?? $product_sync_cron_status['interval']); ?>
                             </p>
+                            <?php if (!empty($batch_processing_status) && $batch_processing_status['is_active']): ?>
+                                <p>
+                                    <strong><?php esc_html_e('Batch Progress:', 'gift-i-card'); ?></strong>
+                                    <?php echo esc_html($batch_processing_status['message']); ?>
+                                </p>
+                                <?php if (!$batch_processing_status['is_complete']): ?>
+                                    <div style="margin-top: 5px;">
+                                        <div style="background: #f0f0f0; border-radius: 3px; height: 8px; width: 200px;">
+                                            <div style="background: #007cba; height: 8px; border-radius: 3px; width: <?php echo esc_attr($batch_processing_status['percentage']); ?>%;"></div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 <?php else: ?>
@@ -261,13 +281,14 @@ foreach ($cron_intervals as $interval => $schedule) {
         <tr>
             <td colspan="2">
                 <div class="gicapi-cron-info">
-                    <h4><?php esc_html_e('🔄 Product Synchronization Cron Job', 'gift-i-card'); ?></h4>
+                    <h4><?php esc_html_e('🔄 Product Synchronization Cron Job (Batch Processing)', 'gift-i-card'); ?></h4>
                     <ol>
                         <li><?php esc_html_e('The product synchronization cron job runs automatically at the specified interval (recommended: 2-3 times a day).', 'gift-i-card'); ?></li>
-                        <li><?php esc_html_e('It finds all WooCommerce products that are mapped to Gift-i-Card variants.', 'gift-i-card'); ?></li>
-                        <li><?php esc_html_e('For each mapped product, it calls the Gift-i-Card API to get the latest stock status.', 'gift-i-card'); ?></li>
-                        <li><?php esc_html_e('It updates the WooCommerce product stock status based on the Gift-i-Card status and your configured mapping rules.', 'gift-i-card'); ?></li>
-                        <li><?php esc_html_e('This ensures your product availability is always synchronized with Gift-i-Card inventory.', 'gift-i-card'); ?></li>
+                        <li><?php esc_html_e('It uses batch processing to handle large numbers of products efficiently - processing only a configurable number of products per cron execution.', 'gift-i-card'); ?></li>
+                        <li><?php esc_html_e('Each batch processes a group of products, calls the Gift-i-Card API for their stock status, and updates WooCommerce accordingly.', 'gift-i-card'); ?></li>
+                        <li><?php esc_html_e('The system tracks progress across multiple cron executions, resuming where the previous batch left off.', 'gift-i-card'); ?></li>
+                        <li><?php esc_html_e('Once all products are processed, the system automatically resets for the next full synchronization cycle.', 'gift-i-card'); ?></li>
+                        <li><?php esc_html_e('Batch size can be configured in Product Settings to optimize performance based on your server capabilities.', 'gift-i-card'); ?></li>
                     </ol>
 
                     <h4><?php esc_html_e('📦 Order Updating Cron Job', 'gift-i-card'); ?></h4>

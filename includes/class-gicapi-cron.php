@@ -211,7 +211,7 @@ class GICAPI_Cron
     }
 
     /**
-     * Product sync cron job handler
+     * Product sync cron job handler - now uses batch processing
      */
     public function sync_products_cron()
     {
@@ -226,8 +226,29 @@ class GICAPI_Cron
             return;
         }
 
-        // Run the product sync
-        $product_sync->sync_all_products();
+        // Get batch size from settings
+        $batch_size = (int) get_option('gicapi_sync_batch_size', 10);
+        if ($batch_size < 1) {
+            $batch_size = 10;
+        }
+
+        // Check if batch processing is complete
+        if ($product_sync->is_batch_processing_complete()) {
+            // Reset for next full cycle
+            $product_sync = GICAPI_Product_Sync::get_instance();
+            $product_sync->reset_batch_progress();
+        }
+
+        // Process one batch
+        $batch_result = $product_sync->sync_products_batch($batch_size);
+
+        // Log batch result for debugging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            $status = $product_sync->get_batch_processing_status();
+            error_log('GICAPI Batch Sync - ' . $status['message']);
+        }
+
+        return $batch_result;
     }
 
 
