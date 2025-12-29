@@ -258,7 +258,7 @@ class GICAPI_Ajax
         $product_name = isset($_POST['product_name']) ? sanitize_text_field(wp_unslash($_POST['product_name'])) : '';
         $product_sku_field = isset($_POST['product_sku_field']) ? sanitize_text_field(wp_unslash($_POST['product_sku_field'])) : '';
         $price = isset($_POST['price']) ? floatval(wp_unslash($_POST['price'])) : 0;
-        $product_status = isset($_POST['product_status']) ? sanitize_text_field(wp_unslash($_POST['product_status'])) : 'publish';
+        $product_status = isset($_POST['product_status']) ? sanitize_text_field(wp_unslash($_POST['product_status'])) : 'draft';
 
         if (empty($variant_sku) || empty($product_name) || empty($category_sku) || empty($product_sku)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));

@@ -247,8 +247,8 @@ if (empty($variants)) {
                     </th>
                     <td>
                         <select id="create-product-status" class="regular-text">
-                            <option value="publish"><?php esc_html_e('Published', 'gift-i-card'); ?></option>
                             <option value="draft"><?php esc_html_e('Draft', 'gift-i-card'); ?></option>
+                            <option value="publish"><?php esc_html_e('Published', 'gift-i-card'); ?></option>
                         </select>
                         <p class="description"><?php esc_html_e('Choose whether to publish the product immediately or save as draft.', 'gift-i-card'); ?></p>
                     </td>

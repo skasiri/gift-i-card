@@ -194,7 +194,7 @@ jQuery(document).ready(function ($) {
         $('#create-product-name').val(variantName);
         $('#create-product-sku').val('');
         $('#create-product-price').val(price);
-        $('#create-product-status').val('publish');
+        $('#create-product-status').val('draft');
 
         // Update mapping info display
         $('#mapping-category-sku').text(categorySku);
