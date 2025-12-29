@@ -14,7 +14,7 @@ class GICAPI_Deactivator
 
     private static function delete_options()
     {
-        delete_option('gicapi_consumer_secret');
+        // delete_option('gicapi_consumer_secret');
     }
 
     private static function unschedule_cron_job()
