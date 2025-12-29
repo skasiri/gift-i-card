@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-12-30 02:46+0330\n"
-"PO-Revision-Date: 2025-12-30 02:47+0330\n"
+"POT-Creation-Date: 2025-12-30 02:49+0330\n"
+"PO-Revision-Date: 2025-12-30 02:49+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -498,7 +498,7 @@ msgstr ""
 #: admin/partials/gicapi-variants-display.php:348
 #: admin/partials/gicapi-variants-display.php:461
 #: admin/partials/gicapi-variants-display.php:511
-#: admin/partials/settings/gicapi-settings-product.php:142
+#: admin/partials/settings/gicapi-settings-product.php:139
 msgid "Enable Price Sync"
 msgstr "همگام سازی قیمت فروش"
 
@@ -511,21 +511,21 @@ msgstr ""
 #: admin/partials/gicapi-variants-display.php:357
 #: admin/partials/gicapi-variants-display.php:470
 #: admin/partials/gicapi-variants-display.php:520
-#: admin/partials/settings/gicapi-settings-product.php:152
+#: admin/partials/settings/gicapi-settings-product.php:149
 msgid "Profit Margin Type"
 msgstr "نوع اعمال حاشیه سود"
 
 #: admin/partials/gicapi-variants-display.php:361
 #: admin/partials/gicapi-variants-display.php:474
 #: admin/partials/gicapi-variants-display.php:524
-#: admin/partials/settings/gicapi-settings-product.php:156
+#: admin/partials/settings/gicapi-settings-product.php:153
 msgid "Percentage (%)"
 msgstr "درصد (%)"
 
 #: admin/partials/gicapi-variants-display.php:362
 #: admin/partials/gicapi-variants-display.php:475
 #: admin/partials/gicapi-variants-display.php:525
-#: admin/partials/settings/gicapi-settings-product.php:157
+#: admin/partials/settings/gicapi-settings-product.php:154
 msgid "Fixed Amount"
 msgstr "مبلغ ثابت"
 
@@ -1068,11 +1068,11 @@ msgstr "تغییر وضعیت سفارش زمانیکه لغو یا منقضی �
 msgid "Status to set when cancelled orders"
 msgstr "سفارش لغو شده به این وضعیت تغییر میکند"
 
-#: admin/partials/settings/gicapi-settings-product.php:16
+#: admin/partials/settings/gicapi-settings-product.php:17
 msgid "Product Status Mapping Settings"
 msgstr "تنظیمات ارتباط همگام سازی محصولات"
 
-#: admin/partials/settings/gicapi-settings-product.php:17
+#: admin/partials/settings/gicapi-settings-product.php:18
 msgid ""
 "Configure how Gift-i-Card product statuses should be synchronized with "
 "WooCommerce stock status."
@@ -1080,11 +1080,11 @@ msgstr ""
 "نحوه همگام‌سازی وضعیت محصولات گیفتی کارت با وضعیت موجودی ووکامرس را پیکربندی "
 "کنید."
 
-#: admin/partials/settings/gicapi-settings-product.php:19
+#: admin/partials/settings/gicapi-settings-product.php:20
 msgid "Gift-i-Card Status Mapping"
 msgstr "ارتباط وضعیت تحویل گیفتی کارت"
 
-#: admin/partials/settings/gicapi-settings-product.php:20
+#: admin/partials/settings/gicapi-settings-product.php:21
 msgid ""
 "Configure how each Gift-i-Card delivery status should affect WooCommerce stock "
 "status:"
@@ -1092,83 +1092,104 @@ msgstr ""
 "پیکربندی کنید که چگونه هر وضعیت تحویل Gift-i-Card باید بر وضعیت موجودی "
 "WooCommerce تأثیر بگذارد:"
 
-#: admin/partials/settings/gicapi-settings-product.php:26
+#: admin/partials/settings/gicapi-settings-product.php:27
 msgid "Instant Delivery"
 msgstr "تحویل آنی"
-
-#: admin/partials/settings/gicapi-settings-product.php:30
-#: admin/partials/settings/gicapi-settings-product.php:46
-#: admin/partials/settings/gicapi-settings-product.php:62
-#: admin/partials/settings/gicapi-settings-product.php:78
-msgid "No Change"
-msgstr "بدون تغییر"
 
 #: admin/partials/settings/gicapi-settings-product.php:31
 #: admin/partials/settings/gicapi-settings-product.php:47
 #: admin/partials/settings/gicapi-settings-product.php:63
 #: admin/partials/settings/gicapi-settings-product.php:79
-msgid "Change to In Stock"
-msgstr "تغییر به موجود"
+msgid "No Change"
+msgstr "بدون تغییر"
 
 #: admin/partials/settings/gicapi-settings-product.php:32
 #: admin/partials/settings/gicapi-settings-product.php:48
 #: admin/partials/settings/gicapi-settings-product.php:64
 #: admin/partials/settings/gicapi-settings-product.php:80
-msgid "Change to On Back Order"
-msgstr "تغییر به پیس خرید"
+msgid "Change to In Stock"
+msgstr "تغییر به موجود"
 
 #: admin/partials/settings/gicapi-settings-product.php:33
 #: admin/partials/settings/gicapi-settings-product.php:49
 #: admin/partials/settings/gicapi-settings-product.php:65
 #: admin/partials/settings/gicapi-settings-product.php:81
+msgid "Change to On Back Order"
+msgstr "تغییر به پیس خرید"
+
+#: admin/partials/settings/gicapi-settings-product.php:34
+#: admin/partials/settings/gicapi-settings-product.php:50
+#: admin/partials/settings/gicapi-settings-product.php:66
+#: admin/partials/settings/gicapi-settings-product.php:82
 msgid "Change to Out of Stock"
 msgstr "تغییر به ناموجود"
 
-#: admin/partials/settings/gicapi-settings-product.php:35
+#: admin/partials/settings/gicapi-settings-product.php:36
 msgid "Action when gift card has instant/automatic delivery"
 msgstr "اقدام زمانی که گیفت کارت تحویل فوری/خودکار دارد"
 
-#: admin/partials/settings/gicapi-settings-product.php:42
+#: admin/partials/settings/gicapi-settings-product.php:43
 msgid "Manual Delivery"
 msgstr "تحویل دستی"
 
-#: admin/partials/settings/gicapi-settings-product.php:51
+#: admin/partials/settings/gicapi-settings-product.php:52
 msgid "Action when gift card requires operator intervention"
 msgstr "اقدام زمانی که گیفت کارت نیاز به اقدام اپراتور گیفتی کارت دارد"
 
-#: admin/partials/settings/gicapi-settings-product.php:58
+#: admin/partials/settings/gicapi-settings-product.php:59
 msgid "Out of Stock"
 msgstr "ناموجود"
 
-#: admin/partials/settings/gicapi-settings-product.php:67
+#: admin/partials/settings/gicapi-settings-product.php:68
 msgid "Action when gift card is out of stock"
 msgstr "اقدام زمانی که گیفت کارت ناموجود است"
 
-#: admin/partials/settings/gicapi-settings-product.php:74
+#: admin/partials/settings/gicapi-settings-product.php:75
 msgid "Deleted/Not Available"
 msgstr "حذف شده / در دسترس نبودن"
 
-#: admin/partials/settings/gicapi-settings-product.php:83
+#: admin/partials/settings/gicapi-settings-product.php:84
 msgid "Action when gift card is deleted or not available"
 msgstr "اقداام زمانی که گیفت کارت حذف شده یا در دسترس نیست"
 
-#: admin/partials/settings/gicapi-settings-product.php:88
+#: admin/partials/settings/gicapi-settings-product.php:89
+msgid "Stock Synchronization Settings"
+msgstr "تنظیمات تعیین وضعیت موجودی"
+
+#: admin/partials/settings/gicapi-settings-product.php:90
+msgid ""
+"Configure how product stock status should be synchronized from Gift-i-Card API."
+msgstr ""
+"نحوه همگام‌سازی موجودی محصولات گیفتی کارت با وضعیت موجودی محصولات ووکامرس را "
+"پیکربندی کنید."
+
+#: admin/partials/settings/gicapi-settings-product.php:95
+msgid "Enable Stock Sync (Default)"
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-product.php:99
+msgid ""
+"Enable automatic stock status synchronization from Gift-i-Card API by default "
+"for all products. Individual products can override this setting."
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-product.php:104
 msgid "Advanced Settings"
 msgstr "تنظیمات پیشرفته"
 
-#: admin/partials/settings/gicapi-settings-product.php:92
+#: admin/partials/settings/gicapi-settings-product.php:108
 msgid "Auto Sync on Product Load"
 msgstr "همگام سازی در هنگام لود محصول"
 
-#: admin/partials/settings/gicapi-settings-product.php:96
+#: admin/partials/settings/gicapi-settings-product.php:112
 msgid "Automatically sync product status when product page is loaded."
 msgstr "همگام‌سازی خودکار وضعیت محصول هنگام بارگذاری صفحه محصول."
 
-#: admin/partials/settings/gicapi-settings-product.php:102
+#: admin/partials/settings/gicapi-settings-product.php:118
 msgid "Sync Batch Size"
 msgstr "اندازه دسته همگام‌سازی"
 
-#: admin/partials/settings/gicapi-settings-product.php:106
+#: admin/partials/settings/gicapi-settings-product.php:122
 msgid ""
 "Number of products to process in each batch during cron job synchronization. "
 "Recommended: 10-20 products per batch."
@@ -1176,60 +1197,39 @@ msgstr ""
 "تعداد محصولاتی که باید در هر دسته در طول همگام‌سازی cron job پردازش شوند. توصیه "
 "می‌شود: ۱۰ تا ۲۰ محصول در هر دسته."
 
-#: admin/partials/settings/gicapi-settings-product.php:111
-msgid "Stock Synchronization Settings"
-msgstr "تنظیمات تعیین وضعیت موجودی"
-
-#: admin/partials/settings/gicapi-settings-product.php:112
-msgid ""
-"Configure how product stock status should be synchronized from Gift-i-Card API."
-msgstr ""
-"نحوه همگام‌سازی موجودی محصولات گیفتی کارت با وضعیت موجودی محصولات ووکامرس را "
-"پیکربندی کنید."
-
-#: admin/partials/settings/gicapi-settings-product.php:121
-msgid "Enable Stock Sync (Default)"
-msgstr ""
-
-#: admin/partials/settings/gicapi-settings-product.php:125
-msgid ""
-"Enable automatic stock status synchronization from Gift-i-Card API by default "
-"for all products. Individual products can override this setting."
-msgstr ""
-
-#: admin/partials/settings/gicapi-settings-product.php:130
+#: admin/partials/settings/gicapi-settings-product.php:127
 msgid "Price Synchronization Settings"
 msgstr "تنظیمات تعیین قیمت فروش"
 
-#: admin/partials/settings/gicapi-settings-product.php:131
+#: admin/partials/settings/gicapi-settings-product.php:128
 msgid "Configure how product prices should be synchronized from Gift-i-Card API."
 msgstr ""
 "نحوه همگام‌سازی قیمت فروش محصولات گیفتی کارت با قیمت محصولات ووکامرس را "
 "پیکربندی کنید."
 
-#: admin/partials/settings/gicapi-settings-product.php:146
+#: admin/partials/settings/gicapi-settings-product.php:143
 msgid ""
 "Enable automatic price synchronization from Gift-i-Card API. Prices will be "
 "updated based on variant prices plus profit margin."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-product.php:159
+#: admin/partials/settings/gicapi-settings-product.php:156
 msgid ""
 "Choose how profit margin should be calculated: as a percentage of the variant "
 "price or as a fixed amount added to the price."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-product.php:165
+#: admin/partials/settings/gicapi-settings-product.php:162
 msgid "Default Profit Margin"
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-product.php:172
+#: admin/partials/settings/gicapi-settings-product.php:169
 msgid ""
 "Default profit margin as percentage (e.g., 10 for 10%). This will be added to "
 "the variant price from API."
 msgstr ""
 
-#: admin/partials/settings/gicapi-settings-product.php:174
+#: admin/partials/settings/gicapi-settings-product.php:171
 msgid ""
 "Default profit margin as fixed amount (e.g., 5.00). This will be added to the "
 "variant price from API."

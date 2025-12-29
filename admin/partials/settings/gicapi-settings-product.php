@@ -8,6 +8,7 @@ $instant_status = get_option('gicapi_instant_status', 'no_change');
 $manual_status = get_option('gicapi_manual_status', 'no_change');
 $outofstock_status = get_option('gicapi_outofstock_status', 'no_change');
 $deleted_status = get_option('gicapi_deleted_status', 'no_change');
+$stock_sync_enabled = get_option('gicapi_stock_sync_enabled', 'yes');
 $auto_sync_enabled = get_option('gicapi_auto_sync_enabled', 'no');
 $batch_size = get_option('gicapi_sync_batch_size', 10);
 ?>
@@ -85,6 +86,21 @@ $batch_size = get_option('gicapi_sync_batch_size', 10);
         </tr>
     </table>
 
+    <h4><?php esc_html_e('Stock Synchronization Settings', 'gift-i-card'); ?></h4>
+    <p><?php esc_html_e('Configure how product stock status should be synchronized from Gift-i-Card API.', 'gift-i-card'); ?></p>
+
+    <table class="form-table">
+        <tr>
+            <th scope="row">
+                <label for="gicapi_stock_sync_enabled"><?php esc_html_e('Enable Stock Sync (Default)', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <input type="checkbox" id="gicapi_stock_sync_enabled" name="gicapi_stock_sync_enabled" value="yes" <?php checked($stock_sync_enabled, 'yes'); ?> />
+                <p class="description"><?php esc_html_e('Enable automatic stock status synchronization from Gift-i-Card API by default for all products. Individual products can override this setting.', 'gift-i-card'); ?></p>
+            </td>
+        </tr>
+    </table>
+
     <h4><?php esc_html_e('Advanced Settings', 'gift-i-card'); ?></h4>
     <table class="form-table">
         <tr>
@@ -104,25 +120,6 @@ $batch_size = get_option('gicapi_sync_batch_size', 10);
             <td>
                 <input type="number" id="gicapi_sync_batch_size" name="gicapi_sync_batch_size" value="<?php echo esc_attr($batch_size); ?>" min="1" max="50" step="1" />
                 <p class="description"><?php esc_html_e('Number of products to process in each batch during cron job synchronization. Recommended: 10-20 products per batch.', 'gift-i-card'); ?></p>
-            </td>
-        </tr>
-    </table>
-
-    <h4><?php esc_html_e('Stock Synchronization Settings', 'gift-i-card'); ?></h4>
-    <p><?php esc_html_e('Configure how product stock status should be synchronized from Gift-i-Card API.', 'gift-i-card'); ?></p>
-
-    <?php
-    $stock_sync_enabled = get_option('gicapi_stock_sync_enabled', 'yes');
-    ?>
-
-    <table class="form-table">
-        <tr>
-            <th scope="row">
-                <label for="gicapi_stock_sync_enabled"><?php esc_html_e('Enable Stock Sync (Default)', 'gift-i-card'); ?></label>
-            </th>
-            <td>
-                <input type="checkbox" id="gicapi_stock_sync_enabled" name="gicapi_stock_sync_enabled" value="yes" <?php checked($stock_sync_enabled, 'yes'); ?> />
-                <p class="description"><?php esc_html_e('Enable automatic stock status synchronization from Gift-i-Card API by default for all products. Individual products can override this setting.', 'gift-i-card'); ?></p>
             </td>
         </tr>
     </table>
