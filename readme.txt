@@ -6,7 +6,7 @@ Tested up to: 6.9
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 10.4.3
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,14 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.2.7 =
+* Added stock status synchronization control for mapped products
+* Products can now individually control whether stock status should be synchronized from Gift-i-Card API
+* Stock sync can be enabled/disabled per product with default global setting
+* Stock synchronization control added to variants display page for each mapped product
+* Enhanced product management with stock sync toggle alongside price sync controls
+* Stock sync settings can be configured globally in product settings with per-product override capability
+
 = 1.2.6 =
 * Added price synchronization feature for mapped products
 * Products can now automatically sync prices from Gift-i-Card API based on variant prices plus configurable profit margin
@@ -136,6 +144,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Enhanced user experience with better language support
 
 == Upgrade Notice ==
+= 1.2.7 =
+This version adds individual stock status synchronization control for mapped products. You can now control whether each product's stock status should be synchronized from Gift-i-Card API, giving you fine-grained control over inventory management. Stock sync can be enabled globally with per-product override capability. Highly recommended for stores that need selective stock synchronization control.
+
 = 1.2.6 =
 This version introduces automatic price synchronization for mapped products. Products can now automatically sync their prices from Gift-i-Card API based on variant prices plus your configured profit margin. You can control price sync individually for each product with custom profit margin settings. Highly recommended for stores that want to keep prices synchronized with Gift-i-Card pricing.
 

@@ -37,6 +37,8 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
 ### Product Status Synchronization
 
 - Automatically synchronize Gift-i-Card product availability status with WooCommerce stock status.
+- Individual stock sync control for each mapped product - enable/disable stock synchronization per product.
+- Global stock sync setting with per-product override capability.
 - Configurable status mapping for different Gift-i-Card delivery types (Instant, Manual, Out of Stock, Deleted/Not Available).
 - Batch processing system for efficient handling of large product catalogs (configurable batch size).
 - Scheduled synchronization via WordPress cron jobs (recommended: 2-3 times daily).
