@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-12-30 02:51+0330\n"
-"PO-Revision-Date: 2025-12-30 02:51+0330\n"
+"POT-Creation-Date: 2025-12-30 02:53+0330\n"
+"PO-Revision-Date: 2025-12-30 02:54+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -83,11 +83,11 @@ msgstr "حداقل یک واریانت را انتخاب کنید"
 
 #: admin/class-gicapi-admin.php:185
 msgid "Variant name is required for all selected variants"
-msgstr ""
+msgstr "نام واریانت برای همه واریانت‌های انتخاب شده الزامی است"
 
 #: admin/class-gicapi-admin.php:186
 msgid "Valid variant price is required for all selected variants"
-msgstr ""
+msgstr "قیمت معتبر واریانت برای همه واریانت‌های انتخاب شده الزامی است"
 
 #: admin/class-gicapi-admin.php:187 admin/partials/gicapi-variants-display.php:442
 msgid "Loading variants..."
@@ -505,6 +505,8 @@ msgid ""
 "Enable automatic price synchronization from Gift-i-Card API. Price will be "
 "calculated based on variant price plus profit margin."
 msgstr ""
+"فعال‌سازی همگام‌سازی خودکار قیمت از API گیفتی کارت. قیمت بر اساس قیمت واریانت به "
+"علاوه حاشیه سود محاسبه می‌شود."
 
 #: admin/partials/gicapi-variants-display.php:357
 #: admin/partials/gicapi-variants-display.php:470
@@ -579,7 +581,7 @@ msgstr "مثلا: اعتبار، مقدار یا میزان"
 msgid ""
 "Name of the attribute that will be used for variations (e.g., Amount, Value, "
 "Size)."
-msgstr ""
+msgstr "نام ویژگی که برای متغیرها استفاده می‌شود (مثلاً: اعتبار، مقدار، اندازه)."
 
 #: admin/partials/gicapi-variants-display.php:438
 msgid "Select Variants"
@@ -603,6 +605,8 @@ msgid ""
 "Enable automatic price synchronization from Gift-i-Card API. Prices will be "
 "calculated based on variant prices plus profit margin."
 msgstr ""
+"فعال‌سازی همگام‌سازی خودکار قیمت از API گیفتی کارت. قیمت‌ها بر اساس قیمت واریانت‌ها "
+"به علاوه حاشیه سود محاسبه می‌شوند."
 
 #: admin/partials/gicapi-variants-display.php:485
 msgid "Profit margin to add to variant prices from API."
@@ -1212,28 +1216,36 @@ msgid ""
 "Enable automatic price synchronization from Gift-i-Card API. Prices will be "
 "updated based on variant prices plus profit margin."
 msgstr ""
+"فعال‌سازی همگام‌سازی خودکار قیمت از API گیفتی کارت. قیمت‌ها بر اساس قیمت واریانت‌ها "
+"به علاوه حاشیه سود به‌روزرسانی می‌شوند."
 
 #: admin/partials/settings/gicapi-settings-product.php:156
 msgid ""
 "Choose how profit margin should be calculated: as a percentage of the variant "
 "price or as a fixed amount added to the price."
 msgstr ""
+"انتخاب کنید که حاشیه سود چگونه محاسبه شود: به صورت درصدی از قیمت واریانت یا به "
+"صورت مبلغ ثابت اضافه شده به قیمت."
 
 #: admin/partials/settings/gicapi-settings-product.php:162
 msgid "Default Profit Margin"
-msgstr ""
+msgstr "حاشیه سود پیش‌فرض"
 
 #: admin/partials/settings/gicapi-settings-product.php:169
 msgid ""
 "Default profit margin as percentage (e.g., 10 for 10%). This will be added to "
 "the variant price from API."
 msgstr ""
+"حاشیه سود پیش‌فرض به صورت درصدی (مثلاً: 10 برای 10%). این به قیمت واریانت از API "
+"اضافه می‌شود."
 
 #: admin/partials/settings/gicapi-settings-product.php:171
 msgid ""
 "Default profit margin as fixed amount (e.g., 5.00). This will be added to the "
 "variant price from API."
 msgstr ""
+"حاشیه سود پیش‌فرض به صورت مبلغ ثابت (مثلاً: 5.00). این به قیمت واریانت از API "
+"اضافه می‌شود."
 
 #: includes/class-gicapi-ajax.php:38 includes/class-gicapi-ajax.php:123
 #: includes/class-gicapi-ajax.php:186 includes/class-gicapi-ajax.php:253
@@ -1477,19 +1489,15 @@ msgstr "نوع حاشیه سود نامعتبر"
 
 #: includes/class-gicapi-ajax.php:898
 msgid "Variant price sync settings saved successfully"
-msgstr "تنظیمات تعیین وضعیت موجودی با موفقیت ذخیره شد."
+msgstr "تنظیمات همگام‌سازی قیمت واریانت با موفقیت ذخیره شد."
 
 #: includes/class-gicapi-ajax.php:925 includes/class-gicapi-ajax.php:956
-#, fuzzy
-#| msgid "Order not found"
 msgid "Product not found"
-msgstr "سفارش یافت نشد"
+msgstr "محصول یافت نشد"
 
 #: includes/class-gicapi-ajax.php:935
-#, fuzzy
-#| msgid "Order status updated successfully"
 msgid "Product price sync settings saved successfully"
-msgstr "سفارش با موفقیت بروزرسانی شد"
+msgstr "تنظیمات تعیین قیمت محصول با موفقیت ذخیره شد"
 
 #: includes/class-gicapi-ajax.php:964
 msgid "Product stock sync settings saved successfully"
