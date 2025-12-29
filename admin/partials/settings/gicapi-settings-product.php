@@ -107,4 +107,56 @@ $batch_size = get_option('gicapi_sync_batch_size', 10);
             </td>
         </tr>
     </table>
+
+    <h4><?php esc_html_e('Price Synchronization Settings', 'gift-i-card'); ?></h4>
+    <p><?php esc_html_e('Configure how product prices should be synchronized from Gift-i-Card API.', 'gift-i-card'); ?></p>
+
+    <?php
+    $price_sync_enabled = get_option('gicapi_price_sync_enabled', 'no');
+    $default_profit_margin = get_option('gicapi_default_profit_margin', 0);
+    $profit_margin_type = get_option('gicapi_profit_margin_type', 'percentage');
+    ?>
+
+    <table class="form-table">
+        <tr>
+            <th scope="row">
+                <label for="gicapi_price_sync_enabled"><?php esc_html_e('Enable Price Sync', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <input type="checkbox" id="gicapi_price_sync_enabled" name="gicapi_price_sync_enabled" value="yes" <?php checked($price_sync_enabled, 'yes'); ?> />
+                <p class="description"><?php esc_html_e('Enable automatic price synchronization from Gift-i-Card API. Prices will be updated based on variant prices plus profit margin.', 'gift-i-card'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="gicapi_profit_margin_type"><?php esc_html_e('Profit Margin Type', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <select id="gicapi_profit_margin_type" name="gicapi_profit_margin_type">
+                    <option value="percentage" <?php selected($profit_margin_type, 'percentage'); ?>><?php esc_html_e('Percentage (%)', 'gift-i-card'); ?></option>
+                    <option value="fixed" <?php selected($profit_margin_type, 'fixed'); ?>><?php esc_html_e('Fixed Amount', 'gift-i-card'); ?></option>
+                </select>
+                <p class="description"><?php esc_html_e('Choose how profit margin should be calculated: as a percentage of the variant price or as a fixed amount added to the price.', 'gift-i-card'); ?></p>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">
+                <label for="gicapi_default_profit_margin"><?php esc_html_e('Default Profit Margin', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <input type="number" id="gicapi_default_profit_margin" name="gicapi_default_profit_margin" value="<?php echo esc_attr($default_profit_margin); ?>" step="0.01" min="0" />
+                <p class="description">
+                    <?php 
+                    if ($profit_margin_type === 'percentage') {
+                        esc_html_e('Default profit margin as percentage (e.g., 10 for 10%). This will be added to the variant price from API.', 'gift-i-card');
+                    } else {
+                        esc_html_e('Default profit margin as fixed amount (e.g., 5.00). This will be added to the variant price from API.', 'gift-i-card');
+                    }
+                    ?>
+                </p>
+            </td>
+        </tr>
+    </table>
 </div>

@@ -72,10 +72,214 @@ class GICAPI_Product_Sync
         // Update WooCommerce stock status
         $result = $this->update_woocommerce_stock_status($product, $target_status);
 
+        // Sync product price if enabled
+        $price_sync_result = $this->sync_product_price($product_id, $variation_id, $api_result);
+        if ($price_sync_result['success']) {
+            $result['price_synced'] = true;
+            $result['old_price'] = $price_sync_result['old_price'];
+            $result['new_price'] = $price_sync_result['new_price'];
+        }
+
         // Log the sync operation
         $this->log_sync_operation($sync_product_id, $gic_status, $target_status, $result['success']);
 
         return $result;
+    }
+
+    /**
+     * Sync product price from Gift-i-Card API
+     * 
+     * @param int $product_id WooCommerce product ID
+     * @param int $variation_id WooCommerce variation ID (optional)
+     * @param array $api_result Cached API result (optional)
+     * @return array Result array with success status and price details
+     */
+    public function sync_product_price($product_id, $variation_id = 0, $api_result = null)
+    {
+        // Check if price sync is enabled globally
+        $global_price_sync_enabled = get_option('gicapi_price_sync_enabled', 'no');
+        if ($global_price_sync_enabled !== 'yes') {
+            return array(
+                'success' => false,
+                'error' => 'Price sync is disabled globally'
+            );
+        }
+
+        // Determine which product to sync (variation or main product)
+        $sync_product_id = $variation_id > 0 ? $variation_id : $product_id;
+        $product = wc_get_product($sync_product_id);
+
+        if (!$product) {
+            return array(
+                'success' => false,
+                'error' => 'WooCommerce product not found',
+                'product_id' => $sync_product_id
+            );
+        }
+
+        // Check if price sync is enabled for this specific product
+        $product_price_sync_enabled = get_post_meta($sync_product_id, '_gicapi_price_sync_enabled', true);
+        if ($product_price_sync_enabled === '') {
+            $product_price_sync_enabled = $global_price_sync_enabled;
+        }
+        if ($product_price_sync_enabled !== 'yes') {
+            return array(
+                'success' => false,
+                'error' => 'Price sync is disabled for this product'
+            );
+        }
+
+        // Get variant SKU
+        $gicapi_order = GICAPI_Order::get_instance();
+        $variant_sku = $gicapi_order->get_mapped_variant_sku($product_id, $variation_id);
+
+        if (!$variant_sku) {
+            return array(
+                'success' => false,
+                'error' => 'Variant SKU not found for this product'
+            );
+        }
+
+        // Get variant price from API
+        $variant_price = $this->get_variant_price_from_api($variant_sku, $product_id, $variation_id, $api_result);
+        if ($variant_price === false) {
+            return array(
+                'success' => false,
+                'error' => 'Failed to get variant price from API'
+            );
+        }
+
+        // Get profit margin settings for this product
+        $profit_margin = get_post_meta($sync_product_id, '_gicapi_profit_margin', true);
+        $profit_margin_type = get_post_meta($sync_product_id, '_gicapi_profit_margin_type', true);
+
+        // Fallback to variant-level settings
+        if ($profit_margin === '') {
+            $profit_margin = get_option('gicapi_variant_profit_margin_' . $variant_sku, '');
+        }
+        if ($profit_margin_type === '') {
+            $profit_margin_type = get_option('gicapi_variant_profit_margin_type_' . $variant_sku, '');
+        }
+
+        // Fallback to global settings
+        if ($profit_margin === '') {
+            $profit_margin = get_option('gicapi_default_profit_margin', 0);
+        }
+        if ($profit_margin_type === '') {
+            $profit_margin_type = get_option('gicapi_profit_margin_type', 'percentage');
+        }
+
+        // Calculate selling price
+        $selling_price = $this->calculate_selling_price($variant_price, $profit_margin, $profit_margin_type);
+
+        // Update product price
+        $old_price = $product->get_regular_price();
+        $product->set_regular_price($selling_price);
+        $product->set_price($selling_price);
+        $product->save();
+
+        return array(
+            'success' => true,
+            'message' => 'Price synced successfully',
+            'variant_price' => $variant_price,
+            'profit_margin' => $profit_margin,
+            'profit_margin_type' => $profit_margin_type,
+            'old_price' => $old_price,
+            'new_price' => $selling_price
+        );
+    }
+
+    /**
+     * Get variant price from API
+     * 
+     * @param string $variant_sku Variant SKU
+     * @param int $product_id WooCommerce product ID
+     * @param int $variation_id WooCommerce variation ID
+     * @param array $api_result Cached API result (optional)
+     * @return float|false Variant price or false on failure
+     */
+    private function get_variant_price_from_api($variant_sku, $product_id, $variation_id = 0, $api_result = null)
+    {
+        // Get parent product SKU for API call
+        $parent_sku = $this->get_parent_sku_from_variant_sku($variant_sku, $product_id, $variation_id);
+        if (!$parent_sku) {
+            return false;
+        }
+
+        // Use cached API result if provided, otherwise make API call
+        if ($api_result !== null) {
+            $api_response = $api_result;
+        } else {
+            $api_response = $this->api->get_variants($parent_sku);
+            if (!$api_response) {
+                return false;
+            }
+        }
+
+        // Find the specific variant in the response
+        $variant_price = $this->find_variant_price_in_response($api_response, $variant_sku);
+        if ($variant_price === false) {
+            return false;
+        }
+
+        return floatval($variant_price);
+    }
+
+    /**
+     * Find variant price in API response
+     * 
+     * @param array $api_response The API response
+     * @param string $variant_sku The variant SKU to find
+     * @return float|false Variant price or false if not found
+     */
+    private function find_variant_price_in_response($api_response, $variant_sku)
+    {
+        // Check if response is an array of variants (direct array)
+        if (is_array($api_response) && !empty($api_response)) {
+            foreach ($api_response as $index => $variant) {
+                if (isset($variant['sku']) && $variant['sku'] === $variant_sku) {
+                    $price = isset($variant['price']) ? $variant['price'] : false;
+                    return $price !== false ? floatval($price) : false;
+                }
+            }
+        }
+
+        // If response has variants array, search for the specific variant
+        if (isset($api_response['variants']) && is_array($api_response['variants'])) {
+            foreach ($api_response['variants'] as $index => $variant) {
+                if (isset($variant['sku']) && $variant['sku'] === $variant_sku) {
+                    $price = isset($variant['price']) ? $variant['price'] : false;
+                    return $price !== false ? floatval($price) : false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Calculate selling price based on variant price and profit margin
+     * 
+     * @param float $variant_price Variant price from API
+     * @param float $profit_margin Profit margin value
+     * @param string $profit_margin_type Profit margin type ('percentage' or 'fixed')
+     * @return float Calculated selling price
+     */
+    private function calculate_selling_price($variant_price, $profit_margin, $profit_margin_type)
+    {
+        $variant_price = floatval($variant_price);
+        $profit_margin = floatval($profit_margin);
+
+        if ($profit_margin_type === 'percentage') {
+            // Percentage: add percentage to price
+            $selling_price = $variant_price + ($variant_price * $profit_margin / 100);
+        } else {
+            // Fixed: add fixed amount to price
+            $selling_price = $variant_price + $profit_margin;
+        }
+
+        // Ensure price is not negative
+        return max(0, round($selling_price, 2));
     }
 
     /**

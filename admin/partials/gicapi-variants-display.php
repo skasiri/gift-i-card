@@ -183,14 +183,39 @@ if (empty($variants)) {
                                 <?php
                                 if (!empty($mapped_products)) :
                                 ?>
-                                    <?php foreach ($mapped_products as $product) : ?>
+                                    <?php foreach ($mapped_products as $product) :
+                                        $product_id = $product->get_id();
+                                        $product_price_sync_enabled = get_post_meta($product_id, '_gicapi_price_sync_enabled', true);
+                                        $product_profit_margin = get_post_meta($product_id, '_gicapi_profit_margin', true);
+                                        $product_profit_margin_type = get_post_meta($product_id, '_gicapi_profit_margin_type', true);
+                                        if ($product_price_sync_enabled === '') {
+                                            $product_price_sync_enabled = get_option('gicapi_price_sync_enabled', 'no');
+                                        }
+                                        if ($product_profit_margin === '') {
+                                            $product_profit_margin = get_option('gicapi_default_profit_margin', 0);
+                                        }
+                                        if ($product_profit_margin_type === '') {
+                                            $product_profit_margin_type = get_option('gicapi_profit_margin_type', 'percentage');
+                                        }
+                                    ?>
                                         <div class="gicapi-mapped-product-item">
-                                            <a href="<?php echo esc_url(get_permalink($product->get_id())); ?>" target="_blank">
-                                                <?php echo esc_html($product->get_name()); ?><?php if ($product->is_type('variation')) : ?> (<?php echo esc_html($product->get_sku()); ?>)<?php endif; ?>
-                                            </a>
-                                            <span class="gicapi-remove-mapping" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-product-id="<?php echo esc_attr($product->get_id()); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>">
-                                                <span class="dashicons dashicons-no-alt"></span>
-                                            </span>
+                                            <div class="gicapi-product-info">
+                                                <a href="<?php echo esc_url(get_permalink($product_id)); ?>" target="_blank">
+                                                    <?php echo esc_html($product->get_name()); ?><?php if ($product->is_type('variation')) : ?> (<?php echo esc_html($product->get_sku()); ?>)<?php endif; ?>
+                                                </a>
+                                            </div>
+                                            <div class="gicapi-product-price-sync-controls">
+                                                <label class="gicapi-product-price-sync-toggle">
+                                                    <input type="checkbox" class="gicapi-product-price-sync-toggle-input" data-product-id="<?php echo esc_attr($product_id); ?>" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" <?php checked($product_price_sync_enabled, 'yes'); ?> />
+                                                    <span class="toggle-label"><?php esc_html_e('Price Sync', 'gift-i-card'); ?></span>
+                                                </label>
+                                                <button type="button" class="button-link gicapi-customize-product-price-sync" data-product-id="<?php echo esc_attr($product_id); ?>" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-price-sync-enabled="<?php echo esc_attr($product_price_sync_enabled); ?>" data-profit-margin="<?php echo esc_attr($product_profit_margin); ?>" data-profit-margin-type="<?php echo esc_attr($product_profit_margin_type); ?>" title="<?php esc_attr_e('Customize price sync settings', 'gift-i-card'); ?>">
+                                                    <span class="dashicons dashicons-admin-generic"></span>
+                                                </button>
+                                                <span class="gicapi-remove-mapping" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-product-id="<?php echo esc_attr($product_id); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>">
+                                                    <span class="dashicons dashicons-no-alt"></span>
+                                                </span>
+                                            </div>
                                         </div>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
@@ -310,6 +335,35 @@ if (empty($variants)) {
                         <p class="description"><?php esc_html_e('These mapping fields are automatically set based on the selected variant and cannot be changed.', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="create-product-price-sync-enabled"><?php esc_html_e('Enable Price Sync', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="checkbox" id="create-product-price-sync-enabled" value="yes" <?php checked(get_option('gicapi_price_sync_enabled', 'no'), 'yes'); ?> />
+                        <p class="description"><?php esc_html_e('Enable automatic price synchronization from Gift-i-Card API. Price will be calculated based on variant price plus profit margin.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr id="create-product-price-sync-settings" style="display:none;">
+                    <th scope="row">
+                        <label for="create-product-price-sync-margin-type"><?php esc_html_e('Profit Margin Type', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select id="create-product-price-sync-margin-type">
+                            <option value="percentage" <?php selected(get_option('gicapi_profit_margin_type', 'percentage'), 'percentage'); ?>><?php esc_html_e('Percentage (%)', 'gift-i-card'); ?></option>
+                            <option value="fixed" <?php selected(get_option('gicapi_profit_margin_type', 'percentage'), 'fixed'); ?>><?php esc_html_e('Fixed Amount', 'gift-i-card'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr id="create-product-price-sync-margin-row" style="display:none;">
+                    <th scope="row">
+                        <label for="create-product-price-sync-margin"><?php esc_html_e('Profit Margin', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="number" id="create-product-price-sync-margin" step="0.01" min="0" value="<?php echo esc_attr(get_option('gicapi_default_profit_margin', 0)); ?>" />
+                        <p class="description"><?php esc_html_e('Profit margin to add to variant price from API.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
             </table>
         </div>
         <div class="gicapi-modal-footer">
@@ -394,11 +448,90 @@ if (empty($variants)) {
                         <p class="description"><?php esc_html_e('These mapping fields are automatically set and cannot be changed.', 'gift-i-card'); ?></p>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="create-variable-product-price-sync-enabled"><?php esc_html_e('Enable Price Sync', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="checkbox" id="create-variable-product-price-sync-enabled" value="yes" <?php checked(get_option('gicapi_price_sync_enabled', 'no'), 'yes'); ?> />
+                        <p class="description"><?php esc_html_e('Enable automatic price synchronization from Gift-i-Card API. Prices will be calculated based on variant prices plus profit margin.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr id="create-variable-product-price-sync-settings" style="display:none;">
+                    <th scope="row">
+                        <label for="create-variable-product-price-sync-margin-type"><?php esc_html_e('Profit Margin Type', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select id="create-variable-product-price-sync-margin-type">
+                            <option value="percentage" <?php selected(get_option('gicapi_profit_margin_type', 'percentage'), 'percentage'); ?>><?php esc_html_e('Percentage (%)', 'gift-i-card'); ?></option>
+                            <option value="fixed" <?php selected(get_option('gicapi_profit_margin_type', 'percentage'), 'fixed'); ?>><?php esc_html_e('Fixed Amount', 'gift-i-card'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr id="create-variable-product-price-sync-margin-row" style="display:none;">
+                    <th scope="row">
+                        <label for="create-variable-product-price-sync-margin"><?php esc_html_e('Profit Margin', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="number" id="create-variable-product-price-sync-margin" step="0.01" min="0" value="<?php echo esc_attr(get_option('gicapi_default_profit_margin', 0)); ?>" />
+                        <p class="description"><?php esc_html_e('Profit margin to add to variant prices from API.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
             </table>
         </div>
         <div class="gicapi-modal-footer">
             <button id="create-variable-product-confirm" class="button button-primary"><?php esc_html_e('Create Variable Product', 'gift-i-card'); ?></button>
             <button id="close-create-variable-product-modal" class="button button-secondary"><?php esc_html_e('Cancel', 'gift-i-card'); ?></button>
+            <span class="spinner"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for customizing product price sync -->
+<div id="gicapi-product-price-sync-modal" class="gicapi-modal" style="display:none;">
+    <div class="gicapi-modal-content">
+        <div class="gicapi-modal-header">
+            <h2><?php esc_html_e('Customize Product Price Sync', 'gift-i-card'); ?></h2>
+            <span class="gicapi-modal-close">&times;</span>
+        </div>
+        <div class="gicapi-modal-body">
+            <input type="hidden" id="product-price-sync-product-id">
+            <input type="hidden" id="product-price-sync-variant-sku">
+            <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <label for="product-price-sync-enabled"><?php esc_html_e('Enable Price Sync', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="checkbox" id="product-price-sync-enabled" value="yes" />
+                        <p class="description"><?php esc_html_e('Enable price synchronization for this product.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="product-price-sync-margin-type"><?php esc_html_e('Profit Margin Type', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select id="product-price-sync-margin-type">
+                            <option value="percentage"><?php esc_html_e('Percentage (%)', 'gift-i-card'); ?></option>
+                            <option value="fixed"><?php esc_html_e('Fixed Amount', 'gift-i-card'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="product-price-sync-margin"><?php esc_html_e('Profit Margin', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="number" id="product-price-sync-margin" step="0.01" min="0" />
+                        <p class="description"><?php esc_html_e('Profit margin to add to variant price from API.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="gicapi-modal-footer">
+            <button id="save-product-price-sync" class="button button-primary"><?php esc_html_e('Save', 'gift-i-card'); ?></button>
+            <button id="close-product-price-sync-modal" class="button button-secondary"><?php esc_html_e('Cancel', 'gift-i-card'); ?></button>
             <span class="spinner"></span>
         </div>
     </div>

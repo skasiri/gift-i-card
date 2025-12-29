@@ -10,6 +10,20 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
 
 - The plugin fully supports mapping both simple and variable WooCommerce products (including product variations) to Gift-i-Card variants.
 
+### Product Creation from Gift-i-Card Variants
+
+- Create WooCommerce simple products directly from Gift-i-Card variants with custom settings.
+- Create WooCommerce variable products with multiple variants in one operation.
+- Automatic mapping of created products to Gift-i-Card variants.
+- Customizable product details (name, SKU, price, status) during creation.
+
+### Price Synchronization
+
+- Automatically synchronize product prices from Gift-i-Card API based on variant prices plus configurable profit margin.
+- Configurable profit margin settings (percentage or fixed amount) in product settings.
+- Individual price sync control for each mapped product/variation with custom profit margin.
+- Price synchronization runs automatically during product status sync (cron or page visit).
+
 ### Connection Status & Real-Time Wallet Balance
 
 - Admins can view the current connection status to the Gift-i-Card API and see the real-time balance of their Gift-i-Card wallet directly from the plugin dashboard.

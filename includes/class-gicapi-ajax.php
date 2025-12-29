@@ -25,6 +25,8 @@ class GICAPI_Ajax
         add_action('wp_ajax_gicapi_confirm_order_manually', array($this, 'confirm_order_manually'));
         add_action('wp_ajax_gicapi_update_status_manually', array($this, 'update_status_manually'));
         add_action('wp_ajax_gicapi_manual_sync_products', array($this, 'manual_sync_products'));
+        add_action('wp_ajax_gicapi_save_variant_price_sync', array($this, 'save_variant_price_sync'));
+        add_action('wp_ajax_gicapi_save_product_price_sync', array($this, 'save_product_price_sync'));
     }
 
     public function search_products()
@@ -261,6 +263,9 @@ class GICAPI_Ajax
         $product_sku_field = isset($_POST['product_sku_field']) ? sanitize_text_field(wp_unslash($_POST['product_sku_field'])) : '';
         $price = isset($_POST['price']) ? floatval(wp_unslash($_POST['price'])) : 0;
         $product_status = isset($_POST['product_status']) ? sanitize_text_field(wp_unslash($_POST['product_status'])) : 'draft';
+        $price_sync_enabled = isset($_POST['price_sync_enabled']) && $_POST['price_sync_enabled'] === 'yes' ? 'yes' : 'no';
+        $price_sync_margin = isset($_POST['price_sync_margin']) ? floatval(wp_unslash($_POST['price_sync_margin'])) : get_option('gicapi_default_profit_margin', 0);
+        $price_sync_margin_type = isset($_POST['price_sync_margin_type']) ? sanitize_text_field(wp_unslash($_POST['price_sync_margin_type'])) : get_option('gicapi_profit_margin_type', 'percentage');
 
         if (empty($variant_sku) || empty($product_name) || empty($category_sku) || empty($product_sku)) {
             wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
@@ -325,6 +330,11 @@ class GICAPI_Ajax
         update_post_meta($product_id, '_gicapi_category_sku', $category_sku);
         update_post_meta($product_id, '_gicapi_product_sku', $product_sku);
 
+        // Save price sync settings
+        update_post_meta($product_id, '_gicapi_price_sync_enabled', $price_sync_enabled);
+        update_post_meta($product_id, '_gicapi_profit_margin', $price_sync_margin);
+        update_post_meta($product_id, '_gicapi_profit_margin_type', $price_sync_margin_type);
+
         wp_send_json_success(__('Simple product created and mapped successfully', 'gift-i-card'));
     }
 
@@ -372,6 +382,9 @@ class GICAPI_Ajax
         $product_sku_field = isset($_POST['product_sku_field']) ? sanitize_text_field(wp_unslash($_POST['product_sku_field'])) : '';
         $product_status = isset($_POST['product_status']) ? sanitize_text_field(wp_unslash($_POST['product_status'])) : 'draft';
         $attribute_name = isset($_POST['attribute_name']) ? sanitize_text_field(wp_unslash($_POST['attribute_name'])) : 'Variant Value';
+        $price_sync_enabled = isset($_POST['price_sync_enabled']) && $_POST['price_sync_enabled'] === 'yes' ? 'yes' : 'no';
+        $price_sync_margin = isset($_POST['price_sync_margin']) ? floatval(wp_unslash($_POST['price_sync_margin'])) : get_option('gicapi_default_profit_margin', 0);
+        $price_sync_margin_type = isset($_POST['price_sync_margin_type']) ? sanitize_text_field(wp_unslash($_POST['price_sync_margin_type'])) : get_option('gicapi_profit_margin_type', 'percentage');
 
         // Handle selected_variants - it might be JSON string or array
         $selected_variants_raw = isset($_POST['selected_variants']) ? wp_unslash($_POST['selected_variants']) : array();
@@ -593,6 +606,11 @@ class GICAPI_Ajax
                 update_post_meta($variation_id, '_gicapi_variant_sku', $variant_data['sku']);
                 update_post_meta($variation_id, '_gicapi_category_sku', $category_sku);
                 update_post_meta($variation_id, '_gicapi_product_sku', $product_sku);
+
+                // Save price sync settings for each variation
+                update_post_meta($variation_id, '_gicapi_price_sync_enabled', $price_sync_enabled);
+                update_post_meta($variation_id, '_gicapi_profit_margin', $price_sync_margin);
+                update_post_meta($variation_id, '_gicapi_profit_margin_type', $price_sync_margin_type);
             }
         }
 
@@ -848,5 +866,69 @@ class GICAPI_Ajax
         } catch (Exception $e) {
             wp_send_json_error(__('Failed to sync products: ', 'gift-i-card') . $e->getMessage());
         }
+    }
+
+    public function save_variant_price_sync()
+    {
+        check_ajax_referer('gicapi_save_variant_price_sync', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $variant_sku = isset($_POST['variant_sku']) ? sanitize_text_field(wp_unslash($_POST['variant_sku'])) : '';
+        $enabled = isset($_POST['enabled']) && $_POST['enabled'] === 'yes' ? 'yes' : 'no';
+        $profit_margin = isset($_POST['profit_margin']) ? floatval(wp_unslash($_POST['profit_margin'])) : 0;
+        $profit_margin_type = isset($_POST['profit_margin_type']) ? sanitize_text_field(wp_unslash($_POST['profit_margin_type'])) : 'percentage';
+
+        if (empty($variant_sku)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        if (!in_array($profit_margin_type, array('percentage', 'fixed'))) {
+            wp_send_json_error(__('Invalid profit margin type', 'gift-i-card'));
+        }
+
+        // Save variant-level price sync settings
+        update_option('gicapi_variant_price_sync_' . $variant_sku, $enabled);
+        update_option('gicapi_variant_profit_margin_' . $variant_sku, $profit_margin);
+        update_option('gicapi_variant_profit_margin_type_' . $variant_sku, $profit_margin_type);
+
+        wp_send_json_success(__('Variant price sync settings saved successfully', 'gift-i-card'));
+    }
+
+    public function save_product_price_sync()
+    {
+        check_ajax_referer('gicapi_save_product_price_sync', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $product_id = isset($_POST['product_id']) ? intval(wp_unslash($_POST['product_id'])) : 0;
+        $variant_sku = isset($_POST['variant_sku']) ? sanitize_text_field(wp_unslash($_POST['variant_sku'])) : '';
+        $enabled = isset($_POST['enabled']) && $_POST['enabled'] === 'yes' ? 'yes' : 'no';
+        $profit_margin = isset($_POST['profit_margin']) ? floatval(wp_unslash($_POST['profit_margin'])) : 0;
+        $profit_margin_type = isset($_POST['profit_margin_type']) ? sanitize_text_field(wp_unslash($_POST['profit_margin_type'])) : 'percentage';
+
+        if (empty($product_id) || empty($variant_sku)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        if (!in_array($profit_margin_type, array('percentage', 'fixed'))) {
+            wp_send_json_error(__('Invalid profit margin type', 'gift-i-card'));
+        }
+
+        $product = wc_get_product($product_id);
+        if (!$product) {
+            wp_send_json_error(__('Product not found', 'gift-i-card'));
+        }
+
+        // Save product-level price sync settings
+        update_post_meta($product_id, '_gicapi_price_sync_enabled', $enabled);
+        update_post_meta($product_id, '_gicapi_profit_margin', $profit_margin);
+        update_post_meta($product_id, '_gicapi_profit_margin_type', $profit_margin_type);
+
+        wp_send_json_success(__('Product price sync settings saved successfully', 'gift-i-card'));
     }
 }

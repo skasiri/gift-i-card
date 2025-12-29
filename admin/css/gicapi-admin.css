@@ -630,3 +630,54 @@
 .variants-list::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* Price Sync Styles */
+.gicapi-mapped-product-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f9f9f9;
+}
+
+.gicapi-product-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gicapi-product-price-sync-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gicapi-product-price-sync-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.gicapi-product-price-sync-toggle input[type="checkbox"] {
+  margin: 0;
+}
+
+.gicapi-customize-product-price-sync {
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+.gicapi-customize-product-price-sync:hover {
+  color: #0073aa;
+}
+
+#create-product-price-sync-settings,
+#create-product-price-sync-margin-row,
+#create-variable-product-price-sync-settings,
+#create-variable-product-price-sync-margin-row {
+  display: none;
+}

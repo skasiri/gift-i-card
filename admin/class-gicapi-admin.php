@@ -164,6 +164,8 @@ class GICAPI_Admin
             'get_variants_for_variable_product_nonce' => wp_create_nonce('gicapi_get_variants_for_variable_product'),
             'check_sku_uniqueness_nonce' => wp_create_nonce('gicapi_check_sku_uniqueness'),
             'search_products_nonce' => wp_create_nonce('gicapi_search_products'),
+            'save_variant_price_sync_nonce' => wp_create_nonce('gicapi_save_variant_price_sync'),
+            'save_product_price_sync_nonce' => wp_create_nonce('gicapi_save_product_price_sync'),
             'text_refreshing_token' => __('Refreshing token...', 'gift-i-card'),
             'text_error_unknown' => __('An unknown error occurred.', 'gift-i-card'),
             'text_error_server_communication' => __('Error communicating with server: ', 'gift-i-card'),
@@ -396,6 +398,36 @@ class GICAPI_Admin
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field'
         ));
+        register_setting('gicapi_settings', 'gicapi_sync_batch_size', array(
+            'type' => 'integer',
+            'sanitize_callback' => array($this, 'sanitize_sync_batch_size')
+        ));
+
+        // Price sync settings
+        register_setting('gicapi_settings', 'gicapi_price_sync_enabled', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        register_setting('gicapi_settings', 'gicapi_default_profit_margin', array(
+            'type' => 'float',
+            'sanitize_callback' => array($this, 'sanitize_profit_margin')
+        ));
+        register_setting('gicapi_settings', 'gicapi_profit_margin_type', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+    }
+
+    public function sanitize_profit_margin($margin)
+    {
+        $margin = floatval($margin);
+        return max(0, $margin); // Ensure margin is not negative
+    }
+
+    public function sanitize_sync_batch_size($size)
+    {
+        $size = intval($size);
+        return max(1, min(50, $size)); // Ensure size is between 1 and 50
     }
 
     public function sanitize_base_url($url)

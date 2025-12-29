@@ -6,7 +6,7 @@ Tested up to: 6.9
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 10.4.3
-Stable tag: 1.2.4
+Stable tag: 1.2.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,16 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 **Main Features and Operations:**
 - **Support for Simple and Variable WooCommerce Products:**
   - The plugin fully supports mapping both simple and variable WooCommerce products (including product variations) to Gift-i-Card variants.
+- **Product Creation from Gift-i-Card Variants:**
+  - Create WooCommerce simple products directly from Gift-i-Card variants with custom settings.
+  - Create WooCommerce variable products with multiple variants in one operation.
+  - Automatic mapping of created products to Gift-i-Card variants.
+  - Customizable product details (name, SKU, price, status) during creation.
+- **Price Synchronization:**
+  - Automatically synchronize product prices from Gift-i-Card API based on variant prices plus configurable profit margin.
+  - Configurable profit margin settings (percentage or fixed amount) in product settings.
+  - Individual price sync control for each mapped product/variation with custom profit margin.
+  - Price synchronization runs automatically during product status sync (cron or page visit).
 - **Connection Status & Real-Time Wallet Balance:**
   - Admins can view the current connection status to the Gift-i-Card API and see the real-time balance of their Gift-i-Card wallet directly from the plugin dashboard.
 - **Product Mapping:**
@@ -67,6 +77,24 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.2.6 =
+* Added price synchronization feature for mapped products
+* Products can now automatically sync prices from Gift-i-Card API based on variant prices plus configurable profit margin
+* Configurable profit margin settings (percentage or fixed amount) in product settings
+* Individual price sync control for each mapped product/variation
+* Price sync can be enabled/disabled per product with custom profit margin settings
+* Price synchronization runs automatically during product status sync (cron or page visit)
+* Enhanced product management with price sync indicators in variants display page
+
+= 1.2.5 =
+* Added ability to create WooCommerce products directly from Gift-i-Card variants
+* Create simple products from individual variants with custom name, SKU, price, and status
+* Create variable products with multiple variants in one operation
+* Customizable variant details (name, price, SKU) during product creation
+* Automatic mapping of created products to Gift-i-Card variants
+* Improved product creation workflow with modal dialogs
+* Enhanced variants display page with product creation buttons
+
 = 1.2.4 =
 * Updated compatibility to WordPress 6.9
 * Updated compatibility to WooCommerce 10.4.3
@@ -108,6 +136,12 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Enhanced user experience with better language support
 
 == Upgrade Notice ==
+= 1.2.6 =
+This version introduces automatic price synchronization for mapped products. Products can now automatically sync their prices from Gift-i-Card API based on variant prices plus your configured profit margin. You can control price sync individually for each product with custom profit margin settings. Highly recommended for stores that want to keep prices synchronized with Gift-i-Card pricing.
+
+= 1.2.5 =
+This version adds the ability to create WooCommerce products directly from Gift-i-Card variants, significantly improving the product setup workflow. You can now create simple or variable products with automatic mapping in just a few clicks. This feature streamlines the process of adding Gift-i-Card products to your WooCommerce store.
+
 = 1.2.4 =
 This version updates compatibility with WordPress 6.9 and WooCommerce 10.4.3, ensuring optimal performance and security with the latest versions. Recommended for all users.
 

@@ -279,6 +279,10 @@ jQuery(document).ready(function ($) {
         $button.prop('disabled', true);
         $('.spinner').show();
 
+        var priceSyncEnabled = $('#create-product-price-sync-enabled').is(':checked') ? 'yes' : 'no';
+        var priceSyncMargin = $('#create-product-price-sync-margin').val() || 0;
+        var priceSyncMarginType = $('#create-product-price-sync-margin-type').val() || 'percentage';
+
         $.post(ajaxurl, {
             action: 'gicapi_create_simple_product',
             nonce: gicapi_admin_params.create_simple_product_nonce,
@@ -290,7 +294,10 @@ jQuery(document).ready(function ($) {
             product_name: productName,
             product_sku_field: productSku,
             price: price,
-            product_status: status
+            product_status: status,
+            price_sync_enabled: priceSyncEnabled,
+            price_sync_margin: priceSyncMargin,
+            price_sync_margin_type: priceSyncMarginType
         }, function (response) {
             if (response.success) {
                 $('#gicapi-create-product-modal').hide();
@@ -435,6 +442,10 @@ jQuery(document).ready(function ($) {
         $button.prop('disabled', true);
         $('.spinner').show();
 
+        var priceSyncEnabled = $('#create-variable-product-price-sync-enabled').is(':checked') ? 'yes' : 'no';
+        var priceSyncMargin = $('#create-variable-product-price-sync-margin').val() || 0;
+        var priceSyncMarginType = $('#create-variable-product-price-sync-margin-type').val() || 'percentage';
+
         $.post(ajaxurl, {
             action: 'gicapi_create_variable_product',
             nonce: gicapi_admin_params.create_variable_product_nonce,
@@ -444,7 +455,10 @@ jQuery(document).ready(function ($) {
             product_sku_field: productSku,
             product_status: status,
             attribute_name: attributeName,
-            selected_variants: JSON.stringify(selectedVariants)
+            selected_variants: JSON.stringify(selectedVariants),
+            price_sync_enabled: priceSyncEnabled,
+            price_sync_margin: priceSyncMargin,
+            price_sync_margin_type: priceSyncMarginType
         }, function (response) {
             if (response.success) {
                 $('#gicapi-create-variable-product-modal').hide();
@@ -719,4 +733,118 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    // Price sync functionality
+    // Product price sync toggle (for each mapped product)
+    $(document).on('change', '.gicapi-product-price-sync-toggle-input', function () {
+        var $toggle = $(this);
+        var productId = $toggle.data('product-id');
+        var variantSku = $toggle.data('variant-sku');
+        var enabled = $toggle.is(':checked') ? 'yes' : 'no';
+
+        // Get default settings from the customize button
+        var $customizeButton = $('.gicapi-customize-product-price-sync[data-product-id="' + productId + '"]');
+        var defaultMargin = $customizeButton.data('profit-margin') || 0;
+        var defaultMarginType = $customizeButton.data('profit-margin-type') || 'percentage';
+
+        $.post(ajaxurl, {
+            action: 'gicapi_save_product_price_sync',
+            nonce: gicapi_admin_params.save_product_price_sync_nonce,
+            product_id: productId,
+            variant_sku: variantSku,
+            enabled: enabled,
+            profit_margin: defaultMargin,
+            profit_margin_type: defaultMarginType
+        }, function (response) {
+            if (!response.success) {
+                alert(response.data || 'Error saving price sync settings');
+                $toggle.prop('checked', !$toggle.is(':checked'));
+            } else {
+                // Update the customize button data attributes
+                $customizeButton.data('price-sync-enabled', enabled);
+            }
+        }).fail(function () {
+            alert('Error saving price sync settings');
+            $toggle.prop('checked', !$toggle.is(':checked'));
+        });
+    });
+
+    // Open product price sync customization modal (using event delegation for dynamic elements)
+    $(document).on('click', '.gicapi-customize-product-price-sync', function () {
+        var productId = $(this).data('product-id');
+        var variantSku = $(this).data('variant-sku');
+        var enabled = $(this).data('price-sync-enabled');
+        var margin = $(this).data('profit-margin');
+        var marginType = $(this).data('profit-margin-type');
+
+        $('#product-price-sync-product-id').val(productId);
+        $('#product-price-sync-variant-sku').val(variantSku);
+        $('#product-price-sync-enabled').prop('checked', enabled === 'yes');
+        $('#product-price-sync-margin-type').val(marginType);
+        $('#product-price-sync-margin').val(margin);
+
+        $('#gicapi-product-price-sync-modal').show();
+        $('body').css('overflow', 'hidden');
+    });
+
+    // Close product price sync modal
+    $('#close-product-price-sync-modal, #gicapi-product-price-sync-modal .gicapi-modal-close').on('click', function () {
+        $('#gicapi-product-price-sync-modal').hide();
+        $('body').css('overflow', '');
+    });
+
+    // Save product price sync settings
+    $('#save-product-price-sync').on('click', function () {
+        var $button = $(this);
+        var productId = $('#product-price-sync-product-id').val();
+        var variantSku = $('#product-price-sync-variant-sku').val();
+        var enabled = $('#product-price-sync-enabled').is(':checked') ? 'yes' : 'no';
+        var margin = $('#product-price-sync-margin').val();
+        var marginType = $('#product-price-sync-margin-type').val();
+
+        $button.prop('disabled', true);
+        $('.spinner').show();
+
+        $.post(ajaxurl, {
+            action: 'gicapi_save_product_price_sync',
+            nonce: gicapi_admin_params.save_product_price_sync_nonce,
+            product_id: productId,
+            variant_sku: variantSku,
+            enabled: enabled,
+            profit_margin: margin,
+            profit_margin_type: marginType
+        }, function (response) {
+            if (response.success) {
+                $('#gicapi-product-price-sync-modal').hide();
+                $('body').css('overflow', '');
+                location.reload();
+            } else {
+                alert(response.data || 'Error saving price sync settings');
+            }
+        }).fail(function () {
+            alert('Error saving price sync settings');
+        }).always(function () {
+            $button.prop('disabled', false);
+            $('.spinner').hide();
+        });
+    });
+
+    // Toggle price sync settings visibility in create product modals
+    $('#create-product-price-sync-enabled, #create-variable-product-price-sync-enabled').on('change', function () {
+        var $checkbox = $(this);
+        var isChecked = $checkbox.is(':checked');
+        var $settingsRow = $checkbox.closest('tr').next('#create-product-price-sync-settings, #create-variable-product-price-sync-settings');
+        var $marginRow = $settingsRow.next('#create-product-price-sync-margin-row, #create-variable-product-price-sync-margin-row');
+
+        if (isChecked) {
+            $settingsRow.show();
+            $marginRow.show();
+        } else {
+            $settingsRow.hide();
+            $marginRow.hide();
+        }
+    });
+
+    // Initialize price sync settings visibility
+    $('#create-product-price-sync-enabled, #create-variable-product-price-sync-enabled').trigger('change');
 }); 
