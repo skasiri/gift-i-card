@@ -6,7 +6,7 @@ Tested up to: 6.9
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 10.4.3
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,11 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.2.4 =
+* Updated compatibility to WordPress 6.9
+* Updated compatibility to WooCommerce 10.4.3
+* Improved plugin stability and reliability with latest WordPress and WooCommerce versions
+
 = 1.2.3 =
 * Added batch processing system for product synchronization to handle large product catalogs efficiently
 * Configurable batch size setting for product sync (default: 10 products per batch)
@@ -103,6 +108,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Enhanced user experience with better language support
 
 == Upgrade Notice ==
+= 1.2.4 =
+This version updates compatibility with WordPress 6.9 and WooCommerce 10.4.3, ensuring optimal performance and security with the latest versions. Recommended for all users.
+
 = 1.2.3 =
 This version introduces batch processing for product synchronization, significantly improving performance for stores with large product catalogs. The system now processes products in configurable batches, preventing timeouts and memory issues. Upgrade recommended for stores with 50+ products.
 

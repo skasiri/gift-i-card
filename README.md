@@ -60,6 +60,8 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
 ### Compatibility
 
 - Fully compatible with both HPOS (High-Performance Order Storage) and the legacy WooCommerce order storage system
+- Tested up to WordPress 6.9
+- Tested up to WooCommerce 10.4.3
 
 ## Setup Requirements
 
