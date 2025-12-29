@@ -96,6 +96,16 @@ class GICAPI_Product_Sync
      */
     public function sync_product_price($product_id, $variation_id = 0, $api_result = null)
     {
+        // First check if price sync is enabled globally
+        // Global setting acts as a master switch - if disabled, no products sync
+        $global_price_sync_enabled = get_option('gicapi_price_sync_enabled', 'no');
+        if ($global_price_sync_enabled !== 'yes') {
+            return array(
+                'success' => false,
+                'error' => 'Price sync is disabled globally'
+            );
+        }
+
         // Determine which product to sync (variation or main product)
         $sync_product_id = $variation_id > 0 ? $variation_id : $product_id;
         $product = wc_get_product($sync_product_id);
@@ -109,18 +119,12 @@ class GICAPI_Product_Sync
         }
 
         // Check if price sync is enabled for this specific product
-        // First check if product has explicit settings (not empty string means it was set)
+        // Product must have explicit 'yes' setting to sync
+        // If product doesn't have explicit settings (empty string), it won't sync
         $product_price_sync_enabled = get_post_meta($sync_product_id, '_gicapi_price_sync_enabled', true);
 
-        // If product has explicit settings, use them (even if 'no')
-        // If product doesn't have explicit settings (empty string), use global settings
-        if ($product_price_sync_enabled === '') {
-            // Product doesn't have explicit settings, use global default
-            $global_price_sync_enabled = get_option('gicapi_price_sync_enabled', 'no');
-            $product_price_sync_enabled = $global_price_sync_enabled;
-        }
-
-        // Only sync if explicitly enabled (either product-specific or global)
+        // Only sync if product explicitly has 'yes' setting
+        // Products without explicit settings (empty string) won't sync even if global is enabled
         if ($product_price_sync_enabled !== 'yes') {
             return array(
                 'success' => false,
