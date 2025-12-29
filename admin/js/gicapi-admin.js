@@ -319,6 +319,7 @@ jQuery(document).ready(function ($) {
         $('#create-variable-product-name').val(productName);
         $('#create-variable-product-sku').val('');
         $('#create-variable-product-status').val('draft');
+        $('#create-variable-product-attribute-name').val('Variant Value');
 
         // Update mapping info display
         $('#variable-mapping-category-sku').text(categorySku);
@@ -348,6 +349,7 @@ jQuery(document).ready(function ($) {
         var productName = $('#create-variable-product-name').val().trim();
         var productSku = $('#create-variable-product-sku').val().trim();
         var status = $('#create-variable-product-status').val();
+        var attributeName = $('#create-variable-product-attribute-name').val().trim() || 'Variant Value';
 
         var categorySku = $('#create-variable-product-category-sku').val();
         var productSkuApi = $('#create-variable-product-product-sku').val();
@@ -441,6 +443,7 @@ jQuery(document).ready(function ($) {
             product_name: productName,
             product_sku_field: productSku,
             product_status: status,
+            attribute_name: attributeName,
             selected_variants: JSON.stringify(selectedVariants)
         }, function (response) {
             if (response.success) {

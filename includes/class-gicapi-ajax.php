@@ -371,6 +371,7 @@ class GICAPI_Ajax
         $product_name = isset($_POST['product_name']) ? sanitize_text_field(wp_unslash($_POST['product_name'])) : '';
         $product_sku_field = isset($_POST['product_sku_field']) ? sanitize_text_field(wp_unslash($_POST['product_sku_field'])) : '';
         $product_status = isset($_POST['product_status']) ? sanitize_text_field(wp_unslash($_POST['product_status'])) : 'draft';
+        $attribute_name = isset($_POST['attribute_name']) ? sanitize_text_field(wp_unslash($_POST['attribute_name'])) : 'Variant Value';
 
         // Handle selected_variants - it might be JSON string or array
         $selected_variants_raw = isset($_POST['selected_variants']) ? wp_unslash($_POST['selected_variants']) : array();
@@ -512,19 +513,28 @@ class GICAPI_Ajax
             wp_send_json_error($error_message);
         }
 
+        // Create attribute slug from attribute name
+        $attribute_slug = sanitize_title($attribute_name);
+        if (empty($attribute_slug)) {
+            $attribute_slug = 'variant_value'; // Fallback to default
+        }
+
         // Create attribute object for WooCommerce
         $attribute = new WC_Product_Attribute();
         $attribute->set_id(0); // Custom attribute (not taxonomy)
-        $attribute->set_name('variant_value'); // Use slug format for custom attribute
+        $attribute->set_name($attribute_slug); // Use slug format for custom attribute
         $attribute->set_options($attribute_values);
         $attribute->set_visible(true);
         $attribute->set_variation(true); // Important: this makes it a variation attribute
 
         // Set attributes to variable product
         $attributes_array = array();
-        $attributes_array['variant_value'] = $attribute;
+        $attributes_array[$attribute_slug] = $attribute;
         $variable_product->set_attributes($attributes_array);
         $variable_product->save();
+
+        // Store attribute name for display purposes
+        update_post_meta($variable_product_id, '_gicapi_attribute_name', $attribute_name);
 
         // Now create variations
         $created_variations = array();
@@ -541,9 +551,9 @@ class GICAPI_Ajax
                 $variation->set_sku($variant_data['variation_sku']);
             }
 
-            // Set variation attributes
+            // Set variation attributes using the attribute slug
             $variation->set_attributes(array(
-                'variant_value' => $variant_data['attribute_value']
+                $attribute_slug => $variant_data['attribute_value']
             ));
 
             $variation_id = $variation->save();
@@ -573,9 +583,9 @@ class GICAPI_Ajax
             $first_variation = wc_get_product($created_variations[0]);
             if ($first_variation) {
                 $variation_attributes = $first_variation->get_attributes();
-                if (isset($variation_attributes['variant_value'])) {
+                if (isset($variation_attributes[$attribute_slug])) {
                     $default_attributes = array(
-                        'variant_value' => $variation_attributes['variant_value']
+                        $attribute_slug => $variation_attributes[$attribute_slug]
                     );
                     $variable_product->set_default_attributes($default_attributes);
                     $variable_product->save();

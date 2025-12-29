@@ -364,6 +364,15 @@ if (empty($variants)) {
                 </tr>
                 <tr>
                     <th scope="row">
+                        <label for="create-variable-product-attribute-name"><?php esc_html_e('Attribute Name', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="create-variable-product-attribute-name" class="regular-text" value="<?php esc_attr_e('Variant Value', 'gift-i-card'); ?>" placeholder="<?php esc_attr_e('e.g., Amount, Value, Size', 'gift-i-card'); ?>">
+                        <p class="description"><?php esc_html_e('Name of the attribute that will be used for variations (e.g., Amount, Value, Size).', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
                         <label><?php esc_html_e('Select Variants', 'gift-i-card'); ?></label>
                     </th>
                     <td>
