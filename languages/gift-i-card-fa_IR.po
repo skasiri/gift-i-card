@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-12-29 01:28+0330\n"
-"PO-Revision-Date: 2025-12-29 01:32+0330\n"
+"POT-Creation-Date: 2025-12-29 16:54+0330\n"
+"PO-Revision-Date: 2025-12-29 17:00+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -21,108 +21,128 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: admin/class-gicapi-admin.php:163
+#: admin/class-gicapi-admin.php:164
 msgid "Refreshing token..."
 msgstr "در حال نوسازی توکن..."
 
-#: admin/class-gicapi-admin.php:164
+#: admin/class-gicapi-admin.php:165
 msgid "An unknown error occurred."
 msgstr "خطای ناشناخته رخ داد."
 
-#: admin/class-gicapi-admin.php:165
+#: admin/class-gicapi-admin.php:166
 msgid "Error communicating with server: "
 msgstr "خطا در برقراری ارتباط با سرور: "
 
-#: admin/class-gicapi-admin.php:166
-#: admin/partials/gicapi-variants-display.php:182
+#: admin/class-gicapi-admin.php:167
+#: admin/partials/gicapi-variants-display.php:190
 msgid "Search for a product..."
 msgstr "جستجوی محصول..."
 
-#: admin/class-gicapi-admin.php:167
+#: admin/class-gicapi-admin.php:168
 msgid "Please select a product"
 msgstr "محصولی را انتخاب کنید"
 
-#: admin/class-gicapi-admin.php:168
+#: admin/class-gicapi-admin.php:169
 msgid "Error adding mapping"
 msgstr "خطا در ایجاد ارتباط"
 
-#: admin/class-gicapi-admin.php:169
+#: admin/class-gicapi-admin.php:170
 msgid "Are you sure you want to remove this mapping?"
 msgstr "آیا از حذف ارتباط محصول اطمینان دارید؟"
 
-#: admin/class-gicapi-admin.php:170 includes/class-gicapi-ajax.php:235
+#: admin/class-gicapi-admin.php:171 includes/class-gicapi-ajax.php:236
 msgid "Error removing mapping"
 msgstr "خطا در حذف ارتباط"
 
-#: admin/class-gicapi-admin.php:171
+#: admin/class-gicapi-admin.php:172
+msgid "Are you sure you want to create a simple product for this variant?"
+msgstr "آیا از ساخت محصول ساده ووکامرس برای این واریانت اطمینان دارید؟"
+
+#: admin/class-gicapi-admin.php:173
+msgid "Error creating simple product"
+msgstr "خطا در ساخت محصول ساده"
+
+#: admin/class-gicapi-admin.php:174
+msgid "Product name is required"
+msgstr "نام محصول الزامی است"
+
+#: admin/class-gicapi-admin.php:175
+msgid "Product SKU is required"
+msgstr "شناسه محصول (SKU) الزامی است"
+
+#: admin/class-gicapi-admin.php:176
+msgid "Valid product price is required"
+msgstr "قیمت محصول معتبر نیاز است"
+
+#: admin/class-gicapi-admin.php:177
 msgid "Updating..."
 msgstr "در حال بروزرسانی..."
 
-#: admin/class-gicapi-admin.php:172
+#: admin/class-gicapi-admin.php:178
 msgid "An error occurred while updating orders."
 msgstr "خطایی در بروزرسانی وضعیت سفارشات رخ داد."
 
-#: admin/class-gicapi-admin.php:173
+#: admin/class-gicapi-admin.php:179
 #: admin/partials/settings/gicapi-settings-cron.php:149
 msgid "Update Pending/Processing Orders Now"
 msgstr "بروزرسانی سفارشات در انتظار / درحال انجام"
 
-#: admin/class-gicapi-admin.php:174
+#: admin/class-gicapi-admin.php:180
 msgid "Syncing..."
 msgstr "در حال همگام سازی..."
 
-#: admin/class-gicapi-admin.php:175
+#: admin/class-gicapi-admin.php:181
 msgid "An error occurred while syncing products."
 msgstr "خطایی در همگام سازی محصولات رخ داد."
 
-#: admin/class-gicapi-admin.php:176
+#: admin/class-gicapi-admin.php:182
 #: admin/partials/settings/gicapi-settings-cron.php:89
 msgid "Sync All Products Now"
 msgstr "هم اکنون همگام سازی کن"
 
-#: admin/class-gicapi-admin.php:177
+#: admin/class-gicapi-admin.php:183
 msgid "Rescheduling..."
 msgstr "در حال زمانبندی مجدد..."
 
-#: admin/class-gicapi-admin.php:178
+#: admin/class-gicapi-admin.php:184
 msgid "An error occurred while rescheduling cron job."
 msgstr "خطایی در روند زمانبندی رویداد کرون رخ داد."
 
-#: admin/class-gicapi-admin.php:179
+#: admin/class-gicapi-admin.php:185
 #: admin/partials/settings/gicapi-settings-cron.php:255
 msgid "Reschedule Cron Job"
 msgstr "زمانبندی مجدد کرون جاب"
 
-#: admin/class-gicapi-admin.php:180
+#: admin/class-gicapi-admin.php:186
 msgid "Checking..."
 msgstr "در حال بررسی..."
 
-#: admin/class-gicapi-admin.php:181
+#: admin/class-gicapi-admin.php:187
 msgid "An error occurred while checking cron job."
 msgstr "خطایی در روند بررسی رویدادهای کرون رخ داد."
 
-#: admin/class-gicapi-admin.php:182
+#: admin/class-gicapi-admin.php:188
 #: admin/partials/settings/gicapi-settings-cron.php:258
 msgid "Check & Repair Cron Job"
 msgstr "بررسی و تعمیر کرون جاب"
 
-#: admin/class-gicapi-admin.php:255
+#: admin/class-gicapi-admin.php:261
 msgid "Connected"
 msgstr "متصل"
 
-#: admin/class-gicapi-admin.php:255
+#: admin/class-gicapi-admin.php:261
 msgid "Balance"
 msgstr "موجودی"
 
-#: admin/class-gicapi-admin.php:259
+#: admin/class-gicapi-admin.php:265
 msgid "Disconnected"
 msgstr "قطع"
 
-#: admin/class-gicapi-admin.php:610 admin/class-gicapi-admin.php:636
+#: admin/class-gicapi-admin.php:616 admin/class-gicapi-admin.php:642
 msgid "You do not have permission to perform this action."
 msgstr "دسترسی لازم برای این کار را ندارید."
 
-#: admin/class-gicapi-admin.php:619
+#: admin/class-gicapi-admin.php:625
 msgid ""
 "Token refreshed successfully. Please refresh the page or save the settings to "
 "see the new connection status."
@@ -130,19 +150,19 @@ msgstr ""
 "توکن با موفقیت نوسازی شد. لطفاً صفحه را به‌روزرسانی کنید تا وضعیت اتصال جدید را "
 "مشاهده کنید."
 
-#: admin/class-gicapi-admin.php:621
+#: admin/class-gicapi-admin.php:627
 msgid "Error refreshing token. Please check the API settings and try again."
 msgstr "خطا در نوسازی توکن. لطفاً تنظیمات API را بررسی کرده و دوباره تلاش کنید."
 
-#: admin/class-gicapi-admin.php:631
+#: admin/class-gicapi-admin.php:637
 msgid "Security check failed. Please try again."
 msgstr "اعتبارسنجی با خطا مواجه شد. لطفا دوباره سعی کنید."
 
-#: admin/class-gicapi-admin.php:644
+#: admin/class-gicapi-admin.php:650
 msgid "Invalid product or variant ID."
 msgstr "شناسه محصول یا واریانت نامعتبر است."
 
-#: admin/class-gicapi-admin.php:649
+#: admin/class-gicapi-admin.php:655
 msgid "Variant mapped successfully."
 msgstr "واریانت با موفقیت مرتبط شد."
 
@@ -197,6 +217,7 @@ msgstr "نام"
 #: admin/partials/gicapi-products-display.php:69
 #: admin/partials/gicapi-products-display.php:132
 #: admin/partials/gicapi-variants-display.php:71
+#: admin/partials/gicapi-variants-display.php:228
 msgid "SKU"
 msgstr "شناسه SKU"
 
@@ -300,26 +321,110 @@ msgstr "وضعیت فروش"
 msgid "Mapped WC Products"
 msgstr "محصولات مرتبط ووکامرس"
 
+#: admin/partials/gicapi-variants-display.php:76
+msgid "Actions"
+msgstr "عملیات"
+
 #. translators: %d: number of products mapped
-#: admin/partials/gicapi-variants-display.php:157
+#: admin/partials/gicapi-variants-display.php:158
 #, php-format
 msgid "%d product mapped"
 msgid_plural "%d products mapped"
 msgstr[0] "%d محصول در ارتباط"
 msgstr[1] "%d محصول در ارتباط"
 
-#: admin/partials/gicapi-variants-display.php:161
-#: admin/partials/gicapi-variants-display.php:188
+#: admin/partials/gicapi-variants-display.php:167
+#: admin/partials/gicapi-variants-display.php:196
 msgid "Add Mapping"
 msgstr "افزودن  ارتباط"
 
-#: admin/partials/gicapi-variants-display.php:176
+#: admin/partials/gicapi-variants-display.php:170
+msgid "Create Simple Product"
+msgstr "ساخت محصول ساده"
+
+#: admin/partials/gicapi-variants-display.php:184
 msgid "Map Gift-i-Card Variant to WooCommerce Product"
 msgstr "برقراری ارتباط بین محصول ووکامرس و واریانت گیفتی کارت"
 
-#: admin/partials/gicapi-variants-display.php:189
+#: admin/partials/gicapi-variants-display.php:197
+#: admin/partials/gicapi-variants-display.php:283
 msgid "Cancel"
 msgstr "انصراف"
+
+#: admin/partials/gicapi-variants-display.php:207
+msgid "Create Simple Product from Gift-i-Card Variant"
+msgstr "ساخت محصول ساده بر اساس واریانت گیفتی کارت"
+
+#: admin/partials/gicapi-variants-display.php:220
+msgid "Product Name"
+msgstr "نام محصول"
+
+#: admin/partials/gicapi-variants-display.php:232
+msgid "Unique identifier for the product."
+msgstr "شناسه یکتا برای محصول."
+
+#: admin/partials/gicapi-variants-display.php:237
+msgid "Regular Price"
+msgstr "قیمت فروش عادی"
+
+#: admin/partials/gicapi-variants-display.php:241
+msgid "Price of the product."
+msgstr "قیمت فروش محصول."
+
+#: admin/partials/gicapi-variants-display.php:246
+msgid "Stock Quantity"
+msgstr "تعداد موجودی"
+
+#: admin/partials/gicapi-variants-display.php:250
+msgid "Number of items in stock. Leave empty for unlimited stock."
+msgstr "تعداد محصول موجود. برای نامحدود خالی بگذارید."
+
+#: admin/partials/gicapi-variants-display.php:255
+msgid "Product Status"
+msgstr "وضعیت محصول"
+
+#: admin/partials/gicapi-variants-display.php:259
+msgid "Published"
+msgstr "منتشر شده"
+
+#: admin/partials/gicapi-variants-display.php:260
+msgid "Draft"
+msgstr "پیش نویس"
+
+#: admin/partials/gicapi-variants-display.php:262
+msgid "Choose whether to publish the product immediately or save as draft."
+msgstr "انتخاب کنید که محصول فورا منتشر شود یا ابتدا پیش نویس گردد."
+
+#: admin/partials/gicapi-variants-display.php:267
+msgid "Mapping Information"
+msgstr "اطلاعات محصول مرتبط"
+
+#: admin/partials/gicapi-variants-display.php:271
+msgid "Category SKU:"
+msgstr "شناسه دسته بندی:"
+
+#: admin/partials/gicapi-variants-display.php:272
+msgid "Product SKU:"
+msgstr "شناسه محصول:"
+
+#: admin/partials/gicapi-variants-display.php:273
+msgid "Variant SKU:"
+msgstr "شناسه واریانت:"
+
+#: admin/partials/gicapi-variants-display.php:274
+msgid "Variant Value:"
+msgstr "اعتبار واریانت:"
+
+#: admin/partials/gicapi-variants-display.php:276
+msgid ""
+"These mapping fields are automatically set based on the selected variant and "
+"cannot be changed."
+msgstr ""
+"فیلدهای مپینگ بر اساس واریانت انتخاب شده تنظیم شده اند و قابل تغییر نیستند."
+
+#: admin/partials/gicapi-variants-display.php:282
+msgid "Create Product"
+msgstr "ساخت محصول"
 
 #: admin/partials/settings/gicapi-settings-connection.php:15
 msgid "Base URL"
@@ -875,137 +980,161 @@ msgstr ""
 "تعداد محصولاتی که باید در هر دسته در طول همگام‌سازی cron job پردازش شوند. توصیه "
 "می‌شود: ۱۰ تا ۲۰ محصول در هر دسته."
 
-#: includes/class-gicapi-ajax.php:31 includes/class-gicapi-ajax.php:116
-#: includes/class-gicapi-ajax.php:179 includes/class-gicapi-ajax.php:246
-#: includes/class-gicapi-ajax.php:310 includes/class-gicapi-ajax.php:362
-#: includes/class-gicapi-ajax.php:413 includes/class-gicapi-cron.php:265
-#: includes/class-gicapi-cron.php:284 includes/class-gicapi-cron.php:303
-#: includes/class-gicapi-cron.php:460
+#: includes/class-gicapi-ajax.php:32 includes/class-gicapi-ajax.php:117
+#: includes/class-gicapi-ajax.php:180 includes/class-gicapi-ajax.php:247
+#: includes/class-gicapi-ajax.php:336 includes/class-gicapi-ajax.php:400
+#: includes/class-gicapi-ajax.php:452 includes/class-gicapi-ajax.php:503
+#: includes/class-gicapi-cron.php:265 includes/class-gicapi-cron.php:284
+#: includes/class-gicapi-cron.php:303 includes/class-gicapi-cron.php:460
 msgid "Permission denied"
 msgstr "دسترسی غیر مجاز"
 
-#: includes/class-gicapi-ajax.php:65
+#: includes/class-gicapi-ajax.php:66
 msgid "Simple Product"
 msgstr "محصول ساده"
 
-#: includes/class-gicapi-ajax.php:68
+#: includes/class-gicapi-ajax.php:69
 msgid "Variable Product"
 msgstr "محصول متغیر"
 
 #. translators: %s: parent product name
-#: includes/class-gicapi-ajax.php:74
+#: includes/class-gicapi-ajax.php:75
 #, php-format
 msgid "Variation of: %s"
 msgstr "متغیر محصول: %s"
 
-#: includes/class-gicapi-ajax.php:76
+#: includes/class-gicapi-ajax.php:77
 msgid "Product Variation"
 msgstr "متغیر محصول"
 
-#: includes/class-gicapi-ajax.php:80
+#: includes/class-gicapi-ajax.php:81
 msgid "Grouped Product"
 msgstr "محصولات دسته بندی شده"
 
-#: includes/class-gicapi-ajax.php:83
+#: includes/class-gicapi-ajax.php:84
 msgid "External Product"
 msgstr "محصول خارجی"
 
-#: includes/class-gicapi-ajax.php:86
+#: includes/class-gicapi-ajax.php:87
 #: includes/class-gicapi-gift-card-display.php:369
 #: includes/class-gicapi-gift-card-display.php:463
 msgid "Product"
 msgstr "محصول"
 
-#: includes/class-gicapi-ajax.php:125 includes/class-gicapi-ajax.php:188
-#: includes/class-gicapi-ajax.php:253 includes/class-gicapi-ajax.php:316
-#: includes/class-gicapi-ajax.php:368
+#: includes/class-gicapi-ajax.php:126 includes/class-gicapi-ajax.php:189
+#: includes/class-gicapi-ajax.php:264 includes/class-gicapi-ajax.php:343
+#: includes/class-gicapi-ajax.php:406 includes/class-gicapi-ajax.php:458
 msgid "Invalid parameters"
 msgstr "پارامترهای نامعتبر"
 
-#: includes/class-gicapi-ajax.php:154
+#: includes/class-gicapi-ajax.php:155
 msgid "This mapping already exists"
 msgstr "ارتباط محصولات از قبل وجود دارد"
 
-#: includes/class-gicapi-ajax.php:168
+#: includes/class-gicapi-ajax.php:169
 msgid "Error saving mapping"
 msgstr "خطا در ذخیره سازی ارتباط محصول"
 
-#: includes/class-gicapi-ajax.php:171
+#: includes/class-gicapi-ajax.php:172
 msgid "Mapping added successfully"
 msgstr "با موفقیت مپ  شد"
 
-#: includes/class-gicapi-ajax.php:221
+#: includes/class-gicapi-ajax.php:222
 msgid "Mapping not found"
 msgstr "ارتباط محصول یافت نشد"
 
-#: includes/class-gicapi-ajax.php:238
+#: includes/class-gicapi-ajax.php:239
 msgid "Mapping removed successfully"
 msgstr "ارتباط حذف شد"
 
-#: includes/class-gicapi-ajax.php:258 includes/class-gicapi-ajax.php:321
-#: includes/class-gicapi-ajax.php:373
+#: includes/class-gicapi-ajax.php:268
+msgid "Price cannot be negative"
+msgstr "قیمت نمیتواند منفی باشد"
+
+#: includes/class-gicapi-ajax.php:272
+msgid "Stock quantity cannot be negative"
+msgstr "موجودی نمیتواند منفی باشد"
+
+#: includes/class-gicapi-ajax.php:276
+msgid "Invalid product status"
+msgstr "وضعیت محصول نامعتبر"
+
+#: includes/class-gicapi-ajax.php:289
+msgid "A product with this SKU already exists"
+msgstr "یک محصول دیگر با این SKU وجود دارد"
+
+#: includes/class-gicapi-ajax.php:310
+msgid "Failed to create product"
+msgstr "خطا در ایجاد محصول"
+
+#: includes/class-gicapi-ajax.php:328
+msgid "Simple product created and mapped successfully"
+msgstr "محصول ساده ووکامرس با موفقیت ایجاد و مپ شد"
+
+#: includes/class-gicapi-ajax.php:348 includes/class-gicapi-ajax.php:411
+#: includes/class-gicapi-ajax.php:463
 msgid "Order not found"
 msgstr "سفارش یافت نشد"
 
-#: includes/class-gicapi-ajax.php:263
+#: includes/class-gicapi-ajax.php:353
 msgid "Order item not found"
 msgstr "آیتم سفارش یافت نشد"
 
-#: includes/class-gicapi-ajax.php:269 includes/class-gicapi-ajax.php:327
+#: includes/class-gicapi-ajax.php:359 includes/class-gicapi-ajax.php:417
 msgid "GICAPI Public class not available"
 msgstr "کلاس GICAPI Public در دسترس نیست"
 
-#: includes/class-gicapi-ajax.php:274 includes/class-gicapi-ajax.php:332
+#: includes/class-gicapi-ajax.php:364 includes/class-gicapi-ajax.php:422
 msgid "GICAPI API not available"
 msgstr "کلاس GICAPI API در دسترس نیست"
 
-#: includes/class-gicapi-ajax.php:280 includes/class-gicapi-ajax.php:338
-#: includes/class-gicapi-ajax.php:385
+#: includes/class-gicapi-ajax.php:370 includes/class-gicapi-ajax.php:428
+#: includes/class-gicapi-ajax.php:475
 msgid "Order processing is disabled"
 msgstr "پردازش سفارشات غیرفعال است"
 
-#: includes/class-gicapi-ajax.php:293
+#: includes/class-gicapi-ajax.php:383
 msgid "Failed to create order: "
 msgstr "خطا در ایجاد سفارش گیفتی کارت: "
 
-#: includes/class-gicapi-ajax.php:299 includes/class-gicapi-ajax.php:353
+#: includes/class-gicapi-ajax.php:389 includes/class-gicapi-ajax.php:443
 msgid "Failed to confirm order: "
 msgstr "خطا در تایید سفارش گیفتی کارت: "
 
-#: includes/class-gicapi-ajax.php:302
+#: includes/class-gicapi-ajax.php:392
 msgid "Order created successfully"
 msgstr "سفارش با موفقیت ایجاد شد"
 
-#: includes/class-gicapi-ajax.php:344 includes/class-gicapi-ajax.php:391
+#: includes/class-gicapi-ajax.php:434 includes/class-gicapi-ajax.php:481
 msgid "Order has not been processed yet"
 msgstr "سفارش هنوز ایجاد نشده است"
 
-#: includes/class-gicapi-ajax.php:351
+#: includes/class-gicapi-ajax.php:441
 msgid "Order confirmed successfully"
 msgstr "سفارش با موفقیت تایید شد"
 
-#: includes/class-gicapi-ajax.php:379
+#: includes/class-gicapi-ajax.php:469
 msgid "GICAPI Order class not available"
 msgstr "کلاس GICAPI Order در دسترس نیست"
 
-#: includes/class-gicapi-ajax.php:399
+#: includes/class-gicapi-ajax.php:489
 msgid "Order status updated successfully"
 msgstr "سفارش با موفقیت بروزرسانی شد"
 
-#: includes/class-gicapi-ajax.php:401
+#: includes/class-gicapi-ajax.php:491
 msgid "No updates were made to the order status"
 msgstr "تغییری در وضعیت سفارش انجام نشده است"
 
-#: includes/class-gicapi-ajax.php:404
+#: includes/class-gicapi-ajax.php:494
 msgid "Failed to update order status: "
 msgstr "خطا در بروزرسانی وضعیت سفارش گیفتی کارت: "
 
-#: includes/class-gicapi-ajax.php:419
+#: includes/class-gicapi-ajax.php:509
 msgid "GICAPI Product Sync class not available"
 msgstr "کلاس GICAPI Product در دسترس نیست"
 
 #. translators: 1: Total number of products, 2: Number of successful syncs, 3: Number of failed syncs
-#: includes/class-gicapi-ajax.php:429
+#: includes/class-gicapi-ajax.php:519
 #, php-format
 msgid ""
 "Product sync completed successfully. Total: %1$d, Successful: %2$d, Failed: "
@@ -1014,11 +1143,11 @@ msgstr ""
 "همگام‌سازی محصول با موفقیت انجام شد. مجموع: %1$d، موفق: %2$d، ناموفق: %3$d"
 
 #. translators: Error message when product sync fails with unknown error
-#: includes/class-gicapi-ajax.php:437
+#: includes/class-gicapi-ajax.php:527
 msgid "Unknown error occurred during sync"
-msgstr "در هنگام همگام سازی خطای ناشناخته رخ داد."
+msgstr "در هنگام همگام سازی خطای ناشناخته رخ داد"
 
-#: includes/class-gicapi-ajax.php:441
+#: includes/class-gicapi-ajax.php:531
 msgid "Failed to sync products: "
 msgstr "خطا همگام سازی محصولات: "
 
@@ -1375,9 +1504,6 @@ msgstr "https://gifticard.ir"
 
 #~ msgid "Error saving product mapping"
 #~ msgstr "خطا در ذخیره ارتباط محصول"
-
-#~ msgid "Error removing product mapping"
-#~ msgstr "حذف در حذف ارتباط محصول"
 
 #~ msgid "Data Management"
 #~ msgstr "مدیریت داده"

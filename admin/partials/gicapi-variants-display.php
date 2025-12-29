@@ -73,6 +73,7 @@ if (empty($variants)) {
                 <th scope="col" class="manage-column"><?php esc_html_e('Value', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Stock Status', 'gift-i-card'); ?></th>
                 <th scope="col" class="manage-column"><?php esc_html_e('Mapped WC Products', 'gift-i-card'); ?> <span class="mapped-count"></span></th>
+                <th scope="col" class="manage-column"><?php esc_html_e('Actions', 'gift-i-card'); ?></th>
             </tr>
         </thead>
         <tbody id="the-list">
@@ -157,10 +158,17 @@ if (empty($variants)) {
                                                             echo esc_html(sprintf(_n('%d product mapped', '%d products mapped', $mapped_count, 'gift-i-card'), $mapped_count));
                                                             ?>
                                 </span>
-                                <button type="button" class="button gicapi-add-mapping" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>">
-                                    <?php esc_html_e('Add Mapping', 'gift-i-card'); ?>
-                                </button>
                             </div>
+                        </div>
+                    </td>
+                    <td class="column-actions">
+                        <div class="gicapi-actions">
+                            <button type="button" class="button gicapi-add-mapping" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>">
+                                <?php esc_html_e('Add Mapping', 'gift-i-card'); ?>
+                            </button>
+                            <button type="button" class="button gicapi-create-simple-product" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-variant-name="<?php echo esc_attr($variant_name); ?>" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>" data-price="<?php echo esc_attr($variant_price); ?>" data-value="<?php echo esc_attr($variant_value); ?>">
+                                <?php esc_html_e('Create Simple Product', 'gift-i-card'); ?>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -187,6 +195,83 @@ if (empty($variants)) {
         <div class="gicapi-modal-footer">
             <button id="save-mapping" class="button button-primary"><?php esc_html_e('Add Mapping', 'gift-i-card'); ?></button>
             <button id="close-modal" class="button button-secondary"><?php esc_html_e('Cancel', 'gift-i-card'); ?></button>
+            <span class="spinner"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for creating simple product -->
+<div id="gicapi-create-product-modal" class="gicapi-modal" style="display:none;">
+    <div class="gicapi-modal-content">
+        <div class="gicapi-modal-header">
+            <h2><?php esc_html_e('Create Simple Product from Gift-i-Card Variant', 'gift-i-card'); ?></h2>
+            <span class="gicapi-create-product-modal-close">&times;</span>
+        </div>
+        <div class="gicapi-modal-body">
+            <!-- Hidden fields for mapping data -->
+            <input type="hidden" id="create-product-variant-sku">
+            <input type="hidden" id="create-product-category-sku">
+            <input type="hidden" id="create-product-product-sku">
+            <input type="hidden" id="create-product-variant-value">
+
+            <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <label for="create-product-name"><?php esc_html_e('Product Name', 'gift-i-card'); ?> <span class="required">*</span></label>
+                    </th>
+                    <td>
+                        <input type="text" id="create-product-name" class="regular-text" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="create-product-sku"><?php esc_html_e('SKU', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="create-product-sku" class="regular-text" placeholder="<?php esc_attr_e('e.g., MY-SKU-001', 'gift-i-card'); ?>">
+                        <p class="description"><?php esc_html_e('Optional unique identifier for the product.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="create-product-price"><?php esc_html_e('Regular Price', 'gift-i-card'); ?> <span class="required">*</span></label>
+                    </th>
+                    <td>
+                        <input type="number" id="create-product-price" class="regular-text" step="0.01" min="0" required>
+                        <p class="description"><?php esc_html_e('Price of the product.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="create-product-status"><?php esc_html_e('Product Status', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select id="create-product-status" class="regular-text">
+                            <option value="publish"><?php esc_html_e('Published', 'gift-i-card'); ?></option>
+                            <option value="draft"><?php esc_html_e('Draft', 'gift-i-card'); ?></option>
+                        </select>
+                        <p class="description"><?php esc_html_e('Choose whether to publish the product immediately or save as draft.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label><?php esc_html_e('Mapping Information', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <div class="mapping-info">
+                            <p><strong><?php esc_html_e('Category SKU:', 'gift-i-card'); ?></strong> <span id="mapping-category-sku"></span></p>
+                            <p><strong><?php esc_html_e('Product SKU:', 'gift-i-card'); ?></strong> <span id="mapping-product-sku"></span></p>
+                            <p><strong><?php esc_html_e('Variant SKU:', 'gift-i-card'); ?></strong> <span id="mapping-variant-sku"></span></p>
+                            <p><strong><?php esc_html_e('Variant Value:', 'gift-i-card'); ?></strong> <span id="mapping-variant-value"></span></p>
+                        </div>
+                        <p class="description"><?php esc_html_e('These mapping fields are automatically set based on the selected variant and cannot be changed.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="gicapi-modal-footer">
+            <button id="create-simple-product" class="button button-primary"><?php esc_html_e('Create Product', 'gift-i-card'); ?></button>
+            <button id="close-create-product-modal" class="button button-secondary"><?php esc_html_e('Cancel', 'gift-i-card'); ?></button>
             <span class="spinner"></span>
         </div>
     </div>

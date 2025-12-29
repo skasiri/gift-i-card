@@ -431,3 +431,80 @@
 .gicapi-cron-info li {
     margin-bottom: 8px;
 }
+
+/* Actions Column Styles */
+.column-actions {
+    width: 200px;
+    text-align: center;
+}
+
+.gicapi-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: stretch;
+}
+
+.gicapi-actions .button {
+    margin: 0;
+    white-space: normal;
+    text-align: center;
+    min-height: 28px;
+    line-height: 1.2;
+}
+
+/* Create Product Modal Styles */
+.gicapi-create-product-modal-close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.gicapi-create-product-modal-close:hover {
+    color: black;
+}
+
+.mapping-info {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.mapping-info p {
+    margin: 5px 0;
+    font-size: 13px;
+}
+
+.required {
+    color: #dc3232;
+}
+
+.form-table th {
+    width: 150px;
+    padding: 15px 10px 15px 0;
+    vertical-align: top;
+}
+
+.form-table td {
+    padding: 15px 10px 15px 0;
+}
+
+.form-table input[type="text"],
+.form-table input[type="number"],
+.form-table select {
+    width: 100%;
+    max-width: 300px;
+}
+
+.form-table .description {
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+    font-size: 12px;
+}

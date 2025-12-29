@@ -17,6 +17,8 @@ class GICAPI_Ajax
         add_action('wp_ajax_gicapi_search_products', array($this, 'search_products'));
         add_action('wp_ajax_gicapi_add_mapping', array($this, 'add_mapping'));
         add_action('wp_ajax_gicapi_remove_mapping', array($this, 'remove_mapping'));
+        add_action('wp_ajax_gicapi_create_simple_product', array($this, 'create_simple_product'));
+        add_action('wp_ajax_gicapi_check_sku_uniqueness', array($this, 'check_sku_uniqueness'));
         add_action('wp_ajax_gicapi_create_order_manually', array($this, 'create_order_manually'));
         add_action('wp_ajax_gicapi_confirm_order_manually', array($this, 'confirm_order_manually'));
         add_action('wp_ajax_gicapi_update_status_manually', array($this, 'update_status_manually'));
@@ -236,6 +238,122 @@ class GICAPI_Ajax
         }
 
         wp_send_json_success(__('Mapping removed successfully', 'gift-i-card'));
+    }
+
+    public function create_simple_product()
+    {
+        check_ajax_referer('gicapi_create_simple_product', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $variant_sku = isset($_POST['variant_sku']) ? sanitize_text_field(wp_unslash($_POST['variant_sku'])) : '';
+        $variant_name = isset($_POST['variant_name']) ? sanitize_text_field(wp_unslash($_POST['variant_name'])) : '';
+        $category_sku = isset($_POST['category_sku']) ? sanitize_text_field(wp_unslash($_POST['category_sku'])) : '';
+        $product_sku = isset($_POST['product_sku']) ? sanitize_text_field(wp_unslash($_POST['product_sku'])) : '';
+        $variant_value = isset($_POST['variant_value']) ? sanitize_text_field(wp_unslash($_POST['variant_value'])) : '';
+
+        // New form fields
+        $product_name = isset($_POST['product_name']) ? sanitize_text_field(wp_unslash($_POST['product_name'])) : '';
+        $product_sku_field = isset($_POST['product_sku_field']) ? sanitize_text_field(wp_unslash($_POST['product_sku_field'])) : '';
+        $price = isset($_POST['price']) ? floatval(wp_unslash($_POST['price'])) : 0;
+        $product_status = isset($_POST['product_status']) ? sanitize_text_field(wp_unslash($_POST['product_status'])) : 'publish';
+
+        if (empty($variant_sku) || empty($product_name) || empty($category_sku) || empty($product_sku)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        if ($price < 0) {
+            wp_send_json_error(__('Price cannot be negative', 'gift-i-card'));
+        }
+
+        if (!in_array($product_status, array('publish', 'draft'))) {
+            wp_send_json_error(__('Invalid product status', 'gift-i-card'));
+        }
+
+        // Check if product with this SKU already exists (only if SKU is provided)
+        if (!empty($product_sku_field)) {
+            $existing_product = get_posts(array(
+                'post_type' => 'product',
+                'post_status' => 'any',
+                'meta_key' => '_sku',
+                'meta_value' => $product_sku_field,
+                'posts_per_page' => 1
+            ));
+
+            if (!empty($existing_product)) {
+                wp_send_json_error(__('A product with this SKU already exists', 'gift-i-card'));
+            }
+        }
+
+        // Create new WooCommerce product
+        $product = new WC_Product_Simple();
+
+        // Set product data
+        $product->set_name($product_name);
+        if (!empty($product_sku_field)) {
+            $product->set_sku($product_sku_field);
+        }
+        $product->set_regular_price($price);
+        $product->set_price($price);
+        $product->set_virtual(true); // Make product virtual
+        $product->set_catalog_visibility('visible');
+        $product->set_status($product_status);
+
+        // Save the product
+        $product_id = $product->save();
+
+        if (!$product_id) {
+            wp_send_json_error(__('Failed to create product', 'gift-i-card'));
+        }
+
+        // Add mapping metadata to the new product
+        $mapped_category_skus = array($category_sku);
+        $mapped_product_skus = array($product_sku);
+        $mapped_variant_skus = array($variant_sku);
+
+        update_post_meta($product_id, '_gicapi_mapped_category_skus', $mapped_category_skus);
+        update_post_meta($product_id, '_gicapi_mapped_product_skus', $mapped_product_skus);
+        update_post_meta($product_id, '_gicapi_mapped_variant_skus', $mapped_variant_skus);
+
+        // Add additional metadata for gift card products
+        update_post_meta($product_id, '_gicapi_variant_value', $variant_value);
+        update_post_meta($product_id, '_gicapi_variant_sku', $variant_sku);
+        update_post_meta($product_id, '_gicapi_category_sku', $category_sku);
+        update_post_meta($product_id, '_gicapi_product_sku', $product_sku);
+
+        wp_send_json_success(__('Simple product created and mapped successfully', 'gift-i-card'));
+    }
+
+    public function check_sku_uniqueness()
+    {
+        check_ajax_referer('gicapi_check_sku_uniqueness', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $sku = isset($_POST['sku']) ? sanitize_text_field(wp_unslash($_POST['sku'])) : '';
+
+        if (empty($sku)) {
+            wp_send_json_error(__('SKU is required', 'gift-i-card'));
+        }
+
+        // Check if product with this SKU already exists
+        $existing_product = get_posts(array(
+            'post_type' => 'product',
+            'post_status' => 'any',
+            'meta_key' => '_sku',
+            'meta_value' => $sku,
+            'posts_per_page' => 1
+        ));
+
+        if (!empty($existing_product)) {
+            wp_send_json_error(__('A product with this SKU already exists', 'gift-i-card'));
+        }
+
+        wp_send_json_success(__('SKU is available', 'gift-i-card'));
     }
 
     public function create_order_manually()

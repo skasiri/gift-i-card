@@ -175,6 +175,129 @@ jQuery(document).ready(function ($) {
         });
     });
 
+    // Open create simple product modal
+    $('.gicapi-create-simple-product').on('click', function () {
+        var $button = $(this);
+        var variantSku = $button.data('variant-sku');
+        var variantName = $button.data('variant-name');
+        var categorySku = $button.data('category-sku');
+        var productSku = $button.data('product-sku');
+        var price = $button.data('price');
+        var value = $button.data('value');
+
+        // Populate modal fields
+        $('#create-product-variant-sku').val(variantSku);
+        $('#create-product-category-sku').val(categorySku);
+        $('#create-product-product-sku').val(productSku);
+        $('#create-product-variant-value').val(value);
+
+        $('#create-product-name').val(variantName);
+        $('#create-product-sku').val('');
+        $('#create-product-price').val(price);
+        $('#create-product-status').val('publish');
+
+        // Update mapping info display
+        $('#mapping-category-sku').text(categorySku);
+        $('#mapping-product-sku').text(productSku);
+        $('#mapping-variant-sku').text(variantSku);
+        $('#mapping-variant-value').text(value);
+
+        $('#gicapi-create-product-modal').show();
+    });
+
+    // Close create product modal
+    $('.gicapi-create-product-modal-close, #close-create-product-modal').on('click', function () {
+        $('#gicapi-create-product-modal').hide();
+    });
+
+    // Create simple product from modal
+    $('#create-simple-product').on('click', function () {
+        var $button = $(this);
+        var productName = $('#create-product-name').val().trim();
+        var productSku = $('#create-product-sku').val().trim();
+        var price = $('#create-product-price').val();
+        var status = $('#create-product-status').val();
+
+        var variantSku = $('#create-product-variant-sku').val();
+        var categorySku = $('#create-product-category-sku').val();
+        var productSkuApi = $('#create-product-product-sku').val();
+        var variantValue = $('#create-product-variant-value').val();
+
+        // Validation
+        if (!productName) {
+            alert(gicapi_admin_params.text_product_name_required || 'Product name is required');
+            $('#create-product-name').focus();
+            return;
+        }
+
+        if (productSku && productSku.length > 0) {
+            // If SKU is provided, check for uniqueness via AJAX
+            var skuValid = false;
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                async: false,
+                data: {
+                    action: 'gicapi_check_sku_uniqueness',
+                    nonce: gicapi_admin_params.check_sku_uniqueness_nonce,
+                    sku: productSku
+                },
+                success: function (response) {
+                    if (!response.success) {
+                        alert(response.data || 'SKU already exists');
+                        $('#create-product-sku').focus();
+                        skuValid = false;
+                    } else {
+                        skuValid = true;
+                    }
+                },
+                error: function () {
+                    alert('Error checking SKU uniqueness');
+                    skuValid = false;
+                }
+            });
+
+            if (!skuValid) {
+                return;
+            }
+        }
+
+        if (!price || price < 0) {
+            alert(gicapi_admin_params.text_product_price_required || 'Valid product price is required');
+            $('#create-product-price').focus();
+            return;
+        }
+
+        $button.prop('disabled', true);
+        $('.spinner').show();
+
+        $.post(ajaxurl, {
+            action: 'gicapi_create_simple_product',
+            nonce: gicapi_admin_params.create_simple_product_nonce,
+            variant_sku: variantSku,
+            variant_name: productName,
+            category_sku: categorySku,
+            product_sku: productSkuApi,
+            variant_value: variantValue,
+            product_name: productName,
+            product_sku_field: productSku,
+            price: price,
+            product_status: status
+        }, function (response) {
+            if (response.success) {
+                $('#gicapi-create-product-modal').hide();
+                location.reload();
+            } else {
+                alert(response.data || (gicapi_admin_params.text_error_creating_product || 'Error creating simple product'));
+            }
+        }).fail(function () {
+            alert(gicapi_admin_params.text_error_creating_product || 'Error creating simple product');
+        }).always(function () {
+            $button.prop('disabled', false);
+            $('.spinner').hide();
+        });
+    });
+
     // Remove mapping
     $('.gicapi-remove-mapping').on('click', function () {
         if (!confirm(gicapi_admin_params.text_confirm_remove || 'Are you sure you want to remove this mapping?')) {
