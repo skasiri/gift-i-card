@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 8.0
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,10 +27,12 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 - **Product Status Synchronization:**
   - Automatically synchronize Gift-i-Card product availability status with WooCommerce stock status.
   - Configurable status mapping for different Gift-i-Card delivery types (Instant, Manual, Out of Stock, Deleted/Not Available).
+  - Batch processing system for efficient handling of large product catalogs (configurable batch size).
   - Scheduled synchronization via WordPress cron jobs (recommended: 2-3 times daily).
   - Manual synchronization option for immediate updates.
-  - Real-time status display showing next execution time and current sync status.
+  - Real-time status display showing next execution time, current sync status, and batch progress.
   - Automatic stock status updates based on Gift-i-Card inventory changes.
+  - Progress tracking with visual progress bar for batch processing status.
 - **Automatic Gift Card Order Placement:**
   - When a customer places an order containing mapped products, the plugin automatically sends a purchase request to the Gift-i-Card API for each mapped item.
   - The plugin handles the API response, stores the Gift-i-Card order details (including codes) in the WooCommerce order meta, and adds order notes for tracking.
@@ -65,6 +67,15 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.2.3 =
+* Added batch processing system for product synchronization to handle large product catalogs efficiently
+* Configurable batch size setting for product sync (default: 10 products per batch)
+* Progress tracking system for batch processing with visual progress bar in admin
+* Improved performance for stores with many products by processing in smaller chunks
+* Enhanced cron job reliability with resumable batch processing
+* Added batch processing status display in cron settings panel
+* Optimized API calls by grouping products in batches instead of processing all at once
+
 = 1.2.2 =
 * Fixed issue with order not being processed when manually created by admin
 
@@ -92,6 +103,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Enhanced user experience with better language support
 
 == Upgrade Notice ==
+= 1.2.3 =
+This version introduces batch processing for product synchronization, significantly improving performance for stores with large product catalogs. The system now processes products in configurable batches, preventing timeouts and memory issues. Upgrade recommended for stores with 50+ products.
+
 = 1.2.2 =
 This version fixes an important issue where orders manually created by administrators were not being processed correctly, ensuring proper order handling for all order creation methods.
 
