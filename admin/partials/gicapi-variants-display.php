@@ -34,14 +34,51 @@ if (!is_wp_error($categories)) {
 $products_page_url = add_query_arg(array('page' => $plugin_name . '-products', 'category' => $category_sku));
 $categories_page_url = admin_url('admin.php?page=' . $plugin_name . '-products');
 
-// Get variants from API
+// Get variants from API first (needed for fallback)
 $variants = $api->get_variants($product_sku);
 
+// Get product name from API products list
 $product_name = __('Unknown Product', 'gift-i-card');
+$found_product = false;
+$unknown_product_text = __('Unknown Product', 'gift-i-card');
 
-if ($variants[0]) {
-    $value = $variants[0]['value'];
-    $product_name = str_replace($value . ' - ', '', $variants[0]['name']);
+// Try to find product in first few pages
+for ($page = 1; $page <= 5 && !$found_product; $page++) {
+    $products_response = $api->get_products($category_sku, $page, 20); // Get 20 products per page
+    if ($products_response && isset($products_response['products']) && is_array($products_response['products'])) {
+        foreach ($products_response['products'] as $product) {
+            if (isset($product['sku']) && $product['sku'] === $product_sku) {
+                $product_name = isset($product['name']) ? $product['name'] : $unknown_product_text;
+                $found_product = true;
+                break;
+            }
+        }
+        // If no more products, stop searching
+        if (empty($products_response['products'])) {
+            break;
+        }
+    } else {
+        // If API returns error, stop searching
+        break;
+    }
+}
+
+// Fallback: Extract product name from first variant if not found in products list
+if (!$found_product && !empty($variants) && isset($variants[0])) {
+    $value = isset($variants[0]['value']) ? $variants[0]['value'] : '';
+    $variant_name = isset($variants[0]['name']) ? $variants[0]['name'] : '';
+    if ($value && $variant_name) {
+        // Try to extract product name by removing value from variant name
+        $product_name = str_replace($value . ' - ', '', $variant_name);
+        // If replacement didn't work, try other patterns
+        if ($product_name === $variant_name) {
+            $product_name = str_replace(' - ' . $value, '', $variant_name);
+        }
+        if ($product_name === $variant_name) {
+            $product_name = str_replace($value, '', $variant_name);
+            $product_name = trim(str_replace(' -', '', $product_name));
+        }
+    }
 }
 
 if (!$variants) {
@@ -63,6 +100,12 @@ if (empty($variants)) {
         <a href="<?php echo esc_url($products_page_url); ?>"><?php echo esc_html($category_name); ?></a> &raquo;
         <?php echo esc_html($product_name); ?> - <?php esc_html_e('Variants', 'gift-i-card'); ?>
     </h1>
+
+    <div class="gicapi-page-actions">
+        <button type="button" class="button button-primary gicapi-create-variable-product" data-category-sku="<?php echo esc_attr($category_sku); ?>" data-product-sku="<?php echo esc_attr($product_sku); ?>" data-product-name="<?php echo esc_attr($product_name); ?>">
+            <?php esc_html_e('Create Variable Product', 'gift-i-card'); ?>
+        </button>
+    </div>
 
     <table class="wp-list-table widefat fixed striped table-view-list posts">
         <thead>
@@ -272,6 +315,81 @@ if (empty($variants)) {
         <div class="gicapi-modal-footer">
             <button id="create-simple-product" class="button button-primary"><?php esc_html_e('Create Product', 'gift-i-card'); ?></button>
             <button id="close-create-product-modal" class="button button-secondary"><?php esc_html_e('Cancel', 'gift-i-card'); ?></button>
+            <span class="spinner"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for creating variable product -->
+<div id="gicapi-create-variable-product-modal" class="gicapi-modal" style="display:none;">
+    <div class="gicapi-modal-content" style="max-width: 900px;">
+        <div class="gicapi-modal-header">
+            <h2><?php esc_html_e('Create Variable Product from Gift-i-Card Variants', 'gift-i-card'); ?></h2>
+            <span class="gicapi-create-variable-product-modal-close">&times;</span>
+        </div>
+        <div class="gicapi-modal-body">
+            <!-- Hidden fields for mapping data -->
+            <input type="hidden" id="create-variable-product-category-sku">
+            <input type="hidden" id="create-variable-product-product-sku">
+
+            <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <label for="create-variable-product-name"><?php esc_html_e('Product Name', 'gift-i-card'); ?> <span class="required">*</span></label>
+                    </th>
+                    <td>
+                        <input type="text" id="create-variable-product-name" class="regular-text" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="create-variable-product-sku"><?php esc_html_e('Product SKU', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="create-variable-product-sku" class="regular-text" placeholder="<?php esc_attr_e('e.g., MY-VARIABLE-PRODUCT', 'gift-i-card'); ?>">
+                        <p class="description"><?php esc_html_e('Optional unique identifier for the variable product.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="create-variable-product-status"><?php esc_html_e('Product Status', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <select id="create-variable-product-status" class="regular-text">
+                            <option value="draft"><?php esc_html_e('Draft', 'gift-i-card'); ?></option>
+                            <option value="publish"><?php esc_html_e('Published', 'gift-i-card'); ?></option>
+                        </select>
+                        <p class="description"><?php esc_html_e('Choose whether to publish the variable product immediately or save as draft.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label><?php esc_html_e('Select Variants', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <div id="variants-selection-container">
+                            <p><?php esc_html_e('Loading variants...', 'gift-i-card'); ?></p>
+                        </div>
+                        <p class="description"><?php esc_html_e('Select which variants to include in the variable product. You can edit details for each selected variant.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label><?php esc_html_e('Mapping Information', 'gift-i-card'); ?></label>
+                    </th>
+                    <td>
+                        <div class="mapping-info">
+                            <p><strong><?php esc_html_e('Category SKU:', 'gift-i-card'); ?></strong> <span id="variable-mapping-category-sku"></span></p>
+                            <p><strong><?php esc_html_e('Product SKU:', 'gift-i-card'); ?></strong> <span id="variable-mapping-product-sku"></span></p>
+                        </div>
+                        <p class="description"><?php esc_html_e('These mapping fields are automatically set and cannot be changed.', 'gift-i-card'); ?></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="gicapi-modal-footer">
+            <button id="create-variable-product-confirm" class="button button-primary"><?php esc_html_e('Create Variable Product', 'gift-i-card'); ?></button>
+            <button id="close-create-variable-product-modal" class="button button-secondary"><?php esc_html_e('Cancel', 'gift-i-card'); ?></button>
             <span class="spinner"></span>
         </div>
     </div>

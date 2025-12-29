@@ -130,12 +130,16 @@ jQuery(document).ready(function ($) {
         $('#modal-variant-id').val(variantSku);
         $('#gicapi-mapping-modal').data('category-sku', categorySku).data('product-sku', productSku).show();
         $('.wc-product-search').val(null).trigger('change');
+        // Prevent body scroll when modal is open
+        $('body').css('overflow', 'hidden');
     });
 
     // Close modal
     $('.gicapi-modal-close, #close-modal').on('click', function () {
         $('#gicapi-mapping-modal').hide();
         $('.wc-product-search').val(null).trigger('change');
+        // Restore body scroll when modal is closed
+        $('body').css('overflow', '');
     });
 
     // Save mapping
@@ -203,11 +207,15 @@ jQuery(document).ready(function ($) {
         $('#mapping-variant-value').text(value);
 
         $('#gicapi-create-product-modal').show();
+        // Prevent body scroll when modal is open
+        $('body').css('overflow', 'hidden');
     });
 
     // Close create product modal
     $('.gicapi-create-product-modal-close, #close-create-product-modal').on('click', function () {
         $('#gicapi-create-product-modal').hide();
+        // Restore body scroll when modal is closed
+        $('body').css('overflow', '');
     });
 
     // Create simple product from modal
@@ -297,6 +305,252 @@ jQuery(document).ready(function ($) {
             $('.spinner').hide();
         });
     });
+
+    // Open create variable product modal
+    $('.gicapi-create-variable-product').on('click', function () {
+        var $button = $(this);
+        var categorySku = $button.data('category-sku');
+        var productSku = $button.data('product-sku');
+        var productName = $button.data('product-name');
+
+        // Populate modal fields
+        $('#create-variable-product-category-sku').val(categorySku);
+        $('#create-variable-product-product-sku').val(productSku);
+        $('#create-variable-product-name').val(productName);
+        $('#create-variable-product-sku').val('');
+        $('#create-variable-product-status').val('draft');
+
+        // Update mapping info display
+        $('#variable-mapping-category-sku').text(categorySku);
+        $('#variable-mapping-product-sku').text(productSku);
+
+        // Store product name in a data attribute for use in variant loading
+        $('#create-variable-product-modal').data('product-name', productName);
+
+        // Load variants
+        loadVariantsForVariableProduct(categorySku, productSku);
+
+        $('#gicapi-create-variable-product-modal').show();
+        // Prevent body scroll when modal is open
+        $('body').css('overflow', 'hidden');
+    });
+
+    // Close create variable product modal
+    $('.gicapi-create-variable-product-modal-close, #close-create-variable-product-modal').on('click', function () {
+        $('#gicapi-create-variable-product-modal').hide();
+        // Restore body scroll when modal is closed
+        $('body').css('overflow', '');
+    });
+
+    // Create variable product from modal
+    $('#create-variable-product-confirm').on('click', function () {
+        var $button = $(this);
+        var productName = $('#create-variable-product-name').val().trim();
+        var productSku = $('#create-variable-product-sku').val().trim();
+        var status = $('#create-variable-product-status').val();
+
+        var categorySku = $('#create-variable-product-category-sku').val();
+        var productSkuApi = $('#create-variable-product-product-sku').val();
+
+        // Get selected variants with their edited details
+        var selectedVariants = [];
+        $('.variant-checkbox:checked').each(function () {
+            var variantSku = $(this).val();
+            var safeId = variantSku.replace(/[^a-zA-Z0-9]/g, '_');
+            var variantData = {
+                sku: variantSku,
+                name: $('#variant-name-' + safeId).val().trim(),
+                price: $('#variant-price-' + safeId).val(),
+                value: $('#variant-value-' + safeId).val().trim(),
+                variation_sku: $('#variant-variation-sku-' + safeId).val().trim()
+            };
+            selectedVariants.push(variantData);
+        });
+
+        // Validation
+        if (!productName) {
+            alert(gicapi_admin_params.text_product_name_required || 'Product name is required');
+            $('#create-variable-product-name').focus();
+            return;
+        }
+
+        if (selectedVariants.length === 0) {
+            alert(gicapi_admin_params.text_at_least_one_variant || 'At least one variant must be selected');
+            return;
+        }
+
+        // Validate variant details
+        var hasError = false;
+        selectedVariants.forEach(function (variant) {
+            if (!variant.name) {
+                alert(gicapi_admin_params.text_variant_name_required || 'Variant name is required for all selected variants');
+                hasError = true;
+                return false;
+            }
+            if (!variant.price || variant.price < 0) {
+                alert(gicapi_admin_params.text_variant_price_required || 'Valid variant price is required for all selected variants');
+                hasError = true;
+                return false;
+            }
+        });
+
+        if (hasError) {
+            return;
+        }
+
+        // Check SKU uniqueness if provided
+        if (productSku && productSku.length > 0) {
+            var skuValid = false;
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                async: false,
+                data: {
+                    action: 'gicapi_check_sku_uniqueness',
+                    nonce: gicapi_admin_params.check_sku_uniqueness_nonce,
+                    sku: productSku
+                },
+                success: function (response) {
+                    if (!response.success) {
+                        alert(response.data || 'Product SKU already exists');
+                        $('#create-variable-product-sku').focus();
+                        skuValid = false;
+                    } else {
+                        skuValid = true;
+                    }
+                },
+                error: function () {
+                    alert('Error checking product SKU uniqueness');
+                    skuValid = false;
+                }
+            });
+
+            if (!skuValid) {
+                return;
+            }
+        }
+
+        $button.prop('disabled', true);
+        $('.spinner').show();
+
+        $.post(ajaxurl, {
+            action: 'gicapi_create_variable_product',
+            nonce: gicapi_admin_params.create_variable_product_nonce,
+            category_sku: categorySku,
+            product_sku: productSkuApi,
+            product_name: productName,
+            product_sku_field: productSku,
+            product_status: status,
+            selected_variants: JSON.stringify(selectedVariants)
+        }, function (response) {
+            if (response.success) {
+                $('#gicapi-create-variable-product-modal').hide();
+                location.reload();
+            } else {
+                alert(response.data || (gicapi_admin_params.text_error_creating_variable_product || 'Error creating variable product'));
+            }
+        }).fail(function () {
+            alert(gicapi_admin_params.text_error_creating_variable_product || 'Error creating variable product');
+        }).always(function () {
+            $button.prop('disabled', false);
+            $('.spinner').hide();
+        });
+    });
+
+    // Function to load variants for variable product modal
+    function loadVariantsForVariableProduct(categorySku, productSku) {
+        $('#variants-selection-container').html('<p>' + (gicapi_admin_params.text_loading_variants || 'Loading variants...') + '</p>');
+
+        // Get product name from modal data attribute
+        var productName = $('#create-variable-product-modal').data('product-name') || '';
+
+        $.post(ajaxurl, {
+            action: 'gicapi_get_variants_for_variable_product',
+            nonce: gicapi_admin_params.get_variants_for_variable_product_nonce,
+            category_sku: categorySku,
+            product_sku: productSku
+        }, function (response) {
+            if (response.success && response.data.variants) {
+                var html = '<div class="variants-list">';
+                html += '<div class="variant-header">';
+                html += '<label><input type="checkbox" id="select-all-variants" checked> ' + (gicapi_admin_params.text_select_all || 'Select All') + '</label>';
+                html += '</div>';
+
+                response.data.variants.forEach(function (variant) {
+                    var safeId = variant.sku.replace(/[^a-zA-Z0-9]/g, '_');
+
+                    // Remove product name from variant name
+                    var variantName = variant.name || '';
+                    if (productName && variantName) {
+                        // Escape special regex characters in product name
+                        var escapedProductName = productName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        // Try to remove product name with various separators
+                        var patterns = [
+                            new RegExp('^' + escapedProductName + '\\s*-\\s*', 'i'),  // "Product - "
+                            new RegExp('^' + escapedProductName + '\\s+', 'i'),        // "Product "
+                            new RegExp('^' + escapedProductName + '$', 'i')            // "Product" (exact match)
+                        ];
+
+                        var found = false;
+                        for (var i = 0; i < patterns.length; i++) {
+                            if (patterns[i].test(variantName)) {
+                                variantName = variantName.replace(patterns[i], '').trim();
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        // If nothing left or pattern didn't match, use original name
+                        if (!variantName || !found) {
+                            variantName = variant.name;
+                        }
+                    }
+
+                    html += '<div class="variant-item">';
+                    html += '<div class="variant-checkbox">';
+                    html += '<label><input type="checkbox" class="variant-checkbox" value="' + variant.sku + '" checked> ' + variant.name + '</label>';
+                    html += '</div>';
+                    html += '<div class="variant-details">';
+                    html += '<div class="variant-field">';
+                    html += '<label>' + (gicapi_admin_params.text_variant_name || 'Name:') + '</label>';
+                    html += '<input type="text" id="variant-name-' + safeId + '" value="' + variantName + '" class="regular-text">';
+                    html += '</div>';
+                    html += '<div class="variant-field">';
+                    html += '<label>' + (gicapi_admin_params.text_variant_price || 'Price:') + '</label>';
+                    html += '<input type="number" id="variant-price-' + safeId + '" value="' + (variant.price || '') + '" step="0.01" min="0" class="regular-text">';
+                    html += '</div>';
+                    html += '<div class="variant-field">';
+                    html += '<label>' + (gicapi_admin_params.text_variant_value || 'Value:') + '</label>';
+                    html += '<input type="text" id="variant-value-' + safeId + '" value="' + (variant.value || '') + '" class="regular-text">';
+                    html += '</div>';
+                    html += '<div class="variant-field">';
+                    html += '<label>' + (gicapi_admin_params.text_variation_sku || 'Variation SKU:') + '</label>';
+                    html += '<input type="text" id="variant-variation-sku-' + safeId + '" value="' + variant.sku + '_var" placeholder="' + (gicapi_admin_params.text_placeholder_variation_sku || 'e.g., VAR-001') + '" class="regular-text">';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+
+                html += '</div>';
+                $('#variants-selection-container').html(html);
+
+                // Handle select all checkbox
+                $('#select-all-variants').on('change', function () {
+                    $('.variant-checkbox').prop('checked', $(this).is(':checked'));
+                });
+
+                // Handle individual checkboxes
+                $('.variant-checkbox').on('change', function () {
+                    var allChecked = $('.variant-checkbox:checked').length === $('.variant-checkbox').length;
+                    $('#select-all-variants').prop('checked', allChecked);
+                });
+            } else {
+                $('#variants-selection-container').html('<p>' + (gicapi_admin_params.text_error_loading_variants || 'Error loading variants.') + '</p>');
+            }
+        }).fail(function () {
+            $('#variants-selection-container').html('<p>' + (gicapi_admin_params.text_error_loading_variants || 'Error loading variants.') + '</p>');
+        });
+    }
 
     // Remove mapping
     $('.gicapi-remove-mapping').on('click', function () {

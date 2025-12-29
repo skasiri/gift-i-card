@@ -18,6 +18,8 @@ class GICAPI_Ajax
         add_action('wp_ajax_gicapi_add_mapping', array($this, 'add_mapping'));
         add_action('wp_ajax_gicapi_remove_mapping', array($this, 'remove_mapping'));
         add_action('wp_ajax_gicapi_create_simple_product', array($this, 'create_simple_product'));
+        add_action('wp_ajax_gicapi_create_variable_product', array($this, 'create_variable_product'));
+        add_action('wp_ajax_gicapi_get_variants_for_variable_product', array($this, 'get_variants_for_variable_product'));
         add_action('wp_ajax_gicapi_check_sku_uniqueness', array($this, 'check_sku_uniqueness'));
         add_action('wp_ajax_gicapi_create_order_manually', array($this, 'create_order_manually'));
         add_action('wp_ajax_gicapi_confirm_order_manually', array($this, 'confirm_order_manually'));
@@ -354,6 +356,260 @@ class GICAPI_Ajax
         }
 
         wp_send_json_success(__('SKU is available', 'gift-i-card'));
+    }
+
+    public function create_variable_product()
+    {
+        check_ajax_referer('gicapi_create_variable_product', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $category_sku = isset($_POST['category_sku']) ? sanitize_text_field(wp_unslash($_POST['category_sku'])) : '';
+        $product_sku = isset($_POST['product_sku']) ? sanitize_text_field(wp_unslash($_POST['product_sku'])) : '';
+        $product_name = isset($_POST['product_name']) ? sanitize_text_field(wp_unslash($_POST['product_name'])) : '';
+        $product_sku_field = isset($_POST['product_sku_field']) ? sanitize_text_field(wp_unslash($_POST['product_sku_field'])) : '';
+        $product_status = isset($_POST['product_status']) ? sanitize_text_field(wp_unslash($_POST['product_status'])) : 'draft';
+
+        // Handle selected_variants - it might be JSON string or array
+        $selected_variants_raw = isset($_POST['selected_variants']) ? wp_unslash($_POST['selected_variants']) : array();
+        $selected_variants = array();
+
+        if (is_string($selected_variants_raw)) {
+            // Try to decode JSON if it's a string
+            $decoded = json_decode($selected_variants_raw, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $selected_variants = $decoded;
+            } else {
+                // If not JSON, try to use as is
+                $selected_variants = array($selected_variants_raw);
+            }
+        } elseif (is_array($selected_variants_raw)) {
+            $selected_variants = $selected_variants_raw;
+        }
+
+        if (empty($category_sku) || empty($product_sku) || empty($product_name)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        if (!is_array($selected_variants) || empty($selected_variants)) {
+            wp_send_json_error(__('No variants selected', 'gift-i-card'));
+        }
+
+        if (!in_array($product_status, array('publish', 'draft'))) {
+            wp_send_json_error(__('Invalid product status', 'gift-i-card'));
+        }
+
+        // Check product SKU uniqueness if provided
+        if (!empty($product_sku_field)) {
+            $existing_product = get_posts(array(
+                'post_type' => 'product',
+                'post_status' => 'any',
+                'meta_key' => '_sku',
+                'meta_value' => $product_sku_field,
+                'posts_per_page' => 1
+            ));
+
+            if (!empty($existing_product)) {
+                wp_send_json_error(__('A product with this SKU already exists', 'gift-i-card'));
+            }
+        }
+
+        // Create variable product
+        $variable_product = new WC_Product_Variable();
+        $variable_product->set_name($product_name);
+        if (!empty($product_sku_field)) {
+            $variable_product->set_sku($product_sku_field);
+        }
+        $variable_product->set_virtual(true); // Make product virtual
+        $variable_product->set_catalog_visibility('visible');
+        $variable_product->set_status($product_status);
+
+        // Save the variable product
+        $variable_product_id = $variable_product->save();
+
+        if (!$variable_product_id) {
+            wp_send_json_error(__('Failed to create variable product', 'gift-i-card'));
+        }
+
+        // First, collect all unique attribute values
+        $attribute_values = array();
+        $variants_data = array();
+        $validation_errors = array();
+
+        foreach ($selected_variants as $index => $variant_data) {
+            // Ensure variant_data is an array
+            if (!is_array($variant_data)) {
+                $validation_errors[] = sprintf(__('Variant at index %d is not valid', 'gift-i-card'), $index);
+                continue;
+            }
+
+            $variant_sku = isset($variant_data['sku']) ? sanitize_text_field($variant_data['sku']) : '';
+            $variant_name = isset($variant_data['name']) ? sanitize_text_field($variant_data['name']) : '';
+            $variant_price = isset($variant_data['price']) ? floatval($variant_data['price']) : 0;
+            $variant_value = isset($variant_data['value']) ? sanitize_text_field($variant_data['value']) : '';
+            $variation_sku = !empty($variant_data['variation_sku']) ? sanitize_text_field($variant_data['variation_sku']) : ($variant_sku ? $variant_sku . '_var' : '');
+
+            // Validate variant data
+            if (empty($variant_name)) {
+                $validation_errors[] = sprintf(__('Variant SKU %s: Name is required', 'gift-i-card'), $variant_sku ?: __('Unknown', 'gift-i-card'));
+                continue;
+            }
+
+            if ($variant_price < 0) {
+                $validation_errors[] = sprintf(__('Variant %s: Price cannot be negative', 'gift-i-card'), $variant_name);
+                continue;
+            }
+
+            if (empty($variant_sku)) {
+                $validation_errors[] = sprintf(__('Variant %s: SKU is required', 'gift-i-card'), $variant_name);
+                continue;
+            }
+
+            // Check variation SKU uniqueness if provided
+            if (!empty($variation_sku)) {
+                $existing_variation = get_posts(array(
+                    'post_type' => 'product_variation',
+                    'post_status' => 'any',
+                    'meta_key' => '_sku',
+                    'meta_value' => $variation_sku,
+                    'posts_per_page' => 1
+                ));
+
+                if (!empty($existing_variation)) {
+                    continue; // Skip if SKU already exists
+                }
+            }
+
+            // Use variant value as attribute value, fallback to variant name
+            $attribute_value = $variant_value ?: $variant_name;
+            if (!in_array($attribute_value, $attribute_values)) {
+                $attribute_values[] = $attribute_value;
+            }
+
+            // Store variant data for later use
+            $variants_data[] = array(
+                'sku' => $variant_sku,
+                'name' => $variant_name,
+                'price' => $variant_price,
+                'value' => $variant_value,
+                'variation_sku' => $variation_sku,
+                'attribute_value' => $attribute_value
+            );
+        }
+
+        if (empty($variants_data)) {
+            // Delete the variable product if no valid variants
+            wp_delete_post($variable_product_id, true);
+            $error_message = __('No valid variants to create', 'gift-i-card');
+            if (!empty($validation_errors)) {
+                $error_message .= '. ' . __('Errors:', 'gift-i-card') . ' ' . implode('; ', $validation_errors);
+            }
+            if (empty($selected_variants)) {
+                $error_message .= '. ' . __('No variants were selected or received.', 'gift-i-card');
+            }
+            wp_send_json_error($error_message);
+        }
+
+        // Create attribute object for WooCommerce
+        $attribute = new WC_Product_Attribute();
+        $attribute->set_id(0); // Custom attribute (not taxonomy)
+        $attribute->set_name('variant_value'); // Use slug format for custom attribute
+        $attribute->set_options($attribute_values);
+        $attribute->set_visible(true);
+        $attribute->set_variation(true); // Important: this makes it a variation attribute
+
+        // Set attributes to variable product
+        $attributes_array = array();
+        $attributes_array['variant_value'] = $attribute;
+        $variable_product->set_attributes($attributes_array);
+        $variable_product->save();
+
+        // Now create variations
+        $created_variations = array();
+
+        foreach ($variants_data as $variant_data) {
+            // Create variation
+            $variation = new WC_Product_Variation();
+            $variation->set_parent_id($variable_product_id);
+            $variation->set_name($variant_data['name']);
+            $variation->set_regular_price($variant_data['price']);
+            $variation->set_price($variant_data['price']);
+            $variation->set_virtual(true); // Make variation virtual
+            if (!empty($variant_data['variation_sku'])) {
+                $variation->set_sku($variant_data['variation_sku']);
+            }
+
+            // Set variation attributes
+            $variation->set_attributes(array(
+                'variant_value' => $variant_data['attribute_value']
+            ));
+
+            $variation_id = $variation->save();
+
+            if ($variation_id) {
+                $created_variations[] = $variation_id;
+
+                // Add mapping metadata to the variation
+                update_post_meta($variation_id, '_gicapi_mapped_category_skus', array($category_sku));
+                update_post_meta($variation_id, '_gicapi_mapped_product_skus', array($product_sku));
+                update_post_meta($variation_id, '_gicapi_mapped_variant_skus', array($variant_data['sku']));
+                update_post_meta($variation_id, '_gicapi_variant_value', $variant_data['value']);
+                update_post_meta($variation_id, '_gicapi_variant_sku', $variant_data['sku']);
+                update_post_meta($variation_id, '_gicapi_category_sku', $category_sku);
+                update_post_meta($variation_id, '_gicapi_product_sku', $product_sku);
+            }
+        }
+
+        if (empty($created_variations)) {
+            // Delete the variable product if no variations were created
+            wp_delete_post($variable_product_id, true);
+            wp_send_json_error(__('Failed to create any variations', 'gift-i-card'));
+        }
+
+        // Set default attributes (use first variation)
+        if (!empty($created_variations)) {
+            $first_variation = wc_get_product($created_variations[0]);
+            if ($first_variation) {
+                $variation_attributes = $first_variation->get_attributes();
+                if (isset($variation_attributes['variant_value'])) {
+                    $default_attributes = array(
+                        'variant_value' => $variation_attributes['variant_value']
+                    );
+                    $variable_product->set_default_attributes($default_attributes);
+                    $variable_product->save();
+                }
+            }
+        }
+
+        wp_send_json_success(__('Variable product created and selected variants mapped successfully', 'gift-i-card'));
+    }
+
+    public function get_variants_for_variable_product()
+    {
+        check_ajax_referer('gicapi_get_variants_for_variable_product', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $category_sku = isset($_POST['category_sku']) ? sanitize_text_field(wp_unslash($_POST['category_sku'])) : '';
+        $product_sku = isset($_POST['product_sku']) ? sanitize_text_field(wp_unslash($_POST['product_sku'])) : '';
+
+        if (empty($category_sku) || empty($product_sku)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        // Get API instance to fetch variants
+        $api = GICAPI_API::get_instance();
+        $variants = $api->get_variants($product_sku);
+
+        if (empty($variants)) {
+            wp_send_json_error(__('No variants found for this product', 'gift-i-card'));
+        }
+
+        wp_send_json_success(array('variants' => $variants));
     }
 
     public function create_order_manually()
