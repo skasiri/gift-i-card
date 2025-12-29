@@ -777,6 +777,31 @@ jQuery(document).ready(function ($) {
         });
     });
 
+    // Stock sync functionality
+    // Product stock sync toggle (for each mapped product)
+    $(document).on('change', '.gicapi-product-stock-sync-toggle-input', function () {
+        var $toggle = $(this);
+        var productId = $toggle.data('product-id');
+        var variantSku = $toggle.data('variant-sku');
+        var enabled = $toggle.is(':checked') ? 'yes' : 'no';
+
+        $.post(ajaxurl, {
+            action: 'gicapi_save_product_stock_sync',
+            nonce: gicapi_admin_params.save_product_stock_sync_nonce,
+            product_id: productId,
+            variant_sku: variantSku,
+            enabled: enabled
+        }, function (response) {
+            if (!response.success) {
+                alert(response.data || 'Error saving stock sync settings');
+                $toggle.prop('checked', !$toggle.is(':checked'));
+            }
+        }).fail(function () {
+            alert('Error saving stock sync settings');
+            $toggle.prop('checked', !$toggle.is(':checked'));
+        });
+    });
+
     // Open product price sync customization modal (using event delegation for dynamic elements)
     $(document).on('click', '.gicapi-customize-product-price-sync', function () {
         var productId = $(this).data('product-id');

@@ -69,8 +69,28 @@ class GICAPI_Product_Sync
         $status_mapping = $this->get_status_mapping();
         $target_status = $this->get_target_status($gic_status, $status_mapping);
 
-        // Update WooCommerce stock status
-        $result = $this->update_woocommerce_stock_status($product, $target_status);
+        // Check if stock sync is enabled for this product
+        $product_stock_sync_enabled = get_post_meta($sync_product_id, '_gicapi_stock_sync_enabled', true);
+
+        // If product doesn't have explicit setting, check global default
+        if ($product_stock_sync_enabled === '') {
+            $product_stock_sync_enabled = get_option('gicapi_stock_sync_enabled', 'yes');
+        }
+
+        // Update WooCommerce stock status only if stock sync is enabled
+        $result = array();
+        if ($product_stock_sync_enabled === 'yes') {
+            $result = $this->update_woocommerce_stock_status($product, $target_status);
+        } else {
+            // Stock sync disabled - return success but skip stock update
+            $result = array(
+                'success' => true,
+                'message' => 'Stock sync is disabled for this product',
+                'old_status' => $product->get_stock_status(),
+                'new_status' => $product->get_stock_status(),
+                'stock_sync_skipped' => true
+            );
+        }
 
         // Sync product price if enabled
         $price_sync_result = $this->sync_product_price($product_id, $variation_id, $api_result);

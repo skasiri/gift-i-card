@@ -656,13 +656,15 @@
   flex-wrap: wrap;
 }
 
-.gicapi-product-price-sync-toggle {
+.gicapi-product-price-sync-toggle,
+.gicapi-product-stock-sync-toggle {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.gicapi-product-price-sync-toggle input[type="checkbox"] {
+.gicapi-product-price-sync-toggle input[type="checkbox"],
+.gicapi-product-stock-sync-toggle input[type="checkbox"] {
   margin: 0;
 }
 

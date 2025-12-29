@@ -166,6 +166,7 @@ class GICAPI_Admin
             'search_products_nonce' => wp_create_nonce('gicapi_search_products'),
             'save_variant_price_sync_nonce' => wp_create_nonce('gicapi_save_variant_price_sync'),
             'save_product_price_sync_nonce' => wp_create_nonce('gicapi_save_product_price_sync'),
+            'save_product_stock_sync_nonce' => wp_create_nonce('gicapi_save_product_stock_sync'),
             'text_refreshing_token' => __('Refreshing token...', 'gift-i-card'),
             'text_error_unknown' => __('An unknown error occurred.', 'gift-i-card'),
             'text_error_server_communication' => __('Error communicating with server: ', 'gift-i-card'),
@@ -413,6 +414,12 @@ class GICAPI_Admin
             'sanitize_callback' => array($this, 'sanitize_profit_margin')
         ));
         register_setting('gicapi_settings', 'gicapi_profit_margin_type', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+
+        // Stock sync settings
+        register_setting('gicapi_settings', 'gicapi_stock_sync_enabled', array(
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field'
         ));

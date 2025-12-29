@@ -27,6 +27,7 @@ class GICAPI_Ajax
         add_action('wp_ajax_gicapi_manual_sync_products', array($this, 'manual_sync_products'));
         add_action('wp_ajax_gicapi_save_variant_price_sync', array($this, 'save_variant_price_sync'));
         add_action('wp_ajax_gicapi_save_product_price_sync', array($this, 'save_product_price_sync'));
+        add_action('wp_ajax_gicapi_save_product_stock_sync', array($this, 'save_product_stock_sync'));
     }
 
     public function search_products()
@@ -932,5 +933,34 @@ class GICAPI_Ajax
         update_post_meta($product_id, '_gicapi_profit_margin_type', $profit_margin_type);
 
         wp_send_json_success(__('Product price sync settings saved successfully', 'gift-i-card'));
+    }
+
+    public function save_product_stock_sync()
+    {
+        check_ajax_referer('gicapi_save_product_stock_sync', 'nonce');
+
+        if (!current_user_can('manage_woocommerce')) {
+            wp_send_json_error(__('Permission denied', 'gift-i-card'));
+        }
+
+        $product_id = isset($_POST['product_id']) ? intval(wp_unslash($_POST['product_id'])) : 0;
+        $variant_sku = isset($_POST['variant_sku']) ? sanitize_text_field(wp_unslash($_POST['variant_sku'])) : '';
+        $enabled = isset($_POST['enabled']) && $_POST['enabled'] === 'yes' ? 'yes' : 'no';
+
+        if (empty($product_id) || empty($variant_sku)) {
+            wp_send_json_error(__('Invalid parameters', 'gift-i-card'));
+        }
+
+        $product = wc_get_product($product_id);
+        if (!$product) {
+            wp_send_json_error(__('Product not found', 'gift-i-card'));
+        }
+
+        // Save product-level stock sync settings explicitly
+        // Always save explicitly (even if 'no'), so product has its own independent setting
+        // This ensures that changing global settings won't affect products with explicit settings
+        update_post_meta($product_id, '_gicapi_stock_sync_enabled', $enabled);
+
+        wp_send_json_success(__('Product stock sync settings saved successfully', 'gift-i-card'));
     }
 }

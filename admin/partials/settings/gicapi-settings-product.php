@@ -108,6 +108,25 @@ $batch_size = get_option('gicapi_sync_batch_size', 10);
         </tr>
     </table>
 
+    <h4><?php esc_html_e('Stock Synchronization Settings', 'gift-i-card'); ?></h4>
+    <p><?php esc_html_e('Configure how product stock status should be synchronized from Gift-i-Card API.', 'gift-i-card'); ?></p>
+
+    <?php
+    $stock_sync_enabled = get_option('gicapi_stock_sync_enabled', 'yes');
+    ?>
+
+    <table class="form-table">
+        <tr>
+            <th scope="row">
+                <label for="gicapi_stock_sync_enabled"><?php esc_html_e('Enable Stock Sync (Default)', 'gift-i-card'); ?></label>
+            </th>
+            <td>
+                <input type="checkbox" id="gicapi_stock_sync_enabled" name="gicapi_stock_sync_enabled" value="yes" <?php checked($stock_sync_enabled, 'yes'); ?> />
+                <p class="description"><?php esc_html_e('Enable automatic stock status synchronization from Gift-i-Card API by default for all products. Individual products can override this setting.', 'gift-i-card'); ?></p>
+            </td>
+        </tr>
+    </table>
+
     <h4><?php esc_html_e('Price Synchronization Settings', 'gift-i-card'); ?></h4>
     <p><?php esc_html_e('Configure how product prices should be synchronized from Gift-i-Card API.', 'gift-i-card'); ?></p>
 
@@ -148,7 +167,7 @@ $batch_size = get_option('gicapi_sync_batch_size', 10);
             <td>
                 <input type="number" id="gicapi_default_profit_margin" name="gicapi_default_profit_margin" value="<?php echo esc_attr($default_profit_margin); ?>" step="0.01" min="0" />
                 <p class="description">
-                    <?php 
+                    <?php
                     if ($profit_margin_type === 'percentage') {
                         esc_html_e('Default profit margin as percentage (e.g., 10 for 10%). This will be added to the variant price from API.', 'gift-i-card');
                     } else {

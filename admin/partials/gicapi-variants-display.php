@@ -188,6 +188,7 @@ if (empty($variants)) {
                                         $product_price_sync_enabled = get_post_meta($product_id, '_gicapi_price_sync_enabled', true);
                                         $product_profit_margin = get_post_meta($product_id, '_gicapi_profit_margin', true);
                                         $product_profit_margin_type = get_post_meta($product_id, '_gicapi_profit_margin_type', true);
+                                        $product_stock_sync_enabled = get_post_meta($product_id, '_gicapi_stock_sync_enabled', true);
                                         if ($product_price_sync_enabled === '') {
                                             $product_price_sync_enabled = get_option('gicapi_price_sync_enabled', 'no');
                                         }
@@ -196,6 +197,9 @@ if (empty($variants)) {
                                         }
                                         if ($product_profit_margin_type === '') {
                                             $product_profit_margin_type = get_option('gicapi_profit_margin_type', 'percentage');
+                                        }
+                                        if ($product_stock_sync_enabled === '') {
+                                            $product_stock_sync_enabled = get_option('gicapi_stock_sync_enabled', 'yes');
                                         }
                                     ?>
                                         <div class="gicapi-mapped-product-item">
@@ -208,6 +212,10 @@ if (empty($variants)) {
                                                 <label class="gicapi-product-price-sync-toggle">
                                                     <input type="checkbox" class="gicapi-product-price-sync-toggle-input" data-product-id="<?php echo esc_attr($product_id); ?>" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" <?php checked($product_price_sync_enabled, 'yes'); ?> />
                                                     <span class="toggle-label"><?php esc_html_e('Price Sync', 'gift-i-card'); ?></span>
+                                                </label>
+                                                <label class="gicapi-product-stock-sync-toggle">
+                                                    <input type="checkbox" class="gicapi-product-stock-sync-toggle-input" data-product-id="<?php echo esc_attr($product_id); ?>" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" <?php checked($product_stock_sync_enabled, 'yes'); ?> />
+                                                    <span class="toggle-label"><?php esc_html_e('Stock Sync', 'gift-i-card'); ?></span>
                                                 </label>
                                                 <button type="button" class="button-link gicapi-customize-product-price-sync" data-product-id="<?php echo esc_attr($product_id); ?>" data-variant-sku="<?php echo esc_attr($variant_sku); ?>" data-price-sync-enabled="<?php echo esc_attr($product_price_sync_enabled); ?>" data-profit-margin="<?php echo esc_attr($product_profit_margin); ?>" data-profit-margin-type="<?php echo esc_attr($product_profit_margin_type); ?>" title="<?php esc_attr_e('Customize price sync settings', 'gift-i-card'); ?>">
                                                     <span class="dashicons dashicons-admin-generic"></span>
