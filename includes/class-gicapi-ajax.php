@@ -517,7 +517,25 @@ class GICAPI_Ajax
         $attribute_slug = sanitize_title($attribute_name);
         if (empty($attribute_slug)) {
             $attribute_slug = 'variant_value'; // Fallback to default
+            $attribute_name = 'Variant Value'; // Fallback to default name
         }
+
+        // Prepare product attributes meta with display name
+        // WooCommerce stores custom attributes in _product_attributes meta
+        // with format: slug => array('name' => display_name, 'value' => values, ...)
+        $product_attributes = array();
+        $product_attributes[$attribute_slug] = array(
+            'name' => $attribute_name, // Display name (this is what WooCommerce uses)
+            'value' => implode(' | ', $attribute_values), // Values separated by |
+            'position' => 0,
+            'is_visible' => 1,
+            'is_variation' => 1,
+            'is_taxonomy' => 0
+        );
+
+        // Set the product attributes meta BEFORE saving
+        // This ensures WooCommerce uses our display name
+        update_post_meta($variable_product_id, '_product_attributes', $product_attributes);
 
         // Create attribute object for WooCommerce
         $attribute = new WC_Product_Attribute();
@@ -531,9 +549,15 @@ class GICAPI_Ajax
         $attributes_array = array();
         $attributes_array[$attribute_slug] = $attribute;
         $variable_product->set_attributes($attributes_array);
+
+        // Save the product
         $variable_product->save();
 
-        // Store attribute name for display purposes
+        // Ensure _product_attributes meta still has the display name after save
+        // (WooCommerce might overwrite it, so we update it again)
+        update_post_meta($variable_product_id, '_product_attributes', $product_attributes);
+
+        // Also store attribute name for our own reference
         update_post_meta($variable_product_id, '_gicapi_attribute_name', $attribute_name);
 
         // Now create variations
