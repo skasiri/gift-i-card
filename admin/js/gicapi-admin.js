@@ -742,10 +742,18 @@ jQuery(document).ready(function ($) {
         var variantSku = $toggle.data('variant-sku');
         var enabled = $toggle.is(':checked') ? 'yes' : 'no';
 
-        // Get default settings from the customize button
+        // Get current settings from the customize button (or use defaults)
         var $customizeButton = $('.gicapi-customize-product-price-sync[data-product-id="' + productId + '"]');
-        var defaultMargin = $customizeButton.data('profit-margin') || 0;
-        var defaultMarginType = $customizeButton.data('profit-margin-type') || 'percentage';
+        var currentMargin = $customizeButton.data('profit-margin');
+        var currentMarginType = $customizeButton.data('profit-margin-type');
+
+        // If product doesn't have explicit settings, use global defaults
+        if (currentMargin === undefined || currentMargin === '') {
+            currentMargin = 0; // Will be set from global settings on server side
+        }
+        if (currentMarginType === undefined || currentMarginType === '') {
+            currentMarginType = 'percentage'; // Will be set from global settings on server side
+        }
 
         $.post(ajaxurl, {
             action: 'gicapi_save_product_price_sync',
@@ -753,8 +761,8 @@ jQuery(document).ready(function ($) {
             product_id: productId,
             variant_sku: variantSku,
             enabled: enabled,
-            profit_margin: defaultMargin,
-            profit_margin_type: defaultMarginType
+            profit_margin: currentMargin,
+            profit_margin_type: currentMarginType
         }, function (response) {
             if (!response.success) {
                 alert(response.data || 'Error saving price sync settings');

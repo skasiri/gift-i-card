@@ -924,7 +924,9 @@ class GICAPI_Ajax
             wp_send_json_error(__('Product not found', 'gift-i-card'));
         }
 
-        // Save product-level price sync settings
+        // Save product-level price sync settings explicitly
+        // Always save explicitly (even if 'no'), so product has its own independent setting
+        // This ensures that changing global settings won't affect products with explicit settings
         update_post_meta($product_id, '_gicapi_price_sync_enabled', $enabled);
         update_post_meta($product_id, '_gicapi_profit_margin', $profit_margin);
         update_post_meta($product_id, '_gicapi_profit_margin_type', $profit_margin_type);
