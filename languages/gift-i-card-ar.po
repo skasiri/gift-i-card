@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gift-i-Card\n"
-"POT-Creation-Date: 2025-07-14 22:24+0330\n"
-"PO-Revision-Date: 2025-07-14 22:24+0330\n"
+"POT-Creation-Date: 2025-12-30 03:33+0330\n"
+"PO-Revision-Date: 2025-12-30 03:33+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar_SA\n"
@@ -22,35 +22,196 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: admin/class-gicapi-admin.php:95
+#: admin/class-gicapi-admin.php:170
 msgid "Refreshing token..."
 msgstr "جارٍ تحديث الرمز..."
 
-#: admin/class-gicapi-admin.php:96
+#: admin/class-gicapi-admin.php:171
 msgid "An unknown error occurred."
 msgstr "حدث خطأ غير معروف."
 
-#: admin/class-gicapi-admin.php:97
+#: admin/class-gicapi-admin.php:172
 msgid "Error communicating with server: "
 msgstr "حدث خطأ أثناء الاتصال بالخادم: "
 
-#: admin/class-gicapi-admin.php:170
+#: admin/class-gicapi-admin.php:173
+#: admin/partials/gicapi-variants-display.php:266
+msgid "Search for a product..."
+msgstr "البحث عن منتج..."
+
+#: admin/class-gicapi-admin.php:174
+msgid "Please select a product"
+msgstr "الرجاء اختيار منتج"
+
+#: admin/class-gicapi-admin.php:175
+msgid "Error adding mapping"
+msgstr "حدث خطأ أثناء إضافة الاتصال"
+
+#: admin/class-gicapi-admin.php:176
+msgid "Are you sure you want to remove this mapping?"
+msgstr "هل أنت متأكد من حذف هذا الاتصال؟"
+
+#: admin/class-gicapi-admin.php:177 includes/class-gicapi-ajax.php:242
+msgid "Error removing mapping"
+msgstr "حدث خطأ أثناء حذف الاتصال"
+
+#: admin/class-gicapi-admin.php:178
+#, fuzzy
+#| msgid "Are you sure you want to remove this mapping?"
+msgid "Are you sure you want to create a simple product for this variant?"
+msgstr "هل أنت متأكد من حذف هذا الاتصال؟"
+
+#: admin/class-gicapi-admin.php:179
+#, fuzzy
+#| msgid "Error fetching products from API"
+msgid "Error creating simple product"
+msgstr "حدث خطأ أثناء جلب المنتجات من API"
+
+#: admin/class-gicapi-admin.php:180
+#, fuzzy
+#| msgid "Error fetching variants from API"
+msgid "Error creating variable product"
+msgstr "حدث خطأ أثناء جلب المتغيرات من API"
+
+#: admin/class-gicapi-admin.php:181
+#, fuzzy
+#| msgid "Order ID is required"
+msgid "Product name is required"
+msgstr "رقم الطلب مطلوب"
+
+#: admin/class-gicapi-admin.php:182
+#, fuzzy
+#| msgid "Order ID is required"
+msgid "Product SKU is required"
+msgstr "رقم الطلب مطلوب"
+
+#: admin/class-gicapi-admin.php:183
+msgid "Valid product price is required"
+msgstr "مطلوب سعر منتج صالح"
+
+#: admin/class-gicapi-admin.php:184
+msgid "At least one variant must be selected"
+msgstr "يجب تحديد متغير واحد على الأقل"
+
+#: admin/class-gicapi-admin.php:185
+msgid "Variant name is required for all selected variants"
+msgstr "اسم المتغير مطلوب لجميع المتغيرات المحددة"
+
+#: admin/class-gicapi-admin.php:186
+msgid "Valid variant price is required for all selected variants"
+msgstr "سعر المتغير الصالح مطلوب لجميع المتغيرات المحددة"
+
+#: admin/class-gicapi-admin.php:187
+#: admin/partials/gicapi-variants-display.php:442
+msgid "Loading variants..."
+msgstr "جارٍ تحميل المتغيرات..."
+
+#: admin/class-gicapi-admin.php:188
+msgid "Select All"
+msgstr "تحديد الكل"
+
+#: admin/class-gicapi-admin.php:189
+#, fuzzy
+#| msgid "Name"
+msgid "Name:"
+msgstr "الاسم"
+
+#: admin/class-gicapi-admin.php:190
+#: includes/class-gicapi-gift-card-display.php:125
+msgid "Price:"
+msgstr "السعر:"
+
+#: admin/class-gicapi-admin.php:191
+#, fuzzy
+#| msgid "Value"
+msgid "Value:"
+msgstr "القيمة"
+
+#: admin/class-gicapi-admin.php:192
+#, fuzzy
+#| msgid "Variation of: %s"
+msgid "Variation SKU:"
+msgstr "المتغير من: %s"
+
+#: admin/class-gicapi-admin.php:193
+msgid "e.g., VAR-001"
+msgstr "مثال: VAR-001"
+
+#: admin/class-gicapi-admin.php:194
+#, fuzzy
+#| msgid "Error adding mapping"
+msgid "Error loading variants."
+msgstr "حدث خطأ أثناء إضافة الاتصال"
+
+#: admin/class-gicapi-admin.php:195
+msgid "Updating..."
+msgstr "يتم التحديث..."
+
+#: admin/class-gicapi-admin.php:196
+msgid "An error occurred while updating orders."
+msgstr "حدث خطأ أثناء تحديث الطلبات."
+
+#: admin/class-gicapi-admin.php:197
+#: admin/partials/settings/gicapi-settings-cron.php:149
+msgid "Update Pending/Processing Orders Now"
+msgstr "تحديث الطلبات المعلقة / المعالجة حالياً"
+
+#: admin/class-gicapi-admin.php:198
+msgid "Syncing..."
+msgstr "يتم التزامن..."
+
+#: admin/class-gicapi-admin.php:199
+msgid "An error occurred while syncing products."
+msgstr "حدث خطأ أثناء التزامن المنتجات."
+
+#: admin/class-gicapi-admin.php:200
+#: admin/partials/settings/gicapi-settings-cron.php:89
+msgid "Sync All Products Now"
+msgstr "تزامن جميع المنتجات الآن"
+
+#: admin/class-gicapi-admin.php:201
+msgid "Rescheduling..."
+msgstr "يتم إعادة زمنة مهمة مجدولة..."
+
+#: admin/class-gicapi-admin.php:202
+msgid "An error occurred while rescheduling cron job."
+msgstr "حدث خطأ أثناء إعادة زمنة المهمة المجدولة."
+
+#: admin/class-gicapi-admin.php:203
+#: admin/partials/settings/gicapi-settings-cron.php:255
+msgid "Reschedule Cron Job"
+msgstr "إعادة زمنة مهمة مجدولة"
+
+#: admin/class-gicapi-admin.php:204
+msgid "Checking..."
+msgstr "يتم التحقق..."
+
+#: admin/class-gicapi-admin.php:205
+msgid "An error occurred while checking cron job."
+msgstr "حدث خطأ أثناء التحقق من المهمة المجدولة."
+
+#: admin/class-gicapi-admin.php:206
+#: admin/partials/settings/gicapi-settings-cron.php:258
+msgid "Check & Repair Cron Job"
+msgstr "التحقق من إصلاح مهمة مجدولة"
+
+#: admin/class-gicapi-admin.php:279
 msgid "Connected"
 msgstr "متصل"
 
-#: admin/class-gicapi-admin.php:170
+#: admin/class-gicapi-admin.php:279
 msgid "Balance"
 msgstr "الرصيد"
 
-#: admin/class-gicapi-admin.php:174
+#: admin/class-gicapi-admin.php:283
 msgid "Disconnected"
 msgstr "غير متصل"
 
-#: admin/class-gicapi-admin.php:500 admin/class-gicapi-admin.php:526
+#: admin/class-gicapi-admin.php:670 admin/class-gicapi-admin.php:696
 msgid "You do not have permission to perform this action."
 msgstr "ليس لديك إذن لتنفيذ هذا الإجراء."
 
-#: admin/class-gicapi-admin.php:509
+#: admin/class-gicapi-admin.php:679
 msgid ""
 "Token refreshed successfully. Please refresh the page or save the settings to "
 "see the new connection status."
@@ -58,20 +219,21 @@ msgstr ""
 "تم تحديث الرمز بنجاح. يرجى تحديث الصفحة أو حفظ الإعدادات لرؤية حالة الاتصال "
 "الجديدة."
 
-#: admin/class-gicapi-admin.php:511
+#: admin/class-gicapi-admin.php:681
 msgid "Error refreshing token. Please check the API settings and try again."
 msgstr ""
-"حدث خطأ أثناء تحديث الرمز. يرجى التحقق من إعدادات API والمحاولة مرة أخرى."
+"خطأ في تحديث الرمز. يرجى التحقق من إعدادات API والمحاولة مرة أخرى.حدث خطأ "
+"أثناء تحديث الرمز. يرجى التحقق من إعدادات API والمحاولة مرة أخرى."
 
-#: admin/class-gicapi-admin.php:521
+#: admin/class-gicapi-admin.php:691
 msgid "Security check failed. Please try again."
 msgstr "فشل التحقق الأمني. يرجى المحاولة مرة أخرى."
 
-#: admin/class-gicapi-admin.php:534
+#: admin/class-gicapi-admin.php:704
 msgid "Invalid product or variant ID."
 msgstr "معرف المنتج أو المتغير غير صالح."
 
-#: admin/class-gicapi-admin.php:539
+#: admin/class-gicapi-admin.php:709
 msgid "Variant mapped successfully."
 msgstr "تم ربط المتغير بنجاح."
 
@@ -117,7 +279,7 @@ msgstr "صورة مصغرة"
 #: admin/partials/gicapi-categories-display.php:153
 #: admin/partials/gicapi-products-display.php:68
 #: admin/partials/gicapi-products-display.php:131
-#: admin/partials/gicapi-variants-display.php:70
+#: admin/partials/gicapi-variants-display.php:113
 msgid "Name"
 msgstr "الاسم"
 
@@ -125,7 +287,8 @@ msgstr "الاسم"
 #: admin/partials/gicapi-categories-display.php:154
 #: admin/partials/gicapi-products-display.php:69
 #: admin/partials/gicapi-products-display.php:132
-#: admin/partials/gicapi-variants-display.php:71
+#: admin/partials/gicapi-variants-display.php:114
+#: admin/partials/gicapi-variants-display.php:304
 msgid "SKU"
 msgstr "SKU"
 
@@ -201,40 +364,66 @@ msgstr "صورة"
 msgid "Variant Count"
 msgstr "عدد المتغيرات"
 
-#: admin/partials/gicapi-variants-display.php:40
+#: admin/partials/gicapi-variants-display.php:41
+#: admin/partials/gicapi-variants-display.php:43
 msgid "Unknown Product"
 msgstr "منتج غير معروف"
 
-#: admin/partials/gicapi-variants-display.php:48
+#: admin/partials/gicapi-variants-display.php:85
 msgid "Error fetching variants from API"
 msgstr "حدث خطأ أثناء جلب المتغيرات من API"
 
-#: admin/partials/gicapi-variants-display.php:54
+#: admin/partials/gicapi-variants-display.php:91
 msgid "No variants found for this product."
 msgstr "لم يتم العثور على متغيرات لهذا المنتج."
 
-#: admin/partials/gicapi-variants-display.php:64
+#: admin/partials/gicapi-variants-display.php:101
 msgid "Variants"
 msgstr "المتغيرات"
 
-#: admin/partials/gicapi-variants-display.php:72
+#: admin/partials/gicapi-variants-display.php:106
+#: admin/partials/gicapi-variants-display.php:491
+#, fuzzy
+#| msgid "Variable Product"
+msgid "Create Variable Product"
+msgstr "منتج متغير"
+
+#: admin/partials/gicapi-variants-display.php:115
 msgid "Price"
 msgstr "السعر"
 
-#: admin/partials/gicapi-variants-display.php:73
+#: admin/partials/gicapi-variants-display.php:116
 msgid "Value"
 msgstr "القيمة"
 
-#: admin/partials/gicapi-variants-display.php:74
+#: admin/partials/gicapi-variants-display.php:117
 msgid "Stock Status"
 msgstr "حالة المخزون"
 
-#: admin/partials/gicapi-variants-display.php:75
+#: admin/partials/gicapi-variants-display.php:118
 msgid "Mapped WC Products"
 msgstr "منتجات مرتبطة ووكامرس"
 
+#: admin/partials/gicapi-variants-display.php:119
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: admin/partials/gicapi-variants-display.php:214
+#, fuzzy
+#| msgid "Price"
+msgid "Price Sync"
+msgstr "السعر"
+
+#: admin/partials/gicapi-variants-display.php:218
+msgid "Stock Sync"
+msgstr "مزامنة المخزون"
+
+#: admin/partials/gicapi-variants-display.php:220
+msgid "Customize price sync settings"
+msgstr "تخصيص إعدادات مزامنة السعر"
+
 #. translators: %d: number of products mapped
-#: admin/partials/gicapi-variants-display.php:157
+#: admin/partials/gicapi-variants-display.php:234
 #, php-format
 msgid "%d product mapped"
 msgid_plural "%d products mapped"
@@ -245,42 +434,268 @@ msgstr[3] "%d منتجات مرتبطة"
 msgstr[4] "%d منتجاً مرتبطاً"
 msgstr[5] "%d منتج مرتبط"
 
-#: admin/partials/gicapi-variants-display.php:161
-#: admin/partials/gicapi-variants-display.php:188
+#: admin/partials/gicapi-variants-display.php:243
+#: admin/partials/gicapi-variants-display.php:272
 msgid "Add Mapping"
 msgstr "إضافة الاتصال"
 
-#: admin/partials/gicapi-variants-display.php:176
+#: admin/partials/gicapi-variants-display.php:246
+#, fuzzy
+#| msgid "Simple Product"
+msgid "Create Simple Product"
+msgstr "منتج بسيط"
+
+#: admin/partials/gicapi-variants-display.php:260
 msgid "Map Gift-i-Card Variant to WooCommerce Product"
 msgstr "تحديد الاتصال بين منتج وووكامرس ومتغير Gift-i-Card"
 
-#: admin/partials/gicapi-variants-display.php:182
-#: admin/partials/gicapi-variants-display.php:387
-msgid "Search for a product..."
-msgstr "البحث عن منتج..."
-
-#: admin/partials/gicapi-variants-display.php:189
+#: admin/partials/gicapi-variants-display.php:273
+#: admin/partials/gicapi-variants-display.php:379
+#: admin/partials/gicapi-variants-display.php:492
+#: admin/partials/gicapi-variants-display.php:542
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: admin/partials/gicapi-variants-display.php:416
-msgid "Please select a product"
-msgstr "الرجاء اختيار منتج"
+#: admin/partials/gicapi-variants-display.php:283
+msgid "Create Simple Product from Gift-i-Card Variant"
+msgstr "إنشاء منتج بسيط من متغير Gift-i-Card"
 
-#: admin/partials/gicapi-variants-display.php:434
-#: admin/partials/gicapi-variants-display.php:437
-msgid "Error adding mapping"
-msgstr "حدث خطأ أثناء إضافة الاتصال"
+#: admin/partials/gicapi-variants-display.php:296
+#: admin/partials/gicapi-variants-display.php:400
+#, fuzzy
+#| msgid "Product"
+msgid "Product Name"
+msgstr "المنتج"
 
-#: admin/partials/gicapi-variants-display.php:446
-msgid "Are you sure you want to remove this mapping?"
-msgstr "هل أنت متأكد من حذف هذا الاتصال؟"
+#: admin/partials/gicapi-variants-display.php:307
+msgid "e.g., MY-SKU-001"
+msgstr "مثال: MY-SKU-001"
 
-#: admin/partials/gicapi-variants-display.php:469
-#: admin/partials/gicapi-variants-display.php:472
-#: includes/class-gicapi-ajax.php:235
-msgid "Error removing mapping"
-msgstr "حدث خطأ أثناء حذف الاتصال"
+#: admin/partials/gicapi-variants-display.php:308
+msgid "Optional unique identifier for the product."
+msgstr "معرف فريد اختياري للمنتج."
+
+#: admin/partials/gicapi-variants-display.php:313
+msgid "Regular Price"
+msgstr "السعر العادي"
+
+#: admin/partials/gicapi-variants-display.php:317
+#, fuzzy
+#| msgid "Search for a product..."
+msgid "Price of the product."
+msgstr "البحث عن منتج..."
+
+#: admin/partials/gicapi-variants-display.php:322
+#: admin/partials/gicapi-variants-display.php:417
+#, fuzzy
+#| msgid "Product Sync Status"
+msgid "Product Status"
+msgstr "حالة التزامن المنتجات"
+
+#: admin/partials/gicapi-variants-display.php:326
+#: admin/partials/gicapi-variants-display.php:421
+msgid "Draft"
+msgstr "مسودة"
+
+#: admin/partials/gicapi-variants-display.php:327
+#: admin/partials/gicapi-variants-display.php:422
+msgid "Published"
+msgstr "منشور"
+
+#: admin/partials/gicapi-variants-display.php:329
+msgid "Choose whether to publish the product immediately or save as draft."
+msgstr "اختر ما إذا كنت تريد نشر المنتج فوراً أو حفظه كمسودة."
+
+#: admin/partials/gicapi-variants-display.php:334
+#: admin/partials/gicapi-variants-display.php:449
+#, fuzzy
+#| msgid "Print Information"
+msgid "Mapping Information"
+msgstr "طباعة المعلومات"
+
+#: admin/partials/gicapi-variants-display.php:338
+#: admin/partials/gicapi-variants-display.php:453
+#, fuzzy
+#| msgid "Categories"
+msgid "Category SKU:"
+msgstr "الفئات"
+
+#: admin/partials/gicapi-variants-display.php:339
+#: admin/partials/gicapi-variants-display.php:454
+#, fuzzy
+#| msgid "Product"
+msgid "Product SKU:"
+msgstr "المنتج"
+
+#: admin/partials/gicapi-variants-display.php:340
+#, fuzzy
+#| msgid "Mapped Variant SKU:"
+msgid "Variant SKU:"
+msgstr "معرف SKU للمنتج المرتبط:"
+
+#: admin/partials/gicapi-variants-display.php:341
+#, fuzzy
+#| msgid "Variant Count"
+msgid "Variant Value:"
+msgstr "عدد المتغيرات"
+
+#: admin/partials/gicapi-variants-display.php:343
+msgid ""
+"These mapping fields are automatically set based on the selected variant and "
+"cannot be changed."
+msgstr ""
+
+#: admin/partials/gicapi-variants-display.php:348
+#: admin/partials/gicapi-variants-display.php:461
+#: admin/partials/gicapi-variants-display.php:511
+#: admin/partials/settings/gicapi-settings-product.php:139
+#, fuzzy
+#| msgid "Manual Product Sync"
+msgid "Enable Price Sync"
+msgstr "تزامن منتجات ديناميكي"
+
+#: admin/partials/gicapi-variants-display.php:352
+#, fuzzy
+#| msgid ""
+#| "Enable automatic stock status synchronization from Gift-i-Card API by "
+msgid ""
+"Enable automatic price synchronization from Gift-i-Card API. Price will be "
+"calculated based on variant price plus profit margin."
+msgstr ""
+"تمكين مزامنة السعر التلقائية من واجهة برمجة تطبيقات Gift-i-Card. سيتم حساب "
+"السعر بناءً على سعر المتغير بالإضافة إلى هامش الربح."
+
+#: admin/partials/gicapi-variants-display.php:357
+#: admin/partials/gicapi-variants-display.php:470
+#: admin/partials/gicapi-variants-display.php:520
+#: admin/partials/settings/gicapi-settings-product.php:149
+msgid "Profit Margin Type"
+msgstr "نوع هامش الربح"
+
+#: admin/partials/gicapi-variants-display.php:361
+#: admin/partials/gicapi-variants-display.php:474
+#: admin/partials/gicapi-variants-display.php:524
+#: admin/partials/settings/gicapi-settings-product.php:153
+msgid "Percentage (%)"
+msgstr "النسبة المئوية (%)"
+
+#: admin/partials/gicapi-variants-display.php:362
+#: admin/partials/gicapi-variants-display.php:475
+#: admin/partials/gicapi-variants-display.php:525
+#: admin/partials/settings/gicapi-settings-product.php:154
+msgid "Fixed Amount"
+msgstr "مبلغ ثابت"
+
+#: admin/partials/gicapi-variants-display.php:368
+#: admin/partials/gicapi-variants-display.php:481
+#: admin/partials/gicapi-variants-display.php:531
+msgid "Profit Margin"
+msgstr "هامش الربح"
+
+#: admin/partials/gicapi-variants-display.php:372
+#: admin/partials/gicapi-variants-display.php:535
+msgid "Profit margin to add to variant price from API."
+msgstr "هامش الربح لإضافته إلى سعر المتغير من API."
+
+#: admin/partials/gicapi-variants-display.php:378
+#, fuzzy
+#| msgid "Variable Product"
+msgid "Create Product"
+msgstr "منتج متغير"
+
+#: admin/partials/gicapi-variants-display.php:389
+msgid "Create Variable Product from Gift-i-Card Variants"
+msgstr "إنشاء منتج متغير من متغيرات Gift-i-Card"
+
+#: admin/partials/gicapi-variants-display.php:408
+#, fuzzy
+#| msgid "Product"
+msgid "Product SKU"
+msgstr "المنتج"
+
+#: admin/partials/gicapi-variants-display.php:411
+msgid "e.g., MY-VARIABLE-PRODUCT"
+msgstr "مثال: MY-VARIABLE-PRODUCT"
+
+#: admin/partials/gicapi-variants-display.php:412
+msgid "Optional unique identifier for the variable product."
+msgstr "معرف فريد اختياري للمنتج المتغير."
+
+#: admin/partials/gicapi-variants-display.php:424
+msgid ""
+"Choose whether to publish the variable product immediately or save as draft."
+msgstr "اختر ما إذا كنت تريد نشر المنتج المتغير فوراً أو حفظه كمسودة."
+
+#: admin/partials/gicapi-variants-display.php:429
+msgid "Attribute Name"
+msgstr "اسم الخاصية"
+
+#: admin/partials/gicapi-variants-display.php:432
+#, fuzzy
+#| msgid "Variant Count"
+msgid "Variant Value"
+msgstr "عدد المتغيرات"
+
+#: admin/partials/gicapi-variants-display.php:432
+msgid "e.g., Amount, Value, Size"
+msgstr "مثال: المبلغ، القيمة، الحجم"
+
+#: admin/partials/gicapi-variants-display.php:433
+msgid ""
+"Name of the attribute that will be used for variations (e.g., Amount, Value, "
+"Size)."
+msgstr ""
+"اسم الخاصية التي ستُستخدم للمتغيرات (مثال: المبلغ، القيمة، الحجم).اسم الخاصية "
+"التي سيتم استخدامها للمتغيرات (مثلاً: المبلغ، القيمة، الحجم)."
+
+#: admin/partials/gicapi-variants-display.php:438
+#, fuzzy
+#| msgid "Variants"
+msgid "Select Variants"
+msgstr "المتغيرات"
+
+#: admin/partials/gicapi-variants-display.php:444
+msgid ""
+"Select which variants to include in the variable product. You can edit "
+"details for each selected variant."
+msgstr ""
+"حدد المتغيرات التي تريد تضمينها في المنتج المتغير. يمكنك تعديل التفاصيل لكل "
+"متغير محدد."
+
+#: admin/partials/gicapi-variants-display.php:456
+msgid "These mapping fields are automatically set and cannot be changed."
+msgstr "حقول الربط هذه محددة تلقائياً ولا يمكن تغييرها."
+
+#: admin/partials/gicapi-variants-display.php:465
+#, fuzzy
+#| msgid ""
+#| "Enable automatic stock status synchronization from Gift-i-Card API by "
+msgid ""
+"Enable automatic price synchronization from Gift-i-Card API. Prices will be "
+"calculated based on variant prices plus profit margin."
+msgstr ""
+"تمكين مزامنة السعر التلقائية من واجهة برمجة تطبيقات Gift-i-Card. سيتم حساب "
+"الأسعار بناءً على أسعار المتغيرات بالإضافة إلى هامش الربح."
+
+#: admin/partials/gicapi-variants-display.php:485
+#, fuzzy
+#| msgid "Error fetching variants from API"
+msgid "Profit margin to add to variant prices from API."
+msgstr "حدث خطأ أثناء جلب المتغيرات من API"
+
+#: admin/partials/gicapi-variants-display.php:502
+msgid "Customize Product Price Sync"
+msgstr "تخصيص مزامنة سعر المنتج"
+
+#: admin/partials/gicapi-variants-display.php:515
+#, fuzzy
+#| msgid "No variants found for this product."
+msgid "Enable price synchronization for this product."
+msgstr "لم يتم العثور على متغيرات لهذا المنتج."
+
+#: admin/partials/gicapi-variants-display.php:541
+msgid "Save"
+msgstr "حفظ"
 
 #: admin/partials/settings/gicapi-settings-connection.php:15
 msgid "Base URL"
@@ -319,20 +734,19 @@ msgid ""
 "Click this button to discard the current token and get a new one from the API."
 msgstr "اضغط على هذا الزر لإلغاء الرمز الحالي والحصول على واحد جديد من API."
 
-#: admin/partials/settings/gicapi-settings-cron.php:39
-#: admin/partials/settings/gicapi-settings-cron.php:264
+#: admin/partials/settings/gicapi-settings-cron.php:46
 msgid "🔄 Product Synchronization Cron Job"
 msgstr "🔄 مهمة مجدولة للتزامن المنتجات"
 
-#: admin/partials/settings/gicapi-settings-cron.php:45
+#: admin/partials/settings/gicapi-settings-cron.php:52
 msgid "Product Sync Cron Job"
 msgstr "مهمة مجدولة للتزامن المنتجات"
 
-#: admin/partials/settings/gicapi-settings-cron.php:50
+#: admin/partials/settings/gicapi-settings-cron.php:57
 msgid "Enable Cron Job for Product Status Synchronization"
 msgstr "تفعيل مهمة مجدولة للتزامن حالة المنتجات"
 
-#: admin/partials/settings/gicapi-settings-cron.php:53
+#: admin/partials/settings/gicapi-settings-cron.php:60
 msgid ""
 "Automatically sync product statuses from Gift-i-Card to WooCommerce at "
 "regular intervals. This ensures your product stock statuses are always up to "
@@ -341,27 +755,22 @@ msgstr ""
 "تزامن خودك لحالة المنتجات من Gift-i-Card بووكامرس في فواصل زمنية منتظمة. هذا "
 "يضمن أن حالة المخزون لمنتجاتك دائماً حديثة."
 
-#: admin/partials/settings/gicapi-settings-cron.php:60
+#: admin/partials/settings/gicapi-settings-cron.php:67
 msgid "Product Sync Interval"
 msgstr "فاصل التزامن"
 
-#: admin/partials/settings/gicapi-settings-cron.php:71
+#: admin/partials/settings/gicapi-settings-cron.php:78
 msgid ""
 "How often should the system synchronize product status? Recommended: 2-3 "
 "times a day."
 msgstr ""
 "كيف يجب أن يتزامن جهازك حالة المنتجات؟ الموصى به: مرتين أو ثلاث مرات في اليوم."
 
-#: admin/partials/settings/gicapi-settings-cron.php:78
+#: admin/partials/settings/gicapi-settings-cron.php:85
 msgid "Manual Product Sync"
 msgstr "تزامن منتجات ديناميكي"
 
-#: admin/partials/settings/gicapi-settings-cron.php:82
-#: admin/partials/settings/gicapi-settings-cron.php:372
-msgid "Sync All Products Now"
-msgstr "تزامن جميع المنتجات الآن"
-
-#: admin/partials/settings/gicapi-settings-cron.php:85
+#: admin/partials/settings/gicapi-settings-cron.php:92
 msgid ""
 "Click this button to manually trigger synchronization of all mapped products. "
 "This is useful for testing or immediate updates."
@@ -369,20 +778,20 @@ msgstr ""
 "للبدء في تزامن ديناميكي كل المنتجات غير المرتبطة، اضغط على هذا الزر. هذا مفيد "
 "للاختبار أو التحديثات الفورية."
 
-#: admin/partials/settings/gicapi-settings-cron.php:99
-#: admin/partials/settings/gicapi-settings-cron.php:273
+#: admin/partials/settings/gicapi-settings-cron.php:106
+#: admin/partials/settings/gicapi-settings-cron.php:294
 msgid "📦 Order Updating Cron Job"
 msgstr "📦 مهمة مجدولة لتحديث الطلبات"
 
-#: admin/partials/settings/gicapi-settings-cron.php:105
+#: admin/partials/settings/gicapi-settings-cron.php:112
 msgid "Order Updating through Cron Job"
 msgstr "تحديث الطلبات من خلال مهمة مجدولة"
 
-#: admin/partials/settings/gicapi-settings-cron.php:110
+#: admin/partials/settings/gicapi-settings-cron.php:117
 msgid "Enable Cron Job for Order Updating (not recommended)"
 msgstr "تفعيل مهمة مجدولة لتحديث الطلبات (غير موصى به)"
 
-#: admin/partials/settings/gicapi-settings-cron.php:113
+#: admin/partials/settings/gicapi-settings-cron.php:120
 msgid ""
 "If your WooCommerce store is running on a real domain with HTTPS, orders are "
 "automatically updated via webhooks and you do not need to enable cron jobs. "
@@ -393,11 +802,11 @@ msgstr ""
 "تلقائياً عبر وب هوك ولا تحتاج إلى تفعيل المهام المجدولة. المهام المجدولة موصى "
 "بها فقط للبيئات التطويرية أو عندما لا يكون هناك وب هوك."
 
-#: admin/partials/settings/gicapi-settings-cron.php:120
+#: admin/partials/settings/gicapi-settings-cron.php:127
 msgid "Update Interval"
 msgstr "فاصل التحديث"
 
-#: admin/partials/settings/gicapi-settings-cron.php:131
+#: admin/partials/settings/gicapi-settings-cron.php:138
 msgid ""
 "How often the system should check for order updates. Recommended: Every 5 "
 "minutes for fastest updates."
@@ -405,16 +814,11 @@ msgstr ""
 "كيف يجب أن يتحقق جهازك من تحديثات الطلبات؟ الموصى به: كل 5 دقائق لأفضل "
 "تحديثات."
 
-#: admin/partials/settings/gicapi-settings-cron.php:138
+#: admin/partials/settings/gicapi-settings-cron.php:145
 msgid "Manual Update"
 msgstr "تحديث ديناميكي"
 
-#: admin/partials/settings/gicapi-settings-cron.php:142
-#: admin/partials/settings/gicapi-settings-cron.php:342
-msgid "Update Pending/Processing Orders Now"
-msgstr "تحديث الطلبات المعلقة / المعالجة حالياً"
-
-#: admin/partials/settings/gicapi-settings-cron.php:145
+#: admin/partials/settings/gicapi-settings-cron.php:152
 msgid ""
 "Click this button to manually trigger an update of all pending and processing "
 "orders. This is useful for testing or immediate updates."
@@ -422,66 +826,60 @@ msgstr ""
 "للبدء في تحديث ديناميكي كل الطلبات المعلقة والمعالجة، اضغط على هذا الزر. هذا "
 "مفيد للاختبار أو التحديثات الفورية."
 
-#: admin/partials/settings/gicapi-settings-cron.php:159
+#: admin/partials/settings/gicapi-settings-cron.php:166
 msgid "🕒 Cron Job Status"
 msgstr "🕒 حالة مهمة مجدولة"
 
-#: admin/partials/settings/gicapi-settings-cron.php:165
+#: admin/partials/settings/gicapi-settings-cron.php:172
 msgid "Product Sync Status"
 msgstr "حالة التزامن المنتجات"
 
-#: admin/partials/settings/gicapi-settings-cron.php:171
-#: admin/partials/settings/gicapi-settings-cron.php:205
+#: admin/partials/settings/gicapi-settings-cron.php:178
+#: admin/partials/settings/gicapi-settings-cron.php:225
 msgid "Enabled:"
 msgstr "مفعل:"
 
-#: admin/partials/settings/gicapi-settings-cron.php:173
-#: admin/partials/settings/gicapi-settings-cron.php:207
+#: admin/partials/settings/gicapi-settings-cron.php:180
+#: admin/partials/settings/gicapi-settings-cron.php:227
 msgid "Yes"
 msgstr "نعم"
 
-#: admin/partials/settings/gicapi-settings-cron.php:173
-#: admin/partials/settings/gicapi-settings-cron.php:207
+#: admin/partials/settings/gicapi-settings-cron.php:180
+#: admin/partials/settings/gicapi-settings-cron.php:227
 msgid "No"
 msgstr "لا"
 
-#: admin/partials/settings/gicapi-settings-cron.php:179
-#: admin/partials/settings/gicapi-settings-cron.php:213
+#: admin/partials/settings/gicapi-settings-cron.php:186
+#: admin/partials/settings/gicapi-settings-cron.php:233
 msgid "Next Run:"
 msgstr "التنفيذ التالي:"
 
-#: admin/partials/settings/gicapi-settings-cron.php:186
-#: admin/partials/settings/gicapi-settings-cron.php:219
+#: admin/partials/settings/gicapi-settings-cron.php:193
+#: admin/partials/settings/gicapi-settings-cron.php:239
 msgid "Interval:"
 msgstr "الفاصل:"
 
-#: admin/partials/settings/gicapi-settings-cron.php:192
+#: admin/partials/settings/gicapi-settings-cron.php:198
+msgid "Batch Progress:"
+msgstr "تقدم الدفعة:"
+
+#: admin/partials/settings/gicapi-settings-cron.php:212
 msgid "Product sync status information not available."
 msgstr "معلومات حالة التزامن المنتج غير متوفرة."
 
-#: admin/partials/settings/gicapi-settings-cron.php:199
+#: admin/partials/settings/gicapi-settings-cron.php:219
 msgid "Order Update Status"
 msgstr "حالة تحديث الطلب"
 
-#: admin/partials/settings/gicapi-settings-cron.php:224
+#: admin/partials/settings/gicapi-settings-cron.php:244
 msgid "Order update status information not available."
 msgstr "معلومات حالة تحديث الطلب غير متوفرة."
 
-#: admin/partials/settings/gicapi-settings-cron.php:231
+#: admin/partials/settings/gicapi-settings-cron.php:251
 msgid "Troubleshooting"
 msgstr "تشخيص الأعطال"
 
-#: admin/partials/settings/gicapi-settings-cron.php:235
-#: admin/partials/settings/gicapi-settings-cron.php:406
-msgid "Reschedule Cron Job"
-msgstr "إعادة زمنة مهمة مجدولة"
-
-#: admin/partials/settings/gicapi-settings-cron.php:238
-#: admin/partials/settings/gicapi-settings-cron.php:440
-msgid "Check & Repair Cron Job"
-msgstr "التحقق من إصلاح مهمة مجدولة"
-
-#: admin/partials/settings/gicapi-settings-cron.php:241
+#: admin/partials/settings/gicapi-settings-cron.php:261
 msgid ""
 "If the cron job is not running, click these buttons to troubleshoot. "
 "\"Reschedule\" will clear and recreate the cron job. \"Check & Repair\" will "
@@ -491,11 +889,17 @@ msgstr ""
 "زمنة المهمة\" ستمسح وإعادة إنشاء المهمة المجدولة. \"التحقق من إصلاح\" ستكتشف "
 "وتصلح المشاكل تلقائياً."
 
-#: admin/partials/settings/gicapi-settings-cron.php:257
+#: admin/partials/settings/gicapi-settings-cron.php:277
 msgid "📋 How It Works"
 msgstr "📋 كيف يعمل"
 
-#: admin/partials/settings/gicapi-settings-cron.php:266
+#: admin/partials/settings/gicapi-settings-cron.php:284
+#, fuzzy
+#| msgid "🔄 Product Synchronization Cron Job"
+msgid "🔄 Product Synchronization Cron Job (Batch Processing)"
+msgstr "🔄 مهمة مجدولة للتزامن المنتجات"
+
+#: admin/partials/settings/gicapi-settings-cron.php:286
 msgid ""
 "The product synchronization cron job runs automatically at the specified "
 "interval (recommended: 2-3 times a day)."
@@ -503,36 +907,43 @@ msgstr ""
 "مهمة مجدولة للتزامن المنتجات تعمل تلقائياً في الفاصل الزمني المحدد (الموصى به: "
 "2-3 مرات في اليوم)."
 
-#: admin/partials/settings/gicapi-settings-cron.php:267
+#: admin/partials/settings/gicapi-settings-cron.php:287
 msgid ""
-"It finds all WooCommerce products that are mapped to Gift-i-Card variants."
+"It uses batch processing to handle large numbers of products efficiently - "
+"processing only a configurable number of products per cron execution."
 msgstr ""
-"تجد هذا الإضافة جميع منتجات وووكامرس التي ترتبط بأنواع منتجات Gift-i-Card."
+"يستخدم معالجة الدفعات للتعامل مع أعداد كبيرة من المنتجات بكفاءة - معالجة فقط "
+"عدد قابل للتكوين من المنتجات لكل تنفيذ مجدول."
 
-#: admin/partials/settings/gicapi-settings-cron.php:268
+#: admin/partials/settings/gicapi-settings-cron.php:288
 msgid ""
-"For each mapped product, it calls the Gift-i-Card API to get the latest stock "
-"status."
+"Each batch processes a group of products, calls the Gift-i-Card API for their "
+"stock status, and updates WooCommerce accordingly."
 msgstr ""
-"بالنسبة لكل منتج مرتبط، يقوم API الخاص بـ Gift-i-Card باستدعاء للحصول على آخر "
-"حالة مخزون."
 
-#: admin/partials/settings/gicapi-settings-cron.php:269
+#: admin/partials/settings/gicapi-settings-cron.php:289
 msgid ""
-"It updates the WooCommerce product stock status based on the Gift-i-Card "
-"status and your configured mapping rules."
+"The system tracks progress across multiple cron executions, resuming where "
+"the previous batch left off."
 msgstr ""
-"تحديث حالة مخزون منتج وووكامرس بناءً على حالة Gift-i-Card وقوانين الترتيب "
-"المكونة."
 
-#: admin/partials/settings/gicapi-settings-cron.php:270
+#: admin/partials/settings/gicapi-settings-cron.php:290
 msgid ""
-"This ensures your product availability is always synchronized with Gift-i-"
-"Card inventory."
+"Once all products are processed, the system automatically resets for the next "
+"full synchronization cycle."
 msgstr ""
-"هذا يضمن أن متوفرة المنتجات الخاصة بك دائماً متزامنة مع مخزون Gift-i-Card."
+"بمجرد معالجة جميع المنتجات، يقوم النظام بإعادة الضبط تلقائياً لدورة التزامن "
+"الكاملة التالية."
 
-#: admin/partials/settings/gicapi-settings-cron.php:275
+#: admin/partials/settings/gicapi-settings-cron.php:291
+msgid ""
+"Batch size can be configured in Product Settings to optimize performance "
+"based on your server capabilities."
+msgstr ""
+"يمكن تكوين حجم الدفعة في إعدادات المنتج لتحسين الأداء بناءً على إمكانيات "
+"الخادم الخاص بك."
+
+#: admin/partials/settings/gicapi-settings-cron.php:296
 msgid ""
 "The order update cron job runs automatically at the specified interval "
 "(recommended: every 5 minutes)."
@@ -540,7 +951,7 @@ msgstr ""
 "مهمة مجدولة لتحديث الطلب تعمل تلقائياً في الفاصل الزمني المحدد (الموصى به: كل "
 "5 دقائق)."
 
-#: admin/partials/settings/gicapi-settings-cron.php:276
+#: admin/partials/settings/gicapi-settings-cron.php:297
 msgid ""
 "It finds all WooCommerce orders that have Gift-i-Card orders in \"pending\" "
 "or \"processing\" status."
@@ -548,18 +959,18 @@ msgstr ""
 "تجد هذا الإضافة جميع طلبات وووكامرس التي تحتوي طلبات Gift-i-Card وفي حالة "
 "\"في انتظار\" أو \"في المعالجة\"."
 
-#: admin/partials/settings/gicapi-settings-cron.php:277
+#: admin/partials/settings/gicapi-settings-cron.php:298
 msgid ""
 "For each active order, it calls the Gift-i-Card API to get the latest status."
 msgstr ""
 "بالنسبة لكل طلب فعال، يقوم API الخاص بـ Gift-i-Card باستدعاء للحصول على آخر "
 "حالة."
 
-#: admin/partials/settings/gicapi-settings-cron.php:278
+#: admin/partials/settings/gicapi-settings-cron.php:299
 msgid "If the status has changed, it updates the order and adds a note."
 msgstr "إذا تغيرت الحالة، يقوم بتحديث الطلب وإضافة ذكرية."
 
-#: admin/partials/settings/gicapi-settings-cron.php:279
+#: admin/partials/settings/gicapi-settings-cron.php:300
 msgid ""
 "If all Gift-i-Card orders in a WooCommerce order are completed, it can "
 "automatically complete the WooCommerce order (if enabled)."
@@ -567,7 +978,7 @@ msgstr ""
 "إذا تم إكمال جميع طلبات Gift-i-Card في طلب WooCommerce، يمكن أن يكمل الطلب "
 "تلقائياً (إذا كان مفعلاً)."
 
-#: admin/partials/settings/gicapi-settings-cron.php:280
+#: admin/partials/settings/gicapi-settings-cron.php:301
 msgid ""
 "If any Gift-i-Card orders fail, it can automatically change the WooCommerce "
 "order status (if enabled)."
@@ -575,11 +986,11 @@ msgstr ""
 "إذا فشل أي من طلبات Gift-i-Card، يمكن أن يغير الطلب الأوروبي الأوروبي تلقائياً "
 "(إذا كان مفعلاً)."
 
-#: admin/partials/settings/gicapi-settings-cron.php:285
+#: admin/partials/settings/gicapi-settings-cron.php:306
 msgid "Note:"
 msgstr "ملاحظة:"
 
-#: admin/partials/settings/gicapi-settings-cron.php:286
+#: admin/partials/settings/gicapi-settings-cron.php:307
 msgid ""
 "These features require WordPress cron to be working properly. If you're using "
 "a real cron job, make sure to disable WordPress cron and set up a real cron "
@@ -587,38 +998,6 @@ msgid ""
 msgstr ""
 "هذه الميزات تتطلب أن يعمل cron WordPress بشكل صحيح. إذا كنت تستخدم كرون "
 "حقيقي، تأكد من إلغاء cron WordPress وإعداد كرون حقيقي لاستدعاء wp-cron.php."
-
-#: admin/partials/settings/gicapi-settings-cron.php:321
-msgid "Updating..."
-msgstr "يتم التحديث..."
-
-#: admin/partials/settings/gicapi-settings-cron.php:339
-msgid "An error occurred while updating orders."
-msgstr "حدث خطأ أثناء تحديث الطلبات."
-
-#: admin/partials/settings/gicapi-settings-cron.php:351
-msgid "Syncing..."
-msgstr "يتم التزامن..."
-
-#: admin/partials/settings/gicapi-settings-cron.php:369
-msgid "An error occurred while syncing products."
-msgstr "حدث خطأ أثناء التزامن المنتجات."
-
-#: admin/partials/settings/gicapi-settings-cron.php:381
-msgid "Rescheduling..."
-msgstr "يتم إعادة زمنة مهمة مجدولة..."
-
-#: admin/partials/settings/gicapi-settings-cron.php:403
-msgid "An error occurred while rescheduling cron job."
-msgstr "حدث خطأ أثناء إعادة زمنة المهمة المجدولة."
-
-#: admin/partials/settings/gicapi-settings-cron.php:415
-msgid "Checking..."
-msgstr "يتم التحقق..."
-
-#: admin/partials/settings/gicapi-settings-cron.php:437
-msgid "An error occurred while checking cron job."
-msgstr "حدث خطأ أثناء التحقق من المهمة المجدولة."
 
 #: admin/partials/settings/gicapi-settings-display.php:15
 msgid "Add to Email"
@@ -759,230 +1138,426 @@ msgstr "تغيير حالة الطلب عند الإلغاء أو الإنقاذ
 msgid "Status to set when cancelled orders"
 msgstr "الحالة التي يتغير إليها الطلب الملغاة"
 
-#: admin/partials/settings/gicapi-settings-product.php:15
+#: admin/partials/settings/gicapi-settings-product.php:17
 msgid "Product Status Mapping Settings"
 msgstr "إعدادات ترتيب حالة المنتجات"
 
-#: admin/partials/settings/gicapi-settings-product.php:16
+#: admin/partials/settings/gicapi-settings-product.php:18
 msgid ""
 "Configure how Gift-i-Card product statuses should be synchronized with "
 "WooCommerce stock status."
 msgstr "تكوين كيفية تزامن حالة المنتجات في Gift-i-Card مع حالة مخزون وووكامرس."
 
-#: admin/partials/settings/gicapi-settings-product.php:18
+#: admin/partials/settings/gicapi-settings-product.php:20
 msgid "Gift-i-Card Status Mapping"
 msgstr "ترتيب حالة التسليم في Gift-i-Card"
 
-#: admin/partials/settings/gicapi-settings-product.php:19
+#: admin/partials/settings/gicapi-settings-product.php:21
 msgid ""
 "Configure how each Gift-i-Card delivery status should affect WooCommerce "
 "stock status:"
 msgstr "تكوين كيفية تأثير كل حالة تسليم Gift-i-Card على حالة مخزون WooCommerce:"
 
-#: admin/partials/settings/gicapi-settings-product.php:25
+#: admin/partials/settings/gicapi-settings-product.php:27
 msgid "Instant Delivery"
 msgstr "التسليم الفوري"
-
-#: admin/partials/settings/gicapi-settings-product.php:29
-#: admin/partials/settings/gicapi-settings-product.php:45
-#: admin/partials/settings/gicapi-settings-product.php:61
-#: admin/partials/settings/gicapi-settings-product.php:77
-msgid "No Change"
-msgstr "بدون تغيير"
-
-#: admin/partials/settings/gicapi-settings-product.php:30
-#: admin/partials/settings/gicapi-settings-product.php:46
-#: admin/partials/settings/gicapi-settings-product.php:62
-#: admin/partials/settings/gicapi-settings-product.php:78
-msgid "Change to In Stock"
-msgstr "تغيير إلى موجود"
 
 #: admin/partials/settings/gicapi-settings-product.php:31
 #: admin/partials/settings/gicapi-settings-product.php:47
 #: admin/partials/settings/gicapi-settings-product.php:63
 #: admin/partials/settings/gicapi-settings-product.php:79
-msgid "Change to On Back Order"
-msgstr "تغيير إلى طلب في الخلف"
+msgid "No Change"
+msgstr "بدون تغيير"
 
 #: admin/partials/settings/gicapi-settings-product.php:32
 #: admin/partials/settings/gicapi-settings-product.php:48
 #: admin/partials/settings/gicapi-settings-product.php:64
 #: admin/partials/settings/gicapi-settings-product.php:80
+msgid "Change to In Stock"
+msgstr "تغيير إلى موجود"
+
+#: admin/partials/settings/gicapi-settings-product.php:33
+#: admin/partials/settings/gicapi-settings-product.php:49
+#: admin/partials/settings/gicapi-settings-product.php:65
+#: admin/partials/settings/gicapi-settings-product.php:81
+msgid "Change to On Back Order"
+msgstr "تغيير إلى طلب في الخلف"
+
+#: admin/partials/settings/gicapi-settings-product.php:34
+#: admin/partials/settings/gicapi-settings-product.php:50
+#: admin/partials/settings/gicapi-settings-product.php:66
+#: admin/partials/settings/gicapi-settings-product.php:82
 msgid "Change to Out of Stock"
 msgstr "تغيير إلى غير موجود"
 
-#: admin/partials/settings/gicapi-settings-product.php:34
+#: admin/partials/settings/gicapi-settings-product.php:36
 msgid "Action when gift card has instant/automatic delivery"
 msgstr "العملية الزمنية عندما يكون البطاقة الهدية تسليماً فورياً/خودكاراً"
 
-#: admin/partials/settings/gicapi-settings-product.php:41
+#: admin/partials/settings/gicapi-settings-product.php:43
 msgid "Manual Delivery"
 msgstr "التسليم اليدوي"
 
-#: admin/partials/settings/gicapi-settings-product.php:50
+#: admin/partials/settings/gicapi-settings-product.php:52
 msgid "Action when gift card requires operator intervention"
 msgstr ""
 "العملية الزمنية عندما تتطلب البطاقة الهدية تدخل من طرف المشغل Gift-i-Card"
 
-#: admin/partials/settings/gicapi-settings-product.php:57
+#: admin/partials/settings/gicapi-settings-product.php:59
 msgid "Out of Stock"
 msgstr "غير موجود"
 
-#: admin/partials/settings/gicapi-settings-product.php:66
+#: admin/partials/settings/gicapi-settings-product.php:68
 msgid "Action when gift card is out of stock"
 msgstr "العملية الزمنية عندما تكون البطاقة الهدية غير موجودة"
 
-#: admin/partials/settings/gicapi-settings-product.php:73
+#: admin/partials/settings/gicapi-settings-product.php:75
 msgid "Deleted/Not Available"
 msgstr "حذف / غير متوفر"
 
-#: admin/partials/settings/gicapi-settings-product.php:82
+#: admin/partials/settings/gicapi-settings-product.php:84
 msgid "Action when gift card is deleted or not available"
 msgstr "العملية الزمنية عندما تم حذف البطاقة الهدية أو غير متوفرة"
 
-#: admin/partials/settings/gicapi-settings-product.php:87
+#: admin/partials/settings/gicapi-settings-product.php:89
+msgid "Stock Synchronization Settings"
+msgstr "إعدادات مزامنة المخزون"
+
+#: admin/partials/settings/gicapi-settings-product.php:90
+msgid ""
+"Configure how product stock status should be synchronized from Gift-i-Card "
+"API."
+msgstr ""
+"قم بتكوين كيفية مزامنة حالة مخزون المنتج من واجهة برمجة تطبيقات Gift-i-Card."
+
+#: admin/partials/settings/gicapi-settings-product.php:95
+msgid "Enable Stock Sync (Default)"
+msgstr "تمكين مزامنة المخزون (افتراضي)"
+
+#: admin/partials/settings/gicapi-settings-product.php:99
+msgid ""
+"Enable automatic stock status synchronization from Gift-i-Card API by default "
+"for all products. Individual products can override this setting."
+msgstr ""
+"تمكين مزامنة حالة المخزون التلقائية من واجهة برمجة تطبيقات Gift-i-Card "
+"افتراضيًا لجميع المنتجات. يمكن للمنتجات الفردية تجاوز هذا الإعداد."
+
+#: admin/partials/settings/gicapi-settings-product.php:104
 msgid "Advanced Settings"
 msgstr "إعدادات في المستوى المتقدم"
 
-#: admin/partials/settings/gicapi-settings-product.php:91
+#: admin/partials/settings/gicapi-settings-product.php:108
 msgid "Auto Sync on Product Load"
 msgstr "تزامن تلقائي عند تحميل المنتج"
 
-#: admin/partials/settings/gicapi-settings-product.php:95
+#: admin/partials/settings/gicapi-settings-product.php:112
 msgid "Automatically sync product status when product page is loaded."
 msgstr "تزامن خودك لحالة المنتج عند تحميل صفحة المنتج."
 
-#: includes/class-gicapi-ajax.php:31 includes/class-gicapi-ajax.php:116
-#: includes/class-gicapi-ajax.php:179 includes/class-gicapi-ajax.php:246
-#: includes/class-gicapi-ajax.php:304 includes/class-gicapi-ajax.php:356
-#: includes/class-gicapi-ajax.php:407 includes/class-gicapi-cron.php:244
-#: includes/class-gicapi-cron.php:263 includes/class-gicapi-cron.php:282
-#: includes/class-gicapi-cron.php:439
+#: admin/partials/settings/gicapi-settings-product.php:118
+msgid "Sync Batch Size"
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-product.php:122
+msgid ""
+"Number of products to process in each batch during cron job synchronization. "
+"Recommended: 10-20 products per batch."
+msgstr ""
+
+#: admin/partials/settings/gicapi-settings-product.php:127
+#, fuzzy
+#| msgid "Stock Synchronization Settings"
+msgid "Price Synchronization Settings"
+msgstr "إعدادات مزامنة المخزون"
+
+#: admin/partials/settings/gicapi-settings-product.php:128
+#, fuzzy
+#| msgid ""
+#| "Configure how product stock status should be synchronized from Gift-i-Card "
+#| "API."
+msgid ""
+"Configure how product prices should be synchronized from Gift-i-Card API."
+msgstr ""
+"قم بتكوين كيفية مزامنة حالة مخزون المنتج من واجهة برمجة تطبيقات Gift-i-Card."
+
+#: admin/partials/settings/gicapi-settings-product.php:143
+#, fuzzy
+#| msgid ""
+msgid ""
+"Enable automatic price synchronization from Gift-i-Card API. Prices will be "
+"updated based on variant prices plus profit margin."
+msgstr ""
+"تمكين مزامنة السعر التلقائية من واجهة برمجة تطبيقات Gift-i-Card. سيتم تحديث "
+"الأسعار بناءً على أسعار المتغيرات بالإضافة إلى هامش الربح."
+
+#: admin/partials/settings/gicapi-settings-product.php:156
+msgid ""
+"Choose how profit margin should be calculated: as a percentage of the variant "
+"price or as a fixed amount added to the price."
+msgstr ""
+"اختر كيفية حساب هامش الربح: كنسبة مئوية من سعر المتغير أو كمبلغ ثابت يضاف إلى "
+"السعر."
+
+#: admin/partials/settings/gicapi-settings-product.php:162
+msgid "Default Profit Margin"
+msgstr "هامش الربح الافتراضي"
+
+#: admin/partials/settings/gicapi-settings-product.php:169
+msgid ""
+"Default profit margin as percentage (e.g., 10 for 10%). This will be added to "
+"the variant price from API."
+msgstr ""
+"هامش الربح الافتراضي كنسبة مئوية (مثلاً: 10 لـ 10%). سيتم إضافة هذا إلى سعر "
+"المتغير من واجهة برمجة التطبيقات."
+
+#: admin/partials/settings/gicapi-settings-product.php:171
+msgid ""
+"Default profit margin as fixed amount (e.g., 5.00). This will be added to the "
+"variant price from API."
+msgstr ""
+"هامش الربح الافتراضي كمبلغ ثابت (مثلاً: 5.00). سيتم إضافة هذا إلى سعر المتغير "
+"من واجهة برمجة التطبيقات."
+
+#: includes/class-gicapi-ajax.php:38 includes/class-gicapi-ajax.php:123
+#: includes/class-gicapi-ajax.php:186 includes/class-gicapi-ajax.php:253
+#: includes/class-gicapi-ajax.php:347 includes/class-gicapi-ajax.php:377
+#: includes/class-gicapi-ajax.php:647 includes/class-gicapi-ajax.php:673
+#: includes/class-gicapi-ajax.php:737 includes/class-gicapi-ajax.php:789
+#: includes/class-gicapi-ajax.php:840 includes/class-gicapi-ajax.php:877
+#: includes/class-gicapi-ajax.php:906 includes/class-gicapi-ajax.php:943
+#: includes/class-gicapi-cron.php:265 includes/class-gicapi-cron.php:284
+#: includes/class-gicapi-cron.php:303 includes/class-gicapi-cron.php:460
 msgid "Permission denied"
 msgstr "الوصول غير مصرح به"
 
-#: includes/class-gicapi-ajax.php:65
+#: includes/class-gicapi-ajax.php:72
 msgid "Simple Product"
 msgstr "منتج بسيط"
 
-#: includes/class-gicapi-ajax.php:68
+#: includes/class-gicapi-ajax.php:75
 msgid "Variable Product"
 msgstr "منتج متغير"
 
 #. translators: %s: parent product name
-#: includes/class-gicapi-ajax.php:74
+#: includes/class-gicapi-ajax.php:81
 #, php-format
 msgid "Variation of: %s"
 msgstr "المتغير من: %s"
 
-#: includes/class-gicapi-ajax.php:76
+#: includes/class-gicapi-ajax.php:83
 msgid "Product Variation"
 msgstr "المتغير من المنتج"
 
-#: includes/class-gicapi-ajax.php:80
+#: includes/class-gicapi-ajax.php:87
 msgid "Grouped Product"
 msgstr "منتجات مجمعة"
 
-#: includes/class-gicapi-ajax.php:83
+#: includes/class-gicapi-ajax.php:90
 msgid "External Product"
 msgstr "منتج خارجي"
 
-#: includes/class-gicapi-ajax.php:86
+#: includes/class-gicapi-ajax.php:93
 #: includes/class-gicapi-gift-card-display.php:369
-#: includes/class-gicapi-gift-card-display.php:487
+#: includes/class-gicapi-gift-card-display.php:463
 msgid "Product"
 msgstr "المنتج"
 
-#: includes/class-gicapi-ajax.php:125 includes/class-gicapi-ajax.php:188
-#: includes/class-gicapi-ajax.php:253 includes/class-gicapi-ajax.php:310
-#: includes/class-gicapi-ajax.php:362
+#: includes/class-gicapi-ajax.php:132 includes/class-gicapi-ajax.php:195
+#: includes/class-gicapi-ajax.php:272 includes/class-gicapi-ajax.php:408
+#: includes/class-gicapi-ajax.php:654 includes/class-gicapi-ajax.php:680
+#: includes/class-gicapi-ajax.php:743 includes/class-gicapi-ajax.php:795
+#: includes/class-gicapi-ajax.php:886 includes/class-gicapi-ajax.php:916
+#: includes/class-gicapi-ajax.php:951
 msgid "Invalid parameters"
 msgstr "المعلمات غير صالحة"
 
-#: includes/class-gicapi-ajax.php:154
+#: includes/class-gicapi-ajax.php:161
 msgid "This mapping already exists"
 msgstr "الاتصال بين المنتجات موجود بالفعل"
 
-#: includes/class-gicapi-ajax.php:168
+#: includes/class-gicapi-ajax.php:175
 msgid "Error saving mapping"
 msgstr "خطأ في حفظ الاتصال بين المنتجات"
 
-#: includes/class-gicapi-ajax.php:171
+#: includes/class-gicapi-ajax.php:178
 msgid "Mapping added successfully"
 msgstr "تمت إضافة الاتصال بنجاح"
 
-#: includes/class-gicapi-ajax.php:221
+#: includes/class-gicapi-ajax.php:228
 msgid "Mapping not found"
 msgstr "الاتصال بين المنتجات غير موجود"
 
-#: includes/class-gicapi-ajax.php:238
+#: includes/class-gicapi-ajax.php:245
 msgid "Mapping removed successfully"
 msgstr "تم حذف الاتصال بنجاح"
 
-#: includes/class-gicapi-ajax.php:258 includes/class-gicapi-ajax.php:315
-#: includes/class-gicapi-ajax.php:367
+#: includes/class-gicapi-ajax.php:276
+msgid "Price cannot be negative"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:280 includes/class-gicapi-ajax.php:416
+#, fuzzy
+#| msgid "Invalid product or variant ID."
+msgid "Invalid product status"
+msgstr "معرف المنتج أو المتغير غير صالح."
+
+#: includes/class-gicapi-ajax.php:294 includes/class-gicapi-ajax.php:366
+#: includes/class-gicapi-ajax.php:430
+msgid "A product with this SKU already exists"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:316
+#, fuzzy
+#| msgid "Failed to create order: "
+msgid "Failed to create product"
+msgstr "فشل إنشاء الطلب: "
+
+#: includes/class-gicapi-ajax.php:339
+#, fuzzy
+#| msgid "Order created successfully"
+msgid "Simple product created and mapped successfully"
+msgstr "تم إنشاء الطلب بنجاح"
+
+#: includes/class-gicapi-ajax.php:353
+#, fuzzy
+#| msgid "Order ID is required"
+msgid "SKU is required"
+msgstr "رقم الطلب مطلوب"
+
+#: includes/class-gicapi-ajax.php:369
+msgid "SKU is available"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:412
+msgid "No variants selected"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:448
+#, fuzzy
+#| msgid "Failed to create order: "
+msgid "Failed to create variable product"
+msgstr "فشل إنشاء الطلب: "
+
+#: includes/class-gicapi-ajax.php:459
+#, php-format
+msgid "Variant at index %d is not valid"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:471
+#, php-format
+msgid "Variant SKU %s: Name is required"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:471
+#, fuzzy
+#| msgid "Unknown Product"
+msgid "Unknown"
+msgstr "منتج غير معروف"
+
+#: includes/class-gicapi-ajax.php:476
+#, php-format
+msgid "Variant %s: Price cannot be negative"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:481
+#, php-format
+msgid "Variant %s: SKU is required"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:520
+msgid "No valid variants to create"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:522
+msgid "Errors:"
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:525
+msgid "No variants were selected or received."
+msgstr ""
+
+#: includes/class-gicapi-ajax.php:621
+#, fuzzy
+#| msgid "Failed to create order: "
+msgid "Failed to create any variations"
+msgstr "فشل إنشاء الطلب: "
+
+#: includes/class-gicapi-ajax.php:639
+#, fuzzy
+#| msgid "Product stock sync settings saved successfully"
+msgid "Variable product created and selected variants mapped successfully"
+msgstr "تم حفظ إعدادات مزامنة مخزون المنتج بنجاح"
+
+#: includes/class-gicapi-ajax.php:662
+#, fuzzy
+#| msgid "No variants found for this product."
+msgid "No variants found for this product"
+msgstr "لم يتم العثور على متغيرات لهذا المنتج."
+
+#: includes/class-gicapi-ajax.php:685 includes/class-gicapi-ajax.php:748
+#: includes/class-gicapi-ajax.php:800
 msgid "Order not found"
 msgstr "الطلب غير موجود"
 
-#: includes/class-gicapi-ajax.php:263
+#: includes/class-gicapi-ajax.php:690
 msgid "Order item not found"
 msgstr "آيتم الطلب غير موجود"
 
-#: includes/class-gicapi-ajax.php:269 includes/class-gicapi-ajax.php:321
+#: includes/class-gicapi-ajax.php:696 includes/class-gicapi-ajax.php:754
 msgid "GICAPI Public class not available"
 msgstr "فئة GICAPI Public غير متوفرة"
 
-#: includes/class-gicapi-ajax.php:274 includes/class-gicapi-ajax.php:326
+#: includes/class-gicapi-ajax.php:701 includes/class-gicapi-ajax.php:759
 msgid "GICAPI API not available"
 msgstr "فئة GICAPI API غير متوفرة"
 
-#: includes/class-gicapi-ajax.php:280 includes/class-gicapi-ajax.php:332
-#: includes/class-gicapi-ajax.php:379
+#: includes/class-gicapi-ajax.php:707 includes/class-gicapi-ajax.php:765
+#: includes/class-gicapi-ajax.php:812
 msgid "Order processing is disabled"
 msgstr "معالجة الطلبات غير مفعلة"
 
-#: includes/class-gicapi-ajax.php:293
-msgid "Order created successfully"
-msgstr "تم إنشاء الطلب بنجاح"
-
-#: includes/class-gicapi-ajax.php:295
+#: includes/class-gicapi-ajax.php:720
 msgid "Failed to create order: "
 msgstr "فشل إنشاء الطلب: "
 
-#: includes/class-gicapi-ajax.php:338 includes/class-gicapi-ajax.php:385
-msgid "Order has not been processed yet"
-msgstr "الطلب لم يتم معالجته بعد"
-
-#: includes/class-gicapi-ajax.php:345
-msgid "Order confirmed successfully"
-msgstr "تم تأكيد الطلب بنجاح"
-
-#: includes/class-gicapi-ajax.php:347
+#: includes/class-gicapi-ajax.php:726 includes/class-gicapi-ajax.php:780
 msgid "Failed to confirm order: "
 msgstr "فشل تأكيد الطلب: "
 
-#: includes/class-gicapi-ajax.php:373
+#: includes/class-gicapi-ajax.php:729
+msgid "Order created successfully"
+msgstr "تم إنشاء الطلب بنجاح"
+
+#: includes/class-gicapi-ajax.php:771 includes/class-gicapi-ajax.php:818
+msgid "Order has not been processed yet"
+msgstr "الطلب لم يتم معالجته بعد"
+
+#: includes/class-gicapi-ajax.php:778
+msgid "Order confirmed successfully"
+msgstr "تم تأكيد الطلب بنجاح"
+
+#: includes/class-gicapi-ajax.php:806
 msgid "GICAPI Order class not available"
 msgstr "فئة GICAPI Order غير متوفرة"
 
-#: includes/class-gicapi-ajax.php:393
+#: includes/class-gicapi-ajax.php:826
 msgid "Order status updated successfully"
 msgstr "تم تحديث حالة الطلب بنجاح"
 
-#: includes/class-gicapi-ajax.php:395
+#: includes/class-gicapi-ajax.php:828
 msgid "No updates were made to the order status"
 msgstr "لم يتم إجراء أي تحديثات على حالة الطلب"
 
-#: includes/class-gicapi-ajax.php:398
+#: includes/class-gicapi-ajax.php:831
 msgid "Failed to update order status: "
 msgstr "فشل تحديث حالة الطلب: "
 
-#: includes/class-gicapi-ajax.php:413
+#: includes/class-gicapi-ajax.php:846
 msgid "GICAPI Product Sync class not available"
 msgstr "فئة GICAPI Product غير متوفرة"
 
 #. translators: 1: Total number of products, 2: Number of successful syncs, 3: Number of failed syncs
-#: includes/class-gicapi-ajax.php:423
+#: includes/class-gicapi-ajax.php:856
 #, php-format
 msgid ""
 "Product sync completed successfully. Total: %1$d, Successful: %2$d, Failed: "
@@ -990,31 +1565,53 @@ msgid ""
 msgstr "تم التزامن المنتج بنجاح. الكلي: %1$d، ناجح: %2$d، ناجح: %3$d"
 
 #. translators: Error message when product sync fails with unknown error
-#: includes/class-gicapi-ajax.php:431
+#: includes/class-gicapi-ajax.php:864
 msgid "Unknown error occurred during sync"
 msgstr "حدث خطأ غير معروف أثناء التزامن"
 
-#: includes/class-gicapi-ajax.php:435
+#: includes/class-gicapi-ajax.php:868
 msgid "Failed to sync products: "
 msgstr "فشل التزامن المنتجات: "
+
+#: includes/class-gicapi-ajax.php:890 includes/class-gicapi-ajax.php:920
+#, fuzzy
+#| msgid "Invalid product or variant ID."
+msgid "Invalid profit margin type"
+msgstr "معرف المنتج أو المتغير غير صالح."
+
+#: includes/class-gicapi-ajax.php:898
+msgid "Variant price sync settings saved successfully"
+msgstr "تم حفظ إعدادات مزامنة سعر المتغير بنجاح"
+
+#: includes/class-gicapi-ajax.php:925 includes/class-gicapi-ajax.php:956
+msgid "Product not found"
+msgstr "المنتج غير موجود"
+
+#: includes/class-gicapi-ajax.php:935
+msgid "Product price sync settings saved successfully"
+msgstr "تم حفظ إعدادات مزامنة سعر المنتج بنجاح"
+
+#: includes/class-gicapi-ajax.php:964
+msgid "Product stock sync settings saved successfully"
+msgstr "تم حفظ إعدادات مزامنة مخزون المنتج بنجاح"
 
 #: includes/class-gicapi-cron.php:86
 msgid "Every 5 minutes"
 msgstr "كل 5 دقائق"
 
-#: includes/class-gicapi-cron.php:250
+#: includes/class-gicapi-cron.php:271
 msgid "Manual order update completed"
 msgstr "تم إكمال تحديث ديناميكي للطلب"
 
-#: includes/class-gicapi-cron.php:269
+#: includes/class-gicapi-cron.php:290
 msgid "Cron job rescheduled successfully"
 msgstr "تم إعادة زمنة المهمة المجدولة بنجاح"
 
-#: includes/class-gicapi-cron.php:446
+#: includes/class-gicapi-cron.php:467
 msgid "Cron job checked and repaired successfully"
 msgstr "تم التحقق من إصلاح وتصليح المهمة المجدولة بنجاح"
 
-#: includes/class-gicapi-cron.php:448
+#: includes/class-gicapi-cron.php:469
 msgid "Cron job check and repair failed"
 msgstr "فشل التحقق من إصلاح وتصليح المهمة المجدولة"
 
@@ -1081,10 +1678,6 @@ msgstr "تومان"
 msgid "Gift-i-Card Order ID:"
 msgstr "معرف الطلب في Gift-i-Card:"
 
-#: includes/class-gicapi-gift-card-display.php:125
-msgid "Price:"
-msgstr "السعر:"
-
 #: includes/class-gicapi-gift-card-display.php:137
 msgid "Confirm Order Manually"
 msgstr "تأكيد ديناميكي للطلب"
@@ -1100,35 +1693,35 @@ msgstr "انتهاء الصلاحية عند:"
 #: includes/class-gicapi-gift-card-display.php:154
 #: includes/class-gicapi-gift-card-display.php:285
 #: includes/class-gicapi-gift-card-display.php:370
-#: includes/class-gicapi-gift-card-display.php:488
+#: includes/class-gicapi-gift-card-display.php:464
 msgid "License Key"
 msgstr "مفتاح الترخيص"
 
 #: includes/class-gicapi-gift-card-display.php:155
 #: includes/class-gicapi-gift-card-display.php:286
 #: includes/class-gicapi-gift-card-display.php:371
-#: includes/class-gicapi-gift-card-display.php:489
+#: includes/class-gicapi-gift-card-display.php:465
 msgid "Serial Number"
 msgstr "الرقم التسلسلي"
 
 #: includes/class-gicapi-gift-card-display.php:156
 #: includes/class-gicapi-gift-card-display.php:287
 #: includes/class-gicapi-gift-card-display.php:372
-#: includes/class-gicapi-gift-card-display.php:490
+#: includes/class-gicapi-gift-card-display.php:466
 msgid "Card Code"
 msgstr "كود البطاقة"
 
 #: includes/class-gicapi-gift-card-display.php:157
 #: includes/class-gicapi-gift-card-display.php:288
 #: includes/class-gicapi-gift-card-display.php:373
-#: includes/class-gicapi-gift-card-display.php:491
+#: includes/class-gicapi-gift-card-display.php:467
 msgid "Redeem Link"
 msgstr "رابط التصرف"
 
 #: includes/class-gicapi-gift-card-display.php:158
 #: includes/class-gicapi-gift-card-display.php:289
 #: includes/class-gicapi-gift-card-display.php:374
-#: includes/class-gicapi-gift-card-display.php:492
+#: includes/class-gicapi-gift-card-display.php:468
 msgid "Expires At"
 msgstr "انتهاء الصلاحية"
 
@@ -1138,7 +1731,7 @@ msgstr "تفاصيل التصرف"
 
 #: includes/class-gicapi-gift-card-display.php:192
 #: includes/class-gicapi-gift-card-display.php:420
-#: includes/class-gicapi-gift-card-display.php:534
+#: includes/class-gicapi-gift-card-display.php:510
 msgid "Redeem"
 msgstr "التصرف"
 
@@ -1163,7 +1756,7 @@ msgid "Click to Redeem"
 msgstr "اضغط هنا"
 
 #: includes/class-gicapi-gift-card-display.php:394
-#: includes/class-gicapi-gift-card-display.php:513
+#: includes/class-gicapi-gift-card-display.php:489
 msgid "Gift Card Redemption Details"
 msgstr "تفاصيل التصرف في البطاقة الهدية"
 
@@ -1203,6 +1796,19 @@ msgid ""
 "mapped)"
 msgstr "تم إلغاء الطلب لأن جميع عناصر بطاقة الهدايا أُلغيت (أي عنصر)"
 
+#: includes/class-gicapi-product-sync.php:1017
+msgid "No batch processing in progress"
+msgstr ""
+
+#: includes/class-gicapi-product-sync.php:1033
+msgid "Batch processing completed"
+msgstr ""
+
+#: includes/class-gicapi-product-sync.php:1034
+#, php-format
+msgid "Processing batch: %d of %d products (%s%%)"
+msgstr ""
+
 #: includes/class-gicapi-webhook.php:17
 msgid "Only POST method is allowed"
 msgstr "يسمح فقط بطريقة POST"
@@ -1211,58 +1817,58 @@ msgstr "يسمح فقط بطريقة POST"
 msgid "Empty request body"
 msgstr "جسم الطلب فارغ"
 
-#: includes/class-gicapi-webhook.php:28
+#: includes/class-gicapi-webhook.php:30
 msgid "Invalid JSON format"
 msgstr "تنسيق JSON غير صالح"
 
-#: includes/class-gicapi-webhook.php:32
+#: includes/class-gicapi-webhook.php:34
 msgid "Invalid data"
 msgstr "بيانات غير صالحة"
 
-#: includes/class-gicapi-webhook.php:36
+#: includes/class-gicapi-webhook.php:38
 msgid "Order ID is required"
 msgstr "رقم الطلب مطلوب"
 
-#: includes/class-gicapi-webhook.php:45
+#: includes/class-gicapi-webhook.php:47
 msgid "Invalid order ID format"
 msgstr "تنسيق رقم الطلب غير صالح"
 
-#: includes/class-gicapi-webhook.php:51
+#: includes/class-gicapi-webhook.php:53
 msgid "Webhook secret is missing"
 msgstr "رمز الويب هوك مفقود"
 
-#: includes/class-gicapi-webhook.php:63
+#: includes/class-gicapi-webhook.php:65
 msgid "No WooCommerce orders found for this Gift-i-Card order"
 msgstr "لم يتم العثور على طلبات ووكومرس لهذا الطلب من بطاقة الهدايا"
 
-#: includes/class-gicapi-webhook.php:76
+#: includes/class-gicapi-webhook.php:78
 msgid "Invalid webhook secret"
 msgstr "رمز الويب هوك غير صالح"
 
-#: includes/class-gicapi-webhook.php:93
+#: includes/class-gicapi-webhook.php:95
 msgid "Webhook processed successfully"
 msgstr "تمت معالجة الويب هوك بنجاح"
 
-#: public/class-gicapi-public.php:177
+#: public/class-gicapi-public.php:193
 msgid "Failed to create Gift-i-Card order"
 msgstr "حدث خطأ أثناء إنشاء طلب بطاقة الهدايا"
 
-#: public/class-gicapi-public.php:186
+#: public/class-gicapi-public.php:202
 msgid "Gift-i-Card API returned empty order_id"
 msgstr "لم يتم استلام رقم الطلب من بطاقة الهدايا"
 
 #. translators: %s: Gift-i-Card order ID
-#: public/class-gicapi-public.php:194
+#: public/class-gicapi-public.php:210
 #, php-format
 msgid "Gift-i-Card order created: %s"
 msgstr "تم إنشاء طلب بطاقة الهدايا: %s"
 
-#: public/class-gicapi-public.php:236
+#: public/class-gicapi-public.php:252
 msgid "Failed to confirm Gift-i-Card order"
 msgstr "حدث خطأ أثناء تأكيد طلب بطاقة الهدايا"
 
 #. translators: %s: Gift-i-Card order ID
-#: public/class-gicapi-public.php:244
+#: public/class-gicapi-public.php:260
 #, php-format
 msgid "Gift-i-Card order confirmed: %s"
 msgstr "تم تأكيد طلب بطاقة الهدايا: %s"
@@ -1286,3 +1892,28 @@ msgstr "سعید کثیری"
 #. Author URI of the plugin/theme
 msgid "https://gifticard.ir"
 msgstr "https://gifticard.ir"
+
+#~ msgid ""
+#~ "It finds all WooCommerce products that are mapped to Gift-i-Card variants."
+#~ msgstr ""
+#~ "تجد هذا الإضافة جميع منتجات وووكامرس التي ترتبط بأنواع منتجات Gift-i-Card."
+
+#~ msgid ""
+#~ "For each mapped product, it calls the Gift-i-Card API to get the latest "
+#~ "stock status."
+#~ msgstr ""
+#~ "بالنسبة لكل منتج مرتبط، يقوم API الخاص بـ Gift-i-Card باستدعاء للحصول على "
+#~ "آخر حالة مخزون."
+
+#~ msgid ""
+#~ "It updates the WooCommerce product stock status based on the Gift-i-Card "
+#~ "status and your configured mapping rules."
+#~ msgstr ""
+#~ "تحديث حالة مخزون منتج وووكامرس بناءً على حالة Gift-i-Card وقوانين الترتيب "
+#~ "المكونة."
+
+#~ msgid ""
+#~ "This ensures your product availability is always synchronized with Gift-i-"
+#~ "Card inventory."
+#~ msgstr ""
+#~ "هذا يضمن أن متوفرة المنتجات الخاصة بك دائماً متزامنة مع مخزون Gift-i-Card."
