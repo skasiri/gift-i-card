@@ -336,6 +336,18 @@ class GICAPI_Ajax
         update_post_meta($product_id, '_gicapi_profit_margin', $price_sync_margin);
         update_post_meta($product_id, '_gicapi_profit_margin_type', $price_sync_margin_type);
 
+        // If price sync is enabled, perform immediate sync to apply profit margin
+        if ($price_sync_enabled === 'yes') {
+            $product_sync = GICAPI_Product_Sync::get_instance();
+            if ($product_sync) {
+                $sync_result = $product_sync->sync_single_product($product_id);
+                if (!$sync_result) {
+                    // Log but don't fail the creation
+                    error_log('GICAPI: Failed to sync price for newly created product ' . $product_id);
+                }
+            }
+        }
+
         wp_send_json_success(__('Simple product created and mapped successfully', 'gift-i-card'));
     }
 
@@ -632,6 +644,26 @@ class GICAPI_Ajax
                     );
                     $variable_product->set_default_attributes($default_attributes);
                     $variable_product->save();
+                }
+            }
+        }
+
+        // If price sync is enabled, perform immediate sync for all variations to apply profit margin
+        if ($price_sync_enabled === 'yes') {
+            $product_sync = GICAPI_Product_Sync::get_instance();
+            if ($product_sync) {
+                // Sync parent product (variable product)
+                $sync_result = $product_sync->sync_single_product($variable_product_id);
+                if (!$sync_result) {
+                    error_log('GICAPI: Failed to sync price for newly created variable product ' . $variable_product_id);
+                }
+
+                // Sync all variations
+                foreach ($created_variations as $variation_id) {
+                    $sync_result = $product_sync->sync_single_product($variable_product_id, $variation_id);
+                    if (!$sync_result) {
+                        error_log('GICAPI: Failed to sync price for newly created variation ' . $variation_id);
+                    }
                 }
             }
         }

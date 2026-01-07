@@ -176,20 +176,24 @@ class GICAPI_Product_Sync
         $profit_margin = get_post_meta($sync_product_id, '_gicapi_profit_margin', true);
         $profit_margin_type = get_post_meta($sync_product_id, '_gicapi_profit_margin_type', true);
 
-        // Fallback to variant-level settings
-        if ($profit_margin === '') {
-            $profit_margin = get_option('gicapi_variant_profit_margin_' . $variant_sku, '');
-        }
-        if ($profit_margin_type === '') {
-            $profit_margin_type = get_option('gicapi_variant_profit_margin_type_' . $variant_sku, '');
-        }
+        // Check if product has explicit profit margin settings (not empty string and not false)
+        $has_product_profit_margin = metadata_exists('post', $sync_product_id, '_gicapi_profit_margin') &&
+            $profit_margin !== '' && $profit_margin !== false;
+        $has_product_profit_margin_type = metadata_exists('post', $sync_product_id, '_gicapi_profit_margin_type') &&
+            $profit_margin_type !== '' && $profit_margin_type !== false;
 
-        // Fallback to global settings
-        if ($profit_margin === '') {
-            $profit_margin = get_option('gicapi_default_profit_margin', 0);
+        // Fallback to variant-level settings if product doesn't have explicit settings
+        if (!$has_product_profit_margin) {
+            $profit_margin = get_option('gicapi_variant_profit_margin_' . $variant_sku, '');
+            if ($profit_margin === '') {
+                $profit_margin = get_option('gicapi_default_profit_margin', 0);
+            }
         }
-        if ($profit_margin_type === '') {
-            $profit_margin_type = get_option('gicapi_profit_margin_type', 'percentage');
+        if (!$has_product_profit_margin_type) {
+            $profit_margin_type = get_option('gicapi_variant_profit_margin_type_' . $variant_sku, '');
+            if ($profit_margin_type === '') {
+                $profit_margin_type = get_option('gicapi_profit_margin_type', 'percentage');
+            }
         }
 
         // Calculate selling price
