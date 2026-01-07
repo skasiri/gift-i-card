@@ -883,12 +883,17 @@ class GICAPI_Ajax
             $result = $product_sync->sync_all_products();
 
             if (isset($result['success']) && $result['success']) {
+                // Extract data from the result structure
+                $total_products = isset($result['progress']['total']) ? $result['progress']['total'] : 0;
+                $successful_syncs = isset($result['batch_result']['successful_syncs']) ? $result['batch_result']['successful_syncs'] : 0;
+                $failed_syncs = isset($result['batch_result']['failed_syncs']) ? $result['batch_result']['failed_syncs'] : 0;
+
                 $message = sprintf(
                     /* translators: 1: Total number of products, 2: Number of successful syncs, 3: Number of failed syncs */
                     __('Product sync completed successfully. Total: %1$d, Successful: %2$d, Failed: %3$d', 'gift-i-card'),
-                    $result['total_products'],
-                    $result['successful_syncs'],
-                    $result['failed_syncs']
+                    $total_products,
+                    $successful_syncs,
+                    $failed_syncs
                 );
                 wp_send_json_success($message);
             } else {

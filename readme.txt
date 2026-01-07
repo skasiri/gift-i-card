@@ -6,7 +6,7 @@ Tested up to: 6.9
 Requires PHP: 7.0
 WC requires at least: 5.0
 WC tested up to: 10.4.3
-Stable tag: 1.2.7
+Stable tag: 1.2.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,11 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
 == Changelog ==
+= 1.2.9 =
+* Fixed issue with applying profit margin to selling price calculation
+* Fixed manual sync counting issue in settings - now correctly counts simple products and product variations
+* Improved sync statistics accuracy for total, successful, and failed counts
+
 = 1.2.7 =
 * Added stock status synchronization control for mapped products
 * Products can now individually control whether stock status should be synchronized from Gift-i-Card API
@@ -144,6 +149,9 @@ Gift-i-Card seamlessly connects WooCommerce with the Gifticard.pro service, enab
 * Enhanced user experience with better language support
 
 == Upgrade Notice ==
+= 1.2.9 =
+This version fixes critical issues with profit margin calculation and manual sync counting. The profit margin is now correctly applied to selling prices, and manual sync statistics now accurately count simple products and product variations. These fixes ensure proper price management and reliable sync reporting. Highly recommended for all users.
+
 = 1.2.7 =
 This version adds individual stock status synchronization control for mapped products. You can now control whether each product's stock status should be synchronized from Gift-i-Card API, giving you fine-grained control over inventory management. Stock sync can be enabled globally with per-product override capability. Highly recommended for stores that need selective stock synchronization control.
 

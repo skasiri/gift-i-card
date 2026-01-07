@@ -92,6 +92,59 @@ Gift-i-Card integrates WooCommerce with the Gifticard.ir service for internation
 3. Use the Gift-i-Card menu to configure the plugin.
 4. Map your WooCommerce products to Gift-i-Card variants as needed.
 
+## Changelog
+
+### 1.2.9
+
+- Fixed issue with applying profit margin to selling price calculation
+- Fixed manual sync counting issue in settings - now correctly counts simple products and product variations
+- Improved sync statistics accuracy for total, successful, and failed counts
+
+### 1.2.7
+
+- Added stock status synchronization control for mapped products
+- Products can now individually control whether stock status should be synchronized from Gift-i-Card API
+- Stock sync can be enabled/disabled per product with default global setting
+- Stock synchronization control added to variants display page for each mapped product
+- Enhanced product management with stock sync toggle alongside price sync controls
+- Stock sync settings can be configured globally in product settings with per-product override capability
+
+### 1.2.6
+
+- Added price synchronization feature for mapped products
+- Products can now automatically sync prices from Gift-i-Card API based on variant prices plus configurable profit margin
+- Configurable profit margin settings (percentage or fixed amount) in product settings
+- Individual price sync control for each mapped product/variation
+- Price sync can be enabled/disabled per product with custom profit margin settings
+- Price synchronization runs automatically during product status sync (cron or page visit)
+- Enhanced product management with price sync indicators in variants display page
+
+### 1.2.5
+
+- Added ability to create WooCommerce products directly from Gift-i-Card variants
+- Create simple products from individual variants with custom name, SKU, price, and status
+- Create variable products with multiple variants in one operation
+- Customizable variant details (name, price, SKU) during product creation
+- Automatic mapping of created products to Gift-i-Card variants
+- Improved product creation workflow with modal dialogs
+- Enhanced variants display page with product creation buttons
+
+### 1.2.4
+
+- Updated compatibility to WordPress 6.9
+- Updated compatibility to WooCommerce 10.4.3
+- Improved plugin stability and reliability with latest WordPress and WooCommerce versions
+
+### 1.2.3
+
+- Added batch processing system for product synchronization to handle large product catalogs efficiently
+- Configurable batch size setting for product sync (default: 10 products per batch)
+- Progress tracking system for batch processing with visual progress bar in admin
+- Improved performance for stores with many products by processing in smaller chunks
+- Enhanced cron job reliability with resumable batch processing
+- Added batch processing status display in cron settings panel
+- Optimized API calls by grouping products in batches instead of processing all at once
+
 ## Links
 
 - [Gifticard](https://gifticard.ir)

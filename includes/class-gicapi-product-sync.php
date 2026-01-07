@@ -761,13 +761,8 @@ class GICAPI_Product_Sync
      */
     public function sync_all_products()
     {
-        $products_sync_enabled = get_option('gicapi_products_sync_enabled', 'no');
-        if ($products_sync_enabled !== 'yes') {
-            return array(
-                'success' => false,
-                'error' => 'Product synchronization is disabled'
-            );
-        }
+        // For manual sync, we don't check if cron sync is enabled
+        // This allows manual sync even if automatic sync is disabled
 
         // Get batch size from settings (default 10)
         $batch_size = (int) get_option('gicapi_sync_batch_size', 10);
@@ -829,7 +824,25 @@ class GICAPI_Product_Sync
 
         // Get mapped products
         $mapped_products = $this->get_all_mapped_products();
-        $total_products = count($mapped_products);
+        $total_products = $this->count_syncable_items();
+
+        // If no mapped products found, return early
+        if ($total_products === 0) {
+            return array(
+                'success' => true,
+                'batch_result' => array(
+                    'successful_syncs' => 0,
+                    'failed_syncs' => 0,
+                    'processed_in_batch' => 0
+                ),
+                'progress' => array(
+                    'total' => 0,
+                    'processed' => 0
+                ),
+                'is_complete' => true,
+                'batch_size' => $batch_size
+            );
+        }
 
         // Update total count
         $progress['total'] = $total_products;
@@ -891,6 +904,8 @@ class GICAPI_Product_Sync
         // Process products in this batch
         foreach ($remaining_products as $product_id) {
             $product_obj = wc_get_product($product_id);
+            $items_processed_for_this_product = 0;
+
             if (!$product_obj) {
                 $results['failed_syncs']++;
                 $results['errors'][] = array(
@@ -898,6 +913,7 @@ class GICAPI_Product_Sync
                     'error' => 'Product object not found'
                 );
                 $progress['processed']++;
+                $results['processed_in_batch']++;
                 continue;
             }
 
@@ -921,6 +937,7 @@ class GICAPI_Product_Sync
                                 'error' => 'Failed to sync variation'
                             );
                         }
+                        $items_processed_for_this_product++;
                     }
                 }
             } else {
@@ -940,11 +957,13 @@ class GICAPI_Product_Sync
                             'error' => 'Failed to sync product'
                         );
                     }
+                    $items_processed_for_this_product++;
                 }
             }
 
-            $progress['processed']++;
-            $results['processed_in_batch']++;
+            // Update progress by the number of items actually processed for this parent product
+            $progress['processed'] += $items_processed_for_this_product;
+            $results['processed_in_batch'] += $items_processed_for_this_product;
         }
 
         // Update progress
@@ -1103,7 +1122,7 @@ class GICAPI_Product_Sync
 
     /**
      * Get all WooCommerce products that have Gift-i-Card mappings
-     * 
+     *
      * @return array Array of product IDs that have mappings
      */
     public function get_all_mapped_products()
@@ -1115,8 +1134,8 @@ class GICAPI_Product_Sync
             $wpdb->prepare(
                 "SELECT DISTINCT pm.post_id FROM {$wpdb->postmeta} pm
                 INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-                WHERE pm.meta_key = %s 
-                AND pm.meta_value != '' 
+                WHERE pm.meta_key = %s
+                AND pm.meta_value != ''
                 AND pm.meta_value != 'null'
                 AND pm.meta_value != '[]'
                 AND p.post_status = 'publish'
@@ -1130,8 +1149,8 @@ class GICAPI_Product_Sync
             $wpdb->prepare(
                 "SELECT DISTINCT pm.post_id FROM {$wpdb->postmeta} pm
                 INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-                WHERE pm.meta_key = %s 
-                AND pm.meta_value != '' 
+                WHERE pm.meta_key = %s
+                AND pm.meta_value != ''
                 AND pm.meta_value != 'null'
                 AND p.post_status = 'publish'
                 AND p.post_type IN ('product', 'product_variation')",
@@ -1192,5 +1211,41 @@ class GICAPI_Product_Sync
         $final_products = array_unique(array_merge($valid_products, $parent_ids));
 
         return $final_products;
+    }
+
+    /**
+     * Count total syncable items (simple products + variations)
+     * This method counts the actual number of items that will be synced
+     *
+     * @return int Total number of syncable items
+     */
+    public function count_syncable_items()
+    {
+        $mapped_products = $this->get_all_mapped_products();
+        $total_count = 0;
+
+        foreach ($mapped_products as $product_id) {
+            $product = wc_get_product($product_id);
+            if (!$product) {
+                continue;
+            }
+
+            if ($product->is_type('variable')) {
+                // For variable products, count each variation that has a mapping
+                $children = $product->get_children();
+                foreach ($children as $variation_id) {
+                    // Check if this variation has a mapped SKU
+                    $variant_sku = GICAPI_Order::get_instance()->get_mapped_variant_sku($product_id, $variation_id);
+                    if ($variant_sku) {
+                        $total_count++;
+                    }
+                }
+            } elseif ($product->is_type('simple')) {
+                // For simple products, count as 1
+                $total_count++;
+            }
+        }
+
+        return $total_count;
     }
 }
